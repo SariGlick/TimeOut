@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "hellow",
+  "version": "1.0",
+  "description": "מפרגן בשלום ",
+  "icons": {
+    "48": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}
