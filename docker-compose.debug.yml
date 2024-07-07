@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  app:
+    build: ./app
+    ports:
+      - "3006:3006"
+    networks:
+      - TimeOut-network
+  app1:
+    build: ../server-side-nodeForGit/app
+    ports:
+      - "3005:3005"
+    networks:
+      - TimeOut-network
+  authservicenodeforgit:
+    image: authservicenodeforgit
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 3006:3006
+      - 9229:9229
+    command: ["node", "--inspect=0.0.0.0:9229", "app.js"]
