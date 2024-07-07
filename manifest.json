@@ -1,0 +1,16 @@
+
+{
+    "manifest_version": 3,
+    "name": "My Chrome Extension3",
+    "version": "1.0",
+    "description": "Description of my Chrome extension",
+    "permissions": [
+      "activeTab"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    }
+}

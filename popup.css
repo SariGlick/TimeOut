@@ -1,0 +1,13 @@
+#hello{
+    width: 130px; 
+    color: red;
+    font-size: 45px;
+    font-family: Arial;
+    height: 100px;
+    background-color: aqua; 
+    padding:30px;
+    border-color:red ;
+    border-width:2px ;
+    border-style: solid;
+
+}
