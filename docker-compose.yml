@@ -1,6 +1,18 @@
 version: '3.4'
 
 services:
+  app:
+    build: ./app
+    ports:
+      - "3006:3006"
+    networks:
+      - TimeOut-network
+  app1:
+    build: ../server-side-nodeForGit/app
+    ports:
+      - "3005:3005"
+    networks:
+      - TimeOut-network
   authservicenodeforgit:
     image: authservicenodeforgit
     build:
@@ -11,5 +23,5 @@ services:
     ports:
       - 3006:3006
 networks:
-  TimeOut-network:
+  timeout_network:
     driver: bridge
