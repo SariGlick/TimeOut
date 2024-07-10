@@ -12,8 +12,11 @@
   "dependencies": {
     "@google-cloud/local-auth": "^2.1.0",
     "express": "^4.19.2",
+    "fs": "^0.0.1-security",
     "googleapis": "^105.0.0",
     "kafka-node": "^5.0.0",
+    "kafkajs": "^2.2.4",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^6.9.14"
   }
 }
