@@ -1,18 +1,10 @@
 import * as React from 'react';
-import { LineChart } from '@mui/x-charts/LineChart';
-import { BarPlot } from '@mui/x-charts/BarChart';
-import { LinePlot } from '@mui/x-charts/LineChart';
-import { ChartContainer } from '@mui/x-charts/ChartContainer';
-import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { ChartsYAxis } from '@mui/x-charts/ChartsYAxis';
+import { LineChart, ChartContainer, LinePlot, BarPlot, ChartsYAxis, ChartsXAxis, Gauge, PieChart,ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
-import { legendClasses } from '@mui/x-charts/ChartsLegend';
-import { PieChart } from '@mui/x-charts/PieChart';
-import { Gauge } from '@mui/x-charts/Gauge';
 
 export default function StackedAreas() {
 
-    const series = [
+    const barChar = [
         {
             type: 'bar',
             yAxisKey: 'eco',
@@ -47,7 +39,7 @@ export default function StackedAreas() {
 
 
 
-    const years = [
+    const dates = [
         new Date(1990, 0, 1),
         new Date(1991, 0, 1),
         new Date(1992, 0, 1),
@@ -103,7 +95,7 @@ export default function StackedAreas() {
         width: 400,
         height: 200,
         sx: {
-            [`.${legendClasses.root}`]: {
+            [`.${ChartsLegend.root}`]: {
                 transform: 'translate(20px, 0)',
             },
         },
@@ -126,7 +118,7 @@ export default function StackedAreas() {
             <Stack direction="row" width="100%" textAlign="center" spacing={2}>
 
                 <Gauge width={200} height={200} value={70} valueMin={5} valueMax={100} />
-                
+
                 <PieChart
                     series={[
                         {
@@ -143,7 +135,7 @@ export default function StackedAreas() {
                 xAxis={[
                     {
                         id: 'Years',
-                        data: years,
+                        data: dates,
                         scaleType: 'time',
                         valueFormatter: (date) => date.getFullYear().toString(),
                     },
@@ -182,12 +174,12 @@ export default function StackedAreas() {
 
 
             <ChartContainer
-                series={series}
+                series={barChar}
                 width={500}
                 height={400}
                 xAxis={[
                     {
-                        id: 'years',
+                        id: 'dates',
                         data: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
                         scaleType: 'band',
                         valueFormatter: (value) => value.toString(),
@@ -206,9 +198,8 @@ export default function StackedAreas() {
             >
                 <BarPlot />
                 <LinePlot />
-                <ChartsXAxis label="Years" position="bottom" axisId="years" />
+                <ChartsXAxis label="Years" position="bottom" axisId="dates" />
                 <ChartsYAxis label="Results" position="left" axisId="eco" />
-                {/* <ChartsYAxis label="PIB" position="right" axisId="pib" /> */}
             </ChartContainer>
 
 
