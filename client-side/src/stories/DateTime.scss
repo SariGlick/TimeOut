@@ -1,9 +1,20 @@
-//DateTime.scss
-.dateTime {
-    background-color: white;
-    color: rgb(103, 252, 210);
-    font-family: "Nanum Gothic", sans-serif ;
-    font-optical-sizing: auto ;
-    font-style: normal ;
-    border: 1px solid black;
-  }
+.dateTime .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgb(72, 245, 193);
+}
+
+.dateTime .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: rgb(72, 245, 193);
+}
+
+.dateTime .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: rgb(72, 245, 193);
+}
+
+.dateTime .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-width: 2px; 
+  border-style: solid; 
+  transition: border-color 0.3s ease; 
+}
+.dateTime{
+  width: 500px;
+}

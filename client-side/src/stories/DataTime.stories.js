@@ -1,8 +1,8 @@
 //DateTime.stories.js
 import * as React from 'react';
-import DateTime from '../Components/DateTime'
+import DateTime from './DateTime'
 
-  const Template = ({ date }) => <DateTime date={date} />;
+  const Template = () => <DateTime  />;
   export default {
     title: 'DateTime',
     component: DateTime,

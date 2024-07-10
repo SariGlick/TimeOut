@@ -1,12 +1,12 @@
-
+import BasicDateTimeRangePicker from './stories/DateTime'
 import './App.css';
 function App() {
   return (
     <div className="App">
         
-        <DateTime date={currentDate} format="full" />
-     <DateTime date={currentDate} format="date" />
-     <DateTime date={currentDate} format="time" />
+        <BasicDateTimeRangePicker/>
+     {/* <DateTime date={currentDate} format="date" />
+     <DateTime date={currentDate} format="time" /> */}
     </div>
   );
 }
