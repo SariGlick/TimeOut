@@ -4,7 +4,9 @@ function App() {
   return (
     <div className="App">
         
-      
+        <DateTime date={currentDate} format="full" />
+     <DateTime date={currentDate} format="date" />
+     <DateTime date={currentDate} format="time" />
     </div>
   );
 }
