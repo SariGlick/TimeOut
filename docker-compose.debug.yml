@@ -6,13 +6,13 @@ services:
     ports:
       - "3006:3006"
     networks:
-      - TimeOut-network
+      - timeout_network
   app1:
     build: ../server-side-nodeForGit/app
     ports:
       - "3005:3005"
     networks:
-      - TimeOut-network
+      - timeout_network
   authservicenodeforgit:
     image: authservicenodeforgit
     build:
