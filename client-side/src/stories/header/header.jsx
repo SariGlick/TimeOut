@@ -3,7 +3,6 @@ import { useState } from 'react';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,MenuItem,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
-import {SETTINGS_LIST} from './header.constants';
 import './header.scss';
 
 
