@@ -1,6 +1,7 @@
 import React from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import GenericButton from '../../stories/Button/GenericButton';
 
 const PdfGenerator = ({data}) => {
 const userName="name"; //change to realy name
@@ -18,18 +19,15 @@ const userName="name"; //change to realy name
       body: data,
       startY: 35,
     });
-    doc.text("developed by kamatech", 10, 250);
+    doc.text("developed by Extratech", 10, 250);
     doc.save("timeOut-Report.pdf");
   };
 
   return (
     <div>
-      <button onClick={generatePdf}>Download as PDF</button>{/* לקחת כפתור מה UI  */}
+      <GenericButton className="secondary" label="Download as PDF" size="medium" onClick={generatePdf}></GenericButton>
     </div>
   );
 };
 
 export default PdfGenerator;
-// התקנתי את הספריות: 
-// npm install jspdf
-// npm i jspdf-autotable
