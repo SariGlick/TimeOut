@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <Header/>
       <Report/>
+      <img src="/public/month.png" alt="" />
     </div>
   );
 }

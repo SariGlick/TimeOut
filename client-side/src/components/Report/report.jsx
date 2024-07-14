@@ -8,18 +8,17 @@ export default function Report() {
   const [mounth,setMounth]=useState(false);
   const [year,setYear]=useState(false);
   const [custum,setCustum]=useState(false);
-  const selectFunctions=(ev)=>{
-    console.log("jujuhu");
-    if(ev.target.value=="day"){
+  const selectFunctions=(selectedValue)=>{
+    if(selectedValue==1){
       setDay(true);
     }
-    else   if(ev.target.value=="month"){
+    else   if(selectedValue==2){
       setMounth(true);
     }
-    else   if(ev.target.value=="year"){
+    else   if(selectedValue==3){
       setYear(true);
     }
-    else   if(ev.target.value=="custum"){
+    else   if(selectedValue==4){
       setCustum(true);
     }
 
@@ -28,9 +27,9 @@ export default function Report() {
     <div>
       {/* לשים היכונים- לשאול את חני איך היא התכוונה לשים אותם - כי הם לא בתוך תגית של תמונה. */}
       {/* הפונקציה של הסלקט איך היא מקבלת מי עבר עליה לא אמור ליהיות event.target? */}
-        <Select className="primary" options={[{text:"day",icon:''},{text:"month",icon:''},{text:"year",icon:''},{text:"custum",icon:''}]} onChange={selectFunctions} title="primary select" size='medium' widthOfSelect="150px"/>
+        <Select onChange={(selectedValue) => selectFunctions(selectedValue) } className="primary" options={[{value:1,text:"day",iconSrc:'/images/day.png'},{value:2,text:"month",iconSrc:'images/month.png'},{value:3,text:"year",iconSrc:'/images/year.png'},{value:4,text:"custum",iconSrc:'/images/custum.png'}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
         {/* {custum&&}
-        {year&&}
+        {year&&}  
         {day&&}
         {mounth&&} */}
         <PdfGenerator data={[{SiteName:'gmail',BrowsingTime:20,AvgForADay:1}]} />
