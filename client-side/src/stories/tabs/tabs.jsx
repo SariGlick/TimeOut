@@ -18,6 +18,11 @@ export default function LabTabs({ nameOfClass = "every-tabs", text = [], nav=[]}
 
   const handleTabClick = (index) => {
     if (nav && nav[index]) {
+      if (nav[index] === "/profiles") {
+        
+        navigate('/profiles');
+      }
+      else
       navigate(nav[index]);
     }
   };

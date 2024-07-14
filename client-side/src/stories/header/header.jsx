@@ -3,8 +3,9 @@ import { useState } from 'react';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
-import {SETTINGS_LIST} from './header.constants'
+import {SETTINGS_LIST} from './Header.stories.js'
 import './header.scss'
+import { Link } from 'react-router-dom';
 
 
 
@@ -61,7 +62,7 @@ function ResponsiveAppBar() {
           <LabTabs
           nameOfClass="navbar-tabs"
           text={["home", "reports", "statistics", "profiles"]}
-          nav={["/home","/reports","/statistics","/profiles"] }
+          nav={["/home","/reports","/statistics","/profile"] }
         />
             </Menu>
           </Box>
