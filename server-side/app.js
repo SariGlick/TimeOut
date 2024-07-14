@@ -24,7 +24,7 @@ app.get('/',(req,res)=>{
     res.send('welcome to time out ');
 })
 app.use('/uploads',express.static('uploads'))
-app.use('/preference',PreferenceRouter);
+app.use('/preferences',PreferenceRouter);
 app.use('/websites',WebsitesRouter);
 app.use('/profiles',profileRouter);
 app.use('/vistedWebsite',visitedWebsiteRouter);

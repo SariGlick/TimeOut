@@ -8,7 +8,7 @@ import {
   updateUserProfileImage 
 } 
 from '../controllers/user.controller.js';
-import upload from '../middleware/upload.js';
+import upload from '../middleware/uploadFiles.js';
 
 const router = express.Router();
 

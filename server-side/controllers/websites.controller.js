@@ -1,5 +1,5 @@
 import  mongoose from 'mongoose';
-import  {Websites} from  '../models/websites.model.js';
+import  Websites from  '../models/websites.model.js';
 
 export const getAllWebsites=async(req,res,next)=>{
     try {

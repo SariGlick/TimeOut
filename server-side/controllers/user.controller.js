@@ -1,11 +1,11 @@
-import userModel from '../Models/user.model.js';
+import User from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 import path from 'path';
 import fs from 'fs';
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await userModel.find().populate('visitsWebsites profiles preferences');
+    const users = await User.find().populate('visitsWebsites profiles preferences');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
@@ -16,7 +16,7 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const idParams = req.params.id;
-    const user = await userModel.findById(idParams).populate('visitsWebsites profiles preferences');
+    const user = await User.findById(idParams).populate('visitsWebsites profiles preferences');
     if (!user) {
       res.status(404).send('User not found');
       return;
@@ -32,7 +32,7 @@ export const addUser = async (req, res) => {
   const { name, password, email } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new userModel({
+    const newUser = new User({
       name,
       password: hashedPassword,
       email,
@@ -48,7 +48,7 @@ export const addUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   try {
     const idParams = req.params.id;
-    const user = await userModel.findByIdAndDelete(idParams);
+    const user = await User.findByIdAndDelete(idParams);
     if (!user) {
       res.status(404).send('User not found');
       return;
@@ -64,7 +64,7 @@ export const updatedUser = async (req, res) => {
   try {
     const idParams = req.params.id;
     const { name, password, email } = req.body;
-    const updatedUser = await userModel.findByIdAndUpdate(
+    const updatedUser = await User.findByIdAndUpdate(
       idParams,
       { name, password, email },
       { new: true }
@@ -89,7 +89,7 @@ export const updateUserProfileImage = async (req, res) => {
       return res.status(400).send('No file uploaded.');
     }
 
-    const user = await userModel.findById(userId);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).send('User not found.');
     }
