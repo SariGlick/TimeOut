@@ -1,5 +1,5 @@
 import express from 'express'
-import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite} from '../controllers/visitedWebSiteController'
+import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite} from '../controllers/visitedWebSite.controller.js'
 const router=express.Router();
 router.get('/vistedWebsite',getAllVisitedWebsites)
 router.get('/vistedWebsite/:id',getVisitedWebsiteById)

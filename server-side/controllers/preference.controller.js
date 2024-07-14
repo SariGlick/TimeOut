@@ -1,5 +1,5 @@
 import  mongoose from 'mongoose';
-import  {Preference}from '../models/preference.model.js';
+import  Preference from '../models/preference.model.js';
 
 export const getAllPreference=async(req,res,next)=>{
      try {
@@ -25,7 +25,7 @@ export const getPreferenceById=async(req,res,next)=>{
     }
     
 
-}
+};
 
 export const updatePreference=async(req,res,next)=>{
      const id= req.params.id;
@@ -54,7 +54,6 @@ export const addPreference=async(req,res,next)=>{
     return next({message:error.message})
   }
 };
-
 
 export const deletePreference=async(req,res,next)=>{
 

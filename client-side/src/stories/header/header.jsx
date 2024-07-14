@@ -102,11 +102,6 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {/* {SETTINGS_LIST.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))} */}
                         <LabTabs
           nameOfClass="navbar-tabs"
           text={['edit user profile','manage notifications']}

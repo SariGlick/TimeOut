@@ -6,11 +6,10 @@ const userSchema = new Schema({
   email: { type: String, required: true },
   password: { type: String },
   googleId: { type: String },
-  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'Website' }],
+  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'Websites' }],
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
   preferences: [{ type: Schema.Types.ObjectId, ref: 'Preference' }],
   profileImage: { type: String }
 });
 
-const userModel = mongoose.model('User', userSchema);
-export default userModel;
+export default mongoose.model('Users', userSchema);

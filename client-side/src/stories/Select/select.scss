@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+.selectWrapper {
+  font-family: 'Nanum Gothic', sans-serif;
+
+  .genericSelect {
+    &.primary {
+      background-color: white;
+    }
+
+    &.secondary {
+      background-color: rgb(103, 252, 210);
+    }
+
+    &:hover .MuiOutlinedInput-notchedOutline {
+      border-color: rgb(103, 252, 210);
+    }
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: rgb(103, 252, 210);
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border-width: 2px;
+      border-color: rgb(103, 252, 210);
+
+      legend {
+        width: auto; 
+      }
+    }
+
+    .MuiSelect-root {
+      font-family: 'Nanum Gothic', sans-serif; 
+    }
+  }
+
+  .MuiInputLabel-root {
+    font-family: 'Nanum Gothic', sans-serif; 
+
+    &.Mui-focused {
+      color: rgb(12, 14, 13);
+    }
+  }
+
+  .MuiMenuItem-root {
+    font-family: 'Nanum Gothic', sans-serif; 
+  }
+}
