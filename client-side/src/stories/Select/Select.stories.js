@@ -20,6 +20,7 @@ Primary.args ={
     title: "primary select",
     size: 'large',
     widthOfSelect:"150px",
+
 };
 export const Secondary = Template.bind({});
 Secondary.args = {

@@ -15,7 +15,7 @@ const Select = ({className, options, onChange, title,size,widthOfSelect}) => {
         <InputLabel  className='input' >{title}</InputLabel>
         <SelectMui  style={{width:widthOfSelect}} label={title}
           className={`genericSelect ${className ? `genericSelect ${className}` : ''}`}
-          onChange={()=>onChange}
+          onChange={onChange}
         >
           {options.map((option, index) => (
             <MenuItem key={index} value={option} >
