@@ -13,7 +13,6 @@ function App() {
       <Header/>
       {/* <Report/> */}
       <downloadPDF/>
-      <Header/> 
       <Footer/>
     </div>
   );
