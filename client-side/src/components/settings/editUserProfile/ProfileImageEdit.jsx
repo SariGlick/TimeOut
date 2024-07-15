@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import GenericButton from '../../../stories/Button/GenericButton';
-// import { Http } from '@mui/icons-material';
+// import ResponsiveAppBar from '../stories/header/header.jsx';
+// import { Sync } from '@mui/icons-material';
+// import { formatDate } from '@storybook/blocks';
 
 const ProfileImageEditButton = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const userId = '6694d2295d41f7809588274c';
-  // const url = process.env.REACT_APP_BASE_URL;
+  const [imageFile,setImageFile]= useState(null);
+  const url=process.env.REACT_APP_BASE_URL;
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFile(file);
+  const handleFilePicture = (e) => {
+    if (e) {
+      console.log('at handleFilePicture the  file is ' ,e.target.files[0]);
+      setImageFile(e.target.files[0]);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
       };
-      reader.readAsDataURL(file);
+      if(e.target.files[0])
+      {
+         reader.readAsDataURL(e.target.files[0]);
+      }
     }
   };
 
-  const handleUpload = async () => {
+  const handleUploadPicture = async () => {
     const formData = new FormData();
-
-    if (!file) {
-      alert('Please select an image first.');
-      return;
-    }
-    if(file){
-      console.log('file',file);
-    }
-    formData.append('profileImage', file);
-
+    formData.append('profileImage', imageFile);
     try {
-      const response = await axios.put(`http://localhost:3000/users/${userId}`, formData, {
+      const response = await axios.put(`http://localhost:3001/users/${userId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
       alert('Profile image updated successfully!');
+      console.log('response.data=',response.data);
     } catch (error) {
-      console.error('Error uploading image:', error);
+      console.log('Response data :',error.response.data);
       alert('Failed to update profile image.');
     }
   };
@@ -50,8 +48,8 @@ const ProfileImageEditButton = () => {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <h2>Change Profile Picture</h2>
-        <input type="file" accept="image/*" onChange={handleFileChange} />
-        <GenericButton size='small' label='Upload Image' onClick={handleUpload} className='' />
+        <input type="file" accept="image/*" onChange={handleFilePicture} />
+        <GenericButton size='small' label='Upload Image' onClick={handleUploadPicture} className='' />
       </div>
       {preview && (
         <div>
