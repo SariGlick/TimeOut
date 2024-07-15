@@ -1,0 +1,81 @@
+@import '../stylies.scss';
+
+.table {
+    background-color: $background-class;
+    margin-top: 10%;
+    border: 2px solid $primary-color;
+    text-align: center;
+    margin: auto;
+    
+
+    .MuiDataGrid-row:hover,
+    .MuiDataGrid-cell:hover {
+        background-color: $secondary-color-hard;
+        border-color: $primary-color;
+    }
+
+    .MuiDataGrid-row:active,
+    .MuiDataGrid-cell:active {
+        background-color: $secondary-color-hard;
+        border-color: $secondary-color;
+    }
+
+    .MuiDataGrid-root {
+        border: none;
+    }
+
+    .MuiDataGrid-columnHeaders {
+        background-color: $primary-color;
+
+        .MuiDataGrid-columnHeaderTitle {
+            color: $secondary-color;
+            font-weight: bold;
+            text-align: center;
+            font-size: 140%;
+            font-family: "Nanum Gothic", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
+    }
+
+    .MuiDataGrid-cell {
+        color: $primary-color;
+        background-color: $background-class;
+        text-align: center;
+        font-size: 110%;
+
+        &:hover {
+            border-color: $secondary-color;
+        }
+    }
+
+    .MuiDataGrid-cellCheckbox,
+    
+    .table.checkboxSelection{
+        .Mui-checked {
+            color: $secondary-color ;
+        }
+    }
+    .MuiDataGrid-footerContainer {
+        background-color: $background-class;
+
+        .MuiTablePagination-root {
+            color: $primary-color;
+        }
+    }
+
+    .MuiDataGrid-row {
+        &:hover {
+            background-color: $secondary-color-hard;
+        }
+
+        &.Mui-selected {
+            background-color: secondary-color-hard;
+
+            &:hover {
+                background-color: secondary-color-hard;
+            }
+        }
+    }
+}
+
