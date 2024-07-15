@@ -22,7 +22,7 @@ const userName="name"; //change to realy name
     doc.text("developed by Extratech", 10, 250);
     doc.save("timeOut-Report.pdf");
   };
-
+ 
   return (
     <div>
       <GenericButton className="secondary" label="Download as PDF" size="medium" onClick={generatePdf}></GenericButton>

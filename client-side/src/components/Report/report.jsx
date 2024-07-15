@@ -2,6 +2,7 @@ import React from 'react';
 import PdfGenerator from './pdf.jsx';
 import { useState } from 'react';
 import Select from '../../stories/Select/Select.jsx';
+import File from './file.jsx';
 
 export default function Report() {
   const [day,setDay]=useState(false);
@@ -24,6 +25,7 @@ export default function Report() {
   };
   return (
     <div>
+        <File/>
         <Select onChange={(selectedValue) => selectFunctions(selectedValue) } className="primary" options={[{value:1,text:"day",iconSrc:'/images/day.png'},{value:2,text:"month",iconSrc:'images/month.png'},{value:3,text:"year",iconSrc:'/images/year.png'},{value:4,text:"custum",iconSrc:'/images/custum.png'}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
         <PdfGenerator data={[{SiteName:'gmail',BrowsingTime:20,AvgForADay:1}]} />
     </div>
