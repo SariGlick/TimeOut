@@ -1,15 +1,12 @@
 import React from "react";
-
 import PropTypes from 'prop-types';
-
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers-pro/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers-pro/AdapterDayjs';
-import { DateTimeRangePicker } from '@mui/x-date-pickers-pro/DateTimeRangePicker';
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import {DateTimeRangePicker} from '@mui/x-date-pickers-pro'
+import {LocalizationProvider} from '@mui/x-date-pickers'
 import './DateInputs.scss';
 
-const DateInputs = ({onAccept=undefined})=>{
+const DateInputs = ({onAccept})=>{
     return(
         <div className='timeInputWrapper'>
       <LocalizationProvider dateAdapter={AdapterDayjs} className='localizationProvider'>
