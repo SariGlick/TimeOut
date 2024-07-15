@@ -1,19 +1,31 @@
+// export default ProfileList;
 import React, { useEffect, useState } from 'react';
 import { getAllProfiles, getProfileById } from '../service/profile-service.ts';
 // Define the Profile type
+import Select from '../stories/Select/Select.jsx';
+interface Website {
+    _id: string;
+    name: string;
+    url: string;
+}
+type WebsiteStatus = 'block' | 'open' | 'limit';
+type BlockedSitesStatus = 'black list' | 'white list';
+interface ListWebsite {
+    websiteId: Website;
+    status: WebsiteStatus;
+    limitedMinutes: number;
+}
+interface ProfileTime {
+    start: Date;
+    end: Date;
+}
 interface Profile {
     _id: string;
     userId: string;
     profileName: string;
-    blockedSites: string[];
-    limitedWebsites: {
-        websiteId: string;
-        status: 'block' | 'open';
-        limitedTimes: {
-            start: Date;
-            end: Date;
-        }[];
-    }[];
+    statusBlockedSites: BlockedSitesStatus;
+    listWebsites: ListWebsite[];
+    profileTime: ProfileTime[];
 }
 const ProfileList = () => {
     const [profiles, setProfiles] = useState<Profile[] | []>([]);
@@ -22,8 +34,9 @@ const ProfileList = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const profileId = '6693906f0aa956f960770e63'; // כאן יש לשים את ה-ID המתאים
+                const profileId = '6694feac0694af4103ed5dfb'; // כאן יש לשים את ה-ID המתאים
                 const profileData = await getProfileById(profileId);
+                // const profileData = await getAllProfiles();
                 console.log("Fetched profile:", profileData);
                 setProfiles([profileData]); // שם את הפרופיל במערך כדי שנוכל להשתמש ב-map
                 setLoading(false);
@@ -35,24 +48,24 @@ const ProfileList = () => {
         fetchProfile();
     }, []);
     const handleProfileSelect = (event) => {
-        const selectedProfileId = event.target.value;
+        const selectedProfileId = event.target.value.value;
         const profile: Profile | undefined = profiles.find((p) => p._id === selectedProfileId);
         setSelectedProfile(profile ?? null);
     };
+
     if (loading) {
         return <div>Loading...</div>;
     }
     return (
         <div>
             <h1>Profile List</h1>
-            <select onChange={handleProfileSelect}>
-                <option value="">Select a profile...</option>
-                {profiles.map((profile) => (
-                    <option key={profile._id} value={profile._id}>
-                        {profile.profileName}
-                    </option>
-                ))}
-            </select>
+            <Select
+                options={profiles.map(profile => ({ text: profile.profileName, value: profile._id }))}
+                title="Select a profile..."
+                onChange={handleProfileSelect}
+                className="custom-select"
+                widthOfSelect={200} // הוספת הפרמטר widthOfSelect
+            />
             {selectedProfile && (
                 <div>
                     <h2>Selected Profile Details</h2>
@@ -64,21 +77,18 @@ const ProfileList = () => {
                 <thead>
                     <tr>
                         <th>SITE</th>
-                        <th>STATE</th>
+                        <th>STATUS</th>
                         <th>FROM</th>
                         <th>TO</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {profiles.map((profile) => (
-                        <tr key={profile._id}>
-                            <td>{profile.limitedWebsites.SITE}</td>
-                            <td>{profile.limitedWebsites.STATE}</td>
-                            <td>{profile.limitedWebsites.FROM}</td>
-                            <td>{profile.limitedWebsites.TO}</td>
-                         
-                            {/* <td>{profile.blockedSites ? profile.blockedSites.join(', ') : 'No data'}</td>
-                            <td>{profile.limitedWebsites ? profile.limitedWebsites.join(', ') : 'No data'}</td> */}
+                    {selectedProfile?.listWebsites.map((profile) => (
+                        <tr key={profile.websiteId._id}>
+                            <td>{profile.websiteId.name}</td>
+                            <td>{profile.websiteId.url}</td>
+                            <td>{profile.status}</td>
+                            <td>{profile.limitedMinutes}</td>
                         </tr>
                     ))}
                 </tbody>
