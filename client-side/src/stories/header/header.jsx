@@ -3,9 +3,13 @@ import { useState } from 'react';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+<<<<<<< HEAD
 import {SETTINGS_LIST} from './Header.stories.js'
 import './header.scss'
 import { Link } from 'react-router-dom';
+=======
+import './header.scss';
+>>>>>>> 05e5e7ae8dc46948a17e0039560fca5ee256f8d7
 
 
 
@@ -104,11 +108,11 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {SETTINGS_LIST.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+                        <LabTabs
+          nameOfClass="navbar-tabs"
+          text={['edit user profile','manage notifications']}
+          nav={['/editUserProfile','/manageNotifications'] }
+        />
             </Menu>
           </Box>
         </Toolbar>
