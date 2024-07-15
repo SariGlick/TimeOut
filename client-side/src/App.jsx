@@ -1,7 +1,10 @@
 import './App.scss';
-import Header from './stories/header/header.jsx';
 import Report from './components/Report/report.jsx';
 import downloadPDF from './components/Report/diagram.jsx';
+import { Route, Routes } from 'react-router';
+import LabTabs from './stories/tabs/tabs';
+import Header from './stories/header/header'
+import Footer from './stories/footer/FooterComponent'
 import './App.scss';
 
 function App() {
@@ -10,7 +13,8 @@ function App() {
       <Header/>
       {/* <Report/> */}
       <downloadPDF/>
-      <img src="/public/month.png" alt="" />
+      <Header/> 
+      <Footer/>
     </div>
   );
 }
