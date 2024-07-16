@@ -21,7 +21,7 @@ import Profiles from '../models/profile.model.js';
         }
     };
 
-   export const   getProfileById= async (req, res) => {
+   export const getProfileById= async (req, res) => {
         try {
             const profile = await Profiles.findById(req.params.id);
             if (!profile) {
