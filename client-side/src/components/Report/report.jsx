@@ -4,27 +4,24 @@ import { useState } from 'react';
 import Select from '../../stories/Select/Select.jsx';
 
 export default function Report() {
-  const [day,setDay]=useState(false);
-  const [mounth,setMounth]=useState(true);
-  const [year,setYear]=useState(false);
-  const [custum,setCustum]=useState(false);
+  const [selectType, setSelectType] = useState("month");
   const selectFunction=(selectedValue)=>{
-    setDay(false);
-    setMounth(false);
-    setYear(false);
-    setCustum(false);
     if(selectedValue==1){
-      setDay(true);
+      setSelectType("day");
     }
     else   if(selectedValue==2){
-      setMounth(true);
+      setSelectType("month");
     }
     else   if(selectedValue==3){
-      setYear(true);
+      setSelectType("year");
     }
     else   if(selectedValue==4){
-      setCustum(true);
+      setSelectType("custum");
+      dateTimePiker();
     }
+  };
+  const dateTimePiker=()=>{
+
   };
   return (
     <div>
