@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import GenericButton  from '../stories/Button/GenericButton';
+import GenericButton  from '../stories/Button/GenericButton.jsx';
 import ResponsiveAppBar from '../stories/header/header.jsx';
 import { Sync } from '@mui/icons-material';
 import './settingPage.scss';
 import { formatDate } from '@storybook/blocks';
 const RingtoneEditButton = () => {
-
+//need to be change to taken form the props
    const currentUser={
     
       "_id": "66965a8c564fb1e231e9a724",
@@ -132,15 +132,7 @@ const RingtoneEditButton = () => {
     };
 
     const handleUploadPicture = async () => {
-      const formData = new FormData();
-      console.log('userId',userId);
-      // if (!file) {
-      //   alert('Please select an image first.');
-      //   return;
-      // }
-      // if(file){
-      //   console.log('file',file);
-      // }
+      const formData = new FormData();    
       formData.append('profileImage', imageFile);
      
       try {
@@ -150,6 +142,7 @@ const RingtoneEditButton = () => {
           },
         });
         alert('Profile image updated successfully!');
+        console.log('response.data=',response.data);
       } catch (error) {
         console.log('Response data :',error.response.data);
         alert('Failed to update profile image.');
@@ -158,7 +151,6 @@ const RingtoneEditButton = () => {
     return (
     
          <div> 
-           <h2  className='font'>change  user preferences</h2>
           <div className='uploadWarper'>
             <input type="file" onChange={handleFileChange} accept="audio/*" />
           </div>
