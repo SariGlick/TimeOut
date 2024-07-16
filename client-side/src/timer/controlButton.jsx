@@ -1,5 +1,5 @@
 import React from "react";
-import "./controlButton.css";
+import "./controlButton.scss";
  
 export default function ControlButtons(props) {
     const StartButton = (

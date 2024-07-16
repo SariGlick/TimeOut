@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./stopWatch.css";
 import Timer from "./timer";
 import ControlButtons from "./controlButton";
 
