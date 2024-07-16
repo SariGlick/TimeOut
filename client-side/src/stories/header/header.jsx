@@ -4,10 +4,22 @@ import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,B
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import './header.scss';
+import { useEffect } from 'storybook/internal/preview-api';
+
 
 
 
 function ResponsiveAppBar() {
+  const [currentname, setCurrentname] = useState(localStorage.getItem('nameUser') || null);
+  console.log(currentname,"jjj");
+  // const [currentname, setCurrentname] = useState(null);
+
+  // useEffect(() => {
+  //   const name = localStorage.getItem('nameUser');
+  //   setCurrentname(name);
+  // }, []); 
+
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -27,6 +39,8 @@ function ResponsiveAppBar() {
   };
 
   return (
+    // <UserNameProvider>
+    //    {({ username }) => (
     <AppBar position="static">
       <Container  className='navbar'  maxWidth="xl">
         <Toolbar disableGutters>
@@ -82,9 +96,9 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box >
-            <Tooltip title="Open settings">
+            <Tooltip title={currentname}>
               <IconButton onClick={handleOpenUserMenu} >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -112,6 +126,8 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    //   )}
+    // </UserNameProvider>
   );
 }
 export default ResponsiveAppBar;
