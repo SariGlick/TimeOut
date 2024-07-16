@@ -2,14 +2,17 @@ import React from 'react';
 import PdfGenerator from './pdf.jsx';
 import { useState } from 'react';
 import Select from '../../stories/Select/Select.jsx';
-import File from './file.jsx';
 
 export default function Report() {
   const [day,setDay]=useState(false);
-  const [mounth,setMounth]=useState(false);
+  const [mounth,setMounth]=useState(true);
   const [year,setYear]=useState(false);
   const [custum,setCustum]=useState(false);
-  const selectFunctions=(selectedValue)=>{
+  const selectFunction=(selectedValue)=>{
+    setDay(false);
+    setMounth(false);
+    setYear(false);
+    setCustum(false);
     if(selectedValue==1){
       setDay(true);
     }
@@ -25,9 +28,8 @@ export default function Report() {
   };
   return (
     <div>
-        <File/>
-        <Select onChange={(selectedValue) => selectFunctions(selectedValue) } className="primary" options={[{value:1,text:"day",iconSrc:'/images/day.png'},{value:2,text:"month",iconSrc:'images/month.png'},{value:3,text:"year",iconSrc:'/images/year.png'},{value:4,text:"custum",iconSrc:'/images/custum.png'}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
-        <PdfGenerator data={[{SiteName:'gmail',BrowsingTime:20,AvgForADay:1}]} />
+        <Select onChange={(selectedValue) => selectFunction(selectedValue) } className="primary" options={[{value:1,text:"day",iconSrc:'/images/time-twenty-four.svg'},{value:2,text:"month",iconSrc:'images/calendar-date-svgrepo-com.svg'},{value:3,text:"year",iconSrc:'/images/calendar-month-schedule-time-date-svgrepo-com.svg'},{value:4,text:"custum",iconSrc:'/images/calendar-date-svgrepo-com (1).svg'}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
+        <PdfGenerator data={[]} />   {/* כאן נשלח את הנתונים של הטבלה כדי שיודפסו בקובץ פדפ */}
     </div>
   );
 }

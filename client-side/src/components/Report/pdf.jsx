@@ -25,7 +25,7 @@ const userName="name"; //change to realy name
  
   return (
     <div>
-      <GenericButton className="secondary" label="Download as PDF" size="medium" onClick={generatePdf}></GenericButton>
+      <GenericButton className="secondary" label="Download as text PDF file" size="medium" onClick={generatePdf}></GenericButton>
     </div>
   );
 };

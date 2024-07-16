@@ -3,9 +3,9 @@ import jsPDF from 'jspdf';
 import React from 'react';
 import GenericButton from '../../stories/Button/GenericButton';
 
-const DownloadPage = () => {
+const DownloadPage = ({divID}) => {
   const downloadPDF = () => {
-    const input = document.getElementById('pdf-content');
+    const input = document.getElementById(divID);
     html2canvas(input, { useCORS: true }).then((canvas) => {
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
