@@ -19,8 +19,12 @@ export default function Report() {
       setSelectType("custum");
       dateTimePiker();
     }
+    fillData();
   };
   const dateTimePiker=()=>{
+
+  };
+  const fillData=()=>{
 
   };
   return (
