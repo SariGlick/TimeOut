@@ -1,0 +1,20 @@
+@import '../stylies.scss';
+
+.div {
+  .every-tabs,
+  .profile-tabs,
+  .footer-tabs,
+  .navbar-tabs {
+    background-color: $primary-color;
+    color: $secondary-color;
+    font-family: "Nanum Gothic", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    &.Mui-selected {
+      color:  $secondary-color;
+    }
+  }
+  .tabs {
+    background-color: $secondary-color;
+  }
+}

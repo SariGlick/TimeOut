@@ -6,15 +6,22 @@
     "@apollo/client": "^3.10.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/material": "^5.15.21",
+    "@fontsource/roboto": "^5.0.13",
+    "@mui/icons-material": "^5.16.0",
+    "@mui/material": "^5.16.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+<<<<<<< HEAD
     "@mui/x-charts": "^7.9.0",
+=======
+    "@mui/x-data-grid": "^7.9.0",
+>>>>>>> 28a8df0f48e4112228aad673e3181e47d2e84c71
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "graphql": "^16.9.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router-dom": "^6.24.1",
     "react-scripts": "5.0.1",
     "styled-components": "^6.1.11",
     "web-vitals": "^2.1.4"
@@ -48,6 +55,9 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.0",
+    "@storybook/addon-actions": "^8.1.11",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.6.0",
     "@storybook/addon-essentials": "^8.1.11",
     "@storybook/addon-interactions": "^8.1.11",
     "@storybook/addon-links": "^8.1.11",
@@ -57,8 +67,13 @@
     "@storybook/react": "^8.1.11",
     "@storybook/react-webpack5": "^8.1.11",
     "@storybook/test": "^8.1.11",
+    "eslint": "^8.57.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-storybook": "^0.8.0",
+    "globals": "^15.8.0",
     "prop-types": "^15.8.1",
+    "sass": "^1.77.6",
     "storybook": "^8.1.11",
     "webpack": "^5.92.1"
   }

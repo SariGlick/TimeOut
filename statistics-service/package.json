@@ -1,0 +1,16 @@
+{
+  "name": "statistics-service",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "graphQL-server.js",
+  "scripts": {
+    "start": "node graphQL-server.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.10.4"
+  }
+}
