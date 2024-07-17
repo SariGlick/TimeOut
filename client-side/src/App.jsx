@@ -3,7 +3,7 @@ import LabTabs from './stories/tabs/tabs';
 import Header from './stories/header/header'
 import Footer from './stories/footer/FooterComponent'
 import './App.scss';
-import DatePicker from './components/report';
+import DateTimePicker from './components/report';
 import DateInputs from './stories/DateTime/DateInputs';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <Header/> 
       <Footer/>
-      <DatePicker/>
+      <DateTimePicker/>
      
 
     </div>

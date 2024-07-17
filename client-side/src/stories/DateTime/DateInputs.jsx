@@ -1,22 +1,22 @@
 import React from "react";
 import PropTypes from 'prop-types';
+import { TextField } from "@mui/material";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DatePicker,LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import './DateInputs.scss';
-
-const DateInputs = ({onAccept})=>{
-    return(
+const DateInputs = ({ onChange }) => {
+    return (
         <div className='timeInputWrapper'>
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DatePicker />
-    </LocalizationProvider>
-
-    </div>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                    onChange={onChange}
+                    renderInput={(params) => <TextField {...params} />}
+                />
+            </LocalizationProvider>
+        </div>
     );
 };
-
 DateInputs.propTypes = {
-        onAccept: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
 };
-
 export default DateInputs;
