@@ -1,0 +1,22 @@
+@import '../stylies.scss';
+
+.footer-wrapper {
+    background-color: $primary-color;
+    color: $secondary-color;
+    padding: 20px;
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .footer-text {
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .link-style {
+    color: $secondary-color;
+    font-family: "Nanum Gothic", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+  }

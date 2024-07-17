@@ -31,14 +31,15 @@ const ProfileImageEditButton = () => {
     const formData = new FormData();
     formData.append('profileImage', imageFile);
     try {
-      const response = await axios.put(`http://localhost:3001/users/${userId}`, formData, {
+      const response = await axios.put(`http://localhost:5000/users/${userId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-      alert('Profile image updated successfully!');
       console.log('response.data=',response.data);
+      // alert('Profile image updated successfully!');
     } catch (error) {
+      if(error.response)
       console.log('Response data :',error.response.data);
       alert('Failed to update profile image.');
     }

@@ -1,22 +1,16 @@
 import express from 'express';
-import { 
-  getUsers, 
-  getUserById, 
-  addUser, 
-  deleteUser, 
-  updatedUser, 
-  updateUserProfileImage 
-} 
-from '../controllers/user.controller.js';
+import { getUsers, getUserById, addUser, deleteUser, updatedUser } from '../controllers/user.controller.js';
 import upload from '../middleware/uploadFiles.js';
 
-const router = express.Router();
+const usersRouter = express.Router();
 
-router.get('/users', getUsers);
-router.get('/users/:id', getUserById);
-router.post('/users', addUser);
-router.delete('/users/:id', deleteUser);
-router.put('/users/:id', updatedUser);
-router.put('/users/:id/profile-image', upload.single('profileImage'), updateUserProfileImage);
+usersRouter.get('/', getUsers);
+usersRouter.get('/:id', getUserById);
+usersRouter.post('/',upload.single('profileImage'), addUser);
+usersRouter.delete('/:id', deleteUser);
+usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 
-export default router;
+
+export default usersRouter;
+
+

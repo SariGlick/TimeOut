@@ -1,0 +1,9 @@
+@import '../../src/stories/stylies.scss';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+.font{
+    font-family: 'Nanum Gothic' ;
+    font-optical-sizing: auto ;
+    color:$secondary-color;
+
+}
