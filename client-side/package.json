@@ -10,11 +10,7 @@
     "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.16.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
-<<<<<<< HEAD
-    "@mui/x-charts": "^7.9.0",
-=======
-    "@mui/x-data-grid": "^7.9.0",
->>>>>>> 28a8df0f48e4112228aad673e3181e47d2e84c71
+    "@mui/x-charts": "^7.10.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -55,9 +51,9 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.0",
-    "@storybook/addon-actions": "^8.1.11",
     "@eslint/compat": "^1.1.0",
     "@eslint/js": "^9.6.0",
+    "@storybook/addon-actions": "^8.1.11",
     "@storybook/addon-essentials": "^8.1.11",
     "@storybook/addon-interactions": "^8.1.11",
     "@storybook/addon-links": "^8.1.11",

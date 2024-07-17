@@ -4,8 +4,7 @@ import  Websites from  '../models/websites.model.js';
 export const getAllWebsites=async(req,res,next)=>{
     try {
      const allWebSites= await Websites.find().select('-__v');
-     return allWebSites;
-    //  return res.json(allWebSites);
+     return res.json(allWebSites);
     } catch (error) {
         next({message:error.message});
     }

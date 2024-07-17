@@ -1,5 +1,5 @@
 
-import './App.css';
+import './App.scss';
 import StackedAreas from './graphs/graphs.jsx'
 function App() {
   return (

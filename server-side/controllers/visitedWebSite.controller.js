@@ -2,9 +2,8 @@ import visitedWebsites from '../models/visitedWebSite.model.js';
 
  export const    getAllVisitedWebsites= async (req, res) => {
         try {
-            const visitedWebsites = await visitedWebsites.find();
-            return visitedWebsites;
-            // res.json(visitedWebsites);
+            const visitedwebsites = await visitedWebsites.find();
+            res.status(200).send(visitedwebsites);
         } catch (err) {
             res.status(500).json({ message: err.message });
         }

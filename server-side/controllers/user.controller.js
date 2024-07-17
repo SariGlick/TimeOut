@@ -6,8 +6,7 @@ import fs from 'fs';
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find().populate('visitsWebsites profiles preferences');
-    return users;
-    // res.status(200).send(users);
+    res.status(200).send(users);
   } catch (err) {
     console.error(err);
     res.status(500).send('Error retrieving users');

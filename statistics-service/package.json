@@ -11,6 +11,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.10.4"
+    "@apollo/server": "^4.10.4",
+    "axios": "^1.7.2",
+    "mongoose": "^8.5.1"
   }
 }

@@ -4,8 +4,7 @@ import  Preference from '../models/preference.model.js';
 export const getAllPreference=async(req,res,next)=>{
      try {
         const allPreferences=await  Preference.find().select('-__v');
-        return allPreferences;
-        // return res.(allPrefesendrences);
+        return res.json(allPrefesendrences);
      } catch (error) {
       return next({message:error.message})
      }
