@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import GenericButton from '../../../stories/Button/GenericButton';
-// import ResponsiveAppBar from '../stories/header/header.jsx';
-// import { Sync } from '@mui/icons-material';
-// import { formatDate } from '@storybook/blocks';
 
 const ProfileImageEditButton = () => {
   const [file, setFile] = useState(null);
@@ -36,11 +33,8 @@ const ProfileImageEditButton = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log('response.data=',response.data);
-      // alert('Profile image updated successfully!');
     } catch (error) {
       if(error.response)
-      console.log('Response data :',error.response.data);
       alert('Failed to update profile image.');
     }
   };
