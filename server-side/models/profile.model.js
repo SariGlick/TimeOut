@@ -8,8 +8,9 @@ const profileSchema = new Schema({
     statusBlockedSites: { type: String, enum: ['black list', 'white list'], required: true },
     listWebsites: [{
         websiteId: { type: Schema.Types.ObjectId, ref: 'Websites' },
-        status: { type: String, enum: ['block', 'open', 'limit'] },
-        limitedMinutes: { type: Number, default: () => new Date().getHours(), required: true },
+        status: { type: String, enum: ['blocked', 'opened', 'limited'] },
+        limitedMinutes: { type: Number, default: () => 60
+            , required: true },
     }],
     profileTime: [{
         start: { type: Date, default: new Date() },
@@ -23,8 +24,14 @@ profileSchema.pre('save', function (next) {
 
     if (profile.statusBlockedSites === 'white list') {
         profile.listWebsites.forEach(site => {
-            if (site.status === 'block') {
-                return next(new Error('In white list mode, site status cannot be "block"'));
+            if (site.status === 'blocked') {
+                return next(new Error('In white list mode, site status cannot be "blocked"'));
+            }
+        });
+    }else if (profile.statusBlockedSites === 'black list') {
+        profile.listWebsites.forEach(site => {
+            if (site.status === 'opened') {
+                return next(new Error('In white list mode, site status cannot be "opened"'));
             }
         });
     }
