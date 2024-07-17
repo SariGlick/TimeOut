@@ -115,39 +115,7 @@ const RingtoneEditButton = () => {
            
     };
     
-    const handleFilePicture = (e) => {
-      if (e) {
-        console.log('at handleFilePicture the  file is ' ,e.target.files[0]);
-        setImageFile(e.target.files[0]);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        };
-        if(e.target.files[0])
-        {
-           reader.readAsDataURL(e.target.files[0]);
-        }
-         
-      }
-    };
-
-    const handleUploadPicture = async () => {
-      const formData = new FormData();    
-      formData.append('profileImage', imageFile);
-     
-      try {
-        const response = await axios.put(`${url}/users/${userId}`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-        alert('Profile image updated successfully!');
-        console.log('response.data=',response.data);
-      } catch (error) {
-        console.log('Response data :',error.response.data);
-        alert('Failed to update profile image.');
-      }
-    };
+    
     return (
     
          <div> 
@@ -161,14 +129,7 @@ const RingtoneEditButton = () => {
             </audio>}
           </div>
        {/*upload image section   */}
-       <div>
-       <h2>Change Profile Picture</h2>
-        <input type="file" accept="image/*" onChange={handleFilePicture} />
-        <GenericButton size='small' label='Upload Image' onClick={handleUploadPicture} className='' />
-        {preview &&   <div>            <img src={preview} alt="Profile Preview" style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
-        </div>  }
-          
-       </div>
+       
             <GenericButton size='small'  label='send preference' onClick={handleUpload} className=''/>
 
         </div>
