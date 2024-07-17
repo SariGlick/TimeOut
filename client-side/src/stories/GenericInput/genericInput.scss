@@ -1,3 +1,4 @@
+/* genericInput.scss */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 @import './style.scss';
 
@@ -67,6 +68,60 @@
 
     &.Mui-error {
       color: $color-error;
+    }
+  }
+
+  
+}
+.file-upload {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+
+  .file-upload-label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: $color-border;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+   // transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width:80%;
+    text-align: center;
+    
+    color: $color-black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    transition: color 0.3s ease;
+
+    &:hover {
+      background-color: $color-border-hover;
+    }
+
+    .file-upload-input {
+      display: none;
+    }
+  }
+
+  .helper-text {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: $color-black;
+
+    &.error {
+      color: $color-error;
+    }
+
+    &.Mui-disabled {
+      opacity: 0.7; 
+      cursor: not-allowed; 
+
+      input {
+        color: rgba($color-black, 0.7); 
+        pointer-events: none; 
+      }
     }
   }
 }

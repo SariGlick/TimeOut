@@ -5,6 +5,9 @@ import ResponsiveAppBar from '../stories/header/header.jsx';
 import { Sync } from '@mui/icons-material';
 import './settingPage.scss';
 import { formatDate } from '@storybook/blocks';
+import GenericInput from '../stories/GenericInput/genericInput.jsx'
+import Button from '@mui/material/Button';
+
 const RingtoneEditButton = () => {
 //need to be change to taken form the props
    const currentUser={
@@ -120,7 +123,9 @@ const RingtoneEditButton = () => {
     
          <div> 
           <div className='uploadWarper'>
-            <input type="file" onChange={handleFileChange} accept="audio/*" />
+            <GenericInput  type='file'  lable='upload ringtone' onChange={handleFileChange} size='medium' disabled={true}/>
+             <GenericInput lable='fdfd' size='meduim' disabled={true}/>
+            {/* <input type="file" onChange={handleFileChange} accept="audio/*" /> */}
           </div>
           <div>
           { audioSrc &&

@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import { TextField, InputAdornment } from '@mui/material';
-import '../style/genericInput.scss';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+import './genericInput.scss';
 
 const GenericInput = ({ 
   label, 
@@ -47,36 +49,77 @@ const GenericInput = ({
   const inputStyle = {
     width,
   };
-
-  return (
-    <div className="generic-input">
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
+  if(type=='file'){
+   return( <div className="generic-input file-upload" style={inputStyle}>
+    {/* <label className="file-upload-label">
       <TextField
-        label={label}
-        type={type}
-        value={inputValue}
+        type="file"
+        className="file-upload-input"
         onChange={handleChange}
-        size={size}
-        error={error}
         disabled={disabled}
+        error={error}
         helperText={helperText}
-        InputProps={{
-          startAdornment: Icon && (
-            <InputAdornment position="start">
-              <Icon />
-            </InputAdornment>
-          ),
-          ...rest.InputProps,
-        }}
-        style={inputStyle}
+        lable={'lable'}
+        size={size}
         {...rest}
-      />
-    </div>
-  );
-};
 
+      />
+    </label> */}  
+
+<Button
+      component="label"
+      role={undefined}
+      variant="contained"
+      tabIndex={-1}
+      size={size}
+    >
+      {'upload ringtone'}
+    <VisuallyHiddenInput type="file" />
+    </Button>
+    {error && <div className="helper-text error">{helperText}</div>}
+  </div>)
+  }
+ 
+  return(
+<div className="generic-input">
+    <TextField
+      label={label}
+      type={type}
+      value={inputValue}
+      onChange={handleChange}
+      size={size}
+      error={error}
+      disabled={disabled}
+      helperText={helperText}
+      InputProps={{
+        startAdornment: Icon && (
+          <InputAdornment position="start">
+            <Icon />
+          </InputAdornment>
+        ),
+        ...rest.InputProps,
+      }}
+      style={inputStyle}
+      {...rest}
+    />
+  </div>
+  )
+    
+};
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password','file']),
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
