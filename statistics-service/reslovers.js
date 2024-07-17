@@ -9,30 +9,30 @@ const port = process.env.PORT;
 
 const resolvers = {
     Query: {
-        // websites: async () => {
-        //     try {
-        //         const allWebSites = await getAllWebsites();
-        //         return allWebSites;
-        //     } catch (error) {
-        //         throw new Error(error.message);
-        //     }
-        // },
-        // users: async () => {
-        //     try {
-        //         const allUsers = await getUsers();
-        //         return allUsers;
-        //     } catch (error) {
-        //         throw new Error(error.message);
-        //     }
-        // },
-        // profile: async () => {
-        //     try {
-        //         const AllProfiles = await getAllProfiles();
-        //         return AllProfiles;
-        //     } catch (error) {
-        //         throw new Error(error.message);
-        //     }
-        // },
+        websites: async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/websites/websites`);
+                return response.data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        users: async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/users/users`);
+                return response.data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        profile: async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/profiles/profiles`);
+                return response.data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
         visitedWebsites: async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/vistedWebsite/vistedWebsite`);
@@ -41,14 +41,14 @@ const resolvers = {
                 throw new Error(error.message);
             }
         },
-        // preferences: async () => {
-        //     try {
-        //         const AllVisitedWebsites = await getAllPreference();
-        //         return AllVisitedWebsites;
-        //     } catch (error) {
-        //         throw new Error(error.message);
-        //     }
-        // },
+        preferences: async () => {
+            try {
+                const response = await axios.get(`http://localhost:5000/preferences/preferences`);
+                return response.data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
     },
     // Mutation: {
     //   addBook: (_, { title, author }) => {
