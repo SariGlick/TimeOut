@@ -5,9 +5,7 @@ import DateInputs from './DateInputs';
 
 export default{
     title: 'DateInputs',
-    component: DateInputs,
-    argTypes:{
-    }
+    component: DateInputs
 };
 
 
