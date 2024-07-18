@@ -1,0 +1,42 @@
+
+@import './style.scss';
+
+.custom-radio-group {
+    padding: 20px;
+    color: $text-color;
+}
+
+.custom-form-label,
+.custom-form-control-label {
+    font-family: $font-family;
+    color: $text-color;
+    margin-bottom: 10px;
+}
+
+.custom-form-label {
+    font-weight: 700;
+}
+
+.custom-form-control-label {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+
+    &.Mui-checked {
+        color: $primary-color;
+    }
+}
+
+.custom-radio {
+    color: $primary-color;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+
+    &.Mui-checked .MuiSvgIcon-root {
+        color: $primary-color;
+    }
+}
