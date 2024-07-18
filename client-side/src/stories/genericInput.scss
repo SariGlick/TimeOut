@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+
+
+.generic-input .MuiOutlinedInput-root {
+  border-radius: 8px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  border-color: rgb(61, 192, 155);
+  border-width: 1px;
+ 
+        
+  &:hover {
+    border-color: rgb(45, 158, 126);
+    box-shadow: 0 0 5px rgba(61, 192, 155, 0.5);
+  }
+
+  &.Mui-focused fieldset {
+    border-color: rgb(45, 158, 126);
+    box-shadow: 0 0 8px rgba(61, 192, 155, 0.8);
+  }
+
+  &:not(.Mui-error) fieldset {
+    border-color: rgb(61, 192, 155);
+  }
+
+  input {
+    color: black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    transition: color 0.3s ease;
+  }
+
+  &.Mui-error {
+    border-color: red;
+  }
+}
+
+.generic-input .MuiFormLabel-root {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  transition: color 0.3s ease;
+
+  &.Mui-focused {
+    color: rgb(45, 158, 126);
+  }
+}
+
+.generic-input .MuiFormHelperText-root {
+  color: black;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  transition: color 0.3s ease;
+
+  &.Mui-error {
+    color: red;
+  }
+}
