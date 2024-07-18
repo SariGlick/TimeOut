@@ -1,5 +1,5 @@
 import express from 'express'
-import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite} from '../controllers/visitedWebSite.controller.js'
+import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite,showVisitedWebsite} from '../controllers/visitedWebSite.controller.js'
 const router=express.Router();
 <<<<<<< HEAD
 router.get('/vistedWebsite',getAllVisitedWebsites)
@@ -14,4 +14,5 @@ router.post('/',createVisitedWebsite)
 router.put('/:id',updateVisitedWebsite)
 router.delete('/:id',deleteVisitedWebsite)
 >>>>>>> moriya/server-side
+router.post('/showVisitedWebsite',showVisitedWebsite)
 export default router;

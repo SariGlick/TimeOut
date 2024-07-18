@@ -48,6 +48,14 @@ import visitedWebsites from '../models/visitedWebSite.model.js';
             res.json({ message: 'Visited website deleted successfully' });
         } catch (err) {
             res.status(500).json({ message: err.message });
+            
         }
     };
 
+    export const showVisitedWebsite=async (req,res)=>{
+
+       const data=req.body;
+       
+        return res.body(f(data))
+        
+    }
