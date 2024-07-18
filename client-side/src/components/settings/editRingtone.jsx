@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import GenericButton  from '../stories/Button/GenericButton.jsx';
-import ResponsiveAppBar from '../stories/header/header.jsx';
+import GenericButton  from '../../stories/Button/GenericButton.jsx';
+import ResponsiveAppBar from '../../stories/header/header.jsx';
 import { Sync } from '@mui/icons-material';
 import './settingPage.scss';
 import { formatDate } from '@storybook/blocks';
-import GenericInput from '../stories/GenericInput/genericInput.jsx'
+import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Button from '@mui/material/Button';
 
 const RingtoneEditButton = () => {
