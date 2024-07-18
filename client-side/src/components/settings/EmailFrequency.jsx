@@ -53,7 +53,8 @@ const EmailFrequency = () => {
           icon: getIconForFrequency(key)
         }))}
         title='Select Email Frequency'
-        value={emailFrequency}
+        value={selectedFrequency}
+        onChange={(e) => setSelectedFrequency(e.target.value)}
         size='large'
         widthOfSelect='210px'
       />
