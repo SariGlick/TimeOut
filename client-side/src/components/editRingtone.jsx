@@ -9,7 +9,8 @@ import GenericInput from '../stories/GenericInput/genericInput.jsx'
 import Button from '@mui/material/Button';
 
 const RingtoneEditButton = () => {
-//need to be change to taken form the props
+  //the curent user need to be taken from state 
+  //temporary 
    const currentUser={
     
       "_id": "66965a8c564fb1e231e9a724",
@@ -68,8 +69,8 @@ const RingtoneEditButton = () => {
     const preferencesId=currentUser.preferences._id;
     const userId=currentUser._id;
     let id='66953d2791606a13857abd26';
-    let sendNotificationTime = 56;
-    let  sendEmail= 'never';
+    let sendNotificationTime = currentUser.preferences.sendNotificationTime;
+    let  emailFrequency= currentUser.preferences.emailFrequency;
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
     const [imageFile,setImageFile]= useState(null);
@@ -91,17 +92,11 @@ const RingtoneEditButton = () => {
     
 
     const handleUpload = async () => {
-        console.log('url=',url);
-        console.log('preferencesId',preferencesId);
+       
         const formData = new FormData();
-         if(ringtoneFile)
-         {
-            console.log('file',ringtoneFile);
-            
-         }
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
-        formData.append('EmailFrequency',sendEmail);
+        formData.append('emailFrequency',emailFrequency);
           try {
             const response = await axios.put(`${url}/preferences/${preferencesId}`, formData, {
                 headers: {
@@ -111,7 +106,6 @@ const RingtoneEditButton = () => {
             if(response)
               console.log('response ',response.data);
           } catch (error) {
-            console.error('Error uploading file:', error);
             if(error.response)
              console.log('Response data :',error.response.data);
           }
@@ -123,19 +117,15 @@ const RingtoneEditButton = () => {
     
          <div> 
           <div className='uploadWarper'>
-            <GenericInput  type='file'  lable='upload ringtone' onChange={handleFileChange} size='medium' disabled={true}/>
-             <GenericInput lable='fdfd' size='meduim' disabled={true}/>
-            {/* <input type="file" onChange={handleFileChange} accept="audio/*" /> */}
+            <GenericInput  type='file'  label='change ringtone' onChange={handleFileChange} size='medium' disabled={false}/>
           </div>
           <div>
           { audioSrc &&
             <audio controls>
                <source src={audioSrc} ></source>
             </audio>}
-          </div>
-       {/*upload image section   */}
-       
-            <GenericButton size='small'  label='send preference' onClick={handleUpload} className=''/>
+          </div>       
+          <GenericButton size='small'  label='send preference' onClick={handleUpload} className='' disabled={false}/>
 
         </div>
         

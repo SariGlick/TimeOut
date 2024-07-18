@@ -45,7 +45,7 @@ const GenericInput = ({
       setHelperText(''); 
     }
   };
-
+   
   const inputStyle = {
     width,
   };
@@ -60,60 +60,48 @@ const GenericInput = ({
     whiteSpace: 'nowrap',
     width: 1,
   });
-  if(type=='file'){
-   return( <div className="generic-input file-upload" style={inputStyle}>
-    {/* <label className="file-upload-label">
-      <TextField
-        type="file"
-        className="file-upload-input"
-        onChange={handleChange}
-        disabled={disabled}
-        error={error}
-        helperText={helperText}
-        lable={'lable'}
-        size={size}
-        {...rest}
-
-      />
-    </label> */}  
-
-<Button
-      component="label"
-      role={undefined}
-      variant="contained"
-      tabIndex={-1}
-      size={size}
-    >
-      {'upload ringtone'}
-    <VisuallyHiddenInput type="file" />
-    </Button>
-    {error && <div className="helper-text error">{helperText}</div>}
-  </div>)
-  }
  
   return(
-<div className="generic-input">
-    <TextField
-      label={label}
-      type={type}
-      value={inputValue}
-      onChange={handleChange}
+  <>
+  {type==='file' ?(<div className="file-upload" style={inputStyle}>
+   <Button
+      component="label"
+      role={undefined}
+      tabIndex={-1}
       size={size}
-      error={error}
       disabled={disabled}
-      helperText={helperText}
-      InputProps={{
-        startAdornment: Icon && (
-          <InputAdornment position="start">
-            <Icon />
-          </InputAdornment>
-        ),
-        ...rest.InputProps,
-      }}
-      style={inputStyle}
-      {...rest}
-    />
-  </div>
+      className='generic-input-file'
+    >
+    {label}
+    <VisuallyHiddenInput type="file" onChange={onChange} />
+  </Button>
+  {error && <div className="helper-text error">{helperText}</div>}
+  </div>) :(<div className="generic-input">
+
+<TextField
+  label={label}
+  type={type}
+  value={inputValue}
+  onChange={handleChange}
+  size={size}
+  error={error}
+  disabled={disabled}
+  helperText={helperText}
+  InputProps={{
+    startAdornment: Icon && (
+      <InputAdornment position="start">
+        <Icon />
+      </InputAdornment>
+    ),
+    ...rest.InputProps,
+  }}
+  style={inputStyle}
+  {...rest}
+/>
+</div>)
+}
+  </>
+
   )
     
 };

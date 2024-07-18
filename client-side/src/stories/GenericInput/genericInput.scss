@@ -73,55 +73,32 @@
 
   
 }
-.file-upload {
-  position: relative;
+.file-upload{
   display: inline-block;
-  width: 100%;
-
-  .file-upload-label {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: $color-border;
-    border: none;
+  .generic-input-file{
     border-radius: 8px;
-    cursor: pointer;
-   // transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width:80%;
-    text-align: center;
-    
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: $color-border;
+    border-width: 1px;
+    background-color:$color-border ;
     color: $color-black;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    transition: color 0.3s ease;
-
     &:hover {
-      background-color: $color-border-hover;
+      box-shadow: 0 0 5px rgba($color-border, 0.5);
+      background-color:$color-border-hover ;
+      transition: color 0.3s ease;
+
     }
-
-    .file-upload-input {
-      display: none;
-    }
-  }
-
-  .helper-text {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    color: $color-black;
-
-    &.error {
-      color: $color-error;
-    }
-
-    &.Mui-disabled {
+    &.Mui-disabled,
+    &[aria-disabled='true'] {
       opacity: 0.7; 
-      cursor: not-allowed; 
-
-      input {
-        color: rgba($color-black, 0.7); 
-        pointer-events: none; 
-      }
+      cursor: not-allowed;
+      pointer-events: auto;
+        
     }
+  
+    
   }
+  
+  
 }
