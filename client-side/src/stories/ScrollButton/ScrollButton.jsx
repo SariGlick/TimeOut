@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GenericButton from "../Button/GenericButton";
+import GenericButton from "../index";
 import "./ScrollButton.scss";
 
 const ScrollButton = () => {

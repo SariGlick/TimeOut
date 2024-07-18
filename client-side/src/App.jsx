@@ -1,13 +1,12 @@
 import React from 'react';
-import Header from './stories/header/header'
-import Footer from './stories/footer/FooterComponent'
+import components from './stories/index'; // Import the default export from index.js
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <Header/> 
-      <Footer/>
+      <components.Header />
+      <components.Footer />
     </div>
   );
 }

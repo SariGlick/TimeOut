@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import GenericButton from '../stories/Button/GenericButton';
-import DateInputs from "../stories/DateTime/DateInputs";
+import {GenericButton,DateInputs} from '../stories/index';
+
 const DateTimePicker = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
