@@ -12,10 +12,9 @@ const emailFrequencyEnum = {
 };
 
 
-const Settings = ({ user }) => {
+const Settings = ({ preferenceId }) => {
   const [emailFrequency, setEmailFrequency] = useState(Object.keys(emailFrequencyEnum)[0]);
   const [message, setMessage] = useState('');
-  const preferenceId = user.preferenceId;
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
 
