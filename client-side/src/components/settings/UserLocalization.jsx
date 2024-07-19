@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-
 const Localization = ({ preferenceId }) => {
     const [timeZone, setTimeZone] = useState('UTC');
     const [language, setLanguage] = useState('en');
     
-
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const permissionRef = useRef(false);
 

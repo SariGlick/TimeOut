@@ -46,10 +46,29 @@ const Settings = ({ preferenceId }) => {
 
 
   return (
-    <div className="settings">
+    <div>
       <h2>Settings</h2>
-
-
+      <Select
+        className='select-email-frequency'
+        options={Object.keys(emailFrequencyEnum).map(key => ({
+          text: key.toLowerCase(),
+          value: key,
+          icon: emailFrequencyEnum[key] || '⏰'
+        }))}
+        title='Select Email Frequency'
+        onChange={handleChangeEmailFreq}
+        value={emailFrequency}
+        size='large'
+        widthOfSelect='210px'
+      />
+      <GenericButton
+        className='Update User Settings'
+        label='Update User Settings'
+        size='medium'
+        onClick={handleFormSubmit}
+      />
+      {/* TO DO: replace message  */}
+      <p>{message}</p>
     </div>
   );
 };
