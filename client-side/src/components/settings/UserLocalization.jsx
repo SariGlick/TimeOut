@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
-const Localization = () => {
+
+const Localization = ({ preferenceId }) => {
     const [timeZone, setTimeZone] = useState('UTC');
     const [language, setLanguage] = useState('en');
-    const preferenceId = '66930c2e2aad987e24078e12'; // Replace with actual logic to get preferenceId
+    
+
     const baseUrl = process.env.REACT_APP_BASE_URL;
     const permissionRef = useRef(false);
 
@@ -13,7 +15,7 @@ const Localization = () => {
         const askForPermission = async () => {
             console.log('askForPermission executed');
             const permission = window.confirm('Allow us to get your location and preferred language for a better experience?');
-            permissionRef.current = permission; // Update permission ref
+            permissionRef.current = true; 
 
             if (permission) {
                 // Get time zone
@@ -48,10 +50,10 @@ const Localization = () => {
         };
 
         // Only ask for permission if it hasn't been granted before
-        if (permissionRef.current == null) {
+        if (permissionRef.current == false) {
             askForPermission();
         }
-    }, []); // Only run once on mount
+    }, []); 
 
     const updateUserPreferences = async (updatedTimeZone, updatedLanguage) => {
         try {

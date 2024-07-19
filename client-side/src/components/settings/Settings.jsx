@@ -1,12 +1,55 @@
-import React from 'react';
-import EmailFrequency from './EmailFrequency.jsx';
-import Localization from './UserLocalization.jsx'
-const Settings = () => {
+import React, { useState } from 'react';
+import axios from 'axios';
+import Select from '../../stories/Select/Select.jsx';
+import GenericButton from '../../stories/Button/GenericButton.jsx';
+
+const emailFrequencyEnum = {
+  'never': '🚫',
+  'daily': '📅',
+  'weekly': '🗓️',
+  'monthly': '📆',
+  'yearly': '📅'
+};
+
+
+const Settings = ({ preferenceId }) => {
+  const [emailFrequency, setEmailFrequency] = useState(Object.keys(emailFrequencyEnum)[0]);
+  const [message, setMessage] = useState('');
+  const baseUrl = process.env.REACT_APP_BASE_URL;
+
+
+  const handleFormSubmit = async () => {
+    const formData = new FormData();
+    formData.append('emailFrequency', emailFrequency);
+
+    try {
+      const response = await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      setMessage('Email frequency preference updated successfully!');
+    } catch (error) {
+      console.error('Error updating email frequency preference:', error);
+      setMessage('Error updating email frequency preference. Please try again later.');
+    }
+  };
+
+  const handleChangeEmailFreq = (e) => {
+    const selectedFrequency = e.target.value;
+    if (!Object.keys(emailFrequencyEnum).includes(selectedFrequency)) {
+      setMessage('Invalid email frequency selected. Please choose a valid option.');
+      return;
+    }
+    setEmailFrequency(selectedFrequency);
+  };
+
+
   return (
     <div className="settings">
       <h2>Settings</h2>
-      <EmailFrequency></EmailFrequency>
-      <Localization></Localization>
+
+
     </div>
   );
 };
