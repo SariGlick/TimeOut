@@ -3,11 +3,7 @@ import express from 'express';
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
-<<<<<<< HEAD
-import PreferenceRouter from './router/preference.router.js';
-=======
 import preferencesRouter from './router/preference.router.js';
->>>>>>> moriya/server-side
 import WebsitesRouter from './router/websites.router.js';
 import profileRouter from './router/profile.router.js'
 import visitedWebsiteRouter from './router/visitedWebsite.router.js'
@@ -28,11 +24,7 @@ app.get('/',(req,res)=>{
     res.send('welcome to time out ');
 })
 app.use('/uploads',express.static('uploads'))
-<<<<<<< HEAD
-app.use('/preferences',PreferenceRouter);
-=======
 app.use('/preferences',preferencesRouter);
->>>>>>> moriya/server-side
 app.use('/websites',WebsitesRouter);
 app.use('/profiles',profileRouter);
 app.use('/vistedWebsite',visitedWebsiteRouter);
