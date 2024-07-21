@@ -5,44 +5,96 @@ import { useQuery, gql } from '@apollo/client';
 
 
 const GET_VISITED_WEBSITES = gql`
-
 query GetVisitedWebsites {
-
 visitedWebsites {
-
-websitesId
-
-visitsTime {
-
-visitDate
-
-activityTime
-
-}
-
-}
-
-}
-
+ websiteId {
+   name
+   url
+ }
+  visitsTime {
+    activityTime
+    visitDate
+  }
+}}
 `;
+
+const GET_WEBSITE = gql`
+query website{
+  websites {
+    name
+    url
+  }
+}
+`
+
+
+
+const otherProps = {
+    width: 400,
+    height: 200,
+    sx: {
+        [`.${ChartsLegend.root}`]: {
+            transform: 'translate(20px, 0)',
+        },
+    },
+};
 
 
 export default function VisitedWebsitesComponent() {
 
-    const { loading, error, data } = useQuery(GET_VISITED_WEBSITES);
+    const websites = useQuery(GET_WEBSITE);
+    const visitedWebsite = useQuery(GET_VISITED_WEBSITES);
+    const colors = ["red", "yellow", "orange", "blue", "lightgreen"]
+    const date = new Date();
+    const year = Number(date.getFullYear());
+    const month = Number(date.getMonth());
+    if (websites.loading || visitedWebsite.loading) return <p>Loading...</p>;
 
+    if (websites.error || visitedWebsite.error) return <p>Error</p>;
 
-    if (loading) return <p>Loading...</p>;
+    let webSite = websites.data.websites.map((obj, index) => ({ ...obj, color: colors[index] }))
 
-    if (error) return <p>Error</p>;
-    console.log("111", data.visitedWebsites[0].websitesId); 
+    const totalActivityTimeByWebsite = {};
 
+    visitedWebsite.data.visitedWebsites.forEach(visitedWebsite => {
+        const websiteName = visitedWebsite.websiteId.name;
+        const activityTime = visitedWebsite.visitsTime.reduce((total, visit) => {
+            if (Number(visit.visitDate.substring(0, 4)) === year && Number(visit.visitDate.substring(5, 7)) == month) {
+                return total + Number(visit.activityTime);
+            }
+            return total;
+        }, 0);
+
+        if (totalActivityTimeByWebsite[websiteName]) {
+            totalActivityTimeByWebsite[websiteName] += activityTime;
+        } else {
+            totalActivityTimeByWebsite[websiteName] = activityTime;
+        }
+    });
+
+    webSite.forEach(site => {
+        const websiteName = site.name;
+        if (totalActivityTimeByWebsite[websiteName]) {
+            site.time = totalActivityTimeByWebsite[websiteName];
+        }
+    });
     return (
+        <>
+            <h2>שלפנו את נתוניך על פי החודש  {month}-{year}</h2>
+            <Stack direction="row" width="100%" textAlign="center" spacing={2}>
 
-        <div>
+                {/* <Gauge width={200} height={200} value={70} valueMin={5} valueMax={100} /> */}
 
-
-        </div>
+                <PieChart
+                    series={[
+                        {
+                            data: webSite.map((data) => ({ label: data.name, value: data.time, color: data.color })),
+                        },
+                    ]}
+                    {...otherProps}
+                />
+            </Stack>
+        </>
 
     );
 
@@ -134,23 +186,6 @@ export default function VisitedWebsitesComponent() {
 //     36205.574, 38014.137, 39752.207, 40715.434, 38962.938, 41109.582, 43189, 43320,
 //     43413, 43922, 44293, 144689, 145619.785, 146177.617,
 // ];
-const otherProps = {
-    width: 400,
-    height: 200,
-    sx: {
-        [`.${ChartsLegend.root}`]: {
-            transform: 'translate(20px, 0)',
-        },
-    },
-};
-
-const data = [
-    { team: 'Python', rank: 3, points: 31, color: "red" },
-    { team: 'React', rank: 1, points: 50, color: "orange" },
-    { team: 'Java', rank: 4, points: 18, color: "yellow" },
-    { team: 'Angular', rank: 2, points: 37, color: "lightgreen" },
-    { team: 'C#', rank: 5, points: 6, color: "blue" },
-];
 
 
 // return (
@@ -244,5 +279,3 @@ const data = [
 //     </>
 // );
 // }
-
-

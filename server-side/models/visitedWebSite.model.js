@@ -3,11 +3,11 @@ import mongoose, { Schema } from "mongoose";
 
 const visitedWebsitesSchema=new mongoose.Schema({
     
-    websitesId:[{
+    websiteId:{
         type:Schema.Types.ObjectId,
-        ref:'website',
+        ref:'Websites',
         require:true,
-    }],
+    },
     visitsTime: [{
         visitDate: {
             type: Date,

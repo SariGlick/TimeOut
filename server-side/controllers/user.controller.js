@@ -5,7 +5,15 @@ import fs from 'fs';
 
 export const getUsers = async (req, res) => {
   try {
-    const users = await User.find().populate('visitsWebsites profiles preferences');
+    const users = await User.find().populate({
+      path: 'visitsWebsites',
+      populate: {
+          path: 'websiteId'
+      }
+  }).populate('profiles preferences');
+    
+    
+    // populate('visitsWebsites profiles preferences');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);

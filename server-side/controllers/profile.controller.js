@@ -4,7 +4,7 @@ import Profiles from '../models/profile.model.js';
 
    export const  getAllProfiles= async (req, res) => {
         try {
-            const profiles = await Profiles.find();
+            const profiles = await Profiles.find().populate('websiteId');
             res.json(profiles);
         } catch (err) {
             res.status(500).json({ message: err.message });

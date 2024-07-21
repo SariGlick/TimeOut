@@ -2,7 +2,7 @@ import visitedWebsites from '../models/visitedWebSite.model.js';
 
  export const    getAllVisitedWebsites= async (req, res) => {
         try {
-            const visitedwebsites = await visitedWebsites.find();
+            const visitedwebsites = await visitedWebsites.find().populate('websiteId');
             res.status(200).send(visitedwebsites);
         } catch (err) {
             res.status(500).json({ message: err.message });
@@ -11,7 +11,7 @@ import visitedWebsites from '../models/visitedWebSite.model.js';
  export const    createVisitedWebsite=  async (req, res) => {
         const newVisitedWebsite = new visitedWebsites(req.body);
         try {
-            const savedVisitedWebsite = await visitedWebsites.save();
+            const savedVisitedWebsite = await newVisitedWebsite.save();
             res.status(201).json(savedVisitedWebsite);
         } catch (err) {
             res.status(400).json({ message: err.message });
