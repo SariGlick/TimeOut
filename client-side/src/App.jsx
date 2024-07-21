@@ -2,13 +2,20 @@ import React from 'react';
 import Header from './stories/header/header'
 import Footer from './stories/footer/FooterComponent'
 import './App.scss';
-import ProfileImageEditButton from './components/settings/ProfileImageEdit';
+import Settings from './components/settings/settings';
 
 function App() {
+  const user = {
+    "visitsWebsites": [],
+    "profiles": [],
+    "_id": "669cf7185d41f78095882762",
+    "name": "Gad",
+    "profileImage": "jjkjklj.jpg"
+  }
   return (
     <div className="App">
       <Header />
-      <ProfileImageEditButton userId={'6694d2295d41f7809588274c'}/>
+      <Settings user={user} />
       <Footer />
     </div>
   );
