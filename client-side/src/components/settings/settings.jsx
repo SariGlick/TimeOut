@@ -22,7 +22,7 @@ const Settings = ({ user }) => {
     }
   };
 
-  const handleUploadPicture = async () => {
+  const handleFormSubmit = async () => {
     const formData = new FormData();
     formData.append('profileImage', imageFile);
     try {
@@ -40,7 +40,7 @@ const Settings = ({ user }) => {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <GenericInput size='medium' label='Add Image' type='file' onChange={handleFilePicture} />
-        <GenericButton size='small' label='Upload Image' onClick={handleUploadPicture} className='UploadImageButton' />
+        <GenericButton size='small' label='Upload Image' onClick={handleFormSubmit} className='UploadImageButton' />
       </div>
       {preview && (
         <div>
