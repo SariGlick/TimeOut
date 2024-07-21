@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
-import ResponsiveAppBar from '../../stories/header/header.jsx';
-import { Sync } from '@mui/icons-material';
-import './settingPage.scss';
-import { formatDate } from '@storybook/blocks';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import Button from '@mui/material/Button';
 
-const RingtoneEditButton = (currentUser) => {
+
+const Setting = (currentUser) => {
    
     const preferencesId=currentUser.currentUser.preferences._id;
     const userId=currentUser.currentUser._id;
@@ -20,6 +17,8 @@ const RingtoneEditButton = (currentUser) => {
     // const [image, setImage] = useState(null);
      const [preview, setPreview] = useState(null);
      const [audioSrc,setAudioSrc]  = useState();
+     const {t,i18n}= useTranslation();
+
     const handleFileChange=(e) => {
          console.log('at handle file ');
          setRingtoneFile(e.target.files[0]);
@@ -70,6 +69,7 @@ const RingtoneEditButton = (currentUser) => {
           </div>       
           <GenericButton size='small'  label='send preference' onClick={handleUpload} className='' disabled={false}/>
 
+
         </div>
         
 
@@ -78,4 +78,4 @@ const RingtoneEditButton = (currentUser) => {
     );
 };
 
-export default RingtoneEditButton;
+export default Setting;
