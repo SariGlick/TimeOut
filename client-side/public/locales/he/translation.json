@@ -1,3 +1,10 @@
 {
-    "welcome":"  {{user-name}} ברוכה הבאה !!"
+    "welcome":"  {{user-name}} ברוכה הבאה !!",
+    "send-ringtone":"שינוי העדפות",
+     "change-ringtone":"שנה צליל",
+      "home":"בית",
+      "reports":"דוחות",
+      "statistics":"סטטיסטיקות",
+      "profiles":"פרופילים",
+      "timeout":"פסק-זמן"
 }

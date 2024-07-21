@@ -1,3 +1,10 @@
 {
-    "welcome":"bienvenida {{user-name}}"
+    "welcome":"bienvenida {{user-name}}",
+    "send-ringtone":" change setting ",
+    "change-ringtone":"change ringtoe",
+    "home":"Home",
+    "reports":"reports",
+    "statistics":"statistic",
+    "profiles":"profiles",
+    "timeout":"TimeOut"
 }

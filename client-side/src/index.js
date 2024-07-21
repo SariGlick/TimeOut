@@ -7,13 +7,16 @@ import { BrowserRouter } from 'react-router-dom';
 // import { createTheme } from '@mui/material';
 // import { ThemeProvider } from '@emotion/react';
 
-
+import  './i18n.js'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <React.Suspense>
+    <BrowserRouter  fallback='loading'>
     <App />
     </BrowserRouter>
+    </React.Suspense>
+
   </React.StrictMode>
 );
 

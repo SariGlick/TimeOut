@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-
+import Select from '../../stories/Select/Select.jsx'
 
 const Setting = (currentUser) => {
    
@@ -17,8 +17,23 @@ const Setting = (currentUser) => {
     // const [image, setImage] = useState(null);
      const [preview, setPreview] = useState(null);
      const [audioSrc,setAudioSrc]  = useState();
+     const [lng,setLng]=useState();
      const {t,i18n}= useTranslation();
-
+    //  const lngs ={
+    //   he: {
+    //     icon: '🇮🇱',
+    //     name: 'Hebrew'
+    //   },
+    //   en: {
+    //     icon: '🇺🇸',
+    //     name: 'English'
+    //   },
+    //   es: {
+    //     icon: '🇪🇸',
+    //     name: 'Spanish'
+    //   }
+    // };
+       
     const handleFileChange=(e) => {
          console.log('at handle file ');
          setRingtoneFile(e.target.files[0]);
@@ -32,7 +47,10 @@ const Setting = (currentUser) => {
           
     };
     
-
+     const handleLngChange=(value)=>{
+       i18n.changeLanguage(value);
+          setLng(value)
+     }
     const handleUpload = async () => {
        
         const formData = new FormData();
@@ -59,7 +77,7 @@ const Setting = (currentUser) => {
     
          <div> 
           <div className='uploadWarper'>
-            <GenericInput  type='file'  label='change ringtone' onChange={handleFileChange} size='medium' disabled={false}/>
+            <GenericInput  type='file'  label={t('change-ringtone')} onChange={handleFileChange} size='medium' disabled={false}/>
           </div>
           <div>
           { audioSrc &&
@@ -67,9 +85,14 @@ const Setting = (currentUser) => {
                <source src={audioSrc} ></source>
             </audio>}
           </div>       
-          <GenericButton size='small'  label='send preference' onClick={handleUpload} className='' disabled={false}/>
+          <GenericButton size='small'  label={t('send-ringtone')} onClick={handleUpload} className='' disabled={false}/>
 
-
+         <Select  title='sleect language' 
+          options={[{text:'עברית',value:'he'}, {text:'española',value:'es'},{text:'english',value:'en',}]} 
+          className='' 
+          size={'large'}
+          widthOfSelect='200px'
+          onChange={e=>handleLngChange(e.target.value)}/>
         </div>
         
 
