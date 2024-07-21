@@ -1,24 +1,18 @@
-import React from 'react';
-import Header from './stories/header/header'
-import Footer from './stories/footer/FooterComponent'
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
+import Footer from './stories/footer/FooterComponent';
+import { router } from './router/router.jsx';
+import { store } from './redux/store.jsx';
 import './App.scss';
-import Settings from './components/settings/settings';
 
 function App() {
-  const user = {
-    "visitsWebsites": [],
-    "profiles": [],
-    "_id": "669cf7185d41f78095882762",
-    "name": "Gad",
-    "profileImage": "jjkjklj.jpg"
-  }
   return (
-    <div className="App">
-      <Header />
-      <Settings user={user} />
-      <Footer />
-    </div>
+    <>
+      <RouterProvider router={router} />
+      <Provider store={store}>
+        <Footer />
+      </Provider>
+    </>
   );
 }
-
 export default App;
