@@ -1,0 +1,61 @@
+name: Node.js CI
+on:
+  push:
+    branches:
+      - master
+      - 'name/*'
+  pull_request:
+    branches:
+      - master
+      - 'name/*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      # Validate branch name
+      - name: Validate branch name
+        run: |
+          echo "Validating branch name..."
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME=${{ github.head_ref }}
+          else
+            BRANCH_NAME=${{ github.ref_name }}
+          fi
+          echo "Current branch: $BRANCH_NAME"
+          if [[ ! "$BRANCH_NAME" =~ ^name/[a-zA-Z0-9_-]+$ && "$BRANCH_NAME" != "master" ]]; then
+            echo "Branch name does not follow the required pattern (name/branchname or master)."
+            exit 1
+          fi
+          echo "Branch name is valid."
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      # Display Node.js version
+      - name: Display Node.js version
+        run: node --version
+      # Display npm version
+      - name: Display npm version
+        run: npm --version
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+      # Display installed packages
+      - name: Display installed packages
+        run: npm list
+      # Run tests in 'test' directory
+      - name: Run tests in 'test' directory
+        run: |
+          if [ -d test ]; then
+            for file in test/*; do
+              if [ -f "$file" ]; then
+                npm test "$file"
+              fi
+            done
+          else
+            echo "'test' directory not found. Skipping tests."
+          fi
