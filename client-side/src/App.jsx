@@ -1,12 +1,13 @@
 import React from 'react';
-import components from './stories/index'; // Import the default export from index.js
+import {ResponsiveAppBar,Footer, ScrollButton, DateInputs} from './stories/index';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
-      <components.Header />
-      <components.Footer />
+      <ResponsiveAppBar />
+      <Footer />
+      <ScrollButton/>
     </div>
   );
 }
