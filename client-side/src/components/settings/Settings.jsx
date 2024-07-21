@@ -12,10 +12,11 @@ const emailFrequencyEnum = {
 };
 
 
-const Settings = ({ preferenceId }) => {
+const Settings = ({ user }) => {
   const [emailFrequency, setEmailFrequency] = useState(Object.keys(emailFrequencyEnum)[0]);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
+  const preferenceId=user.preference._id;
 
 
   const handleFormSubmit = async () => {
@@ -23,7 +24,7 @@ const Settings = ({ preferenceId }) => {
     formData.append('emailFrequency', emailFrequency);
 
     try {
-      const response = await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
+       await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
