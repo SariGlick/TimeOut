@@ -33,10 +33,3 @@ const DateTimePicker = () => {
     );
 };
 export default DateTimePicker;
-
-
-
-
-
-
-

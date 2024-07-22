@@ -1,12 +1,12 @@
 import React from 'react';
-import {ResponsiveAppBar,Footer, ScrollButton, DateInputs} from './stories/index';
+import {ResponsiveAppBar,Footer, ScrollButton} from './stories/index';
 import './App.scss';
 
 function App() {
   return (
     <div className="App">
       <ResponsiveAppBar />
-      <Footer />
+      <Footer/>
       <ScrollButton/>
     </div>
   );

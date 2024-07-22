@@ -5,7 +5,7 @@ import GenericInput from './GenericInput/genericInput';
 import ResponsiveAppBar from './header/header';
 import ScrollButton from './ScrollButton/ScrollButton';
 import Select from './Select/Select';
-import TableComponent from './table/TableComponent';
+// import TableComponent from './table/TableComponent';
 import LabTabs from './tabs/tabs';
 
 export{
@@ -16,6 +16,6 @@ export{
     ResponsiveAppBar,
     ScrollButton,
     Select,
-    TableComponent,
+    // TableComponent,
     LabTabs
 };

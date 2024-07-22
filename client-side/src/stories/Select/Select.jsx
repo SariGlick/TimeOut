@@ -7,7 +7,7 @@ import SelectMui from '@mui/material/Select';
 import PropTypes, { shape } from 'prop-types';
 import './select.scss';
 
-const Select = ({className, options, onChange, title,size,widthOfSelect}) => {
+const Select = ({className, options= [{ text: "option1", icon: '🖋️' }, { text: "option2", icon: '🖋️' }], onChange = undefined, title,size= 'large',widthOfSelect, value}) => {
   return ( 
      <div className='selectWrapper' >
       <Box>
@@ -16,9 +16,10 @@ const Select = ({className, options, onChange, title,size,widthOfSelect}) => {
         <SelectMui  style={{width:widthOfSelect}} label={title}
           className={`genericSelect ${className ? `genericSelect ${className}` : ''}`}
           onChange={onChange}
+          value={value}
         >
           {options.map((option, index) => (
-            <MenuItem key={index} value={option} >
+            <MenuItem key={index} value={option.value} >
               {option.text}
               {option.icon}
             </MenuItem>
@@ -31,16 +32,12 @@ const Select = ({className, options, onChange, title,size,widthOfSelect}) => {
 
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  value: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
   className: PropTypes.string.isRequired
 };
 
-Select.defaultProps = {
-  size: 'large',
-  onChange: undefined,
-  options:[{text:"option1",icon:'🖋️'},{text:"option2",icon:'🖋️'}]
-};
 
 export default Select;
