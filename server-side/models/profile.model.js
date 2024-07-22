@@ -2,8 +2,8 @@ import mongoose, { Schema } from "mongoose";
 
 const profileSchema = new mongoose.Schema({
     profileName: { type: String, required: true, minlength: 2, maxlength: 50 },
-    blockedSites: [{ type: Schema.Types.ObjectId, ref: 'Websites' }],
-    limitedWebsites: [{
+    statusBlockedSites: { enum: ['black list', 'white list'] },
+    listWebsites: [{
         websiteId: { type: Schema.Types.ObjectId, ref: 'Websites' },
         status: { type: String, enum: ['block', 'open'] },
         limitedTimes: [{
