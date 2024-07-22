@@ -3,13 +3,13 @@
 
 .custom-radio-group {
     padding: 20px;
-    color: $text-color;
+    color: $primary-color;
 }
 
 .custom-form-label,
 .custom-form-control-label {
-    font-family: $font-family;
-    color: $text-color;
+    font-family: 'Montserrat', sans-serif;;
+    color: $primary-color;
     margin-bottom: 10px;
 }
 
@@ -24,7 +24,7 @@
     cursor: pointer;
 
     &.Mui-checked {
-        color: $primary-color;
+        color: $secondary-color;
     }
 }
 
@@ -37,6 +37,6 @@
     }
 
     &.Mui-checked .MuiSvgIcon-root {
-        color: $primary-color;
+        color: $secondary-color;
     }
 }
