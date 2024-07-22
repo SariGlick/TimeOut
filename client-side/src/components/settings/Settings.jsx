@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
+import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/index.jsx';
 
-const emailFrequencyEnum = {
-  'never': '🚫',
-  'daily': '📅',
-  'weekly': '🗓️',
-  'monthly': '📆',
-  'yearly': '📅'
-};
 
 
 const Settings = ({ user }) => {
-  const [emailFrequency, setEmailFrequency] = useState(Object.keys(emailFrequencyEnum)[0]);
+  
+  const [emailFrequency, setEmailFrequency] = useState( user.preference.emailFrequency.toLowerCase()|| EMAIL_FREQUENCY_ENUM.NEVER);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const preferenceId=user.preference._id;
@@ -29,20 +24,20 @@ const Settings = ({ user }) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setMessage('Email frequency preference updated successfully!');
+      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATED);
     } catch (error) {
       console.error('Error updating email frequency preference:', error);
-      setMessage('Error updating email frequency preference. Please try again later.');
+      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATE_ERROR);
     }
   };
 
   const handleChangeEmailFreq = (e) => {
     const selectedFrequency = e.target.value;
-    if (!Object.keys(emailFrequencyEnum).includes(selectedFrequency)) {
-      setMessage('Invalid email frequency selected. Please choose a valid option.');
+    if (!Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase())) {
+      setMessage(MESSAGES.INVALID_EMAIL_FREQUENCY);
       return;
     }
-    setEmailFrequency(selectedFrequency);
+    setEmailFrequency(selectedFrequency.toLowerCase());
   };
 
 
@@ -51,12 +46,12 @@ const Settings = ({ user }) => {
       <h2>Settings</h2>
       <Select
         className='select-email-frequency'
-        options={Object.keys(emailFrequencyEnum).map(key => ({
+        options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
           text: key.toLowerCase(),
-          value: key,
-          icon: emailFrequencyEnum[key] || '⏰'
+          value: EMAIL_FREQUENCY_ENUM[key.toLowerCase()],
+          icon: EMAIL_FREQUENCY_ENUM[key.toLowerCase()] || '⏰'
         }))}
-        title='Select Email Frequency'
+        title={TITLES.SELECT_EMAIL_FREQUENCY}
         onChange={handleChangeEmailFreq}
         value={emailFrequency}
         size='large'
@@ -64,7 +59,7 @@ const Settings = ({ user }) => {
       />
       <GenericButton
         className='Update User Settings'
-        label='Update User Settings'
+        label={LABELS.UPDATE_USER_SETTINGS}
         size='medium'
         onClick={handleFormSubmit}
       />
