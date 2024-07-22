@@ -7,16 +7,16 @@ export default function Report() {
   const [selectType, setSelectType] = useState(Time.Month);
   const selectFunction=(selectedValue)=>{
     if(selectedValue==1){
-      setSelectType(Time.DAY);
+      setSelectType(Time.DAY.name);
     }
     else   if(selectedValue==2){
-      setSelectType(Time.Month);
+      setSelectType(Time.Month.name);
     }
     else   if(selectedValue==3){
-      setSelectType(Time.YEAR);
+      setSelectType(Time.YEAR.name);
     }
     else   if(selectedValue==4){
-      setSelectType(Time.CUSTUM);
+      setSelectType(Time.CUSTUM.name);
       dateTimePiker();
     }
     fillData();
