@@ -2,14 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
+import { useAppSelector } from '../../redux/store.jsx';
+import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/index.jsx';
 
-const emailFrequencyEnum = {
-  'never': '🚫',
-  'daily': '📅',
-  'weekly': '🗓️',
-  'monthly': '📆',
-  'yearly': '📅'
-};
 
 const createTimeZones = () => {
   const timeZones = [];
@@ -24,25 +19,23 @@ const createTimeZones = () => {
 };
 
 
-const Settings = ({ user }) => {
-  const [emailFrequency, setEmailFrequency] = useState(Object.keys(emailFrequencyEnum)[0]);
+const Settings = () => {
+  const user = useAppSelector((state) => state.auth.user);
   const [timeZone, setTimeZone] = useState('GMT±00:00'); 
+  const [emailFrequency, setEmailFrequency] = useState( EMAIL_FREQUENCY_ENUM.NEVER);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const preferenceId = user.preference._id;
+  
 
   useEffect(() => {
-    if (user.preference.emailFrequency) {
-      setEmailFrequency(user.preference.emailFrequency);
+    if (user) {
+      setEmailFrequency(user.preference.emailFrequency || EMAIL_FREQUENCY_ENUM.NEVER);
+      setTimeZone(user.preference.timeZone || 'GMT±00:00');
     }
-    if (user.preference.timeZone) {
-      setTimeZone(user.preference.timeZone);
-    }
-  }, []);
-
-
+  }, [user]);
 
   const handleFormSubmit = async () => {
+    const preferenceId = user.preference._id;
     const formData = new FormData();
     formData.append('emailFrequency', emailFrequency);
     formData.append('timeZone', timeZone);
@@ -54,17 +47,17 @@ const Settings = ({ user }) => {
           'Content-Type': 'multipart/form-data'
         }
       });
-      setMessage('Preferences updated successfully!');
+      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATED);
     } catch (error) {
       console.error('Error updating email frequency preference:', error);
-      setMessage('Error updating preferences. Please try again later.');
+      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATE_ERROR);
     }
   };
 
   const handleChangeEmailFreq = (e) => {
     const selectedFrequency = e.target.value;
-    if (!Object.keys(emailFrequencyEnum).includes(selectedFrequency)) {
-      setMessage('Invalid email frequency selected. Please choose a valid option.');
+    if (!Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase())) {
+      setMessage(MESSAGES.INVALID_EMAIL_FREQUENCY);
       return;
     }
     setEmailFrequency(selectedFrequency);
@@ -81,12 +74,12 @@ const Settings = ({ user }) => {
 
       <Select
         className='select-email-frequency'
-        options={Object.keys(emailFrequencyEnum).map(key => ({
+        options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
           text: key.toLowerCase(),
-          value: key,
-          icon: emailFrequencyEnum[key] || '⏰'
+          value: EMAIL_FREQUENCY_ENUM[key.toLowerCase()],
+          icon: EMAIL_FREQUENCY_ENUM[key.toLowerCase()] || '⏰'
         }))}
-        title='Select Email Frequency'
+        title={TITLES.SELECT_EMAIL_FREQUENCY}
         onChange={handleChangeEmailFreq}
         value={emailFrequency}
         size='large'
@@ -108,7 +101,7 @@ const Settings = ({ user }) => {
 
       <GenericButton
         className='Update User Settings'
-        label='Update User Settings'
+        label={LABELS.UPDATE_USER_SETTINGS}
         size='medium'
         onClick={handleFormSubmit}
       />
