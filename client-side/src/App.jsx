@@ -1,5 +1,5 @@
 import React from 'react';
-import {ResponsiveAppBar,Footer} from './stories/index';
+import {ResponsiveAppBar,Footer, ScrollButton} from './stories/index';
 import './App.scss';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
     <div className="App">
       <ResponsiveAppBar />
       <Footer/>
+      <ScrollButton/>
     </div>
   );
 }
