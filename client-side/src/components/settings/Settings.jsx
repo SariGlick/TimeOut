@@ -49,7 +49,7 @@ const Setting = ({currentUser}) => {
     
          <div> 
           <div className='uploadWarper'>
-            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium' />
+            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  disabled={true}/>
           </div>
           <div>
           { audioSrc &&

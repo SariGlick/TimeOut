@@ -48,18 +48,8 @@ const GenericInput = ({
   const inputStyle = {
     width,
   };
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
- 
+  
+  
   return(
   <>
   {type==='file' ?(<div className="file-upload" style={inputStyle}>
@@ -70,7 +60,7 @@ const GenericInput = ({
       className='generic-input-file'
     >
     {label}
-    <VisuallyHiddenInput type="file" onChange={onChange} />
+    <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled}/>
   </Button>
   {error && <div className="helper-text error">{helperText}</div>}
   </div>) :(<div className="generic-input">
