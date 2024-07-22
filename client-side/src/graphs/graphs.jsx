@@ -3,7 +3,6 @@ import { LineChart, ChartContainer, LinePlot, BarPlot, ChartsYAxis, ChartsXAxis,
 import Stack from '@mui/material/Stack';
 import { useQuery, gql } from '@apollo/client';
 
-
 const GET_VISITED_WEBSITES = gql`
 query GetVisitedWebsites {
 visitedWebsites {
@@ -26,7 +25,25 @@ query website{
   }
 }
 `
-
+const GET_USERS = gql`
+ query users{
+   users {
+     name
+     password
+     email
+    profileImage
+    visitsWebsites {
+      visitsTime {
+        activityTime
+        visitDate
+      }
+      websiteId {
+        name
+        url
+      }
+    }
+   }
+ }`
 
 
 const otherProps = {
@@ -40,26 +57,40 @@ const otherProps = {
 };
 
 
-export default function VisitedWebsitesComponent() {
-
+const VisitedWebsitesComponent = ({ startDate, endDate, user }) => {
     const websites = useQuery(GET_WEBSITE);
     const visitedWebsite = useQuery(GET_VISITED_WEBSITES);
+    const users = useQuery(GET_USERS);
     const colors = ["red", "yellow", "orange", "blue", "lightgreen"]
-    const date = new Date();
-    const year = Number(date.getFullYear());
-    const month = Number(date.getMonth());
-    if (websites.loading || visitedWebsite.loading) return <p>Loading...</p>;
+    let dateStart = new Date(startDate.$d);
+    let year = dateStart.getFullYear();
+    let month = ('0' + (dateStart.getMonth() + 1)).slice(-2);
+    let day = ('0' + dateStart.getDate()).slice(-2);
+    dateStart = `${year}-${month}-${day}`
+    let dateEnd = new Date(endDate.$d);
+    year = dateEnd.getFullYear();
+    month = ('0' + (dateEnd.getMonth() + 1)).slice(-2);
+    day = ('0' + dateEnd.getDate()).slice(-2);
+    dateEnd = `${year}-${month}-${day}`
+    if (websites.loading || users.loading) return <p>Loading...</p>;
 
-    if (websites.error || visitedWebsite.error) return <p>Error</p>;
+    if (websites.error  || users.error) return <p>Error</p>;
 
     let webSite = websites.data.websites.map((obj, index) => ({ ...obj, color: colors[index] }))
-
+    const u = users.data.users.find(u => u.email === user.email)
+    console.log({ u });
+    
     const totalActivityTimeByWebsite = {};
 
-    visitedWebsite.data.visitedWebsites.forEach(visitedWebsite => {
+    u.visitsWebsites.forEach(visitedWebsite => {
         const websiteName = visitedWebsite.websiteId.name;
         const activityTime = visitedWebsite.visitsTime.reduce((total, visit) => {
-            if (Number(visit.visitDate.substring(0, 4)) === year && Number(visit.visitDate.substring(5, 7)) == month) {
+            let date = new Date(visit.visitDate)
+            year = date.getFullYear();
+            month = ('0' + (date.getMonth() + 1)).slice(-2);
+            day = ('0' + date.getDate()).slice(-2);
+            date = `${year}-${month}-${day}`
+            if (date >= dateStart && date <= dateEnd) {
                 return total + Number(visit.activityTime);
             }
             return total;
@@ -80,7 +111,7 @@ export default function VisitedWebsitesComponent() {
     });
     return (
         <>
-            <h2>שלפנו את נתוניך על פי החודש  {month}-{year}</h2>
+            {/* <h2>שלפנו את נתוניך על פי החודש  {month}-{year}</h2> */}
             <Stack direction="row" width="100%" textAlign="center" spacing={2}>
 
                 {/* <Gauge width={200} height={200} value={70} valueMin={5} valueMax={100} /> */}
@@ -99,6 +130,7 @@ export default function VisitedWebsitesComponent() {
     );
 
 }
+export default VisitedWebsitesComponent;
 // const barChar = [
 //     {
 //         type: 'bar',
@@ -274,7 +306,7 @@ export default function VisitedWebsitesComponent() {
                 <ChartsXAxis label="Years" position="bottom" axisId="dates" />
                 <ChartsYAxis label="Results" position="left" axisId="eco" />
             </ChartContainer>
- */}
+//  */}
 
 //     </>
 // );
