@@ -11,6 +11,7 @@ import { useEffect } from 'storybook/internal/preview-api';
 
 function ResponsiveAppBar() {
   const [currentname, setCurrentname] = useState(localStorage.getItem('nameUser') || null);
+  const [currentProfile, setCurrentProfile] = useState(localStorage.getItem('nameProfile') || null);
   console.log(currentname,"jjj");
   // const [currentname, setCurrentname] = useState(null);
 
@@ -97,9 +98,13 @@ function ResponsiveAppBar() {
 
           <Box >
             <Tooltip title={currentname}>
-              <IconButton onClick={handleOpenUserMenu} >
+            { !currentProfile && < IconButton onClick={handleOpenUserMenu} >
                 <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
-              </IconButton>
+              </IconButton>}
+        
+            { currentProfile && < IconButton onClick={handleOpenUserMenu} >
+                <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
+              </IconButton>}
             </Tooltip>
             <Menu
               id="menu-appbar"

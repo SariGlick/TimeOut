@@ -20,8 +20,8 @@ function App() {
       <Header/> 
       {/* <ResponsiveAppBar userName={userName} />
       <Login onLogin={handleLogin} /> */}
-      <Login/>
-      {/* <SignUp/> */}
+      {/* <Login/> */}
+      <SignUp/>
       <Footer/>
    
 

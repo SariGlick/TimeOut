@@ -2,18 +2,22 @@
 /* src/SignUp.css */
 .signup-container {
     max-width: 400px;
+ 
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: right;
-    background-color: #e8f5e9;
+
   }
   
   h2 {
     margin-bottom: 20px;
-    color: #2e7d32;
+    direction: ltr;
+    // text-align: center;
+    margin-right: 78%;
+
   }
   
   .form-group {
@@ -23,7 +27,7 @@
   label {
     display: block;
     margin-bottom: 5px;
-    color: #2e7d32;
+
   }
   
   input {
@@ -38,7 +42,7 @@
   button {
     width: 100%;
     padding: 10px;
-    background-color: #66bb6a;
+
     color: white;
     border: none;
     border-radius: 4px;
@@ -46,13 +50,12 @@
     font-size: 16px;
   }
   
-  button:hover {
-    background-color: #388e3c;
-  }
+
   
   .error {
     color: red;
     font-size: 12px;
-    margin-top: 5px;
+    margin-top: -7px;
+    margin-right: 54%;
   }
   
