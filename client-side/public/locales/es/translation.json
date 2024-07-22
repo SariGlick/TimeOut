@@ -1,13 +1,13 @@
 {
     "welcome":"welcome {{user-name}}" ,
-    "send-ringtone":"Cambiar ajustes",
+    "send preferences":"Cambiar ajustes",
     "change-ringtone":"cambiar-tono",
     "home":"hogar",
     "reports":"informe",
     "statistics":"Estadísticas",
     "profiles":"perfiles",
-    "timeout":"se acabó el tiempo"
-
+    "timeout":"se acabó el tiempo",
+    "sleect-language":"seleccione el idioma"
 
  
 }

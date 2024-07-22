@@ -1,10 +1,11 @@
 {
     "welcome":"bienvenida {{user-name}}",
-    "send-ringtone":" change setting ",
+    "send preferences":" change setting ",
     "change-ringtone":"change ringtoe",
     "home":"Home",
     "reports":"reports",
     "statistics":"statistic",
     "profiles":"profiles",
-    "timeout":"TimeOut"
+    "timeout":"TimeOut",
+    "sleect-language":"sleect language"
 }

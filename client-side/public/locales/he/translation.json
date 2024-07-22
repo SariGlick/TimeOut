@@ -1,10 +1,11 @@
 {
     "welcome":"  {{user-name}} ברוכה הבאה !!",
-    "send-ringtone":"שינוי העדפות",
+    "send preferences":"שינוי העדפות",
     "change-ringtone":"שנה צליל",
     "home":"בית",
     "reports":"דוחות",
     "statistics":"סטטיסטיקות",
     "profiles":"פרופילים",
-    "timeout":"פסק-זמן"
+    "timeout":"פסק-זמן",
+     "sleect-language":"בחר שפה"
 }
