@@ -73,7 +73,7 @@ const GenericInput = ({
       className='generic-input-file'
     >
     {label}
-    <VisuallyHiddenInput type="file" onChange={onChange} />
+    <VisuallyHiddenInput type="file" onChange={onChange} id='VisuallyHiddenInput'/>
   </Button>
   {error && <div className="helper-text error">{helperText}</div>}
   </div>) :(<div className="generic-input">
