@@ -1,5 +1,6 @@
 import User, { generateToken } from '../models/user.model.js';
 import bcrypt from 'bcrypt';
+import nodemailer from 'nodemailer'
 import path from 'path';
 import fs from 'fs';
 
@@ -28,8 +29,42 @@ export const getUserById = async (req, res) => {
   }
 };
 
-export const addUser = async (req, res) => {
+let transporter = nodemailer.createTransport({
+    
+  service: 'hotmail',
+  secureConnection: true,
+ 
+ 
+  auth: {
+     user: 'timeout1@outlook.co.il',
+     pass: 'time1122'}
+});
+
+export const sendEmail = async (req, res) => {
+  //  const { to, subject, text } = req.body;
+  const user= "st3196420@gmail.com"
+debugger
+  try {
+      await transporter.sendMail({
+          from: 'איפוס סיסמאTIMEOUT ',
+          to: user,
+          subject : "succsesssssss",
+          text: "this is the kod"
+      });
+     console.log({ message: 'Email sent successfully!' });
+  } catch (error) {
+      console.error('Error sending email:', error);
+      // res.status(500).json({ message: 'Failed to send email.' });
+  }
+};
+// module.exports = { sendEmail };
+// sendEmail({}, {});
+
+export const addUser = async (req, res,next) => {
   const { name, password, email } = req.body;
+  const user= await User.findOne({email})
+  if(user)
+    return next({message:"user is exist"})
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({
