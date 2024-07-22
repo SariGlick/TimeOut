@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { INVALID_INPUT_MESSAGE } from './constants';
-import { TextField, InputAdornment } from '@mui/material';
+import { TextField, InputAdornment ,styled} from '@mui/material';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
 const GenericInput = ({ 
@@ -66,8 +65,6 @@ const GenericInput = ({
   {type==='file' ?(<div className="file-upload" style={inputStyle}>
    <Button
       component="label"
-      role={undefined}
-      tabIndex={-1}
       size={size}
       disabled={disabled}
       className='generic-input-file'
