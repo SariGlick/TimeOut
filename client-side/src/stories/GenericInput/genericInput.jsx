@@ -49,7 +49,7 @@ const GenericInput = ({
   const inputStyle = {
     width,
   };
-  const VisuallyHiddenInput = styled('input')({
+  const visuallyHiddenInput = styled('input')({
     clip: 'rect(0 0 0 0)',
     clipPath: 'inset(50%)',
     height: 1,
@@ -73,7 +73,7 @@ const GenericInput = ({
       className='generic-input-file'
     >
     {label}
-    <VisuallyHiddenInput type="file" onChange={onChange} />
+    <visuallyHiddenInput type="file" onChange={onChange} />
   </Button>
   {error && <div className="helper-text error">{helperText}</div>}
   </div>) :(<div className="generic-input">

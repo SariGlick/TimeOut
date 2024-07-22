@@ -1,18 +1,21 @@
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
-import Footer from './stories/footer/FooterComponent';
-import { router } from './router/router.jsx';
-import { store } from './redux/store.jsx';
+import React from 'react';
+import Header from './stories/header/header'
+import Footer from './stories/footer/FooterComponent'
 import './App.scss';
 
 function App() {
+  const user ={
+    "visitsWebsites": [],
+      "profiles": [],
+        "_id": "669cf7185d41f78095882762",
+          "name": "Gad",
+            "profileImage": "jjkjklj.jpg"
+  }
   return (
-    <>
-      <RouterProvider router={router} />
-      <Provider store={store}>
-        <Footer />
-      </Provider>
-    </>
+    <div className="App">
+      <Footer />
+    </div>
   );
 }
+
 export default App;

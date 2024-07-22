@@ -37,8 +37,8 @@ const Settings = ({ user }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <>
+      <div>
         <GenericInput size='medium' label='Add Image' type='file' onChange={handleFilePicture} />
         <GenericButton size='small' label='Upload Image' onClick={handleFormSubmit} className='UploadImageButton' />
       </div>
@@ -47,7 +47,7 @@ const Settings = ({ user }) => {
           <img src={preview} alt='Profile Preview' style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
         </div>
       )}
-    </div>
+    </>
   );
 };
 
