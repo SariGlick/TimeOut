@@ -2,14 +2,12 @@ import React from 'react';
 import {Box,InputLabel,MenuItem,FormControl}from '@mui/material';
 import SelectMui from '@mui/material/Select';
 import PropTypes from 'prop-types';
+import { optionsSelect } from './select.constat';
 import './select.scss';
 
 const Select = ({
   className,
-  options = [
-    { value: 1, text: "Option 1", iconSrc: 'https://img.icons8.com/?size=100&id=Z13asb8sqRyN&format=png&color=000000' },
-    { value: 2, text: "Option 2", iconSrc: 'https://img.icons8.com/?size=100&id=Z13asb8sqRyN&format=png&color=000000' }
-  ],
+  options = optionsSelect,
   onChange = () => {},
   title,
   size = 'large',

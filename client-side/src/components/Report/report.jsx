@@ -1,22 +1,22 @@
-import React from 'react';
+import React,{useState} from 'react';
 import PdfGenerator from './pdf.jsx';
-import { useState } from 'react';
 import Select from '../../stories/Select/Select.jsx';
+import { Time } from './report.constant.jsx';
 
 export default function Report() {
-  const [selectType, setSelectType] = useState("month");
+  const [selectType, setSelectType] = useState(Time.Month);
   const selectFunction=(selectedValue)=>{
     if(selectedValue==1){
-      setSelectType("day");
+      setSelectType(Time.DAY);
     }
     else   if(selectedValue==2){
-      setSelectType("month");
+      setSelectType(Time.Month);
     }
     else   if(selectedValue==3){
-      setSelectType("year");
+      setSelectType(Time.YEAR);
     }
     else   if(selectedValue==4){
-      setSelectType("custum");
+      setSelectType(Time.CUSTUM);
       dateTimePiker();
     }
     fillData();
@@ -29,8 +29,9 @@ export default function Report() {
   };
   return (
     <div>
-        <Select onChange={(selectedValue) => selectFunction(selectedValue) } className="primary" options={[{value:1,text:"day",iconSrc:'/images/time-twenty-four.svg'},{value:2,text:"month",iconSrc:'images/calendar-date-svgrepo-com.svg'},{value:3,text:"year",iconSrc:'/images/calendar-month-schedule-time-date-svgrepo-com.svg'},{value:4,text:"custum",iconSrc:'/images/calendar-date-svgrepo-com (1).svg'}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
+        <Select onChange={(selectedValue) => selectFunction(selectedValue) } className="primary" options={[{value:1,text:Time.DAY.name,iconSrc:Time.DAY.icon},{value:2,text:Time.Month.name,iconSrc:Time.Month.icon},{value:3,text:Time.YEAR.name,iconSrc:Time.YEAR.icon},{value:4,text:Time.CUSTUM.name,iconSrc:Time.CUSTUM.icon}]}  title="time arrange" size='medium' widthOfSelect="150px"/>
         <PdfGenerator data={[]} />   {/* כאן נשלח את הנתונים של הטבלה כדי שיודפסו בקובץ פדפ */}
     </div>
   );
 }
+
