@@ -40,8 +40,7 @@ const Setting = ({currentUser}) => {
             
           } catch (error) {
              console.error(error)
-          }
-           
+          }  
     };
     
     
@@ -49,7 +48,7 @@ const Setting = ({currentUser}) => {
     
          <div> 
           <div className='uploadWarper'>
-            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  disabled={true}/>
+            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  />
           </div>
           <div>
           { audioSrc &&
@@ -58,16 +57,10 @@ const Setting = ({currentUser}) => {
             </audio>}
           </div>       
           <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='' disabled={false}/>
-
-
-        </div>
-        
-
-       
-        
+        </div>  
     );
 };
-Setting.propTypes={
-   currentUser: PropTypes.object.isRequired
-}
-export default Setting;
+ Setting.propTypes={
+    currentUser: PropTypes.object.isRequired
+ }
+ export default Setting;
