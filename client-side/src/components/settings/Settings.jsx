@@ -65,7 +65,7 @@ const Setting = ({currentUser}) => {
           </div>       
 
          <Select  title={t(SELECT_LANGUAGES)} 
-          options={[{text:'עברית',value:'he',icon:'🇮🇱' }, {text:'española',value:'es'},{text:'english',value:'en',}]} 
+          options={[{text:'עברית',value:'he'}, {text:'española',value:'es'},{text:'english',value:'en',}]} 
           className='' 
           size={'large'}
           widthOfSelect='200px'
