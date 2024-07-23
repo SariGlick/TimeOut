@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import {uploadFileUtil} from '../../uploadFileUtil.js'
+import {uploadFile} from '../../uploadFileUtil.js'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
 const Setting = ({currentUser={}}) => {
@@ -28,7 +28,7 @@ const Setting = ({currentUser={}}) => {
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
         formData.append('emailFrequency',emailFrequency);
-        uploadFileUtil(preferencesUrl,formData,'post')
+        uploadFile(preferencesUrl,formData,'post')
     };
     
     

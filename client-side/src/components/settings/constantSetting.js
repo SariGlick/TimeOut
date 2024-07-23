@@ -1,2 +1,3 @@
-export const SEND_PREFERENCE='send preference';
-export const CHANGE_RINGTONE='change ringtone';
+ const SEND_PREFERENCE='send preference';
+ const CHANGE_RINGTONE='change ringtone';
+ export {SEND_PREFERENCE,CHANGE_RINGTONE};
