@@ -6,12 +6,12 @@ import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import {uploadFileUtil} from '../../uploadFileUtil.js'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
-const Setting = ({currentUser}) => {
-    const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
+const Setting = ({currentUser={}}) => {
+    const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
     const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
-    const [audioSrc,setAudioSrc]  = useState(currentUser.preferences.soundVoice);
+    const [audioSrc,setAudioSrc]  = useState(soundVoice);
 
     const handleFileChange=(e) => {
          if(e.target.files[0])
