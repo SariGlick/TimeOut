@@ -31,7 +31,7 @@ export default function ListComponenet({ dataObject }) {
 
 }
 
-ListComponenet.prototype = {
+ ListComponenet.prototype = {
     dataObject: PropTypes.shape({}).isRequired
 }
 
