@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Website Blocker</title>
   <link rel="stylesheet" href="popup.css">
+
 </head>
 <body>
   <!-- TODO to use generic components and style this page -->
@@ -20,8 +21,14 @@
       </form>
     </div>
     <div id="browsingDataDiv" class="hidden">
-      <h3>Browsing Data:</h3>
-      <p>This is where browsing data will be displayed.</p>
+      
+      <ul id="visitedSitesList"></ul>
+  <label for="layoutDirection">Choose display direction:</label>
+<select id="layoutDirection">
+    <option value="ltr">Left to Right</option>
+    <option value="rtl">Right to Left</option>
+</select>
+
     </div>
   </div>
   <script src="popup.js"></script>

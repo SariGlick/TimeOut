@@ -8,7 +8,9 @@
     "scripting",
     "webNavigation",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "alarms"
+    
   ],
   "host_permissions": [
     "http://*/*",
@@ -21,6 +23,9 @@
     "default_popup": "popup.html"
   },
    "web_accessible_resources": 
-   [{"resources": ["oops.html"],
+   [{"resources": ["oops.html","browsing_data.html", "browsing_data.js","browsing_data.css"],
     "matches": ["<all_urls>"]}]
+
+
+
 }
