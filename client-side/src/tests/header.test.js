@@ -26,7 +26,7 @@ describe('ResponsiveAppBar', () => {
     fireEvent.click(userButton);
     expect(screen.getByRole('menu')).toBeInTheDocument();
 
-    fireEvent.click(document.body); // Click outside to close the menu
+    fireEvent.click(document.body); 
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
   });
 
@@ -34,9 +34,8 @@ describe('ResponsiveAppBar', () => {
     render(<ResponsiveAppBar />);
 
     const tabs = screen.getAllByRole('tab');
-    expect(tabs).toHaveLength(4); // Assuming there are 4 tabs in the middle-side-box
+    expect(tabs).toHaveLength(4); 
 
-    // Check text of tabs
     expect(tabs[0]).toHaveTextContent('home');
     expect(tabs[1]).toHaveTextContent('reports');
     expect(tabs[2]).toHaveTextContent('statistics');
