@@ -1,22 +1,22 @@
 import React,{useState} from 'react';
 // import PdfGenerator from './pdf.jsx';
 import Select from '../../stories/Select/Select.jsx';
-import { Time, optionArray } from './report.constant.jsx';
+import { OPTION_ARRAY, TIME } from './report.constant.jsx';
 
 export default function Report() {
-  const [selectType, setSelectType] = useState(Time.Month);
+  const [selectType, setSelectType] = useState(TIME.Month);
   const selectFunction=(selectedValue)=>{
     if(selectedValue==1){
-      setSelectType(Time.DAY.text);
+      setSelectType(TIME.DAY.text);
     }
     else   if(selectedValue==2){
-      setSelectType(Time.Month.text);
+      setSelectType(TIME.Month.text);
     }
     else   if(selectedValue==3){
-      setSelectType(Time.YEAR.text);
+      setSelectType(TIME.YEAR.text);
     }
     else   if(selectedValue==4){
-      setSelectType(Time.CUSTUM.text);
+      setSelectType(TIME.CUSTUM.text);
       dateTimePiker();
     }
     fillData();
@@ -29,7 +29,7 @@ export default function Report() {
   };
   return (
     <div>
-        <Select onChange={(selectedValue) => selectFunction(selectedValue) } className="primary" options={optionArray}  title="time arrange" size='medium' widthOfSelect="150px"/>
+        <Select onChange={(selectedValue) => selectFunction(selectedValue) } className="primary" options={OPTION_ARRAY}  title="time arrange" size='medium' widthOfSelect="150px"/>
         {/* <PdfGenerator data={[]} />   כאן נשלח את הנתונים של הטבלה כדי שיודפסו בקובץ פדפ */}
     </div>
   );

@@ -2,6 +2,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import React from 'react';
 import GenericButton from '../../stories/Button/GenericButton';
+import { LABEL_OF_PDF_DOWNLOAD, LABEL_OF_PDF_DOWNLOAD_HTML } from './report.constant';
 
 const DownloadPage = ({divID,nameFile="timeOut-Report",sizePage="a4",directly="p",size="mm"}) => {
   const downloadPDF = () => {
@@ -20,7 +21,7 @@ const DownloadPage = ({divID,nameFile="timeOut-Report",sizePage="a4",directly="p
 };
   return (
     <div>
-      <GenericButton className="secondary" label="Download as html PDF" size="medium" onClick={downloadPDF}></GenericButton>
+      <GenericButton className="secondary" label={LABEL_OF_PDF_DOWNLOAD_HTML} size="medium" onClick={downloadPDF}></GenericButton>
       </div>
   );
 };

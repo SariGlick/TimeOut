@@ -2,9 +2,9 @@ import React from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import GenericButton from '../../stories/Button/GenericButton';
-import { table } from './report.constant';
+import { LABEL_OF_PDF_DOWNLOAD, TABLE } from './report.constant';
 
-const PdfGenerator = ({ data, nameFile = "timeOut-Report", columnsforthetable = table, textLable = "download psectionRows" }) => {
+const PdfGenerator = ({ data, nameFile = "timeOut-Report", columnsforthetable = TABLE }) => {
   const userName = "name"; 
 
   const generatePdf = () => {
@@ -30,7 +30,7 @@ const PdfGenerator = ({ data, nameFile = "timeOut-Report", columnsforthetable = 
 
   return (
     <div>
-      <GenericButton className="secondary" label={textLable} size="medium" onClick={generatePdf} />
+        <GenericButton className="secondary" label={LABEL_OF_PDF_DOWNLOAD} size="medium" onClick={generatePdf} />
     </div>
   );
 };
