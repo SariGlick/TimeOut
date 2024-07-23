@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
@@ -12,7 +11,6 @@ const Setting = ({currentUser}) => {
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
     const [audioSrc,setAudioSrc]  = useState();
-    const {t,i18n}= useTranslation();
 
     const handleFileChange=(e) => {
          if(e.target.files[0])
