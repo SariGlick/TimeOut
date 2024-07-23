@@ -9,29 +9,31 @@ import './List.scss'
 export default function ListComponenet({ dataObject }) {
 
     return (
-        <>
-            <div className="wrapper" >
-                <List >
-                    {dataObject.messageData && dataObject.messageData.map((value) => (
-                        <ListItem
-                            key={value}
-                            disableGutters
-                            secondaryAction={
-                                <IconButton aria-label="comment">
-                                    <CommentIcon />
-                                </IconButton>
-                            }
-                        >
-                            <ListItemText style={{ color: value.read ? 'rgb(112, 112, 112)' : 'rgb(0, 0, 0)' }} primary={`${value.message}`} />
-                        </ListItem>
-                    ))}
-                </List>
-            </div>
-        </>
+        <div className="wrapper" >
+            <List >
+                {dataObject.messageData && dataObject.messageData.map((value) => (
+                    <ListItem
+                        key={value}
+                        disableGutters
+                        secondaryAction={
+                            <IconButton aria-label="comment">
+                                <CommentIcon />
+                            </IconButton>
+                        }
+                    >
+                        <ListItemText style={{ color: value.read ? 'rgb(112, 112, 112)' : 'rgb(0, 0, 0)' }} primary={`${value.message}`} />
+                    </ListItem>
+                ))}
+            </List>
+        </div>
+
     );
+
 }
 
-
+ListComponenet.prototype = {
+    dataObject: PropTypes.shape({}).isRequired
+}
 
 
 

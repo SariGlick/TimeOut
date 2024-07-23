@@ -9,7 +9,8 @@ import profileRouter from './router/profile.router.js'
 import visitedWebsiteRouter from './router/visitedWebsite.router.js'
 import userRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
-import {connecMongo} from './config/db.js'
+import {connectMongo} from './config/db.js'
+
 
 
 const app=express();
@@ -19,7 +20,7 @@ app.use(morgan('dev'));//הדפסת המידע של כל הבקשה
 app.use(cors());
 
 dotenv.config();
-connecMongo();
+connectMongo();
 app.get('/',(req,res)=>{
     res.send('welcome to time out ');
 })

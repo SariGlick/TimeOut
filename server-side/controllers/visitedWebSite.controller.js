@@ -1,5 +1,5 @@
 import visitedWebsites from '../models/visitedWebSite.model.js';
-import visitedWebsiteService from '../services/visitedWebsiteService.js'
+import visitedWebsiteservice from '../services/visitedWebsiteService.js'
 
 export const getAllVisitedWebsites = async (req, res) => {
     try {
@@ -55,7 +55,13 @@ export const deleteVisitedWebsite = async (req, res) => {
 
 
 export const showVisitedWebsite = async (req, res) => {
-    const obj = req.body;
+    // const obj = req.body;
+    console.log("i am ")
+    const obj={
+        userId:1,
+        type:'month',
+        dateRange:null
+    }
 
     if (obj.type == "custom") {
 
@@ -72,7 +78,7 @@ export const showVisitedWebsite = async (req, res) => {
     }
 
     try {
-        const data = visitedWebsiteservice(req.body);
+        const data = visitedWebsiteservice(obj);
         console.log(data);
         res.json(data);
     } catch {
