@@ -6,18 +6,22 @@ import { OPTION_ARRAY, TIME } from './report.constant.jsx';
 export default function Report() {
   const [selectType, setSelectType] = useState(TIME.Month);
   const selectFunction=(selectedValue)=>{
-    if(selectedValue==1){
-      setSelectType(TIME.DAY.text);
-    }
-    else   if(selectedValue==2){
-      setSelectType(TIME.Month.text);
-    }
-    else   if(selectedValue==3){
-      setSelectType(TIME.YEAR.text);
-    }
-    else   if(selectedValue==4){
-      setSelectType(TIME.CUSTUM.text);
-      dateTimePiker();
+    switch (selectedValue){
+      case 1:
+        setSelectType(TIME.DAY.text);
+        break;
+      case 2:
+        setSelectType(TIME.Month.text);
+        break;
+      case 3:
+        setSelectType(TIME.YEAR.text);
+        break;
+      case 4:
+        setSelectType(TIME.CUSTUM.text);
+        dateTimePiker();
+        break;
+      default:
+        break;
     }
     fillData();
   };
