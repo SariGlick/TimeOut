@@ -1,19 +1,15 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
-const { Schema } = mongoose;
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String },
   googleId: { type: String },
-<<<<<<< HEAD
-  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'Websites' }],
-=======
-  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsites' }],
->>>>>>> moriya/server-side
-  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
-  preferences: [{ type: Schema.Types.ObjectId, ref: 'Preference' }],
-  profileImage: { type: String }
+  profileImage: { type: String,default:"profile.jpg" },
+  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
+  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
+  preference: { type: Schema.Types.ObjectId, ref: 'Preference' }
+
 });
 
 export default mongoose.model('Users', userSchema);
