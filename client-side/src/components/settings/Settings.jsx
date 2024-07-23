@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
@@ -7,19 +7,24 @@ import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/
 
 
 const Settings = ({ user }) => {
-  
-  const [emailFrequency, setEmailFrequency] = useState( user.preference.emailFrequency.toLowerCase()|| EMAIL_FREQUENCY_ENUM.NEVER);
+
+  const [emailFrequency, setEmailFrequency] = useState(EMAIL_FREQUENCY_ENUM.NEVER);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const preferenceId=user.preference._id;
+  const preferenceId = user.preference._id;
 
+  useEffect(() => {
+    if (user.preference.emailFrequency) {
+      setEmailFrequency(user.preference.emailFrequency);
+    }
+  }, []);
 
   const handleFormSubmit = async () => {
     const formData = new FormData();
     formData.append('emailFrequency', emailFrequency);
 
     try {
-       await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
+      await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -37,7 +42,7 @@ const Settings = ({ user }) => {
       setMessage(MESSAGES.INVALID_EMAIL_FREQUENCY);
       return;
     }
-    setEmailFrequency(selectedFrequency.toLowerCase());
+    setEmailFrequency(selectedFrequency);
   };
 
 
@@ -48,8 +53,8 @@ const Settings = ({ user }) => {
         className='select-email-frequency'
         options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
           text: key.toLowerCase(),
-          value: EMAIL_FREQUENCY_ENUM[key.toLowerCase()],
-          icon: EMAIL_FREQUENCY_ENUM[key.toLowerCase()] || '⏰'
+          value: EMAIL_FREQUENCY_ENUM[key],
+          icon: '⏰'
         }))}
         title={TITLES.SELECT_EMAIL_FREQUENCY}
         onChange={handleChangeEmailFreq}
