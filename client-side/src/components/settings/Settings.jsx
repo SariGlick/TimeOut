@@ -3,6 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
+import {uploadFileUtil} from '../../uploadFileUtil.js'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
 const Setting = ({currentUser}) => {
@@ -10,7 +11,7 @@ const Setting = ({currentUser}) => {
     const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
-    const [audioSrc,setAudioSrc]  = useState();
+    const [audioSrc,setAudioSrc]  = useState(currentUser.preferences.soundVoice);
 
     const handleFileChange=(e) => {
          if(e.target.files[0])
@@ -21,24 +22,13 @@ const Setting = ({currentUser}) => {
          }
           
     };
-    
-
     const sendPreference = async () => {
-       
         const formData = new FormData();
+        const preferencesUrl=`${url}/preferences/${_id}`
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
         formData.append('emailFrequency',emailFrequency);
-          try {
-            const response = await axios.put(`${url}/preferences/${_id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            
-          } catch (error) {
-             console.error(error)
-          }  
+        uploadFileUtil(preferencesUrl,formData,'post')
     };
     
     
@@ -49,10 +39,9 @@ const Setting = ({currentUser}) => {
             <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  />
           </div>
           <div>
-          { audioSrc &&
             <audio controls>
                <source src={audioSrc} ></source>
-            </audio>}
+            </audio>
           </div>       
           <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='' disabled={false}/>
         </div>  
