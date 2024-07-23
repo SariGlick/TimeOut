@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
@@ -8,16 +8,11 @@ import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/
 
 const Settings = ({ user }) => {
 
-  const [emailFrequency, setEmailFrequency] = useState(EMAIL_FREQUENCY_ENUM.NEVER);
+  const [emailFrequency, setEmailFrequency] = useState(user.preference.emailFrequency);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const preferenceId = user.preference._id;
 
-  useEffect(() => {
-    if (user.preference.emailFrequency) {
-      setEmailFrequency(user.preference.emailFrequency);
-    }
-  }, []);
 
   const handleFormSubmit = async () => {
     const formData = new FormData();
