@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
-import { useAppSelector } from '../../redux/store.jsx';
 import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/index.jsx';
 
 
@@ -19,23 +18,22 @@ const createTimeZones = () => {
 };
 
 
-const Settings = () => {
-  const user = useAppSelector((state) => state.auth.user);
+const Settings = ({user}) => {
   const [timeZone, setTimeZone] = useState('GMT±00:00'); 
   const [emailFrequency, setEmailFrequency] = useState( EMAIL_FREQUENCY_ENUM.NEVER);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  
+  const preferenceId = user.preference._id;
 
   useEffect(() => {
     if (user) {
-      setEmailFrequency(user.preference.emailFrequency || EMAIL_FREQUENCY_ENUM.NEVER);
-      setTimeZone(user.preference.timeZone || 'GMT±00:00');
+      setEmailFrequency(user.preference.emailFrequency);
+      setTimeZone(user.preference.timeZone);
     }
-  }, [user]);
+  }, []);
 
   const handleFormSubmit = async () => {
-    const preferenceId = user.preference._id;
+    
     const formData = new FormData();
     formData.append('emailFrequency', emailFrequency);
     formData.append('timeZone', timeZone);
