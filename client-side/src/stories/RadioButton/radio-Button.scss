@@ -1,16 +1,15 @@
-
 @import '../variables.scss';
 
 .custom-radio-group {
-    padding: 20px;
+    padding: 5%;
     color: $primary-color;
 }
 
 .custom-form-label,
 .custom-form-control-label {
-    font-family: 'Montserrat', sans-serif;;
+    font-family: 'Montserrat', sans-serif;
     color: $primary-color;
-    margin-bottom: 10px;
+    margin-bottom: 4%;
 }
 
 .custom-form-label {
@@ -38,5 +37,10 @@
 
     &.Mui-checked .MuiSvgIcon-root {
         color: $secondary-color;
+    }
+
+    
+    &.Mui-checked .MuiTouchRipple-root {
+        display: none;
     }
 }

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Radio, FormControlLabel, RadioGroup, FormControl } from '@mui/material';
 import './radio-Button.scss';
 
-const RadioButton = ({ options, selectedOption, onChange }) => {
+const RadioButtonComponent = ({ options, selectedOption, onChange }) => {
     return (
         <FormControl component="fieldset" className="custom-radio-group">
             <RadioGroup value={selectedOption} onChange={onChange}>
@@ -22,10 +22,17 @@ const RadioButton = ({ options, selectedOption, onChange }) => {
     );
 };
 
-RadioButton.propTypes = {
-    options: PropTypes.array.isRequired,
+RadioButtonComponent.propTypes = {
+    options: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+        })
+    ).isRequired,
     selectedOption: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
 };
+
+const RadioButton = React.memo(RadioButtonComponent);
 
 export default RadioButton;
