@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import {uploadFile} from '../../uploadFileUtil.js'
+import {uploadFile} from './uploadFileUtil.js'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
-const Setting = ({currentUser={}}) => {
+const Setting = ({currentUser}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
     const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
@@ -28,7 +27,7 @@ const Setting = ({currentUser={}}) => {
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
         formData.append('emailFrequency',emailFrequency);
-        uploadFile(preferencesUrl,formData,'post')
+        uploadFile(preferencesUrl,formData,'put')
     };
     
     
@@ -43,7 +42,7 @@ const Setting = ({currentUser={}}) => {
                <source src={audioSrc} ></source>
             </audio>
           </div>       
-          <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='' disabled={false}/>
+          <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='buttonInput' disabled={false}/>
         </div>  
     );
 };
