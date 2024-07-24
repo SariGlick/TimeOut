@@ -69,6 +69,7 @@ export const deleteUser = async (req, res,next) => {
 
 export const updatedUser = async (req, res,next) => {
   const id = req.params.id;
+  req.body.password= await bcrypt.hash(req.body.password, 10);
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})
   try {
@@ -85,5 +86,3 @@ export const updatedUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
-
-
