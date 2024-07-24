@@ -5,6 +5,7 @@ import './App.scss';
 
 function App() {
 
+  //const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
 
   
   return (

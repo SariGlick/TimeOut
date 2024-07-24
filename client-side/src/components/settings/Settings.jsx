@@ -5,7 +5,7 @@ import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import {uploadFile} from './uploadFileUtil.js'
 import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
-const Setting = ({currentUser}) => {
+const Settings = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
     const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
@@ -46,7 +46,7 @@ const Setting = ({currentUser}) => {
         </div>  
     );
 };
- Setting.propTypes={
+ Settings.propTypes={
     currentUser: PropTypes.object.isRequired
  }
- export default Setting;
+ export default Settings;
