@@ -4,7 +4,7 @@ import Users from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 export const getUsers = async (req, res) => {
   try {
-    const users = await Users.find().populate('visitsWebsites.websiteId  profiles.blockedSites profiles.limitedWebsites.websiteId' )
+    const users = await Users.find().populate('visitsWebsites.websiteId  profiles.blockedSites profiles.limitedWebsites.websiteId')
     .select('-__v')
     res.status(200).send(users);
   } catch (err) {
@@ -31,8 +31,6 @@ export const getUserById = async (req, res,next) => {
   }
 };
 
-
-
 export const addUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -52,9 +50,6 @@ export const addUser = async (req, res) => {
 
   }
 };
-
-
-
 
 export const deleteUser = async (req, res) => {
   try {
@@ -78,8 +73,8 @@ export const updatedUser = async (req, res,next) => {
     return next({message:'id is not valid'})
   try {
     const id = req.params.id;
-    // const { name, email, password } = req.body;
-    // const updateFields = { name, email, password };
+    const { name, email, password } = req.body;
+    const updateFields = { name, email, password };
     if (req.file) {
       req.body.profileImage = req.file.originalname;
     }
@@ -93,6 +88,28 @@ export const updatedUser = async (req, res,next) => {
     res.status(500).send('Error updating user');
   }
 };
+// export const updateDateFormat = async (req, res, next) => {
+//   const id = req.params.id;
+//   const { formatedDate } = req.body;
+
+//   if (!mongoose.Types.ObjectId.isValid(id)) {
+//     return next({ message: 'id is not valid' });
+//   }
+
+//   try {
+//     const updatedUser = await Users.findByIdAndUpdate(id, { formatedDate }, { new: true });
+//     if (!updatedUser) {
+//       return res.status(404).send('User not found');
+//     }
+//     res.status(200).json(updatedUser);
+//   } catch (err) {
+//     console.error(err);
+//     next({ message: err.message, status: 500 });
+//   }
+// };
+
+
+
 
 
 
