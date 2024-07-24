@@ -17,3 +17,11 @@ export const TITLES = {
 export const LABELS = {
     UPDATE_USER_SETTINGS: 'Update User Settings',
   };
+  const CONSTANTS = {
+    EMAIL_FREQUENCY_ENUM,
+    MESSAGES,
+    TITLES,
+    LABELS,
+};
+
+export default CONSTANTS;

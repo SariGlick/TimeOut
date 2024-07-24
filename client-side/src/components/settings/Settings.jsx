@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
-import { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } from '../../constants/index.jsx';
+import CONSTANTS from '../../constants/index.jsx'
 
 
 
-const Settings = ({ user }) => {
-
-  const [emailFrequency, setEmailFrequency] = useState(user.preference.emailFrequency);
+const Settings = ({ currentUser }) => {
+  const { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } = CONSTANTS;
+  const {emailFrequency: initialEmailFrequency,_id:preferenceId } = currentUser.preference;
+  const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const preferenceId = user.preference._id;
 
 
   const handleFormSubmit = async () => {
@@ -68,5 +69,8 @@ const Settings = ({ user }) => {
     </div>
   );
 };
+Settings.propTypes={
+  currentUser: PropTypes.object.isRequired
+}
 
 export default Settings;
