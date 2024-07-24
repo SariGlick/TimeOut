@@ -1,54 +1,65 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import GenericButton from '../../stories/Button/GenericButton'
-import GenericInput from '../../stories/GenericInput/genericInput';
+// import PropTypes from 'prop-types';
+import GenericButton from '../../stories/Button/GenericButton.jsx'
+import GenericInput from '../../stories/GenericInput/genericInput.jsx'
+import { CHANGE_RINGTONE, SEND_PREFERENCE } from './constantSetting.js'
 
 const Settings = ({ user }) => {
-  const userId = user._id;
-  const [preview, setPreview] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+  const { emailFrequency, sendNotificationTime, _id } = user.preference;
+  const url = process.env.REACT_APP_BASE_URL;
+  const [ringtoneFile, setRingtoneFile] = useState(null);
+  const [audioSrc, setAudioSrc] = useState();
 
-  const handleFilePicture = (e) => {
-    if (e) {
-      setImageFile(e.target.files[0]);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-      };
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const validImageType = 'image/jpeg';
+
+      if (file.type === validImageType) {
+        setRingtoneFile(file);
+        const audioUrl = URL.createObjectURL(e.target.files[0]);
+        setAudioSrc(audioUrl);
       }
     }
   };
 
-  const handleFormSubmit = async () => {
+  const sendPreference = async () => {
+
     const formData = new FormData();
-    formData.append('profileImage', imageFile);
+    formData.append('soundVoice', ringtoneFile);
+    formData.append('sendNotificationTime', sendNotificationTime);
+    formData.append('emailFrequency', emailFrequency);
     try {
-      await axios.put(`${baseUrl}/users/${userId}`, formData, {
+      const response = await axios.put(`${url}/preferences/${_id}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+          'Content-Type': 'multipart/form-data'
+        }
       });
+
     } catch (error) {
-      console.error('error updating image', error);
+      console.error(error)
     }
   };
 
+
   return (
-    <>
-      <div>
-        <GenericInput size='medium' label='Add Image' type='file' onChange={handleFilePicture} />
-        <GenericButton size='small' label='Upload Image' onClick={handleFormSubmit} className='UploadImageButton' />
+
+    <div>
+      <div className='uploadWarper'>
+        <GenericInput type='file' label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium' className=""/>
       </div>
-      {preview && (
-        <div>
-          <img src={preview} alt='Profile Preview' style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
-        </div>
-      )}
-    </>
+      <div>
+        {audioSrc &&
+          <audio controls>
+            <source src={audioSrc} ></source>
+          </audio>}
+      </div>
+      <GenericButton size='small' label={SEND_PREFERENCE} onClick={sendPreference} className=''  />
+    </div>
   );
 };
-
+// Settings.propTypes = {
+//   currentUser: PropTypes.object.isRequired,
+// }
 export default Settings;
