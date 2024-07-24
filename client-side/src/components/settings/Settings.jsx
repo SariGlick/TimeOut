@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
-import CONSTANTS from '../../constants/index.jsx'
+import CONSTANTS from '../../constants/index.js'
 
 
 
