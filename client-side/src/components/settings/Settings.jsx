@@ -19,8 +19,8 @@ const createTimeZones = () => {
 
 
 const Settings = ({user}) => {
-  const [timeZone, setTimeZone] = useState('GMT±00:00'); 
-  const [emailFrequency, setEmailFrequency] = useState( EMAIL_FREQUENCY_ENUM.NEVER);
+  const [timeZone, setTimeZone] = useState(user.preference.timeZone); 
+  const [emailFrequency, setEmailFrequency] = useState(user.preference.emailFrequency);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const preferenceId = user.preference._id;
@@ -40,14 +40,13 @@ const Settings = ({user}) => {
 
     try {
       await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
-
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
       setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATED);
     } catch (error) {
-      console.error('Error updating email frequency preference:', error);
+      console.error('Error updating preference:', error);
       setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATE_ERROR);
     }
   };
@@ -74,8 +73,8 @@ const Settings = ({user}) => {
         className='select-email-frequency'
         options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
           text: key.toLowerCase(),
-          value: EMAIL_FREQUENCY_ENUM[key.toLowerCase()],
-          icon: EMAIL_FREQUENCY_ENUM[key.toLowerCase()] || '⏰'
+          value: EMAIL_FREQUENCY_ENUM[key],
+          icon: '⏰'
         }))}
         title={TITLES.SELECT_EMAIL_FREQUENCY}
         onChange={handleChangeEmailFreq}

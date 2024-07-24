@@ -16,4 +16,10 @@ export const TITLES = {
 };
 export const LABELS = {
     UPDATE_USER_SETTINGS: 'Update User Settings',
+    SIGN_UP:'Sign Up'
   };
+export  const LANGUAGE ={
+    en:'english',
+    he:'עברית',
+    es:'española'
+}
