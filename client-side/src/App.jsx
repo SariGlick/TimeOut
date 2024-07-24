@@ -10,6 +10,8 @@ function App() {
   return (
     <div className="App">
       <Header/> 
+      <h1>Choose Date Format</h1> 
+       <DateFormatter initialDate={format(new Date())} /> 
       <Footer/>
     </div>
   );
