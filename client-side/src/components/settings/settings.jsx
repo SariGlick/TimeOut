@@ -1,65 +1,58 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// import PropTypes from 'prop-types';
-import GenericButton from '../../stories/Button/GenericButton.jsx'
-import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import { CHANGE_RINGTONE, SEND_PREFERENCE } from './constantSetting.js'
+import GenericButton from '../../stories/Button/GenericButton';
+import GenericInput from '../../stories/GenericInput/genericInput';
 
 const Settings = ({ user }) => {
-  const { emailFrequency, sendNotificationTime, _id } = user.preference;
-  const url = process.env.REACT_APP_BASE_URL;
-  const [ringtoneFile, setRingtoneFile] = useState(null);
-  const [audioSrc, setAudioSrc] = useState();
+  const userId = user._id;
+  const [preview, setPreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const baseUrl = process.env.REACT_APP_BASE_URL;
 
-  const handleFileChange = (e) => {
+  const handleFilePicture = (e) => {
     const file = e.target.files[0];
     if (file) {
-      const validImageType = 'image/jpeg';
-
-      if (file.type === validImageType) {
-        setRingtoneFile(file);
-        const audioUrl = URL.createObjectURL(e.target.files[0]);
-        setAudioSrc(audioUrl);
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (validImageTypes.includes(file.type)) {
+        setImageFile(file);
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreview(reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        console.error('Unsupported file type. Please upload an image (JPEG, PNG, GIF).');
       }
     }
   };
 
-  const sendPreference = async () => {
-
+  const handleFormSubmit = async () => {
     const formData = new FormData();
-    formData.append('soundVoice', ringtoneFile);
-    formData.append('sendNotificationTime', sendNotificationTime);
-    formData.append('emailFrequency', emailFrequency);
+    formData.append('profileImage', imageFile);
     try {
-      const response = await axios.put(`${url}/preferences/${_id}`, formData, {
+      await axios.put(`${baseUrl}/users/${userId}`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
-
     } catch (error) {
-      console.error(error)
+      console.error('error updating image', error);
     }
   };
 
-
   return (
-
-    <div>
-      <div className='uploadWarper'>
-        <GenericInput type='file' label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium' className=""/>
-      </div>
+    <>
       <div>
-        {audioSrc &&
-          <audio controls>
-            <source src={audioSrc} ></source>
-          </audio>}
+        <GenericInput size='medium' label='Add Image' type='file' onChange={handleFilePicture} />
+        <GenericButton size='small' label='Upload Image' onClick={handleFormSubmit} className='UploadImageButton' />
       </div>
-      <GenericButton size='small' label={SEND_PREFERENCE} onClick={sendPreference} className=''  />
-    </div>
+      {preview && (
+        <div>
+          <img src={preview} alt='Profile Preview' style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
+        </div>
+      )}
+    </>
   );
 };
-// Settings.propTypes = {
-//   currentUser: PropTypes.object.isRequired,
-// }
+
 export default Settings;
