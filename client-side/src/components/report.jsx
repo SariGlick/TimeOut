@@ -7,11 +7,9 @@ const DateTimePicker = ({onDateSubmit}) => {
     const [endDate, setEndDate] = useState('');
 
     const handleStartDateChange = (start) => {
-        console.log('Start Date Selected:', start);
         setStartDate(start);
     };
     const handleEndDateChange = (end) => {
-        console.log('End Date Selected:', end);
         setEndDate(end);
     };
     const handleSubmit = () => {
@@ -19,7 +17,6 @@ const DateTimePicker = ({onDateSubmit}) => {
     };
 
     const isButtonDisabled = (!startDate || !endDate) || startDate > endDate; // Button is disabled when startDate or endDate is empty
-    console.log('Is Button Disabled:', isButtonDisabled);
 
 
     return (
