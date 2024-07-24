@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import SelectMui from '@mui/material/Select';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import './select.scss';
 
 const Select = ({className, options= [{ text: "option1", icon: '🖋️' }, { text: "option2", icon: '🖋️' }], onChange = undefined, title,size= 'large',widthOfSelect, value}) => {
