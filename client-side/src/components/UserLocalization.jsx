@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
-import { LANGUAGE,LABELS } from '../constants/index.jsx';
+import { LANGUAGE, LABELS, MESSAGES } from '../constants/index.jsx';
 import GenericButton from '../stories/Button/GenericButton.jsx';
 
 function getGMTOffset() {
@@ -18,31 +18,35 @@ const SignUp = ({ user }) => {
     const baseUrl = process.env.REACT_APP_BASE_URL;
 
     const handleSignUp = async () => {
-        window.confirm('Allow us to get your location and preferred language for a better experience?');
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const userTimeZone = getGMTOffset();
-                    setTimeZone(userTimeZone);
+        const permission = window.confirm(MESSAGES.CONFIRM_LOCATION);
+        if (permission) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const userTimeZone = getGMTOffset();
+                        setTimeZone(userTimeZone);
 
-                    // Get language
-                    const userLanguage = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language || 'en';
-                    const languageCode = userLanguage.split('-')[0]; // Extract just the language code
-                    const validatedLanguage = LANGUAGE[languageCode] ? languageCode : 'en'; // Check if language exists
-                    setLanguage(validatedLanguage);
+                        // Get language
+                        const userLanguage = navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language || 'en';
+                        const languageCode = userLanguage.split('-')[0]; // Extract just the language code
+                        const validatedLanguage = LANGUAGE[languageCode] ? languageCode : 'en'; // Check if language exists
+                        setLanguage(validatedLanguage);
 
-                    // Update preferences with user's data
-                    updateUserPreferences(userTimeZone, validatedLanguage);
-                },
-                (error) => {
-                    console.error('Error getting location:', error);
-                    // Since geolocation failed, update with defaults
-                    updateUserPreferences(timeZone, language);
-                }
-            );
+                        // Update preferences with user's data
+                        updateUserPreferences(userTimeZone, validatedLanguage);
+                    },
+                    (error) => {
+                        console.error('Error getting location:', error);
+                        // Since geolocation failed, update with defaults
+                        updateUserPreferences(timeZone, language);
+                    }
+                );
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+                // Update with defaults if geolocation not supported
+                updateUserPreferences(timeZone, language);
+            }
         } else {
-            console.error('Geolocation is not supported by this browser.');
-            // Update with defaults if geolocation not supported
             updateUserPreferences(timeZone, language);
         }
 
@@ -66,11 +70,11 @@ const SignUp = ({ user }) => {
 
     return (
         <GenericButton
-        className='signUp'
-        label={LABELS.SIGN_UP}
-        size='medium'
-        onClick={handleSignUp}
-      />
+            className='signUp'
+            label={LABELS.SIGN_UP}
+            size='medium'
+            onClick={handleSignUp}
+        />
     );
 };
 
