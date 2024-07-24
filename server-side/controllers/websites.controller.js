@@ -57,7 +57,8 @@ export const deleteWebsite=async(req,res,next)=>{
         const deletedWebsite= await Websites.findByIdAndDelete(id);
     if(!deletedWebsite)
         return next({message:'website not found'});
-    return res.status(204).json({message:'website deleted succesfully'});
+    await Websites.findByIdAndDelete(id);
+    return res.status(204).send('website deleted succesfully');
     } catch (error) {
         return next({message: error.message,status:500});
     } 

@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Website Blocker7",
+  "version": "1.0",
+  "description": "Blocks specified websites on Chrome using manifest v3",
+  "permissions": [
+    "storage",
+    "scripting",
+    "webNavigation",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+   "web_accessible_resources": 
+   [{"resources": ["oops.html"],
+    "matches": ["<all_urls>"]}]
+}
