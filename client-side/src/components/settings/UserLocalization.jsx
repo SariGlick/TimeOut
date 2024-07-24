@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import { LANGUAGE, LABELS, MESSAGES } from '../constants/index.jsx';
+import CONSTANTS from '../../constants/index.js'
 import GenericButton from '../stories/Button/GenericButton.jsx';
 
 function getGMTOffset() {
@@ -12,6 +12,7 @@ function getGMTOffset() {
 }
 
 const SignUp = ({ user }) => {
+    const { MESSAGES,LANGUAGE } = CONSTANTS;
     const [timeZone, setTimeZone] = useState('GMT±00:00');
     const [language, setLanguage] = useState('en');
     const preferenceId = user.preference._id;
@@ -46,8 +47,6 @@ const SignUp = ({ user }) => {
                 // Update with defaults if geolocation not supported
                 updateUserPreferences(timeZone, language);
             }
-        } else {
-            updateUserPreferences(timeZone, language);
         }
 
     };

@@ -17,7 +17,6 @@
 };
  const LABELS = {
     UPDATE_USER_SETTINGS: 'Update User Settings',
-    SIGN_UP:'Sign Up'
   };
   const LANGUAGE ={
     en:'english',

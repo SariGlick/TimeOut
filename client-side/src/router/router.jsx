@@ -2,6 +2,7 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
 import Layout from "./layout.jsx";
+
 export const router = createBrowserRouter([
     {
         path: '',
