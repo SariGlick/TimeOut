@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import Select from '../Select/Select';
@@ -6,8 +5,9 @@ import GenericButton from '../Button/GenericButton.jsx'
 import axios from 'axios';
 import {formatDate} from './formatDate.js'
 
-const DateFormatter = ({ initialDate }) => {
-  const [currentDate, setCurrentDate] = useState(format(initialDate, 'yyyy-MM-dd'));
+const DateFormatter = ({ currentUser }) => {
+  const {emailFrequency,sendNotificationTime,soundVoice,_id}=currentUser.preferences
+  const {formatedDate}=currentUser;
   const [dateFormat, setDateFormat] = useState('yyyy-MM-dd');
 const url=process.env.REACT_APP_BASE_URL;
   const dateFormats = [
@@ -17,11 +17,6 @@ const url=process.env.REACT_APP_BASE_URL;
     { value: 'EEEE, MMMM do, yyyy', label: 'EEEE, MMMM do, yyyy' },
     { value: 'yyyy-MM-dd HH:mm:ss', label: 'yyyy-MM-dd HH:mm:ss' },
   ];
-
-  useEffect(() => {
-    setCurrentDate(format(initialDate, dateFormat));
-  }, [initialDate, dateFormat]);
-
   
  const sendFormatDate = async()=>{
    const response = await axios.put(`${url}/preferences/`)
@@ -42,6 +37,7 @@ const url=process.env.REACT_APP_BASE_URL;
       />
         <GenericButton size='medium' label='send format date' onClick={sendFormatDate}/>
     </div>
+    
   );
   
 };
