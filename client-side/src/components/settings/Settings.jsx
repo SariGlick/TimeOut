@@ -6,7 +6,8 @@ import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Select from '../../stories/Select/Select.jsx'
 import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES,LANGUAGE,CHANGE_NOTIFICATION} from './constantSetting.js'
-const arrOption=[];
+//import { uploadFile } from './uploadFileUtil.js';
+//const arrOption=[];
 
 const Setting = ({currentUser}) => {
     const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
@@ -33,7 +34,6 @@ const Setting = ({currentUser}) => {
      }
    
      const changeNotificationTime=(event)=>{
-        // const  notificationTime=event;
          setNotificationTime(event);
          console.log('notificationTime',notificationTime);
      }
@@ -54,7 +54,9 @@ const Setting = ({currentUser}) => {
              console.error(error)
           }  
     };
-    
+    const sendNotification =()=>{
+
+    }
     
     return (
       <> 
@@ -83,6 +85,7 @@ const Setting = ({currentUser}) => {
 
           <GenericInput size='small'  label={t(CHANGE_NOTIFICATION)} onChange={changeNotificationTime} type='number' className='' disabled={false}/>
           <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
+          <GenericButton size='small'  label={'send notification time'} onClick={sendNotification} className='' disabled={false}/>
 
 
       </>
