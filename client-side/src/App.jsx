@@ -4,8 +4,11 @@ import Header from './stories/header/header'
 import Footer from './stories/footer/FooterComponent'
 import Setting from './components/settings/Settings.jsx';
 
+import './App.scss';
+
 function App() {
 
+  //const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
 
   
   return (

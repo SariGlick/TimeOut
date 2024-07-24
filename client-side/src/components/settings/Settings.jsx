@@ -1,23 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import PropTypes, { object } from 'prop-types';
-import { useTranslation } from 'react-i18next'
+import PropTypes from 'prop-types';
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import Select from '../../stories/Select/Select.jsx'
-import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES,LANGUAGE,CHANGE_NOTIFICATION} from './constantSetting.js'
-//import { uploadFile } from './uploadFileUtil.js';
-//const arrOption=[];
+import {uploadFile} from './uploadFileUtil.js'
+import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
-const Setting = ({currentUser}) => {
-    const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
+const Settings = ({currentUser={}}) => {
+    const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
+    const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
-    const [audioSrc,setAudioSrc]  = useState();
-    const [notificationTime, setNotificationTime]=useState();
-    const [lng,setLng] = useState('en');
-    const {t,i18n}= useTranslation();
-    
+    const [audioSrc,setAudioSrc]  = useState(soundVoice);
+
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
@@ -38,21 +32,12 @@ const Setting = ({currentUser}) => {
          console.log('notificationTime',notificationTime);
      }
     const sendPreference = async () => {
-       
         const formData = new FormData();
+        const preferencesUrl=`${url}/preferences/${_id}`
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
         formData.append('emailFrequency',emailFrequency);
-          try {
-            const response = await axios.put(`${url}/preferences/${_id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            
-          } catch (error) {
-             console.error(error)
-          }  
+        uploadFile(preferencesUrl,formData,'put')
     };
     const sendNotification =()=>{
 
@@ -66,10 +51,9 @@ const Setting = ({currentUser}) => {
             <GenericInput  type='file'  label={t(CHANGE_RINGTONE)} onChange={handleFileChange} size='medium'  />
           </div>
           <div>
-          { audioSrc &&
             <audio controls>
                <source src={audioSrc} ></source>
-            </audio>}
+            </audio>
           </div>       
 
          <Select  title={t(SELECT_LANGUAGES)} 
@@ -92,7 +76,7 @@ const Setting = ({currentUser}) => {
          
     );
 };
- Setting.propTypes={
+ Settings.propTypes={
     currentUser: PropTypes.object.isRequired
  }
- export default Setting;
+ export default Settings;
