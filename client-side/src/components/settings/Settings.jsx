@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { useTranslation } from 'react-i18next'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Select from '../../stories/Select/Select.jsx'
-import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES} from './constantSetting.js'
+import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES,LANGUAGE,CHANGE_NOTIFICATION} from './constantSetting.js'
+const arrOption=[];
 
 const Setting = ({currentUser}) => {
     const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
     const [audioSrc,setAudioSrc]  = useState();
+    const [notificationTime, setNotificationTime]=useState();
     const [lng,setLng] = useState('en');
     const {t,i18n}= useTranslation();
-
+    
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
@@ -30,7 +32,11 @@ const Setting = ({currentUser}) => {
           setLng(value)
      }
    
-
+     const changeNotificationTime=(event)=>{
+        // const  notificationTime=event;
+         setNotificationTime(event);
+         console.log('notificationTime',notificationTime);
+     }
     const sendPreference = async () => {
        
         const formData = new FormData();
@@ -65,18 +71,20 @@ const Setting = ({currentUser}) => {
           </div>       
 
          <Select  title={t(SELECT_LANGUAGES)} 
-          options={[{text:'עברית',value:'he'}, {text:'española',value:'es'},{text:'english',value:'en',}]} 
+          options={[{text:LANGUAGE.he,value:'he'}, {text:LANGUAGE.es,value:'es'},{text:LANGUAGE.en,value:'en',}]} 
           className='' 
           size={'large'}
           widthOfSelect='200px'
           value={lng}
           onChange={e=>handleLngChange(e.target.value)}/>
-        </div>
+        </div>          
         
-        
-        
-  
+         <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
+
+          <GenericInput size='small'  label={t(CHANGE_NOTIFICATION)} onChange={changeNotificationTime} type='number' className='' disabled={false}/>
           <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
+
+
       </>
          
     );
