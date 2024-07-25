@@ -6,8 +6,8 @@
     YEARLY: 'yearly',
   };
  const MESSAGES = {
-    EMAIL_FREQUENCY_UPDATED: 'Email frequency preference updated successfully!',
-    EMAIL_FREQUENCY_UPDATE_ERROR: 'Error updating email frequency preference. Please try again later.',
+  SUCCESS_UPDATED_SETTINGS: 'Settings updated successfully!',
+  ERROR_UPDATE_SETTINGS: 'Failed to update settings. Please try again.',
     INVALID_EMAIL_FREQUENCY: 'Invalid email frequency selected. Please choose a valid option.',
     CONFIRM_LOCATION: 'Allow us to get your location and preferred language for a better experience?',
 };

@@ -1,7 +1,10 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
+import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
+
+
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +22,10 @@ export const router = createBrowserRouter([
             {
                 path: '/profiles',
                 element: <ProfileList />
+            },
+            {
+                path: '/settings',
+                element: <Settings />
             }
         ]
     },

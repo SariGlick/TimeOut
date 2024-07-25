@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import CONSTANTS from '../../constants/index.js';
+import {uploadFile} from './uploadFileUtil.js'
 
 
 const createTimeZones = () => {
@@ -19,30 +19,25 @@ const createTimeZones = () => {
 };
 
 
-const Settings = ({ currentUser }) => {
+const Settings = ({ currentUser={} }) => {
   const { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } = CONSTANTS;
-  const {emailFrequency: initialEmailFrequency,timeZone:initialTimeZone,_id:preferenceId } = currentUser.preference;
+  const { emailFrequency: initialEmailFrequency, timeZone: initialTimeZone, _id: preferenceId } = currentUser.preference;
   const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
-  const [timeZone, setTimeZone] = useState(initialTimeZone); 
+  const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [message, setMessage] = useState('');
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleFormSubmit = async () => {
-    
+
     const formData = new FormData();
     formData.append('emailFrequency', emailFrequency);
     formData.append('timeZone', timeZone);
-
+    const preferencesUrl = `${baseUrl}/preferences/${preferenceId}`
     try {
-      await axios.put(`${baseUrl}/preferences/${preferenceId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATED);
+      const response = await uploadFile(preferencesUrl, formData, 'put');
+      setMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS); 
     } catch (error) {
-      console.error('Error updating preference:', error);
-      setMessage(MESSAGES.EMAIL_FREQUENCY_UPDATE_ERROR);
+      setMessage(MESSAGES.ERROR_UPDATE_SETTINGS);
     }
   };
 
@@ -103,7 +98,7 @@ const Settings = ({ currentUser }) => {
     </div>
   );
 };
-Settings.propTypes={
+Settings.propTypes = {
   currentUser: PropTypes.object.isRequired
 }
 
