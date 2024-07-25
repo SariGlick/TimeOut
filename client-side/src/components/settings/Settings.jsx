@@ -63,8 +63,11 @@ const Settings = ({currentUser={}}) => {
           value={lng}
           onChange={e=>handleLngChange(e.target.value)}/>
         </div>          
+        
           <GenericInput size='small'  label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='' />
           <GenericButton size='small'  label={t(LABELS.SEND_PREFERENCE)} onClick={sendPreference} className='but-send'/>
+
+
       </>
          
     );
