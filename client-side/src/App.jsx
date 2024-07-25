@@ -6,9 +6,10 @@ import { store } from './redux/store.jsx';
 import './App.scss';
 
 function App() {
+
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} />      
       <Footer />
     </Provider>
   );

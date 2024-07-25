@@ -12,6 +12,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddProfile from './addProfileComponent.jsx';
 import ChangeProfile from './changeProfileComponent.jsx';
+import ProfileActivationTimer from './ProfileActivationTimer.jsx';
 import './profileScss.scss'; 
 const ProfileList = () => {
     const dispatch = useAppDispatch();
@@ -19,6 +20,10 @@ const ProfileList = () => {
     const [loading, setLoading] = useState(true);
     const [editRowId, setEditRowId] = useState(null);
     const [editedRows, setEditedRows] = useState(null);
+    const [isChooseProfile, setIsChooseProfile] = useState(false);
+    const [time, setTime] = useState(0);
+
+
     const profiles = useAppSelector(selectProfile);
 
     const fetchProfiles = async () => {
@@ -50,6 +55,14 @@ const ProfileList = () => {
         setSelectedProfile(profile);
         setEditRowId(null);
         setEditedRows(null);
+        setIsChooseProfile(true);
+        setTime();
+
+
+        const start = new Date(profile.timeProfile.start);
+        const end = new Date(profile.timeProfile.end);
+        const durationMinutes = (end - start) / 1000 / 60;
+        setTime(durationMinutes);
     };
 
     const handleDelete = async (id) => {
@@ -193,6 +206,7 @@ const ProfileList = () => {
                     </div>
                 )
             )}
+            {isChooseProfile && <ProfileActivationTimer profileActivationTime={time}/>}
         </div>
     );
 };
