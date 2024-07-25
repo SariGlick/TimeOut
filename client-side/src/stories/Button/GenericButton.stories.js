@@ -24,11 +24,17 @@ Secondary.args = {
     label: "secondary button",
     size: "medium"
 }
-export const WithIcon=Template.bind({});
-WithIcon.args={
-    className:"secondary",
-    label: "primary button",
+export const primaryIcon = Template.bind({});
+primaryIcon.args = {
+    className: "primary",    
     size: "medium",
-    icon:<DeleteIcon/>,
-    onIconClick: () => console.log('Icon clicked')
+    icon:DeleteIcon
+   
+}
+export const SecondaryIcon = Template.bind({});
+SecondaryIcon.args = {
+    className: "secondary",
+    icon:DeleteIcon,
+    size: "medium",
+     disabled:true
 }
