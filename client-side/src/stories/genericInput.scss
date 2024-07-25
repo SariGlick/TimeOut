@@ -1,9 +1,6 @@
+/* genericInput.scss */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-$color-border: rgb(61, 192, 155);
-$color-border-hover: rgb(45, 158, 126);
-$color-error: red;
-$color-black: black;
+@import './style.scss';
 
 .generic-input {
   .MuiOutlinedInput-root {
@@ -73,6 +70,43 @@ $color-black: black;
       color: $color-error;
     }
   }
+
+  .file-upload {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    .file-upload-label {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      text-align: center;
+
+      &:hover {
+        background-color: #45a049;
+      }
+
+      .file-upload-input {
+        display: none;
+      }
+    }
+
+    .helper-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      color: $color-black;
+
+      &.error {
+        color: $color-error;
+      }
+    }
+  }
 }
-
-
