@@ -1,7 +1,6 @@
 import React from "react";
-
-import GenericButton from './GenericButton';
-
+import GenericButton from "./GenericButton";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default{
     title: 'Button/GenericButton',
@@ -10,10 +9,6 @@ export default{
         className:{ control: {type: 'select', options:['primary','secondary']}},
     }
 };
-
-
-// Button variations
-
 const Template = (args) => <GenericButton {...args}/>;
 
 export const Primary = Template.bind({});
@@ -29,4 +24,11 @@ Secondary.args = {
     label: "secondary button",
     size: "medium"
 }
-
+export const WithIcon=Template.bind({});
+WithIcon.args={
+    className:"secondary",
+    label: "primary button",
+    size: "medium",
+    icon:<DeleteIcon/>,
+    onIconClick: () => console.log('Icon clicked')
+}

@@ -1,41 +1,34 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
-import Button from '@mui/material/Button';
-
+import { Button, IconButton } from '@mui/material';
 import './GenericButton.scss';
 
-const GenericButton = ({className, label, onClick, size = "medium", disabled = false})=>{
-    return(
-        <div className='buttonWrapper'>
-            <Button 
+const GenericButton = ({ className, label, onClick, size = "medium", disabled = false, icon = null, onIconClick = () => {} }) => (
+    <div className='buttonWrapper'>
+        <Button
             className={`genericButton ${className ? `genericButton ${className}` : ''}`}
             onClick={onClick}
             size={size}
             disabled={disabled}
-            >
+            endIcon={icon && (
+                <IconButton onClick={onIconClick}>
+                    {React.cloneElement(icon)}
+                </IconButton>
+            )}
+        >
             {label}
-            </Button>
-        </div>
-    );
-};
+        </Button>
+    </div>
+);
 
 GenericButton.propTypes = {
-    
     className: PropTypes.string.isRequired,
-    
-    //How large should the button be?
-    size: PropTypes.oneOf(['small', 'medium','large']),
-    
-    //Button contents
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
     label: PropTypes.string.isRequired,
-    
-    //Click handler
     onClick: PropTypes.func.isRequired,
-
-    //Optional is disabled
     disabled: PropTypes.bool,
+    icon: PropTypes.elementType,
+    onIconClick: PropTypes.func,
 };
 
 export default GenericButton;
