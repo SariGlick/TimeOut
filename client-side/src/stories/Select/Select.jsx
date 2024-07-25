@@ -7,7 +7,7 @@ import SelectMui from '@mui/material/Select';
 import PropTypes, { shape } from 'prop-types';
 import './select.scss';
 
-const Select = ({className, options, onChange, title,size,widthOfSelect, value}) => {
+const Select = ({className, options= [{ text: "option1", icon: '🖋️' }, { text: "option2", icon: '🖋️' }], onChange = undefined, title,size= 'large',widthOfSelect, value}) => {
   return ( 
      <div className='selectWrapper' >
       <Box>
@@ -39,10 +39,5 @@ Select.propTypes = {
   className: PropTypes.string.isRequired
 };
 
-Select.defaultProps = {
-  size: 'large',
-  onChange: undefined,
-  options:[{text:"option1",icon:'🖋️'},{text:"option2",icon:'🖋️'}]
-};
 
 export default Select;
