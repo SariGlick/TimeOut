@@ -7,7 +7,7 @@ import Select from '../../stories/Select/Select.jsx'
 import {uploadFile} from './uploadFileUtil.js'
 import {LANGUAGE,LABELS} from './constantSetting.js'
 const Settings = ({currentUser={}}) => {
-    const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
+    const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
     const preferencesUrl=`${url}/preferences/${_id}`
     const [ringtoneFile, setRingtoneFile] = useState(null);
