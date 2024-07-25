@@ -1,11 +1,10 @@
-import { useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import profileReducer from './profile/profile.slice.js';
 import VisitedWebsitesReducer from './visitedWebsites/visitedWebsites.slice.js';
 import userReducer from './user/user.slice.js';
 import preferenceReducer from './preference/preference.slice.js';
 import authReducer from './auth/auth.slice.js';
-
+import { useSelector, useDispatch } from 'react-redux';
 export const store = configureStore({
     reducer: {
         profile: profileReducer,
@@ -15,4 +14,5 @@ export const store = configureStore({
         auth: authReducer
     }
 });
+export const useAppDispatch = () => useDispatch();
 export const useAppSelector = useSelector;

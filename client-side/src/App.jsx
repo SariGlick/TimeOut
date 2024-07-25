@@ -6,13 +6,12 @@ import { store } from './redux/store.jsx';
 import './App.scss';
 
 function App() {
+
   return (
-    <>
-      <RouterProvider router={router} />
-      <Provider store={store}>
-        <Footer />
-      </Provider>
-    </>
+    <Provider store={store}>
+      <RouterProvider router={router} />      
+      <Footer />
+    </Provider>
   );
 }
 export default App;
