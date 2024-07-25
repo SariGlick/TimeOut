@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types'
-import { LineChart, ChartContainer, LinePlot, BarPlot, ChartsYAxis, ChartsXAxis, Gauge, PieChart, ChartsLegend } from '@mui/x-charts';
+import { PieChart, ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@apollo/client';
 import { GET_USERS, GET_WEBSITE } from './queries.js';
@@ -71,13 +71,7 @@ const VisitedWebsitesComponent = ({ startDate, endDate, user }) => {
             },
         },
     };
-   
-    VisitedWebsitesComponent.propTypes = {
-        startDate: PropTypes.instanceOf(Date).isRequired,
-        endDate: PropTypes.instanceOf(Date).isRequired,
-        user: PropTypes.object.isRequired,
-      };
-      
+
     return (
         <>
             <h4>this is your data </h4>
@@ -97,11 +91,12 @@ const VisitedWebsitesComponent = ({ startDate, endDate, user }) => {
     );
 
 }
-// VisitedWebsitesComponent.PropTypes = {
-//     startDate: PropTypes.instanceOf(Date).isRequired,
-//     endDate: PropTypes.instanceOf(Date).isRequired,
-//     user: PropTypes.object.isRequired,
-// };
+
+VisitedWebsitesComponent.propTypes = {
+    startDate: PropTypes.instanceOf(Date).isRequired,
+    endDate: PropTypes.instanceOf(Date).isRequired,
+    user: PropTypes.object.isRequired,
+};
 
 
 export default VisitedWebsitesComponent;

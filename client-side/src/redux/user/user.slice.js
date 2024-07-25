@@ -7,7 +7,7 @@ import { User } from '../../types/types';
  */
 
 /** @type {UserStateType} */
-const initialState = { users: [] };
+const initialState = { users: [], currentUser: null };
 
 const userSlice = createSlice({
     name: 'user',
@@ -19,6 +19,7 @@ const userSlice = createSlice({
          */
         setUser: (state, action) => {
             state.users = action.payload;
+            state.currentUser=action.payload
         },
         /**
          * @param {UserStateType} state

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DateTimePicker from './report.jsx'
 import VisitedWebsitesComponent from '../graphs/graphs.jsx';
-
+import {useAppSelector} from '../redux/store.jsx'
 
 const Statistics = () => {
     const [startDate, setStartDate] = useState('');
@@ -15,13 +15,8 @@ const Statistics = () => {
 
     };
 
-    const user = {
-        name: "jack",
-        email: "jack@gmail.com",
-        password: "fdfdfd",
-        googleId: "fdfdffdfd",
-        profileImage: "rimon.jpg",
-    }
+    const user = useAppSelector((state) => state.user.currentUser)
+
     return (<>
 
         <DateTimePicker onDateSubmit={handleDateSubmit} />
