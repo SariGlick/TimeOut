@@ -66,18 +66,21 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-export const updatedUser = async (req, res,next) => {
+export const updatedUser = async (req, res, next) => {
   const id = req.params.id;
-  if(!mongoose.Types.ObjectId.isValid(id))
-    return next({message:'id is not valid'})
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next({ message: 'ID is not valid' });
+  }
   try {
-    const id = req.params.id;
     const { name, email, password } = req.body;
-    const updateFields = { name, email, password };
+    const updateFields = { name, email };   
+    if (password) {
+      updateFields.password = await bcrypt.hash(password, 10);
+    }    
     if (req.file) {
-      req.body.profileImage = req.file.originalname;
+      updateFields.profileImage = req.file.originalname;
     }
-    const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
+    const updatedUser = await Users.findByIdAndUpdate(id, updateFields, { new: true });
     if (!updatedUser) {
       return res.status(404).send('User not found');
     }
@@ -87,3 +90,4 @@ export const updatedUser = async (req, res,next) => {
     res.status(500).send('Error updating user');
   }
 };
+
