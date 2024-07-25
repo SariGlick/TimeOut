@@ -50,7 +50,7 @@ const Settings = ({ user }) => {
       </div>
       {preview && (
         <div>
-          <img src={preview} alt='Profile Preview' style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
+          <img src={preview} alt='Profile Preview'/>
         </div>
       )}
     </>
