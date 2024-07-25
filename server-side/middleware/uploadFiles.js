@@ -10,7 +10,6 @@ const storage = multer.diskStorage({
   })
 
 const  fileFilter   =(req, file, cb) =>{
-    console.log(' at uploadFile = ', file);
     const filetypes = /mp3|wav|ogg|jpeg|jpg|png|audio/;
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
     const mimetype = filetypes.test(file.mimetype);

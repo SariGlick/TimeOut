@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { format } from 'date-fns';
-import Select from '../Select/Select';
-import GenericButton from '../Button/GenericButton.jsx'
-import axios from 'axios';
+import React, { useState } from 'react';
 import {formatDate} from './formatDate.js'
+import axios from 'axios';
+import Select from '../../stories/Select/Select.jsx'
+import GenericButton from '../../stories/Button/GenericButton.jsx'
+
+
 
 const DateFormatter = ({ currentUser }) => {
+  
   const {emailFrequency,sendNotificationTime,soundVoice,_id}=currentUser.preferences
   const {formatedDate}=currentUser;
   const [dateFormat, setDateFormat] = useState('yyyy-MM-dd');
@@ -40,6 +42,29 @@ const url=process.env.REACT_APP_BASE_URL;
     
   );
   
+};
+DateFormatter.propTypes = {
+  currentUser: PropTypes.shape({
+    preferences: PropTypes.shape({
+      emailFrequency: PropTypes.string,
+      sendNotificationTime: PropTypes.string,
+      soundVoice: PropTypes.string,
+      _id: PropTypes.string,
+    }).isRequired,
+    formatedDate: PropTypes.string,
+  }).isRequired,
+};
+
+DateFormatter.defaultProps = {
+  currentUser: {
+    preferences: {
+      emailFrequency: '',
+      sendNotificationTime: '',
+      soundVoice: '',
+      _id: '',
+    },
+    formatedDate: 'yyyy-MM-dd',
+  },
 };
 
 export default DateFormatter;
