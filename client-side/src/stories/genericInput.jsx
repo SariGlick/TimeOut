@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { INVALID_INPUT_MESSAGE } from './constants';
 import { TextField, InputAdornment } from '@mui/material';
 import '../style/genericInput.scss';
 
@@ -29,15 +28,14 @@ const GenericInput = ({
   const handleChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    if(onChange)
-       onChange(newValue);
+    onChange(newValue);
   };
 
   const handleValidation = (inputValue) => {
     const validationResult = validation(inputValue);
     if (validationResult && validationResult.error) {
       setError(true);
-      setHelperText(validationResult.helperText || INVALID_INPUT_MESSAGE);
+      setHelperText(validationResult.helperText || 'Invalid input');
     } else {
       setError(false);
       setHelperText(''); 
