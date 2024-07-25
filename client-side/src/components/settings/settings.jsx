@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import GenericButton from '../../stories/Button/GenericButton';
 import GenericInput from '../../stories/GenericInput/genericInput';
+import CONSTANTS from '../../constants';
 
 const Settings = ({ user }) => {
+  const { LABELS } = CONSTANTS;
   const userId = user._id;
   const [preview, setPreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
@@ -43,8 +45,8 @@ const Settings = ({ user }) => {
   return (
     <>
       <div>
-        <GenericInput size='medium' label='Add Image' type='file' onChange={handleFilePicture} />
-        <GenericButton size='small' label='Upload Image' onClick={handleFormSubmit} className='UploadImageButton' />
+        <GenericInput size='medium' label={LABELS.ADD_IMAGE} type='file' onChange={handleFilePicture} />
+        <GenericButton size='small' label={LABELS.UPLOAD_IMAGE} onClick={handleFormSubmit} className='UploadImageButton' />
       </div>
       {preview && (
         <div>
