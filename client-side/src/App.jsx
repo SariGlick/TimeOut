@@ -10,6 +10,7 @@ function App() {
     <>
       <RouterProvider router={router} />
       <Provider store={store}>
+      <Header/> 
         <Footer />
       </Provider>
     </>
