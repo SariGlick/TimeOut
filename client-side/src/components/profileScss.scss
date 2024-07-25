@@ -1,0 +1,123 @@
+
+.profile-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center horizontally */
+    justify-content: flex-start; /* Align to the top */
+    width: 100%; /* Full width */
+    padding: 20px; /* Optional: Add some padding for better spacing */
+}
+
+.profile-list-select-wrapper {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    width: 100%; /* Full width */
+    margin-bottom: 20px;
+}
+
+.profile-list-select {
+    width: 200px; /* Set a width for the Select component */
+}
+
+/* Style for the loading message */
+.profile-list-loading {
+    font-size: 1.2em;
+    color: #333;
+}
+
+/* Style for the profile details section */
+.profile-list-details {
+    text-align: center;
+    width: 100%; /* Full width */
+    max-width: 1200px; /* Limit the width for better readability */
+}
+
+/* Style for the table component */
+.profile-list-table {
+    margin-top: 20px;
+    width: 98%; /* Table width */
+    max-width: 1200px; /* Limit the width for better readability */
+}
+
+/* General styles for centering and layout */
+h1, h2, p {
+    text-align: center;
+}
+
+button {
+    display: block;
+    margin: 20px auto; /* Center horizontally */
+}
+
+/* Custom styles */
+.custom-time-input {
+    color: #000;
+    background-color: white;
+    border: 2px solid #67FCD2;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 20px;
+    &:hover {
+        border-color: rgb(45, 158, 126); // צבע הגבול כאשר העכבר מעל השדה
+    }
+    &:focus {
+        border-color: 2px solid rgb(21, 22, 22); // צבע הגבול כאשר השדה בפוקוס
+        outline: none; // הסרת הקו הכחול ברירת המחדל
+        box-shadow: 0 0 8px rgb(45, 158, 126, 0.5); // הוספת צל כאשר השדה בפוקוס
+    }
+}
+
+.custom-radio {
+    background-color: #67FCD2;
+    border-color: rgb(45, 158, 126); // צבע הגבול כאשר השדה בפוקוס
+    width: 20px;
+    height: 20px;
+    appearance: none; // הסרת העיצוב הקבוע של הדפדפן
+    border-radius: 100%;
+    &:checked {
+        background-color: #43BA98; // צבע הרקע כאשר הכפתור במצב "checked"
+    }
+    &:hover {
+        background-color: #43BA98; // צבע הרקע כאשר העכבר מעל הכפתור
+    }
+    &:focus {
+        outline: none; // הסרת הקו הכחול ברירת המחדל
+        box-shadow: 0 0 5px #67FCD2; // הוספת צל כאשר הכפתור בפוקוס
+        background-color: #43BA98;
+    }
+}
+
+.custom-label {
+    color: #43BA98;
+    font-size: x-large;
+}
+
+.component-spacing {
+    margin-bottom: 20px; /* Add spacing between components */
+}
+.component-spacing {
+    margin-bottom: 20px; // Adjust the value as needed
+}
+.profile-list-container {
+    .profile-list-button {
+      background-color: transparent;
+      border: 2px solid rgb(103, 252, 210);
+      color: rgb(103, 252, 210);
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  
+      &:hover {
+        background-color: rgb(103, 252, 210);
+        color: white;
+      }
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  
+  
