@@ -2,7 +2,7 @@
  import axios from 'axios';
 
  export const uploadFile=async(url,formdata,request)=>{
-    const response={};
+    let response={};
     if(request==='post')
     {  try {
         response =await axios.post(url,formdata, {

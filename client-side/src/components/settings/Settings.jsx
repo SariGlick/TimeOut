@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
+import { useTranslation } from 'react-i18next'
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import {uploadFile} from './uploadFileUtil.js'
-import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
-
+import {CHANGE_RINGTONE,SEND_PREFERENCE,LANGUAGE,SELECT_LANGUAGES,CHANGE_NOTIFICATION_TIME} from './constantSetting.js'
+import Select from '../../stories/Select/Select.jsx'
 const Settings = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
-    const userId=currentUser._id;
     const url=process.env.REACT_APP_BASE_URL;
+    const preferencesUrl=`${url}/preferences/${_id}`
     const [ringtoneFile, setRingtoneFile] = useState(null);
-    const [audioSrc,setAudioSrc]  = useState(soundVoice);
-
+    const [audioSrc,setAudioSrc]  = useState();
+    const [notificationTime,setNotificationTime]= useState(sendNotificationTime);
+    const [lng,setLng] =useState('en');
+    const {t,i18n}= useTranslation();
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
@@ -29,19 +32,14 @@ const Settings = ({currentUser={}}) => {
    
      const changeNotificationTime=(event)=>{
          setNotificationTime(event);
-         console.log('notificationTime',notificationTime);
      }
     const sendPreference = async () => {
         const formData = new FormData();
-        const preferencesUrl=`${url}/preferences/${_id}`
         formData.append('soundVoice', ringtoneFile);
-        formData.append('sendNotificationTime',sendNotificationTime);
+        formData.append('sendNotificationTime',notificationTime);
         formData.append('emailFrequency',emailFrequency);
         uploadFile(preferencesUrl,formData,'put')
     };
-    const sendNotification =()=>{
-
-    }
     
     return (
       <> 
@@ -51,9 +49,10 @@ const Settings = ({currentUser={}}) => {
             <GenericInput  type='file'  label={t(CHANGE_RINGTONE)} onChange={handleFileChange} size='medium'  />
           </div>
           <div>
-            <audio controls>
+            {audioSrc && <audio controls>
                <source src={audioSrc} ></source>
-            </audio>
+            </audio>}
+            
           </div>       
 
          <Select  title={t(SELECT_LANGUAGES)} 
@@ -67,10 +66,9 @@ const Settings = ({currentUser={}}) => {
         
          <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
 
-          <GenericInput size='small'  label={t(CHANGE_NOTIFICATION)} onChange={changeNotificationTime} type='number' className='' disabled={false}/>
+          <GenericInput size='small'  label={t(CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='' disabled={false}/>
           <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
-          <GenericButton size='small'  label={'send notification time'} onClick={sendNotification} className='' disabled={false}/>
-
+          
 
       </>
          

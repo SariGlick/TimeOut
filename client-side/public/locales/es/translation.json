@@ -7,7 +7,9 @@
     "statistics":"Estadísticas",
     "profiles":"perfiles",
     "timeout":"se acabó el tiempo",
-    "sleect-language":"seleccione el idioma"
+    "sleect-language":"seleccione el idioma",
+    "change-notification-time":"cambiar la hora de notificación"
 
+ 
  
 }

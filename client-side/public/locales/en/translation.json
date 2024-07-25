@@ -7,5 +7,6 @@
     "statistics":"statistic",
     "profiles":"profiles",
     "timeout":"TimeOut",
-    "sleect-language":"sleect language"
+    "sleect-language":"sleect language",
+    "change-notification-time":"change notification time"
 }
