@@ -6,9 +6,6 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import './App.scss';
 function App() {
-
-  //const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preferences
-   
   
   return (
 
