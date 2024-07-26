@@ -4,11 +4,13 @@ import { PieChart, ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@apollo/client';
 import { GET_USERS, GET_WEBSITE } from './queries.js';
+import { useAppSelector } from '../redux/store.jsx'
 
-const VisitedWebsitesComponent = ({ startDate, endDate, user }) => {
+const VisitedWebsitesComponent = ({ startDate, endDate }) => {
     const websites = useQuery(GET_WEBSITE);
     const users = useQuery(GET_USERS);
     const colors = ["red", "yellow", "orange", "blue", "lightgreen"]
+    const user = useAppSelector((state) => state.user.currentUser)
 
     function formatDate(date) {
         let year = date.getFullYear();
@@ -94,8 +96,7 @@ const VisitedWebsitesComponent = ({ startDate, endDate, user }) => {
 
 VisitedWebsitesComponent.propTypes = {
     startDate: PropTypes.instanceOf(Date).isRequired,
-    endDate: PropTypes.instanceOf(Date).isRequired,
-    user: PropTypes.object.isRequired,
+    endDate: PropTypes.instanceOf(Date).isRequired
 };
 
 

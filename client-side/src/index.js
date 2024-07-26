@@ -4,9 +4,11 @@ import './index.scss';
 import App from './App.jsx';
 import reportWebVitals from './reportWebVitals';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.jsx';
 
 const port = process.env.REACT_APP_PORT
-const url = process.env.REACT_APP_URL 
+const url = process.env.REACT_APP_URL
 
 const client = new ApolloClient({
 
@@ -21,7 +23,9 @@ root.render(
 
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ApolloProvider>
   </React.StrictMode>
 );
