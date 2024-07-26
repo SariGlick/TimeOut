@@ -1,7 +1,10 @@
-const kafka = require('kafka-node');
+import dotenv from 'dotenv';
+dotenv.config();
+import kafka from 'kafka-node';
+
 const Producer = kafka.Producer;
 const Admin = kafka.Admin;
-const client = new kafka.KafkaClient({ kafkaHost: 'kafka:9092' });
+const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
 const admin = new Admin(client);
 
 const topicToCreate = [
@@ -20,11 +23,14 @@ admin.createTopics(topicToCreate, async (err, res) => {
 });
 
 const producer = new Producer(client);
+const email='malkysino@gmail.com'
+const subject='אלופות'
+const text='אם זה הגיע הפרויקט עובד🤣😘😂😊😍😁אין עלינו!!!!!!!!!!'
 producer.on('ready', () => {
   insertEvent('emailTopic', 'sendEmail', {
-    to: 'malkysino@gmail.com',
-    subject: 'אלופות',
-    text: 'אם זה הגיע הפרויקט עובד🤣😘😂😊😍😁אין עלינו!!!!!!!!!!'
+    to: email,
+    subject: subject,
+    text: text
   });
 });
 
@@ -49,6 +55,4 @@ process.on('SIGINT', () => {
   });
 });
 
-module.exports = {
-  insertEvent
-};
+export { insertEvent };

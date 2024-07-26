@@ -1,12 +1,17 @@
-const nodemailer = require('nodemailer');
-const Bottleneck = require('bottleneck');
-const retry = require('async-retry');
+import dotenv from 'dotenv';
+dotenv.config();
+import nodemailer from 'nodemailer';
+import Bottleneck from 'bottleneck';
+import retry from 'async-retry';
 
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'prwyyqtsly@gmail.com',
-    pass: 'z k w x m l w a m j e n i j q p'
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  },
+  tls: {
+    rejectUnauthorized: false
   }
 });
 
@@ -45,6 +50,4 @@ const scheduleEmail = (email) => {
   return limiter.schedule(() => sendEmail(email));
 };
 
-module.exports = {
-  sendEmail: scheduleEmail
-};
+export { scheduleEmail as sendEmail };

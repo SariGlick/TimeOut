@@ -1,11 +1,14 @@
-const kafka = require('kafka-node');
-const nodemailer = require('nodemailer');
-const Bottleneck = require('bottleneck');
-const retry = require('async-retry');
-const { sendEmail } = require('./mailer');
-const Consumer = kafka.Consumer;
-const client = new kafka.KafkaClient({ kafkaHost: 'kafka:9092' });
+import dotenv from 'dotenv';
+dotenv.config();
+import kafka from 'kafka-node';
+import nodemailer from 'nodemailer';
+import Bottleneck from 'bottleneck';
+import retry from 'async-retry';
+import { sendEmail } from './mailer.js';
 
+
+const Consumer = kafka.Consumer;
+const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER});
 const consumer = new Consumer(client, [{ topic: 'emailTopic', partition: 0 }], { autoCommit: true });
 
 consumer.on('message', (message) => {
