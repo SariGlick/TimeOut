@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import GenericButton from '../../stories/Button/GenericButton';
 import GenericInput from '../../stories/GenericInput/genericInput';
 import CONSTANTS from '../../constants';
-
+import { uploadFile } from './uploadFileUtil';
 const Settings = ({ user }) => {
   const { LABELS } = CONSTANTS;
   const userId = user._id;
@@ -31,15 +30,9 @@ const Settings = ({ user }) => {
   const handleFormSubmit = async () => {
     const formData = new FormData();
     formData.append('profileImage', imageFile);
-    try {
-      await axios.put(`${baseUrl}/users/${userId}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    } catch (error) {
-      console.error('error updating image', error);
-    }
+    const userUrl = `${baseUrl}/users/${userId}`
+    const response = await uploadFile(userUrl, formData, 'put');
+
   };
 
   return (
