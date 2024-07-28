@@ -1,53 +1,66 @@
 import React, { useState } from 'react';
-import GenericButton from '../../stories/Button/GenericButton';
-import GenericInput from '../../stories/GenericInput/genericInput';
-import CONSTANTS from '../../constants';
-import { uploadFile } from './uploadFileUtil';
-const Settings = ({ user }) => {
-  const { LABELS } = CONSTANTS;
-  const userId = user._id;
-  const [preview, setPreview] = useState(null);
-  const [imageFile, setImageFile] = useState(null);
-  const baseUrl = process.env.REACT_APP_BASE_URL;
+import axios from 'axios';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next'
+import GenericButton  from '../../stories/Button/GenericButton.jsx';
+import GenericInput from '../../stories/GenericInput/genericInput.jsx'
+import {CHANGE_RINGTONE,SEND_PREFERENCE} from './constantSetting.js'
 
-  const handleFilePicture = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
-      if (validImageTypes.includes(file.type)) {
-        setImageFile(file);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreview(reader.result);
-        };
-        reader.readAsDataURL(file);
-      } else {
-        console.error('Unsupported file type. Please upload an image (JPEG, PNG, GIF).');
-      }
-    }
-  };
+const Setting = ({currentUser}) => {
+    const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
+    const userId=currentUser._id;
+    const url=process.env.REACT_APP_BASE_URL;
+    const [ringtoneFile, setRingtoneFile] = useState(null);
+    const [audioSrc,setAudioSrc]  = useState();
+    const {t,i18n}= useTranslation();
 
-  const handleFormSubmit = async () => {
-    const formData = new FormData();
-    formData.append('profileImage', imageFile);
-    const userUrl = `${baseUrl}/users/${userId}`
-    const response = await uploadFile(userUrl, formData, 'put');
+    const handleFileChange=(e) => {
+         if(e.target.files[0])
+         { 
+            setRingtoneFile(e.target.files[0]);
+            const audioUrl= URL.createObjectURL(e.target.files[0]);
+            setAudioSrc(URL.createObjectURL(e.target.files[0]));
+         }
+          
+    };
+    
 
-  };
-
-  return (
-    <>
-      <div>
-        <GenericInput size='medium' label={LABELS.ADD_IMAGE} type='file' onChange={handleFilePicture} />
-        <GenericButton size='small' label={LABELS.UPLOAD_IMAGE} onClick={handleFormSubmit} className='UploadImageButton' />
-      </div>
-      {preview && (
-        <div>
-          <img src={preview} alt='Profile Preview' style={{ width: '150px', height: '150px', objectFit: 'cover' }} />
-        </div>
-      )}
-    </>
-  );
+    const sendPreference = async () => {
+       
+        const formData = new FormData();
+        formData.append('soundVoice', ringtoneFile);
+        formData.append('sendNotificationTime',sendNotificationTime);
+        formData.append('emailFrequency',emailFrequency);
+          try {
+            const response = await axios.put(`${url}/preferences/${_id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            
+          } catch (error) {
+             console.error(error)
+          }  
+    };
+    
+    
+    return (
+    
+         <div> 
+          <div className='uploadWarper'>
+            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  />
+          </div>
+          <div>
+          { audioSrc &&
+            <audio controls>
+               <source src={audioSrc} ></source>
+            </audio>}
+          </div>       
+          <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='' disabled={false}/>
+        </div>  
+    );
 };
-
-export default Settings;
+ Setting.propTypes={
+    currentUser: PropTypes.object.isRequired
+ }
+ export default Setting;
