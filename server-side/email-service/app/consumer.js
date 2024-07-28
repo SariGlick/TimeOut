@@ -1,9 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import kafka from 'kafka-node';
-import nodemailer from 'nodemailer';
-import Bottleneck from 'bottleneck';
-import retry from 'async-retry';
 import { sendEmail } from './mailer.js';
 
 
