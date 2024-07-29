@@ -82,3 +82,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // כדי להורות שהתגובה היא אסינכרונית
   }
 });
+
+function showNotification(title, message) {
+  chrome.notifications.create({
+      type: 'basic',
+      iconUrl: 'images/icon48.png',
+      title: title,
+      message: message,
+      priority: 2
+  }, function(notificationId) {
+      if (chrome.runtime.lastError) {
+          console.error(chrome.runtime.lastError);
+      } else {
+          console.log('Notification created with ID:', notificationId);
+      }
+  });
+}
+
+chrome.tabs.onCreated.addListener((tab) => {
+  showNotification('New Tab Opened', 'A new tab has been opened.');
+});
+
+chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
+  showNotification('Tab Closed', 'A tab has been closed.');
+});
+
