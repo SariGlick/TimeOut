@@ -1,8 +1,22 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import App from './App.jsx';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+// Mock the Header and Footer components
+jest.mock('./stories/header/header', () => () => <div>Header</div>);
+jest.mock('./stories/footer/FooterComponent', () => () => <div>Footer</div>);
+
+test('renders Header and Footer', () => {
+  const { getByText } = render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>
+  );
+
+  // Check if Header is rendered
+  expect(getByText('Header')).toBeInTheDocument();
+
+  // Check if Footer is rendered
+  expect(getByText('Footer')).toBeInTheDocument();
 });
