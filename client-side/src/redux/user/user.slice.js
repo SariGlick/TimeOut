@@ -7,7 +7,36 @@ import { User } from '../../types/types';
  */
 
 /** @type {UserStateType} */
-const initialState = { users: [], currentUser: null };
+const initialState = { users: [], currentUser: {
+    "_id": "669535fa91606a13857abd0b",
+    "name": "jack",
+    "email": "jack@gmail.com",
+    "password": "fdfdfd",
+    "googleId": "fdfdffdfd",
+    "profileImage": "rimon.jpg",
+    "visitsWebsites": [
+      {
+        "_id": "6694ed068b0ebdbe10fbb8d3",
+        "visitsTime": [
+          {
+            "visitDate": "2024-06-15T15:56:20.000Z",
+            "activityTime": 150,
+            "_id": "669546b0a60b7afddfdcfd1e"
+          }
+        ],
+        "__v": 0,
+        "websiteId": {
+          "_id": "669d07ea77f0de67ad26038a",
+          "name": "google",
+          "url": "https:/google.com",
+          "__v": 0
+        }
+      }
+    ],
+    "profiles": [],
+    "preferences": null,
+    "__v": 0
+  } };
 
 const userSlice = createSlice({
     name: 'user',

@@ -9,7 +9,9 @@ import { useAppSelector } from '../redux/store.jsx'
 const VisitedWebsitesComponent = ({ startDate, endDate }) => {
     const websites = useQuery(GET_WEBSITE);
     const users = useQuery(GET_USERS);
-    const colors = ["red", "yellow", "orange", "blue", "lightgreen"]
+
+    const getRandomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+
     const user = useAppSelector((state) => state.user.currentUser)
 
     function formatDate(date) {
@@ -29,7 +31,7 @@ const VisitedWebsitesComponent = ({ startDate, endDate }) => {
     if (websites.error || users.error) return <p>Error</p>;
 
     function getWebsites(dateStart, dateEnd) {
-        let website = websites?.data?.websites?.map((obj, index) => ({ ...obj, color: colors[index] }))
+        let website = websites?.data?.websites?.map((obj) => ({ ...obj, color: getRandomColor() }))
         const u = users?.data?.users?.find(u => u.email === user.email)
 
         const totalActivityTimeByWebsite = {};
@@ -86,7 +88,7 @@ const VisitedWebsitesComponent = ({ startDate, endDate }) => {
                         },
                     ]}
                     {...otherProps}
-                />
+                /> 
             </Stack>
         </>
 

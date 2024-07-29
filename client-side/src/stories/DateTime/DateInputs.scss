@@ -1,4 +1,4 @@
-@import '../stylies.scss';
+// @import '../stylies.scss';
 
 
 .timeInputWrapper {
@@ -9,7 +9,7 @@ width: 40%;
 
 .MuiOutlinedInput-notchedOutline {
 
-border-color: $secondary-color;
+// border-color: $secondary-color;
 
 border-width: 2px;
 
@@ -20,14 +20,14 @@ transition: border-color 0.3s ease;
 
 &.Mui-focused {
 
-border-color: $secondary-color;
+// border-color: $secondary-color;
 
 }
 
 
 &:hover {
 
-border-color: $secondary-color;
+// border-color: $secondary-color;
 
 }
 

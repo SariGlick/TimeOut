@@ -4,7 +4,6 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import { Provider } from 'react-redux';
 import { store } from './redux/store.jsx';
-import reportWebVitals from './reportWebVitals';
 import App from './App.jsx';
 import './index.scss';
 
