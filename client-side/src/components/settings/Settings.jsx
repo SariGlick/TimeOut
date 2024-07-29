@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import {uploadFile} from './uploadFileUtil.js'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Select from '../../stories/Select/Select.jsx'
 import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES} from './constantSetting.js'
 
-const Setting = ({currentUser}) => {
+const Settings = ({currentUser}) => {
     const {emailFrequency,sendNotificationTime,_id}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
+    const preferencesUrl=`${url}/preferences/${_id}`
     const [ringtoneFile, setRingtoneFile] = useState(null);
     const [audioSrc,setAudioSrc]  = useState();
     const [lng,setLng] = useState('en');
     const {t,i18n}= useTranslation();
-
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
@@ -31,21 +31,12 @@ const Setting = ({currentUser}) => {
    
 
     const sendPreference = async () => {
-       
         const formData = new FormData();
         formData.append('soundVoice', ringtoneFile);
         formData.append('sendNotificationTime',sendNotificationTime);
         formData.append('emailFrequency',emailFrequency);
-          try {
-            const response = await axios.put(`${url}/preferences/${_id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            
-          } catch (error) {
-             console.error(error)
-          }  
+        formData.append('language',lng)
+        uploadFile(preferencesUrl,formData,'put')
     };
     
     
@@ -57,15 +48,15 @@ const Setting = ({currentUser}) => {
             <GenericInput  type='file'  label={t(CHANGE_RINGTONE)} onChange={handleFileChange} size='medium'  />
           </div>
           <div>
-          { audioSrc &&
             <audio controls>
                <source src={audioSrc} ></source>
-            </audio>}
+            </audio>
+            
           </div>       
 
          <Select  title={t(SELECT_LANGUAGES)} 
           options={[{text:'עברית',value:'he'}, {text:'española',value:'es'},{text:'english',value:'en',}]} 
-          className='' 
+          className='select-des' 
           size={'large'}
           widthOfSelect='200px'
           value={lng}
@@ -80,7 +71,7 @@ const Setting = ({currentUser}) => {
          
     );
 };
- Setting.propTypes={
+ Settings.propTypes={
     currentUser: PropTypes.object.isRequired
  }
- export default Setting;
+ export default Settings;
