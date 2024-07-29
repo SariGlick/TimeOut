@@ -9,13 +9,12 @@ const Settings = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
-    const [audioSrc,setAudioSrc] = useState(`${url}/uploads/${soundVoice}`);
+    const [audioSrc,setAudioSrc] = useState();
 
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
             setRingtoneFile(e.target.files[0]);
-            const audioUrl= URL.createObjectURL(e.target.files[0]);
             setAudioSrc(URL.createObjectURL(e.target.files[0]));
          }
           
@@ -34,12 +33,13 @@ const Settings = ({currentUser={}}) => {
     
          <div> 
           <div className='uploadWarper'>
-            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  />
+            <GenericInput  type='file'  label={CHANGE_RINGTONE} onChange={handleFileChange} size='medium'  accept='audio/mp3'/>
           </div>
           <div>
             <audio controls>
                <source src={audioSrc} ></source>
             </audio>
+            
           </div>       
           <GenericButton size='small'  label={SEND_PREFERENCE} onClick={sendPreference} className='buttonInput' disabled={false}/>
         </div>  
