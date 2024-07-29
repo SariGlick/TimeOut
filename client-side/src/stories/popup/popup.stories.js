@@ -1,16 +1,16 @@
 import React from "react";
 
-import SimplePopup from "./popup.jsx";
+import BasicPopup from "./popup.jsx";
 
 
 export default{
     title: 'popup',
-    component: SimplePopup,
+    component: BasicPopup,
 };
 
 
 
-const Template = (args) => <SimplePopup {...args}/>;
+const Template = (args) => <BasicPopup {...args}/>;
 
 export const Primary = Template.bind({});
 Primary.args ={
