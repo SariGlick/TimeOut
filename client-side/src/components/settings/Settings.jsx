@@ -8,7 +8,7 @@ import Select from '../../stories/Select/Select.jsx'
 import {CHANGE_RINGTONE,SEND_PREFERENCE,SELECT_LANGUAGES} from './constantSetting.js'
 
 const Setting = ({currentUser}) => {
-    const {emailFrequency,sendNotificationTime,_id}= currentUser.preferences
+    const {emailFrequency,sendNotificationTime,_id}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
     const [ringtoneFile, setRingtoneFile] = useState(null);
     const [audioSrc,setAudioSrc]  = useState();
@@ -19,7 +19,6 @@ const Setting = ({currentUser}) => {
          if(e.target.files[0])
          { 
             setRingtoneFile(e.target.files[0]);
-            const audioUrl= URL.createObjectURL(e.target.files[0]);
             setAudioSrc(URL.createObjectURL(e.target.files[0]));
          }
           
@@ -76,7 +75,7 @@ const Setting = ({currentUser}) => {
         
         
   
-          <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='' disabled={false}/>
+          <GenericButton size='small'  label={t(SEND_PREFERENCE)} onClick={sendPreference} className='but-design' disabled={false}/>
       </>
          
     );
