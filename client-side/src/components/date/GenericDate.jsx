@@ -24,7 +24,6 @@ const DateFormatter = ({ currentUser, date }) => {
   const sendFormatDate = async () => {
     try {
       const response = await axios.put(`${url}/users/669f86c302f253ec5a6f5162`);
-      console.log(response.data);
     } catch (error) {
       console.error('Error sending format date:', error);
     }
