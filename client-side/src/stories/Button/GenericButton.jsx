@@ -28,9 +28,9 @@ const GenericButton = ({ className, label, onClick, size = "medium", disabled = 
 );
 
 GenericButton.propTypes = {
-    className: PropTypes.string,
+    className: PropTypes.string.isRequired,
     size: PropTypes.oneOf(['small', 'medium', 'large']),
-    label: PropTypes.string.isRequired,
+    label: PropTypes.string,
     onClick: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     icon: PropTypes.elementType,
