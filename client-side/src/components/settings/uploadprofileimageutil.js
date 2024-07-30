@@ -16,9 +16,9 @@ export const uploadFile = async (url, formdata, request) => {
         }
       });
     }
-    return response; 
+    return response;
   } catch (error) {
     console.error(error);
-    throw error; 
+    throw error;
   }
 };

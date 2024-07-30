@@ -102,8 +102,8 @@ function ResponsiveAppBar() {
             >
                         <LabTabs
           nameOfClass="navbar-tabs"
-          text={['edit user profile','manage notifications']}
-          nav={['/editUserProfile','/manageNotifications'] }
+          text={['edit user profile','settings']}
+          nav={['/editUserProfile','/settings'] }
         />
             </Menu>
           </Box>
