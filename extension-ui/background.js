@@ -90,13 +90,8 @@ function showNotification(title, message) {
       title: title,
       message: message,
       priority: 2
-  }, function(notificationId) {
-      if (chrome.runtime.lastError) {
-          console.error(chrome.runtime.lastError);
-      } else {
-          console.log('Notification created with ID:', notificationId);
-      }
-  });
+   }
+);
 }
 
 chrome.tabs.onCreated.addListener((tab) => {
