@@ -1,8 +1,8 @@
 import axios from 'axios';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
-const url = process.env.SERVER_URL
+dotenv.config();
+const url = process.env.SERVER_URL;
 
 export async function get(path) {
     const response = await axios.create({ baseURL: url }).get(path);
