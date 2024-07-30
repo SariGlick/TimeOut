@@ -11,7 +11,7 @@ const visitedWebsitesSchema = new mongoose.Schema({
         visitsTime: [{
             visitDate: {
                 type: Date,
-                default:Date(),
+                default:Date.now,
             },
             activityTime: {
                 type: Number,

@@ -8,10 +8,8 @@
     width: 25vh;
     text-align: center;
     cursor: pointer;
-   // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* 3D effect shadow */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Outer shadow and subtle inner highlight */
-    transition: transform 0.1s, box-shadow 0.1s; /* Smooth transition for interactions */ 
-    
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2); 
+    transition: transform 0.1s, box-shadow 0.1s;
     &:hover {
         box-shadow: 0 0 5px rgba($color-border, 0.5);
         background-color:$color-border-hover ;
@@ -33,6 +31,7 @@
     border-color: rgb(103, 252, 210);
     width: 100vh;
     height: 75vh;
+
 }
 .tab-warper{
     display: flex;

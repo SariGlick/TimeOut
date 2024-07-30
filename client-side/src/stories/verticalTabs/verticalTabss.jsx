@@ -19,7 +19,7 @@ const  VerticalTabss=({ labels=['tab1','tab2'],elements})=> {
         onClick={()=>handleClick(index)}
           key={index}  
           >
-            <p> {label}</p>
+          <p> {label}</p>
             
          </div>
       )
