@@ -6,3 +6,4 @@ export default {
     components:'verticalTabs'
 }
 const Template = (args) =>  <VerticalTabss  {...args}/>;
+export const classicVerticalTab= Template.bind({});
