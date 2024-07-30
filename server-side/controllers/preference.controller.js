@@ -11,7 +11,7 @@ export const getAllPreference=async(req,res,next)=>{
 };
 export const getPreferenceById=async(req,res,next)=>{
     const id= req.params.id;
-    if(mongoose.Types.ObjectId.isValid(id))
+    if(!mongoose.Types.ObjectId.isValid(id))
         return  next({message:'id is not valid'});
 
         try {

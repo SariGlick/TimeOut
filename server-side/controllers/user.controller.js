@@ -20,7 +20,7 @@ export const getUserById = async (req, res,next) => {
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})
   try {
-    const user = await Users.findById(id).populate('visitsWebsites profiles preferences').select('-__v');
+    const user = await Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
     if (!user) {
         return next({message:'user not found ',status:404})
     }
