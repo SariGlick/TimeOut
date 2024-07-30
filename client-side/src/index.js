@@ -8,12 +8,12 @@ import App from './App.jsx';
 import './index.scss';
 
 
-const port = process.env.REACT_APP_PORT
-const url = process.env.REACT_APP_URL
+
+const appolo_server_url = process.env.REACT_APP_APOLLO_SERVER_URL
 
 const client = new ApolloClient({
 
-  uri: `${url}:${port}`,
+  uri: appolo_server_url,
 
   cache: new InMemoryCache()
 

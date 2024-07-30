@@ -23,30 +23,6 @@ const resolvers = {
                 throw new Error(error.message);
             }
         },
-        profile: async () => {
-            try {
-                const response = await axios.get(`${url}:${port}/profiles/profiles`);
-                return response.data;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        },
-        visitedWebsites: async () => {
-            try {
-                const response = await axios.get(`${url}:${port}/vistedWebsite/vistedWebsite`);
-                return response.data;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        },
-        preferences: async () => {
-            try {
-                const response = await axios.get(`${url}:${port}/preferences/preferences`);
-                return response.data;
-            } catch (error) {
-                throw new Error(error.message);
-            }
-        },
     }
 };
 

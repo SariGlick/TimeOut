@@ -4,67 +4,24 @@ import { PieChart, ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@apollo/client';
 import { GET_USERS, GET_WEBSITE } from './queries.js';
-import { useAppSelector } from '../redux/store.jsx'
+import { useAppSelector } from '../redux/store.jsx';
+import { getWebsites, formatDate, getRandomColor } from './graphsUtils.js';
+import Loader from '../stories/loader/loader.jsx'
+import './graphs.scss'
 
 const VisitedWebsitesComponent = ({ startDate, endDate }) => {
     const websites = useQuery(GET_WEBSITE);
     const users = useQuery(GET_USERS);
-
-    const getRandomColor = () => `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-
-    const user = useAppSelector((state) => state.user.currentUser)
-
-    function formatDate(date) {
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1
-        let day = date.getDate()
-        let d = `${year}-${month}-${day}`
-        return d;
-    }
-
+    const user = useAppSelector((state) => state.user.currentUser);
+    let website = [];
     let dateStart = new Date(startDate.$d);
     dateStart = formatDate(dateStart)
     let dateEnd = new Date(endDate.$d);
-    dateEnd = formatDate(dateEnd)
-    if (websites.loading || users.loading) return <p>Loading...</p>;
+    dateEnd = formatDate(dateEnd);
 
-    if (websites.error || users.error) return <p>Error</p>;
-
-    function getWebsites(dateStart, dateEnd) {
-        let website = websites?.data?.websites?.map((obj) => ({ ...obj, color: getRandomColor() }))
-        const u = users?.data?.users?.find(u => u.email === user.email)
-
-        const totalActivityTimeByWebsite = {};
-
-        u.visitsWebsites.forEach(visitedWebsite => {
-            const websiteName = visitedWebsite.websiteId.name;
-            const activityTime = visitedWebsite.visitsTime.reduce((total, visit) => {
-                let date = new Date(visit.visitDate)
-                date = formatDate(date)
-                if (date >= dateStart && date <= dateEnd) {
-                    return total + Number(visit.activityTime);
-                }
-                return total;
-            }, 0);
-
-            if (totalActivityTimeByWebsite[websiteName]) {
-                totalActivityTimeByWebsite[websiteName] += activityTime;
-            } else {
-                totalActivityTimeByWebsite[websiteName] = activityTime;
-            }
-        });
-
-        website.forEach(site => {
-            const websiteName = site.name;
-            if (totalActivityTimeByWebsite[websiteName]) {
-                site.time = totalActivityTimeByWebsite[websiteName];
-            }
-        });
-
-        return website
+    if (!websites.error && !users.error && !websites.loading && !users.loading) {
+        website = getWebsites(websites, users, user, dateStart, dateEnd);
     }
-    let website = getWebsites(dateStart, dateEnd)
-
 
     const otherProps = {
         width: 400,
@@ -78,22 +35,19 @@ const VisitedWebsitesComponent = ({ startDate, endDate }) => {
 
     return (
         <>
-            <h4>this is your data </h4>
-            <h4>between the dates {dateStart} and {dateEnd}</h4>
-            <Stack direction="row" width="100%" textAlign="center" spacing={2}>
+            {(websites.loading || users.loading) && <Loader className="secondary" />}
+            <Stack className="custom-stack">
                 <PieChart
                     series={[
                         {
-                            data: website.map((data) => ({ label: data.name, value: data.time, color: data.color })),
+                            data: website.map((data) => ({ label: data.name, value: data.time, color: getRandomColor() })),
                         },
                     ]}
                     {...otherProps}
-                /> 
+                />
             </Stack>
         </>
-
     );
-
 }
 
 VisitedWebsitesComponent.propTypes = {

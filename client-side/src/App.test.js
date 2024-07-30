@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import App from './App.jsx';
+import App from './App';
+import Header from './stories/header/header';
+import Footer from './stories/footer/FooterComponent';
 
 // Mock the Header and Footer components
 jest.mock('./stories/header/header', () => () => <div>Header</div>);

@@ -2,11 +2,13 @@ import express from 'express';
 import { getUsers, getUserById, addUser, deleteUser, updatedUser } from '../controllers/user.controller.js';
 import upload from '../middleware/uploadFiles.js';
 
-const router=express.Router();
-router.get('/users/', getUsers);
-router.get('/users/:id', getUserById);
-router.post('/users/', addUser);
-router.delete('/users/:id', deleteUser);
-router.put('/users/:id', updatedUser);
+const usersRouter = express.Router();
 
-export default router;
+usersRouter.get('/', getUsers);
+usersRouter.get('/:id', getUserById);
+usersRouter.post('/',upload.single('profileImage'), addUser);
+usersRouter.delete('/:id', deleteUser);
+usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
+
+
+export default usersRouter;

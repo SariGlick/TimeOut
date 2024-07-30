@@ -7,13 +7,9 @@ const profileSchema = new mongoose.Schema({
         websiteId: { type: Schema.Types.ObjectId, ref: 'Websites' },
         status: { type: String, enum: ['block', 'open'] },
         limitedTimes: [{
-            start: { type: Date, default: new Date() },
-            end: { type: Date, default: new Date() }
+            start: {type:Date,required:true},
+            end: {type:Date,required:true} }]
         }]
-    }]
-});
-
-
-
-
-export default mongoose.model("Profiles", profileSchema);
+    });
+    
+    export  default mongoose.model("Profiles", profileSchema);
