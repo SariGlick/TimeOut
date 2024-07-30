@@ -1,28 +1,27 @@
 import React from 'react';
 import { Badge, IconButton } from '@mui/material';
 import { MailOutline, Mail } from '@mui/icons-material';
+import './icon.scss';
 
 const MessageIcon = ({ messages = [] }) => {
-  const hasMessages = messages.length > 0;
+  let cntUnreadMessages = messages.filter(message => !message.read).length;
+  const hasUnreadMessages = cntUnreadMessages > 0;
 
   const handleClick = () => {
-    //Displays a generic component with the list
+    // Displays a generic component with the list
   };
 
-  const iconStyle = { color: 'rgb(103, 252, 210)' };
-
   return (
-    <IconButton onClick={handleClick}>
-      {hasMessages ? (
-        <Badge badgeContent={messages.length} color="error">
-          <Mail sx={iconStyle} />
+    <IconButton onClick={handleClick} className="iconButton">
+      {hasUnreadMessages ? (
+        <Badge badgeContent={cntUnreadMessages} color="error" className="badgeContent">
+          <Mail />
         </Badge>
       ) : (
-        <MailOutline sx={iconStyle} />
+        <MailOutline />
       )}
     </IconButton>
   );
 };
-
 
 export default MessageIcon;
