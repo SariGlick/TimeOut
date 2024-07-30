@@ -3,7 +3,7 @@ import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
 import GenericButton from '../Button/GenericButton';
 import './popup.scss';
 
-export default function BasicPopup({text='',labelButtonOutThePopup='open popup',buttonArray}) {
+export default function BasicPopup({labelButtonOutThePopup='open popup',popupContent }) {
   const [anchor, setAnchor] = React.useState(null);
   const handleClick = (event) => {
     setAnchor(anchor ? null : event.currentTarget);
@@ -17,8 +17,7 @@ export default function BasicPopup({text='',labelButtonOutThePopup='open popup',
       <GenericButton className="secondary" label={labelButtonOutThePopup} aria-describedby={id} type="button" onClick={handleClick} />
       <BasePopup id={id} open={open} anchor={anchor}>
         <div className='popup-body'>
-            <div>{text}</div>
-           {buttonArray}
+           {popupContent}
         </div>
        </BasePopup>
     </div>
