@@ -2,8 +2,26 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
 import Settings from "../components/settings/Settings.jsx";
+import SignUp from "../components/settings/UserLocalization.jsx";
 import Layout from "./layout.jsx";
 
+const user={
+    "_id": "66940b051ccb2852370d5a17",
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "password": "securePassword123",
+    "visitsWebsites": [],
+    "profiles": [],
+    "profileImage": "profile.jpg",
+    "preference": {
+        "sendNotificationTime": 30,
+        "soundVoice": "×××ª ××¢× ×¢×©×",
+        "_id": "66930c2e2aad987e24078e12",
+        "emailFrequency": "weekly",
+        "timeZone": "UTC",
+        "language": "fr"
+    }
+}
 
 
 export const router = createBrowserRouter([
@@ -25,7 +43,11 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/settings',
-                element: <Settings />
+                element: <Settings currentUser={user}/>
+            },
+            {
+                path: '/signup',
+                element: <SignUp currentUser={user}/>
             }
         ]
     },

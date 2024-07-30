@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import CONSTANTS from '../../constants/index.js'
-import GenericButton from '../stories/Button/GenericButton.jsx';
+import GenericButton from '../../stories/Button/GenericButton.jsx';
 
-function getGMTOffset() {
-    const offset = new Date().getTimezoneOffset();
-    const hours = Math.floor(Math.abs(offset) / 60);
-    const minutes = Math.abs(offset) % 60;
-    const sign = offset <= 0 ? '+' : '-';
-    return `GMT${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
-}
 
-const SignUp = ({ user }) => {
-    const { MESSAGES,LANGUAGE } = CONSTANTS;
-    const [timeZone, setTimeZone] = useState('GMT±00:00');
+
+const SignUp = ({ currentUser = {} }) => {
+    const { MESSAGES,LANGUAGE,LABELS } = CONSTANTS;
+    const [timeZone, setTimeZone] = useState('UTC');
     const [language, setLanguage] = useState('en');
-    const preferenceId = user.preference._id;
+    const preferenceId = currentUser.preference._id;
     const baseUrl = process.env.REACT_APP_BASE_URL;
 
     const handleSignUp = async () => {
@@ -24,7 +18,7 @@ const SignUp = ({ user }) => {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                        const userTimeZone = getGMTOffset();
+                        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                         setTimeZone(userTimeZone);
 
                         // Get language

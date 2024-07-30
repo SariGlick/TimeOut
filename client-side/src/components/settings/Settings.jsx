@@ -2,29 +2,27 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx'
 import CONSTANTS from '../../constants/index.js';
-import {uploadFile} from './uploadFileUtil.js'
-
+import { uploadFile } from './uploadFileUtil.js'
+import moment from 'moment-timezone';
 
 const createTimeZones = () => {
-  const timeZones = [];
-  for (let i = -12; i <= 12; i++) {
-    const offset = i >= 0 ? `+${i}` : `${i}`;
-    timeZones.push({
-      value: `GMT${offset}:00`,
-      label: `GMT${offset}:00`,
-    });
-  }
-  return timeZones;
+  return moment.tz.names().map(timezone => ({
+    value: timezone,
+    text: timezone,
+  }));
 };
 
 
-const Settings = ({ currentUser={} }) => {
-  const { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS } = CONSTANTS;
+const Settings = ({ currentUser = {} }) => {
+  const { EMAIL_FREQUENCY_ENUM, MESSAGES, TITLES, LABELS, MAIN_TITLE } = CONSTANTS;
   const { emailFrequency: initialEmailFrequency, timeZone: initialTimeZone, _id: preferenceId } = currentUser.preference;
   const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
-  const [message, setMessage] = useState('');
+  const [toastOpen, setToastOpen] = useState(false);  // State to control ToastMessage
+  const [toastType, setToastType] = useState('success');  // Type of the toast
+  const [toastMessage, setToastMessage] = useState('');  // Message of the toast
   const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const handleFormSubmit = async () => {
@@ -34,37 +32,43 @@ const Settings = ({ currentUser={} }) => {
     formData.append('timeZone', timeZone);
     const preferencesUrl = `${baseUrl}/preferences/${preferenceId}`
     try {
-      const response = await uploadFile(preferencesUrl, formData, 'put');
-      setMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS); 
+      await uploadFile(preferencesUrl, formData, 'put');
+      setToastType('success');
+      setToastMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS);
     } catch (error) {
-      setMessage(MESSAGES.ERROR_UPDATE_SETTINGS);
+      setToastType('error');
+      setToastMessage(MESSAGES.ERROR_UPDATE_SETTINGS);
+    } finally {
+      setToastOpen(true);  // Show toast message
     }
   };
 
-  const handleChangeEmailFreq = (e) => {
-    const selectedFrequency = e.target.value;
+  const handleChangeEmailFreq = (selectedFrequency) => {
     if (!Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase())) {
-      setMessage(MESSAGES.INVALID_EMAIL_FREQUENCY);
+      setToastType('warning');
+      setToastMessage(MESSAGES.INVALID_EMAIL_FREQUENCY);
+      setToastOpen(true);  // Show toast message
       return;
     }
     setEmailFrequency(selectedFrequency);
   };
 
-  const handleChangeTimeZone = (e) => {
-    const selectedTimeZone = e.target.value;
+  const handleChangeTimeZone = (selectedTimeZone) => {
     setTimeZone(selectedTimeZone);
+  };
+  const handleToastClose = () => {
+    setToastOpen(false);  // Close toast message
   };
 
   return (
     <div>
-      <h2>Settings</h2>
+      <h2>{MAIN_TITLE.SETTINGS}</h2>
 
       <Select
         className='select-email-frequency'
         options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
           text: key.toLowerCase(),
-          value: EMAIL_FREQUENCY_ENUM[key],
-          icon: '⏰'
+          value: EMAIL_FREQUENCY_ENUM[key]
         }))}
         title={TITLES.SELECT_EMAIL_FREQUENCY}
         onChange={handleChangeEmailFreq}
@@ -76,7 +80,7 @@ const Settings = ({ currentUser={} }) => {
       <Select
         className='select-time-zone'
         options={createTimeZones().map(tz => ({
-          text: tz.label,
+          text: tz.text,
           value: tz.value
         }))}
         title='Select Time Zone'
@@ -93,8 +97,12 @@ const Settings = ({ currentUser={} }) => {
         onClick={handleFormSubmit}
       />
 
-      {/* TO DO: replace message  */}
-      <p>{message}</p>
+      <ToastMessage
+        open={toastOpen}
+        type={toastType}
+        message={toastMessage}
+        onClose={handleToastClose}
+      />
     </div>
   );
 };
