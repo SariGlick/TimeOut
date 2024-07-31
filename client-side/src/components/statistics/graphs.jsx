@@ -4,9 +4,9 @@ import { PieChart, ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@apollo/client';
 import { GET_USERS, GET_WEBSITE } from './queries.js';
-import { useAppSelector } from '../redux/store.jsx';
+import { useAppSelector } from '../../redux/store.jsx';
 import { getWebsites, formatDate, getRandomColor } from './graphsUtils.js';
-import Loader from '../stories/loader/loader.jsx'
+import Loader from '../../stories/loader/loader.jsx'
 import './graphs.scss'
 
 const VisitedWebsitesComponent = ({ startDate, endDate }) => {
