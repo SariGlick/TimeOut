@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@mui/material'
 import GenericButton from '../Button/GenericButton';
+import { useTranslation } from 'react-i18next';
 import './verticalTabs.scss'
 const  VerticalTabss=({ labels=['tab1','tab2'],elements})=> {
   const [activeIndex,setActiveIndex]= useState(0);
   const handleClick =(i)=>{
      setActiveIndex(i)
   }
+  const {t} =useTranslation();
   return ( 
 
     <div className='tab-warper'>
@@ -19,7 +21,7 @@ const  VerticalTabss=({ labels=['tab1','tab2'],elements})=> {
         onClick={()=>handleClick(index)}
           key={index}  
           >
-          <p> {label}</p>
+          <p> {t(label)}</p>
             
          </div>
       )

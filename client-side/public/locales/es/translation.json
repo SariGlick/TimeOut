@@ -8,8 +8,12 @@
     "profiles":"perfiles",
     "timeout":"se acabó el tiempo",
     "sleect-language":"seleccione el idioma",
-    "change-notification-time":"cambiar la hora de notificación"
-
+    "change-notification-time":"cambiar la hora de notificación",
+    "Account" :"Cuenta",
+    "Notifications" :"Notificaciones",
+    "Preference":"Preferencia",
+    "Display-Setting" :"Configuración de pantalla",
+    "Message" :"Mensaje"
  
  
 }
