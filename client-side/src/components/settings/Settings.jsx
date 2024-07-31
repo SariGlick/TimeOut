@@ -5,12 +5,14 @@ import CONSTANTS from '../../constants';
 import { uploadFile } from './uploadprofileimageutil';
 
 const Settings = ({ user }) => {
-    const { LABELS, MESSAGES} = CONSTANTS;
+    const { LABELS, MESSAGES } = CONSTANTS;
     const userId = user._id;
     const [preview, setPreview] = useState(null);
     const [imageFile, setImageFile] = useState(null);
     const baseUrl = process.env.REACT_APP_BASE_URL;
-    const [massage, setMessage] = useState('');
+    const [message, setMessage] = useState('');
+    const [toastType, setToastType] = useState('info');
+    const [openToast, setOpenToast] = useState(false);
 
     const handleFilePicture = (e) => {
         const file = e.target.files[0];
@@ -24,7 +26,9 @@ const Settings = ({ user }) => {
                 };
                 reader.readAsDataURL(file);
             } else {
+                setToastType('error');
                 setMessage(MESSAGES.UNSUCCESS_UPLOAD_FILE_TYPE);
+                setOpenToast(true);
             }
         }
     };
@@ -34,10 +38,13 @@ const Settings = ({ user }) => {
         formData.append('profileImage', imageFile);
         try {
             const response = await uploadFile(baseUrl, formData, 'put');
-            setMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS); 
+            setMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS);
         } catch (error) {
-            setMessage(MESSAGES.UNSUCCESS_UPLOAD_FILE); 
+            setMessage(MESSAGES.UNSUCCESS_UPLOAD_FILE);
         }
+    };
+    const handleCloseToast = () => {
+        setOpenToast(false);
     };
 
     return (
