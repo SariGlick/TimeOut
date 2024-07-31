@@ -62,8 +62,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
   });
 
-  const blockForm = document.getElementById("blockForm");
-  const siteInput = document.getElementById("siteInput");
+  const blockForm = document.getElementById('blockForm');
+  const siteInput = document.getElementById('siteInput');
   blockForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const inputUrl = siteInput.value.trim();
