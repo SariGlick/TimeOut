@@ -1,0 +1,47 @@
+@import '../variables.scss';
+
+.popup-body {
+  width: max-content;
+  padding: 5% 7%;
+  margin: 5%;
+  border-radius: 8px;
+  border: 1px solid ;
+  box-shadow: 0px 4px 8px $primary-color;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  z-index: 1;
+
+  &[data-theme='dark'] {
+
+    box-shadow: 0px 4px 8px $primary-color;
+  }
+}
+
+.button {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  padding: 5% 7%;
+  border-radius: 8px;
+  color: $standardInfoColor;
+  transition: all 150ms ease;
+  cursor: pointer;
+
+  &:active {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
