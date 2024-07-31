@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, InputAdornment ,styled} from '@mui/material';
-import Button from '@mui/material/Button';
+import { TextField, InputAdornment ,styled,Button} from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
@@ -14,6 +13,7 @@ const GenericInput = ({
   width = '20%', 
   icon: Icon=null, 
   disabled= false,
+  accept,
   validation  = () => {}, 
   ...rest 
 }) => {
@@ -61,7 +61,7 @@ const GenericInput = ({
     >
     {label}
 
-    <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled}/>
+    <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled} accept={accept}/>
   </Button>
   {error && <div className="helper-text error">{helperText}</div>}
   </div>) :(<div className="generic-input">

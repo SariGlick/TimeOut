@@ -6,7 +6,6 @@ import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Select from '../../stories/Select/Select.jsx'
 import {uploadFile} from './uploadFileUtil.js'
 import {LANGUAGE,LABELS} from './constantSetting.js'
-import { Language } from '@mui/icons-material';
 const Settings = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
@@ -16,6 +15,7 @@ const Settings = ({currentUser={}}) => {
     const [notificationTime,setNotificationTime]= useState(sendNotificationTime);
     const [lng,setLng] =useState('en');
     const {t,i18n}= useTranslation();
+
     const handleFileChange=(e) => {
          if(e.target.files[0])
          { 
@@ -47,7 +47,8 @@ const Settings = ({currentUser={}}) => {
         <div> 
           <div className='uploadWarper'>
 
-            <GenericInput  type='file'  label={t(LABELS.CHANGE_RINGTONE)} onChange={handleFileChange} size='medium'  />
+            <GenericInput  type='file'  label={t(LABELS.CHANGE_RINGTONE)} onChange={handleFileChange} size='medium'  accept='audio/mp3'/>
+
           </div>
           <div>
              <audio controls>
