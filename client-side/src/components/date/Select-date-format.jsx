@@ -38,7 +38,6 @@ const DateFormatSelect = ({ currentUser }) => {
   );
   
 };
-
 DateFormatSelect.propTypes = {
   currentUser: PropTypes.shape({
     preferences: PropTypes.shape({
