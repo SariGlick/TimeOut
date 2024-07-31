@@ -1,0 +1,38 @@
+@import '../stylies.scss';
+
+
+.timeInputWrapper {
+
+    width: 40%;
+
+    .MuiOutlinedInput-root {
+
+        .MuiOutlinedInput-notchedOutline {
+
+            border-color: $secondary-color;
+
+            border-width: 2px;
+
+            border-style: solid;
+
+            transition: border-color 0.3s ease;
+
+
+            &.Mui-focused {
+
+                border-color: $secondary-color;
+
+            }
+
+
+            &:hover {
+
+                border-color: $secondary-color;
+
+            }
+
+        }
+
+    }
+
+}

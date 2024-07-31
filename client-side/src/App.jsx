@@ -1,18 +1,16 @@
-import { Provider } from 'react-redux';
-import { RouterProvider } from 'react-router-dom';
-import Footer from './stories/footer/FooterComponent';
-import { router } from './router/router.jsx';
-import { store } from './redux/store.jsx';
+import React from 'react';
+import Header from './stories/header/header'
+import Footer from './stories/footer/FooterComponent'
+import DateTimePicker from './components/report';
 import './App.scss';
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-      <Provider store={store}>
-        <Footer />
-      </Provider>
-    </>
+    <div className="App">
+      <Header/> 
+      <Footer/>
+      <DateTimePicker/>
+    </div>
   );
 }
 export default App;
