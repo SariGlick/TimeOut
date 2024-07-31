@@ -1,10 +1,9 @@
 import { format } from 'date-fns';
 
-const formatDate = (event,date) => {
-    const newFormat = event;
-    const formatDate=format(date, newFormat);
+const dateFormat = (event,date) => {
+    const formatDate=format(date, event);
     return formatDate;
   };
-  export default formatDate;
+  export default dateFormat;
   
   
