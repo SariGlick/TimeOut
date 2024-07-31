@@ -7,26 +7,30 @@ const DateTimePicker = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
 
+
     const storeArr = () => {
-        const dataArr = [startDate, endDate];
-        fillData(dataArr);
-    }
+        console.log(startDate.$d.toISOString(), " s ", endDate.$d.toISOString());
+        setCustomArr([startDate.$d.toISOString(), endDate.$d.toISOString()]);
+        console.log(customArr, "setCustomArr");
+          }
+      const submit = (!startDate || !endDate) || startDate > endDate;
+      if (!submit)
+      {
+        fillData()
+      }
 
-    const isButtonDisabled = (!startDate || !endDate) || startDate > endDate;
-
-    const handleDateChange = (inputName, date) => {
+      const handleDateChange = (inputName, date) => {
         if (inputName === 'start') {
-            setStartDate(date);
+          setStartDate(date);
         } else {
-            setEndDate(date);
+          setEndDate(date);
         }
-    }
+      }
 
     return (
         <div>
             <DateInput onChange={date => handleDateChange('start', date)} className="start" />
             <DateInput onChange={date => handleDateChange('end', date)} className="end" />
-            <GenericButton className='submit' label='submit' onClick={storeArr} disabled={isButtonDisabled} />
         </div>
     );
 };
