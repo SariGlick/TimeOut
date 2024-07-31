@@ -3,9 +3,8 @@ dotenv.config();
 import kafka from 'kafka-node';
 import { sendEmail } from './mailer.js';
 
-
 const Consumer = kafka.Consumer;
-const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER});
+const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
 const consumer = new Consumer(client, [{ topic: 'emailTopic', partition: 0 }], { autoCommit: true });
 
 consumer.on('message', (message) => {
