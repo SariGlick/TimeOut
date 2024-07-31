@@ -9,6 +9,7 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
+import  messageRouter from './router/message.router.js';
 
 
 const app=express();
@@ -27,6 +28,7 @@ app.use('/preferences',preferencesRouter);
 app.use('/websites',websitesRouter);
 app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
+app.use('/messages',messageRouter);
 app.use('/users',usersRouter);
 app.use(pageNotFound);
 app.use(serverErrors)
