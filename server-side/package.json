@@ -18,11 +18,16 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "i18next": "^23.12.1",
+    "i18next-browser-languagedetector": "^8.0.0",
+    "i18next-http-backend": "^2.5.2",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
+    "moment-timezone": "^0.5.45",
     "mongoose": "^8.4.5",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "react-i18next": "^14.1.3"
   }
 }

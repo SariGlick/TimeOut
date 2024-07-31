@@ -6,6 +6,7 @@ import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import Select from '../../stories/Select/Select.jsx'
 import {uploadFile} from './uploadFileUtil.js'
 import {LANGUAGE,LABELS} from './constantSetting.js'
+import { Language } from '@mui/icons-material';
 const Settings = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
@@ -19,13 +20,13 @@ const Settings = ({currentUser={}}) => {
          if(e.target.files[0])
          { 
             setRingtoneFile(e.target.files[0]);
-            const audioUrl= URL.createObjectURL(e.target.files[0]);
             setAudioSrc(URL.createObjectURL(e.target.files[0]));
          }
           
     };
     
      const handleLngChange=(value)=>{
+      console.log('value= ', value);
        i18n.changeLanguage(value);
           setLng(value)
      }
@@ -56,12 +57,15 @@ const Settings = ({currentUser={}}) => {
           </div>       
 
          <Select  title={t(LABELS.SELECT_LANGUAGES)} 
-          options={[{text:LANGUAGE.he,value:'he'}, {text:LANGUAGE.es,value:'es'},{text:LANGUAGE.en,value:'en',}]} 
-          className='' 
+          options={Object.keys(LANGUAGE).map(key=>({
+            value:key,
+            text:LANGUAGE[key]['text'],
+            iconSrc:LANGUAGE[key]['icon']
+          }))} 
+          className='select-class' 
           size={'large'}
           widthOfSelect='200px'
-          value={lng}
-          onChange={e=>handleLngChange(e.target.value)}/>
+          onChange={handleLngChange}/>
         </div>          
         
           <GenericInput size='small'  label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='' />
