@@ -5,7 +5,6 @@ const messageTypeRouter = express.Router();
 
 messageTypeRouter.get('/', getAllMessageTypes);
 messageTypeRouter.get('/:id', getMessageTypeById);
-
 messageTypeRouter.put('/:id', updateMessageType);
 messageTypeRouter.delete('/:id', deleteMessageType);   
 

@@ -7,7 +7,8 @@ import MessageType from '../models/MessageType.model.js';
 
 export const getMessages = async (req, res) => {
   try {
-    const messages = await Message.find().populate('type').populate('userId');
+    const messages = await Message.find().select('-__v');
+
     res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -17,11 +18,29 @@ export const getMessages = async (req, res) => {
 
 export const getMessageById = async (req, res) => {
   try {
-    const message = await Message.findById(req.params.id).populate('type').populate('userId');
+
+    const message = await Message.findById(req.params.id,{__v:0}) //.populate('type').populate('userId');
+
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }
     res.status(200).json(message);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+export const getMessagesByUserId = async (req, res) => {
+  try {
+    const userId = req.params.userId;   
+    const messages = await Message.find({ userId }).select('-__v').populate('type', 'type -_id');
+    
+    if (!messages) {
+      return res.status(404).json({ error: 'Messages not found' });
+    }
+
+    res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -46,11 +65,16 @@ export const addMessage = async (req, res) => {
 export const updateMessage = async (req, res) => {
   try {
     const { type, userId, date, read } = req.body;
+    if (type !== undefined) updateFields.type = type;
+    if (userId !== undefined) updateFields.userId = userId;
+    if (date !== undefined) updateFields.date = date;
+    if (read !== undefined) updateFields.read = read;
+
     const message = await Message.findByIdAndUpdate(
       req.params.id,
       { type, userId, date, read },
       { new: true, runValidators: true }
-    );
+    );   
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }

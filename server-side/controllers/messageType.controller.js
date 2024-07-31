@@ -3,7 +3,7 @@ import MessageType from '../models/MessageType.model.js';
 
 export const getAllMessageTypes = async (req, res) => {
   try {
-    const messageTypes = await MessageType.find();
+        const messageTypes = await MessageType.find().select('-__v');
     res.status(200).json(messageTypes);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -13,7 +13,9 @@ export const getAllMessageTypes = async (req, res) => {
 
 export const getMessageTypeById = async (req, res) => {
   try {
-    const messageType = await MessageType.findById(req.params.id);
+
+    const messageType = await MessageType.findById(req.params.id).select('-__v');
+
     if (!messageType) {
       return res.status(404).json({ error: 'Type not found' });
     }
