@@ -1,4 +1,4 @@
-
+importScripts('constants.js');
 let blockedSitesCache = null;
 
 // Initialize cache when the extension is loaded
@@ -83,22 +83,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function showNotification(title, message) {
+function showNotification(site, num) {
+  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
   chrome.notifications.create({
-      type: 'basic',
-      iconUrl: 'images/icon48.png',
-      title: title,
-      message: message,
-      priority: 2
-   }
-);
+    type: 'basic',
+    iconUrl: 'images/icon48.png',
+    title: NOTIFICATION_TITLE,
+    message: message,
+    priority: 2
+  });
 }
-
-chrome.tabs.onCreated.addListener((tab) => {
-  showNotification('New Tab Opened', 'A new tab has been opened.');
-});
-
-chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  showNotification('Tab Closed', 'A tab has been closed.');
-});
-
