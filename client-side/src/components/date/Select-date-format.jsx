@@ -26,7 +26,7 @@ const DateFormatSelect = ({ currentUser }) => {
         options={DATE_FORMATS.map(formatOption => ({
           value: formatOption.value,
           text: formatOption.label,
-          }))}Fix date format
+          }))}
         value={dateFormat}
         onChange={setDateFormat}
         title='Select date format'
