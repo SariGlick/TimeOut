@@ -19,13 +19,7 @@ export  const router = createBrowserRouter([
                 path: '/profiles',
                 element:<ProfilePageComponent  userId = {'6698da056e5c07ebd3c11ec1'}/>
 
-
-
-
-
-
-
-            }
+           }
         ]
     },
 ])

@@ -59,12 +59,35 @@ export const extractWebsiteName = (url) => {
 };
 
 
-  
+export function validateProfileDate(formData) {
+    let isValid = true;
+
+    if (!formData.timeProfile.timeStart.trim()) {
+        isValid = false;
+    }
+
+    if (!formData.timeProfile.timeEnd.trim()) {
+        isValid = false;
+    }
+
+    return isValid;
+}
 export const validateName = (inputValue) => {
     if (inputValue.length < 2) {
-      return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
+        return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
     } else if (inputValue.length > 50) {
-      return VALIDATE_MESSAGES.PROFILE_NAME_LONG;
+        return VALIDATE_MESSAGES.PROFILE_NAME_LONG;
     }
     return '';
-  };
+};
+export const isValidURL = (string) => {
+    try {
+        new URL(string);
+        return true;
+    } catch (_) {
+        return false;
+    }
+};
+export const isWebsiteInProfile = (url, profile) => {
+    return profile.listWebsites.some(website => website.websiteId.url === url);
+};

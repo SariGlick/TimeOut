@@ -6,9 +6,20 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
+import GenericButton from '../Button/GenericButton.jsx';
 import './TableComponent.scss';
 
-const TableComponent = ({ dataObject, widthOfTable = "80%", widthOfColums, actions, editRowId, handleFieldChange, statusOptions = [] }) => {
+const TableComponent = ({
+  dataObject,
+  widthOfTable,
+  widthOfColums,
+  actions,
+  editRowId,
+  handleFieldChange,
+  statusOptions,
+  addButton,
+  handleAddRow
+}) => {
   let columns = dataObject.headers.map((header, i) => ({
     field: header,
     headerName: header,
@@ -31,6 +42,18 @@ const TableComponent = ({ dataObject, widthOfTable = "80%", widthOfColums, actio
                 </MenuItem>
               ))}
             </Select>
+          );
+        }
+        if (header === 'name') {
+          return (
+            <Tooltip title='This field is optional'>
+              <TextField
+                value={params.value}
+                onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
+                name={header}
+                fullWidth
+              />
+            </Tooltip>
           );
         }
         return (
@@ -92,6 +115,11 @@ const TableComponent = ({ dataObject, widthOfTable = "80%", widthOfColums, actio
         }}
         pageSizeOptions={[4, 8]}
       />
+      {addButton && (
+        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+          <GenericButton variant="outlined" size="medium" onClick={handleAddRow} className="profile-list-button" label='Add Website' />
+        </div>
+      )}
     </div>
   );
 };
@@ -113,7 +141,12 @@ TableComponent.propTypes = {
   ),
   editRowId: PropTypes.string,
   handleFieldChange: PropTypes.func,
-  statusOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  statusOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  })).isRequired,
+  addButton: PropTypes.bool,
+  handleAddRow: PropTypes.func,
 };
 
 TableComponent.defaultProps = {
@@ -121,6 +154,7 @@ TableComponent.defaultProps = {
   actions: [],
   editRowId: null,
   handleFieldChange: null,
+  addButton: false,
+  handleAddRow: null,
 };
-
 export default TableComponent;

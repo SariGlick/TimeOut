@@ -12,11 +12,9 @@ const ToastMessage = ({ message, type, onClose }) => {
     </Snackbar>
   );
 };
-
 ToastMessage.propTypes = {
   message: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['error', 'success', 'warning', 'info']).isRequired,
   onClose: PropTypes.func,
 };
-
 export default ToastMessage;

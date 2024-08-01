@@ -8,11 +8,11 @@ import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
 import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
-import { SELECT_OPTIONS, INPUT_LABELS, DIALOG_TITLES, TOAST_MESSAGES, VALIDATE_MESSAGES,  BUTTON_LABELS, TOOLTIP_TEXTS } from '../../constants/profileConstants.js';
+import { SELECT_OPTIONS, INPUT_LABELS, DIALOG_TITLES, TOAST_MESSAGES, VALIDATE_MESSAGES, BUTTON_LABELS} from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 
-export default function AddProfile({userId}) {
+export default function AddProfile({ userId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -155,7 +155,7 @@ export default function AddProfile({userId}) {
             {BUTTON_LABELS.CANCEL}
           </Button>
           {(!data.name || data.name.length < 2 || data.name.length > 50 || !data.status) ? (
-            <Tooltip title={TOOLTIP_TEXTS.FORM_NOT_FILLED}>
+            <Tooltip title={TOAST_MESSAGES.FORM_NOT_FILLED}>
               <span>
                 <Button color="success" type="submit" disabled={!data.name || data.name.length < 2 || data.name.length > 50 || !data.status}>
                   {BUTTON_LABELS.ADDING}
