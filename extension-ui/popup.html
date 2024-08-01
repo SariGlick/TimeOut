@@ -6,11 +6,13 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <!-- TODO to use generic components and style this page -->
   <div class="container">
     <button id="blockSitesBtn">Block Websites</button>
+    <button id="allowedSitesBtn">Allowed Sites</button>
     <button id="browsingDataBtn">Browsing Data</button>
     <button id="enterSite">Enter to Site</button>
+    
+    <!-- Blocked Sites Section -->
     <div id="blockDiv" class="hidden">
       <h3>Blocked Sites:</h3>
       <ul id="blockedSitesList"></ul>
@@ -19,6 +21,18 @@
         <button type="submit">Block Site</button>
       </form>
     </div>
+
+    <!-- Allowed Sites Section -->
+    <div id="allowedSitesDiv" class="hidden">
+      <h3>Allowed Sites:</h3>
+      <ul id="allowedSitesList"></ul>
+      <form id="addAllowedSiteForm">
+        <input type="text" id="allowedSiteInput" placeholder="Enter allowed site name">
+        <button type="submit">Add Allowed Site</button>
+      </form>
+    </div>
+
+    <!-- Browsing Data Section -->
     <div id="browsingDataDiv" class="hidden">
       <h3>Browsing Data:</h3>
       <p>This is where browsing data will be displayed.</p>
