@@ -1,30 +1,31 @@
 
 let blockedSitesCache = null;
+let allowedSitesCache = null;
+let isBlackList = true;
 
-// Initialize cache when the extension is loaded
 chrome.runtime.onStartup.addListener(() => initializeBlockedSitesCache());
 chrome.runtime.onInstalled.addListener(() => initializeBlockedSitesCache());
-
-function initializeBlockedSitesCache(callback) {
-  chrome.storage.local.get("blockedSites", (data) => {
+function initializeCaches(callback) {
+  chrome.storage.local.get(["blockedSites", "allowedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
+    allowedSitesCache = data.allowedSites || [];
     if (typeof callback === "function") {
       callback();
     }
   });
 }
 
-// Use this function to ensure cache is initialized
-function ensureBlockedSitesCacheInitialized(callback) {
-  if (blockedSitesCache === null) {
-    initializeBlockedSitesCache(callback);
+function ensureCachesInitialized(callback) {
+  if (blockedSitesCache === null || allowedSitesCache === null) {
+    initializeCaches(callback);
   } else if (typeof callback === "function") {
     callback();
   }
 }
 
+
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
-  ensureBlockedSitesCacheInitialized(() => {
+  ensureCachesInitialized(() => {
     handleBeforeNavigate(details);
   });
 }, { url: [{ schemes: ['http', 'https'] }] });
@@ -32,39 +33,47 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 function handleBeforeNavigate(details) {
   try {
     const url = new URL(details.url);
-    
     if (url.protocol === 'chrome:' || url.protocol === 'about:') {
       return;
     }
 
     const hostname = url.hostname.toLowerCase();
-    
-    if (blockedSitesCache.some(site => hostname.includes(site))) {
-      chrome.tabs.get(details.tabId, (tab) => {
-        if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
-          return;
-        }
-        chrome.scripting.executeScript({
-          target: { tabId: details.tabId },
-          func: () => {
-            //TODO  add UI for the oops window
-             window.stop();
-            window.location.href = chrome.runtime.getURL('oops.html');
-          }
-        }).catch(error => {
-          console.error("Error executing script: ", error);
-        });
-      });
+
+    if (isBlackList) {
+      if (blockedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
+    } else {
+      if (!allowedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
     }
   } catch (error) {
     console.error("Invalid URL: ", error);
   }
 }
 
+function blockSite(tabId) {
+  chrome.tabs.get(tabId, (tab) => {
+    if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
+      return;
+    }
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        window.stop();
+        window.location.href = chrome.runtime.getURL('oops.html');
+      }
+    }).catch(error => {
+      console.error("Error executing script: ", error);
+    });
+  });
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addBlockedSite') {
     const hostname = request.hostname.toLowerCase();
-    ensureBlockedSitesCacheInitialized(() => {
+    ensureCachesInitialized(() => {
       if (!blockedSitesCache.includes(hostname)) {
         blockedSitesCache.push(hostname);
         chrome.storage.local.set({ blockedSites: blockedSitesCache }, () => {
@@ -74,11 +83,35 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ success: false, message: 'Site already blocked' });
       }
     });
-    return true; // כדי להורות שהתגובה היא אסינכרונית
+    return true; 
   } else if (request.action === 'getBlockedSites') {
-    ensureBlockedSitesCacheInitialized(() => {
+    ensureCachesInitialized(() => {
       sendResponse({ blockedSites: blockedSitesCache });
     });
-    return true; // כדי להורות שהתגובה היא אסינכרונית
+    return true; 
+  } else if (request.action === 'addAllowedSite') {
+    const hostname = request.hostname.toLowerCase();
+    ensureCachesInitialized(() => {
+      if (!allowedSitesCache.includes(hostname)) {
+        allowedSitesCache.push(hostname);
+        chrome.storage.local.set({ allowedSites: allowedSitesCache }, () => {
+          sendResponse({ success: true });
+        });
+      } else {
+        sendResponse({ success: false, message: 'Site already allowed' });
+      }
+    });
+    return true;
+  } else if (request.action === 'getAllowedSites') {
+    ensureCachesInitialized(() => {
+      sendResponse({ allowedSites: allowedSitesCache });
+    });
+    return true; 
   }
 });
+
+
+
+
+
+
