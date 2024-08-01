@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
   googleId: { type: String },
   profileImage: { type: String,default:"profile.jpg" },
   visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
-  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
+  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }], 
   preference: { type: Schema.Types.ObjectId, ref: 'Preference' }
 
 });
