@@ -1,8 +1,8 @@
 import React , { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import {GoogleLogin, googleLogout } from '@react-oauth/google';
-import GenericButton from "./stories/Button/GenericButton";
-import { getUserByGoogleAccount } from "./axios/login-services";
+import GenericButton from "../../stories/Button/GenericButton";
+import { getUserByGoogleAccount } from "../../axios/login-services";
 
 export default function () {
   const [userData, setUserData] = useState();
@@ -29,7 +29,6 @@ export default function () {
 
   return (
     <div className='App'>
-      <h2> Google Sign-In</h2>
       {!userData && (
         <GoogleLogin
           className="sign"
@@ -51,14 +50,13 @@ export default function () {
       )}
       {userData && (
         <div>
-          <h3>Name: {userData.name}</h3>
-          <p>Email: {userData.email}</p>
           <GenericButton
            className="primary"
             label="Log out"
             onClick={logOut}
             size="medium"
           ></GenericButton>
+
         </div>
       )}
     </div>
