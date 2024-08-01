@@ -13,14 +13,14 @@ import {LANGUAGE,LABELS} from './constantSetting.js'
        }
   return (
     <Select  title={t(LABELS.SELECT_LANGUAGES)} 
-    options={Object.keys(LANGUAGE).map(key=>({
-      value:key,
-      text:LANGUAGE[key]['text'],
-      iconSrc:LANGUAGE[key]['icon']
-    }))} 
-    className='select-class' 
-    size={'large'}
-    widthOfSelect='200px'
-    onChange={handleLngChange}/>  )
+      options={Object.keys(LANGUAGE).map(key=>({
+        value:key,
+        text:LANGUAGE[key]['text'],
+        iconSrc:LANGUAGE[key]['icon']
+      }))} 
+      className='select-class' 
+      size={'large'}
+      widthOfSelect='200px'
+      onChange={handleLngChange}/>  )
 }
 export default Preferences;

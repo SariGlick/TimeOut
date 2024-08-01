@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'
 import GenericButton  from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import Select from '../../stories/Select/Select.jsx'
 import {uploadFile} from './uploadFileUtil.js'
 import Preferences from './preferences.jsx';
-import {LANGUAGE,LABELS} from './constantSetting.js'
+import {LABELS} from './constantSetting.js'
 const Notifications = ({currentUser={}}) => {
     const {emailFrequency,sendNotificationTime,_id,soundVoice}= currentUser.preference
     const url=process.env.REACT_APP_BASE_URL;
