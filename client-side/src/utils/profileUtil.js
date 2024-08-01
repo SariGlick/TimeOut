@@ -1,6 +1,4 @@
-import { SELECT_OPTIONS } from '../constants/profileConstants.js';
-import { createWebsite } from "../services/websiteService";
-
+import { SELECT_OPTIONS ,VALIDATE_MESSAGES } from '../constants/profileConstants.js';
 export const formatProfileData = (profile) => {
     return {
         id: profile._id,
@@ -60,24 +58,13 @@ export const extractWebsiteName = (url) => {
     }
 };
 
-export const handleAddUrl = async (data, URLSUser, setURLSUser, setdataToast, setData) => {
-    try {
-        const parsedUrl = new URL(data.url);
-        const dataWebsites = {
-            name: parsedUrl.hostname,
-            url: data.url
-        };
-        if (URLSUser.some(item => item.url === data.url)) {
-            setdataToast({ open: true, message: 'URL already exists in the list.', type: 'error' });
-            return;
-        }
 
-        const newWebsites = await createWebsite(dataWebsites);
-        setURLSUser([{ id: newWebsites._id, url: data.url, urlStatus: data.urlStatus, urlTimeLimit: data.urlTimeLimit }, ...URLSUser]);
-        setData({ ...data, url: '', urlStatus: '', urlTimeLimit: 0 });
-    } catch (e) {
-        setdataToast({ open: true, message: 'Invalid URL', type: 'error' });
-        return null;
+  
+export const validateName = (inputValue) => {
+    if (inputValue.length < 2) {
+      return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
+    } else if (inputValue.length > 50) {
+      return VALIDATE_MESSAGES.PROFILE_NAME_LONG;
     }
-};
-
+    return '';
+  };

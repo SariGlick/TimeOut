@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/redux": "^3.6.31",
     "axios": "^1.7.2",
+    "notistack": "^3.0.1",
     "react": "^18.3.1",
     "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^18.3.1",

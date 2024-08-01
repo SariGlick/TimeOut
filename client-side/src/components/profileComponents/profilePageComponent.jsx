@@ -20,7 +20,7 @@ import ProfileActivationTimer from './profileActivationComponent.jsx';
 
 import '../../styles/profilePageStyle.scss';
 
-const ProfilePageComponent = () => {
+const ProfilePageComponent = ({userId}) => {
   const dispatch = useDispatch();
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,6 @@ const ProfilePageComponent = () => {
   
   const fetchProfiles = async () => {
     try {
-      const userId = '6698da056e5c07ebd3c11ec1';
       const profileData = await getProfilesByUserId(userId);
       dispatch(setProfiles(profileData));
       setLoading(false);
@@ -43,8 +42,10 @@ const ProfilePageComponent = () => {
   };
 
   useEffect(() => {
-    fetchProfiles();
-  }, [dispatch]);
+    if (userId) {
+      fetchProfiles(userId);
+    }
+  }, [dispatch, userId]);
 
   const handleProfileSelect = (event) => {
     const selectedProfileId = event.target.value;
@@ -193,7 +194,7 @@ const ProfilePageComponent = () => {
     <div className="profile-list-container">
       <div className="profile-list-select-wrapper">
         <div className="component-add">
-          <AddProfileComponent />
+          <AddProfileComponent  userId={userId}/>
         </div>
         <Select
           options={profiles.map((profile) => ({ text: profile.profileName, value: profile._id }))}

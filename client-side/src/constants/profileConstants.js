@@ -25,7 +25,8 @@ export const TOOLTIP_TEXTS = {
     STATUS_BLOCKED_SITES: 'Blocked Sites Status',
     DELETE_PROFILE: 'Delete Profile',
     DELETE: 'Delete',
-    CONFIRM_DELETE: 'Are you sure you want to delete this profile?'
+    CONFIRM_DELETE: 'Are you sure you want to delete this profile?',
+    FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
 };
 
 export const SELECT_OPTIONS = {
@@ -39,7 +40,7 @@ export const SELECT_OPTIONS = {
     ],
     WEBSITE_STATUS_OPEN: [
         { text: 'limit', value: 'limit' },
-        { text: 'blocked', value: 'blocked' }
+        { text: 'block', value: 'block' }
     ]
 };
 
@@ -57,11 +58,9 @@ export const BUTTON_LABELS = {
 export const DIALOG_TITLES = {
     ADD_PROFILE: 'Add a new profile',
     EDIT_PROFILE: 'Edit Profile',
-    CONFIRM_DELETION: 'Confirm Deletion',
     PROFILE_TIME:' Enter profile start time and profile end time',
     CREATE_FORM:'  To create a new profile please enter the required data.',
     NEW_PROFILE:'New profile',
-    ADD_WEBSITE:'Enter the URL of the site you want to add, select a site status and add to your list of sites',
     STATUS_LIST:'Choose a white/black list to set how the sites are blocked.'
 };
 
@@ -70,18 +69,14 @@ export const TOAST_MESSAGES = {
     PROFILE_UPDATED_ERROR: 'Error updating profile!',
     PROFILE_DELETED_SUCCESS: 'Profile deleted successfully!',
     PROFILE_DELETED_ERROR: 'Error deleting profile!',
-    TYPE_LIST_CHANGE_ERROR: 'You cannot change the list type after adding URLs.'
+    TYPE_LIST_CHANGE_ERROR: 'You cannot change the list type after adding URLs.',
+    PROFILE_CREATE_ERROR: 'Error creating profile',
+    PROFILE_CREATE_SUCCESS: 'Success creating profile',
+
+
 };
 
 export const VALIDATE_MESSAGES = {
     PROFILE_NAME_SHORT: 'Name must be at least 2 characters long.',
     PROFILE_NAME_LONG: 'Name cannot be more than 50 characters long.'
-};
-
-export const CONSOLE_MESSAGES = {
-    PROFILE_CREATE_ERROR: 'Error creating profile:',
-};
-
-export const TOOLTIP_MESSAGES = {
-    FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
 };
