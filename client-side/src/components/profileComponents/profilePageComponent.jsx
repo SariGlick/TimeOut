@@ -20,7 +20,7 @@ import ProfileActivationTimer from './profileActivationComponent.jsx';
 
 import '../../styles/profilePageStyle.scss';
 
-const ProfilePageComponent = () => {
+const ProfilePageComponent = ({userId}) => {
   const dispatch = useDispatch();
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const ProfilePageComponent = () => {
   
   const fetchProfiles = async () => {
     try {
-      const userId = '6698da056e5c07ebd3c11ec1';
+      //const userId = '6698da056e5c07ebd3c11ec1';
       const profileData = await getProfilesByUserId(userId);
       dispatch(setProfiles(profileData));
       setLoading(false);
@@ -43,8 +43,11 @@ const ProfilePageComponent = () => {
   };
 
   useEffect(() => {
-    fetchProfiles();
-  }, [dispatch]);
+    if (userId) {
+      fetchProfiles(userId);
+    }
+  }, [dispatch, userId]);
+  
 
   const handleProfileSelect = (event) => {
     const selectedProfileId = event.target.value;
