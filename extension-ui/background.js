@@ -2,28 +2,29 @@ let currentTab = null;
 let startTime = null;
 
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
-  await updateTimeForPreviousTab();
   try {
-    currentTab = await chrome.tabs.get(activeInfo.tabId);
-    startTime = Date.now();
-    if (currentTab.url) {
-      await addSiteToList(currentTab.url);
-    }
+    const tab= await chrome.tabs.get(activeInfo.tabId);
+    updateData(tab);
   } catch (error) {
     console.error('Error in onActivated listener:', error);
   }
 });
 
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.active) {
+    updateData(tab);
+  }
+});
+
+async function updateData(tab) {
     await updateTimeForPreviousTab();
     currentTab = tab;
     startTime = Date.now();
     if (tab.url) {
       await addSiteToList(tab.url);
     }
-  }
-});
+}
 
 async function updateTimeForPreviousTab() {
   if (currentTab && startTime && currentTab.url) {
