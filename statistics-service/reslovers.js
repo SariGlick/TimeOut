@@ -9,7 +9,7 @@ const resolvers = {
     Query: {
         websites: async () => {
             try {
-                const response = await axios.get(`${url}:${port}/websites/websites`);
+                const response = await axios.get(`${url}:${port}/websites`);
                 return response.data;
             } catch (error) {
                 throw new Error(error.message);
@@ -17,7 +17,7 @@ const resolvers = {
         },
         users: async () => {
             try {
-                const response = await axios.get(`${url}:${port}/users/users`);
+                const response = await axios.get(`${url}:${port}/users`);
                 return response.data;
             } catch (error) {
                 throw new Error(error.message);

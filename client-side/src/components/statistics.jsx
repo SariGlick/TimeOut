@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import DateTimePicker from './report.jsx'
-import VisitedWebsitesComponent from '../graphs/graphs.jsx';
+import VisitedWebsitesComponent from './statistics/graphs.jsx';
 
 const Statistics = () => {
     const [startDate, setStartDate] = useState('');
