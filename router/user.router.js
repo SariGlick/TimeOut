@@ -8,8 +8,9 @@ import {
   updateUserProfileImage ,
   // sendEmail,
   getByEmail,
-  getNewPassword,
-  getUserByGoogleAccount
+  getUserByGoogleAccount,
+  googleLogin,
+  getCode
 } 
 from '../controllers/user.controller.js';
 import upload from '../middleware/uploadFiles.js';
@@ -24,6 +25,7 @@ router.put('/users/:id', updatedUser);
 router.put('/users/:id/profile-image', upload.single('profileImage'), updateUserProfileImage);
 // router.get('/sendEmail', sendEmail);
 router.get('/getByEmail/:email', getByEmail);
-router.get('/getNewPassword/:email', getNewPassword);
+router.get('/getNewPassword/:email',getCode);
 router.get("/users/:token/:email", getUserByGoogleAccount)
+router.get("/users/:token/:email", googleLogin)
 export default router;

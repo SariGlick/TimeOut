@@ -4,84 +4,11 @@ import path from 'path';
 import fs from 'fs';
 import nodemailer from "nodemailer"
  
-// const jwt = require('jsonwebtoken');
-// const { OAuth2Client } = require('google-auth-library');
-// const client = new OAuth2Client(''); // יש להחליף במזהה הלקוח שלך ממנהל ה-API של Google
-
-// const nodemailer = require('nodemailer');
-// קונפיגורציה של Nodemailer
-// let transporter = nodemailer.createTransport({
-    
-//     service: 'hotmail',
-//     port: 587,
-//     auth: {
-//       //  user: 'timeout1@outlook.co.il',
-//       //  pass: 'time1122'
-//        user: 'mazaltovchagit16@gmail.com',
-//             pass: 'bysr woai nxmd jtti'
-//       }
-// });
-
-// const transporter = nodemailer.createTransport({
-//   // secureConnection: true,
-//   service: 'gmail',
-//   auth: {
-//       user: 'mazaltovchagit16@gmail.com',
-//       pass: 'bysr woai nxmd jtti'
-//   }
-// });
-// function sendTemporaryPasswordToCustomerEmail(user) {
-//   const transporter = nodemailer.createTransport({
-//       service: 'gmail',
-//       auth: {
-//           user: 'mazaltovchagit16@gmail.com',
-//           pass: 'bysr woai nxmd jtti'
-//       }
-//   });
-
-//   const mailOptions = {
-//       from: 'mazaltovchagit16@gmail.com',
-//       to: "st3196420@gmail.com",
-//       subject: 'סיסמא זמנית ND',
-//       html: `
-//       <div dir="rtl">
-//       <p>הסיסמה הזמנית שלך היא: ${user.name}</p>
-//       </div>
-//   `
-//   };
-
-//   transporter.sendMail(mailOptions, function (error, info) {
-//       if (error) {
-//           console.error(error);
-//       }
-//   });
-
-// }
-
-// export const sendEmail = async (req, res) => {
-  
-//     //  const { to, subject, text } = req.body;
-//     const user= "st3196420@gmail.com"
-// debugger
-//     try {
-//         await transporter.sendMail({
-//             from: 'mazaltovchagit16@gmail.com',
-//             to: user,
-//             subject : "succsesssssss",
-//             text: "this is the kod"
-//         });
-//        console.log({ message: 'Email sent successfully!' });
-//     } catch (error) {
-//         console.error('Error sending email:', error);
-//         // res.status(500).json({ message: 'Failed to send email.' });
-//     }
-// };
-
-// module.exports = { sendEmail };
-// sendEmail({}, {});
-
+const messages = require('./texts.js');
 export const getUserByGoogleAccount =async (req, res) =>{
   const user = getByEmail1 ( req.params.email)
+  const clientId=  process.env.CLIENT_ID
+  const clientSecret=  process.env.CLIENT_SECRET
   if (user)
     return res.status(200).send(user)
   else{
@@ -89,21 +16,18 @@ export const getUserByGoogleAccount =async (req, res) =>{
         try {
           const ticket = await client.verifyIdToken({
             idToken: tokenId,
-            audience: '1079513751617-cvu5tvh0ggnogkvj8im50op7gocnehrj.apps.googleusercontent.com' // יש להחליף גם כאן במזהה הלקוח שלך
+            audience: clientId
           });
           const payload = ticket.getPayload();
           const { email, name, picture } = payload;
-          const token = jwt.sign({ email, name, picture }, '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', { expiresIn: '1h' }); // יש להחליף במפתח סודי עבור JWT שלך
+          const token = jwt.sign({ email, name, picture }, clientSecret, { expiresIn: '1h' });
           res.json({
             token,
             userData: { email, name, picture }
           });
         } catch (error) {
-          console.error('Google login error:', error);
-          res.status(500).json({ error: 'Google login failed' });
-        }
-        {
-          
+          console.error( messages.error.googleError, error);
+          res.status(500).json({ error: messages.error.googleError});
         }
       };
 
@@ -150,44 +74,37 @@ export const getUserByGoogleAccount =async (req, res) =>{
         const user = await User.findOne({ email: em })
        if(user)
         res.status(200).send(user)
-      // else
-      //   res.status(404).send('Error email not found');
       }
       catch(error){
       console.error(error);
-      res.status(404).send('Error email not found');
-      // res.status(500).send('Enacorrect to db');
+      res.status(404).send(messages.error.notFound);
      }
     }
-     export const getByEmail1 = async (email) => {
+  export const getByEmail1 = async (email) => {
           try {
               const user = await User.findOne({ email });
-              return user; // מחזיר את המשתמש אם נמצא, אחרת מחזיר null
+              return user; 
           } catch (error) {
-              console.error('Error: Unable to query database', error);
-              throw new Error('Unable to query database');
+              console.error(messages.error.data, error);
+              throw new Error(messages.error.data);
           }
       };
-  export const getKode = async (req, res)=>{
-    // const us= "st3196420@gmail.com"
-    const us=req.params.email
+  export const getCode = async (req, res)=>{
+    const email=req.params.email
     try{
-      const user = await getByEmail1( us);
+      const user = await getByEmail1(email);
       if(user){
-        // sendTemporaryPasswordToCustomerEmail(user)
-        // sendEmail(user.email)//, req.params.password
-        sendEmail(user)
-        res.status(200).send( "We will send you a verification code to " + user.email+" email" )
+        //i need the funcition from the girls who responsibilities on send-email
+        //  now their function is not work in normal js file
+        // sendEmail(user.email,req.params.password)
+        res.status(200).send( messages.su+ user.email )
       }
-      else
-      {
+      else {
         res.status(404).send("Error email not found")
       }
     }
     catch{
-      // #00466a
       res.status(500).send('Internal Server Error');
-      // res.status(404).send("Error email not found")
     }
   
   
@@ -218,7 +135,6 @@ export const getUserByGoogleAccount =async (req, res) =>{
   }
 
 
-
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find()
@@ -246,27 +162,26 @@ export const getUserById = async (req, res) => {
 };
 
 export const addUser = async (req, res) => {
-  const { name, password, email, } = req.body;//googleId
-  if(password){
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({
-        name,
-        password: hashedPassword,
-        email,
-      });
-      await newUser.save();
-      res.send('Data saved successfully!');
-    } catch (err) {
-      console.error(err);
-      res.status(500).send('Error saving user');
-    }
-
+  const { name, email, picture, googleId, password } = req.body;
+  try {
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : await bcrypt.hash(generateRandomPassword(), 10);
+    const newUser = new User({
+      name,
+      email,
+      googleId, // option field
+      password: hashedPassword, //we have password in any case 
+      profileImage: picture,
+    });
+    await newUser.save();
+    res.status(200).json({ message: messages.addUser, user: newUser });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message:  messages.error.dataSave});
   }
-  // else if(googleId){
+};
 
-  // }
-
+const generateRandomPassword = () => {
+  return Math.random().toString(36).slice(-8); // 8 tabs
 };
 
 export const deleteUser = async (req, res) => {
