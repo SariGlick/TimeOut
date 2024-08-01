@@ -15,7 +15,8 @@ export const getUsers = async (req, res,next) => {
 };
 
 export const getUserById = async (req, res,next) => {
-  const id = req.params.id;
+  let id = req.params?.id;
+  id=id.split('').slice(1).join('').trim();
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})
   try {

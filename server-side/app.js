@@ -9,7 +9,7 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
-
+import activeProfile from './profileMngr.js'
 
 const app=express();
 app.use(express.json())
@@ -31,6 +31,8 @@ app.use('/users',usersRouter);
 app.use(pageNotFound);
 app.use(serverErrors)
 let port= process.env.PORT;
+
+const user=activeProfile("669645be78def8e48726043e")
 
 app.listen(port,()=>{
     console.log(` running at http://localhost:${port}`);
