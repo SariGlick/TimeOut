@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
-dotenv.config();
 import kafka from 'kafka-node';
 import { sendEmail } from './mailer.js';
+dotenv.config();
+
 
 const Consumer = kafka.Consumer;
 const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
