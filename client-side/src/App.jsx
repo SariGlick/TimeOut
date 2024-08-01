@@ -7,12 +7,10 @@ import './App.scss';
 
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <RouterProvider router={router} />
-      <Provider store={store}>
-        <Footer />
+        {/* <Footer /> */}
       </Provider>
-    </>
   );
 }
 export default App;
