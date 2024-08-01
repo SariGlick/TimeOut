@@ -15,7 +15,7 @@ function App() {
 
     <>
       <Provider store={store}>
-        <VerticalTabs labels={['Account']} elements={[<AccountTab/>]}/>
+        <Header/>
         <Footer />
       </Provider>
     </>
