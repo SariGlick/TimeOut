@@ -45,6 +45,7 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
+
   className: PropTypes.string.isRequired,
   widthOfSelect: PropTypes.string
 };
