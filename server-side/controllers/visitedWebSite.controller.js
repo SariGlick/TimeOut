@@ -1,37 +1,37 @@
-import visitedWebsites from '../models/visitedWebSite.model.js';
+import VisitedWebsite from '../models/visitedWebSite.model.js';
 import visitedWebsiteservice from '../services/visitedWebsiteService.js'
 
 export const getAllVisitedWebsites = async (req, res) => {
     try {
-        const visitedWebsites = await visitedWebsites.find();
+        const visitedWebsites = await VisitedWebsite.find();
         res.json(visitedWebsites);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 };
 export const createVisitedWebsite = async (req, res) => {
-    const newVisitedWebsite = new visitedWebsites(req.body);
+    const newVisitedWebsite = new VisitedWebsite(req.body);
     try {
-        const savedVisitedWebsite = await visitedWebsites.save();
+        const savedVisitedWebsite = await VisitedWebsite.save();
         res.status(201).json(savedVisitedWebsite);
     } catch (err) {
         res.status(400).json({ message: err.message });
     }
 };
-export const getVisitedWebsiteById = async (req, res) => {
+export const getVisitedWebsiteById = async (visitsId) => {
     try {
-        const visitedWebsite = await visitedWebsites.findById(req.params.id);
+        const visitedWebsite = await VisitedWebsite.findById(visitsId).populate('websiteId').select('-__v');
         if (!visitedWebsite) {
-            return res.status(404).json({ message: 'Visited website not found' });
+            return next({message:'visited Websites not found ',status:404})
         }
-        res.json(visitedWebsite);
+        return visitedWebsite
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        next({message:err.message})
     }
 };
 export const updateVisitedWebsite = async (req, res) => {
     try {
-        const updatedVisitedWebsite = await visitedWebsites.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedVisitedWebsite = await VisitedWebsite.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedVisitedWebsite) {
             return res.status(404).json({ message: 'Visited website not found' });
         }
@@ -42,7 +42,7 @@ export const updateVisitedWebsite = async (req, res) => {
 };
 export const deleteVisitedWebsite = async (req, res) => {
     try {
-        const deletedVisitedWebsite = await visitedWebsites.findByIdAndDelete(req.params.id);
+        const deletedVisitedWebsite = await VisitedWebsite.findByIdAndDelete(req.params.id);
         if (!deletedVisitedWebsite) {
             return res.status(404).json({ message: 'Visited website not found' });
         }
@@ -55,14 +55,8 @@ export const deleteVisitedWebsite = async (req, res) => {
 
 
 export const showVisitedWebsite = async (req, res) => {
-    // const obj = req.body;
-    console.log("i am ")
-    const obj={
-        userId:1,
-        type:'month',
-        dateRange:null
-    }
-
+    const obj = req.body;
+   
     if (obj.type == "custom") {
 
         if (!Array.isArray(obj.customDates) || obj.customDates.length !== 2) {
@@ -72,17 +66,19 @@ export const showVisitedWebsite = async (req, res) => {
             if (obj.customDates[0] == null || obj.customDates[1] == null) {
                 res.status(400).json({ message: 'Impossible to calculate because data is missing' });
             }
-            if (obj.customDates[1].getTime() < obj.customDates[0].getTime())
+            if (obj.customDates[1] < obj.customDates[0])
                 res.status(400).json({ message: 'order of dates is invalid' });
         }
     }
 
     try {
-        const data = visitedWebsiteservice(obj);
-        console.log(data);
+        const data = await visitedWebsiteservice(obj);
+        console.log('Data from service:', data);
+        res.status(200);
         res.json(data);
+       
     } catch {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ message: "error" });
     }
-
+    
 };
