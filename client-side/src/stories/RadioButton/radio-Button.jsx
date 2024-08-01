@@ -6,7 +6,7 @@ import './radio-Button.scss';
 const RadioButtonComponent = ({ name, options = [], selectedOption, onChange }) => {
     return (
         <FormControl component="fieldset" className="custom-radio-group">
-            <RadioGroup value={selectedOption} onChange={onChange} name={name}>
+            <RadioGroup value={selectedOption} onChange={onChange} name={name} row>
                 {options.map(option => (
                     <FormControlLabel
                         key={option.value}
@@ -14,7 +14,7 @@ const RadioButtonComponent = ({ name, options = [], selectedOption, onChange }) 
                         label={option.label}
                         control={<Radio className="custom-radio" />}
                         className={`custom-form-control-label ${selectedOption === option.value ? 'Mui-checked' : ''}`}
-                        labelPlacement="start"
+                        labelPlacement="end"
                     />
                 ))}
             </RadioGroup>

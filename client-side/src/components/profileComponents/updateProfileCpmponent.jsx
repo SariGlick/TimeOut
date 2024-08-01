@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Box, Tooltip } from '@mui/material';
+import { useSnackbar } from 'notistack';
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Box, Tooltip, Button } from '@mui/material';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import Select from '../../stories/Select/Select.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import { updateProfileApi, deleteProfileApi } from '../../services/profileService.js';
-import { deleteProfile } from '../../redux/profile/profile.slice.js';
+import { deleteProfile,updateProfile } from '../../redux/profile/profile.slice.js';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
-import { formatProfileData, updateFormDataWithStatusBlockedSites } from '../../utils/profileUtil.js';
+import { formatProfileData, validateName, validateProfileDate, updateFormDataWithStatusBlockedSites } from '../../utils/profileUtil.js';
 import {
     INPUT_LABELS,
     SELECT_OPTIONS,
@@ -17,21 +18,20 @@ import {
     BUTTON_LABELS,
     TOOLTIP_TEXTS
 } from '../../constants/profileConstants.js';
+import '../../styles/profilePageStyle.scss';
 
-export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
+export default function UpdateProfileComponent({ profile}) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     const [open, setOpen] = useState(false);
-    const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
-    const [toastOpen, setToastOpen] = useState(false);
-    const [toastType, setToastType] = useState('success');
-    const [toastMessage, setToastMessage] = useState('');
+    const [errorMessages, setErrorMessages] = useState('');
     const [formData, setFormData] = useState({
         userId: '',
         profileName: '',
         timeProfile: {
-            timeStart: new Date().toISOString(),
-            timeEnd: new Date().toISOString(),
+            timeStart: new Date().toISOString().substr(11, 5),
+            timeEnd: new Date().toISOString().substr(11, 5),
         },
         statusBlockedSites: '',
         websites: []
@@ -49,12 +49,14 @@ export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
 
     const handleClose = useCallback(() => {
         setOpen(false);
-        setConfirmDeleteOpen(false);
-        setToastOpen(false);
     }, []);
 
     const handleFieldChange = useCallback((e) => {
         const { name, value } = e.target;
+        if (name === 'profileName') {
+            const validName = validateName(value);
+            setErrorMessages(validName);
+        }
         if (name === "statusBlockedSites") {
             setFormData(prevState => updateFormDataWithStatusBlockedSites(prevState, value));
         } else if (name === "timeStart" || name === "timeEnd") {
@@ -71,6 +73,10 @@ export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
     }, []);
 
     const handleSave = useCallback(async () => {
+        const isValid = validateProfileDate(formData);
+        if (!isValid) {
+            return;
+        }
         try {
             const updatedProfile = {
                 userId: formData.userId,
@@ -83,42 +89,27 @@ export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
                 listWebsites: formData.websites
             };
             await updateProfileApi(profile._id, updatedProfile);
-            setToastOpen(true);
-            setToastType('success');
-            setToastMessage(TOAST_MESSAGES.PROFILE_UPDATED_SUCCESS);
+            dispatch(updateProfile(updatedProfile));
             handleClose();
-            if (onProfileUpdated) onProfileUpdated({ id: profile._id, ...updatedProfile });
+            enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_UPDATED_SUCCESS} type="success" />);
+            setTimeout(() => navigate(0), 3000);
         } catch (error) {
-            console.error('Error updating profile:', error);
-            setToastOpen(true);
-            setToastType('error');
-            setToastMessage(TOAST_MESSAGES.PROFILE_UPDATED_ERROR);
+            enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_UPDATED_ERROR} type="error" />);
         }
-    }, [formData, profile, handleClose, onProfileUpdated]);
+    }, [formData, profile, handleClose]);
 
     const handleDelete = useCallback(async () => {
         if (profile && profile._id) {
             try {
                 await deleteProfileApi(profile._id);
                 dispatch(deleteProfile(profile._id));
-                setToastOpen(true);
-                setToastType('success');
-                setToastMessage(TOAST_MESSAGES.PROFILE_DELETED_SUCCESS);
-                navigate(0);
+                enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_DELETED_SUCCESS} type="warning"/>);
+                setTimeout(() => navigate(0), 3000);
             } catch (err) {
-                console.error('Error handling delete:', err);
-                setToastOpen(true);
-                setToastType('error');
-                setToastMessage(TOAST_MESSAGES.PROFILE_DELETED_ERROR);
+                enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_DELETED_ERROR} type="error"/>);
             }
         }
     }, [dispatch, profile]);
-
-    const isFormValid = useCallback(() => {
-        return formData.profileName.trim() !== '' &&
-            formData.timeProfile.timeStart.trim() !== '' &&
-            formData.timeProfile.timeEnd.trim() !== '';
-    }, [formData]);
 
     return (
         <div>
@@ -139,6 +130,8 @@ export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
                                             value={formData.profileName}
                                             onChange={handleFieldChange}
                                             width='100%'
+                                            error={!!errorMessages}
+                                            helperText={<span>{errorMessages}</span>}
                                         />
                                     </Tooltip>
                                 </Box>
@@ -192,45 +185,22 @@ export default function UpdateProfileComponent({ profile, onProfileUpdated }) {
                 </DialogContent>
                 <DialogActions>
                     <Tooltip title={TOOLTIP_TEXTS.CANCEL}>
-                        <GenericButton label={BUTTON_LABELS.CANCEL} onClick={handleClose} />
+                        <Button sx={{ color: ' rgb(103, 252, 210) ' }} onClick={handleClose}>
+                            {BUTTON_LABELS.CANCEL}
+                        </Button>
                     </Tooltip>
                     <Tooltip title={TOOLTIP_TEXTS.SAVE}>
-                        <GenericButton
-                            label={BUTTON_LABELS.SAVE}
-                            onClick={handleSave}
-                            disabled={!isFormValid()}
-                        />
+                        <Button color="success" type="submit" onClick={handleSave}>
+                            {BUTTON_LABELS.SAVE}
+                        </Button>
                     </Tooltip>
                     <Tooltip title={TOOLTIP_TEXTS.DELETE_PROFILE}>
-                        <GenericButton
-                            label={BUTTON_LABELS.DELETE_PROFILE}
-                            onClick={() => setConfirmDeleteOpen(true)}
-                            color="error"
-                        />
+                        <Button color="error" onClick={handleDelete}>
+                            {BUTTON_LABELS.DELETE_PROFILE}
+                        </Button>
                     </Tooltip>
                 </DialogActions>
             </Dialog>
-            <Dialog open={confirmDeleteOpen} onClose={handleClose}>
-                <DialogTitle>{DIALOG_TITLES.CONFIRM_DELETE}</DialogTitle>
-                <DialogActions>
-                    <Tooltip title={TOOLTIP_TEXTS.CANCEL}>
-                        <GenericButton label={BUTTON_LABELS.CANCEL} onClick={handleClose} />
-                    </Tooltip>
-                    <Tooltip title={TOOLTIP_TEXTS.DELETE}>
-                        <GenericButton
-                            label={BUTTON_LABELS.DELETE}
-                            onClick={handleDelete}
-                            color="error"
-                        />
-                    </Tooltip>
-                </DialogActions>
-            </Dialog>
-            <ToastMessage
-                open={toastOpen}
-                type={toastType}
-                message={toastMessage}
-                onClose={handleClose}
-            />
         </div>
     );
 }
