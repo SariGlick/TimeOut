@@ -74,7 +74,6 @@
   
 }
 .file-upload{
-  display: inline-block;
   .generic-input-file{
     border-radius: 8px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
@@ -83,10 +82,12 @@
     background-color:$color-border ;
     color: $color-black;
     font-family: 'Montserrat', sans-serif;
+    width: 100%; 
+    min-width: 160px;
     &:hover {
-      box-shadow: 0 0 5px rgba($color-border, 0.5);
-      background-color:$color-border-hover ;
-      transition: color 0.3s ease;
+    box-shadow: 0 0 5px rgba($color-border, 0.5);
+    background-color:$color-border-hover ;
+    transition: color 0.3s ease;
 
     }
     &.Mui-disabled,
