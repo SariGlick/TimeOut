@@ -1,10 +1,10 @@
-
 let blockedSitesCache = null;
 let allowedSitesCache = null;
 let isBlackList = true;
 
-chrome.runtime.onStartup.addListener(() => initializeBlockedSitesCache());
-chrome.runtime.onInstalled.addListener(() => initializeBlockedSitesCache());
+chrome.runtime.onStartup.addListener(() => initializeCaches());
+chrome.runtime.onInstalled.addListener(() => initializeCaches());
+
 function initializeCaches(callback) {
   chrome.storage.local.get(["blockedSites", "allowedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
@@ -22,7 +22,6 @@ function ensureCachesInitialized(callback) {
     callback();
   }
 }
-
 
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   ensureCachesInitialized(() => {
@@ -83,12 +82,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ success: false, message: 'Site already blocked' });
       }
     });
-    return true; 
+    return true;
   } else if (request.action === 'getBlockedSites') {
     ensureCachesInitialized(() => {
       sendResponse({ blockedSites: blockedSitesCache });
     });
-    return true; 
+    return true;
   } else if (request.action === 'addAllowedSite') {
     const hostname = request.hostname.toLowerCase();
     ensureCachesInitialized(() => {
@@ -106,12 +105,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     ensureCachesInitialized(() => {
       sendResponse({ allowedSites: allowedSitesCache });
     });
-    return true; 
+    return true;
   }
 });
-
-
-
-
-
-
