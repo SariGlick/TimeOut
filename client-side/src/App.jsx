@@ -14,8 +14,6 @@ function App() {
 
     <>
         <Provider store={store}>
-        <Header/>
-        <VerticalTabs labels={['Account', 'Notifications', 'Preference ', 'Display Setting', 'Message']} elements={[<p>Account</p>,<p>Notifications</p>,<p>Preference</p>,<p>Display Setting</p>,<p>Message</p>]}/>
         <Footer />
         </Provider>
     </>
