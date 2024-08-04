@@ -7,7 +7,14 @@
     "statistics":"סטטיסטיקות",
     "profiles":"פרופילים",
     "timeout":"פסק-זמן",
-     "sleect-language":"בחר שפה",
-     "change-notification-time":"שנה זמן קבלת התראות"
+    "sleect-language":"בחר שפה",
+    "change-notification-time":"שנה זמן קבלת התראות",
+    "Account" :"Cuenta",
+    "Notifications" :"התראות",
+    "Preference":"הגדרות אישיות",
+    "Display-Setting" :" הגדרות תצוגה",
+    "Message" :"הודעות",
+    "account":"חשבון",
+    "display-setting":"הגדרות תצוגה"
 
 }

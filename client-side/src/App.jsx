@@ -5,20 +5,17 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import Header from './stories/header/header'
+import VerticalTabs from './stories/verticalTabs/verticalTabss.jsx'
 import Footer from './stories/footer/FooterComponent'
-import Settings from './components/settings/Notifications.jsx';
-
+import AccountTab from './components/settings/accountTab.jsx'
 function App() {
-  
-   
-
+ 
   
   return (
 
     <>
-      {/* <RouterProvider router={router} /> */}
+     <RouterProvider router={router} />
       <Provider store={store}>
-      <Header/>
         <Footer />
       </Provider>
     </>

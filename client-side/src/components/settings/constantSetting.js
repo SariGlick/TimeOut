@@ -3,7 +3,12 @@
     SEND_PREFERENCE:'send preferences',
     CHANGE_RINGTONE:'change-ringtone',
     SELECT_LANGUAGES:'sleect-language',
-    CHANGE_NOTIFICATION_TIME:'change-notification-time'
+    CHANGE_NOTIFICATION_TIME:'change-notification-time',
+    ACCOUNT:'account',
+    NOTIFICATIONS:'Notifications',
+    DISPLAY_SETTING:'display-setting',
+    PREFERENCE:'Preference',
+    MESSAGE:'Message'
  };
  const LANGUAGE = {
    he: {
