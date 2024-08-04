@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { TextField, InputAdornment ,styled,Button} from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
-import { TextField, InputAdornment } from '@mui/material';
-import '../style/genericInput.scss';
+import './genericInput.scss';
 
 const GenericInput = ({ 
   label, 
@@ -13,6 +13,7 @@ const GenericInput = ({
   width = '20%', 
   icon: Icon=null, 
   disabled= false,
+  accept,
   validation  = () => {}, 
   ...rest 
 }) => {
@@ -43,40 +44,58 @@ const GenericInput = ({
       setHelperText(''); 
     }
   };
-
+   
   const inputStyle = {
     width,
   };
+  
+  
+  return(
+  <>
+  {type==='file' ?(<div className="file-upload" style={inputStyle}>
+   <Button
+      component="label"
+      size={size}
+      disabled={disabled}
+      className='generic-input-file'
+    >
+    {label}
 
-  return (
-    <div className="generic-input">
-      <TextField
-        label={label}
-        type={type}
-        value={inputValue}
-        onChange={handleChange}
-        size={size}
-        error={error}
-        disabled={disabled}
-        helperText={helperText}
-        InputProps={{
-          startAdornment: Icon && (
-            <InputAdornment position="start">
-              <Icon />
-            </InputAdornment>
-          ),
-          ...rest.InputProps,
-        }}
-        style={inputStyle}
-        {...rest}
-      />
-    </div>
-  );
+    <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled} accept={accept}/>
+  </Button>
+  {error && <div className="helper-text error">{helperText}</div>}
+  </div>) :(<div className="generic-input">
+
+<TextField
+  label={label}
+  type={type}
+  value={inputValue}
+  onChange={handleChange}
+  size={size}
+  error={error}
+  disabled={disabled}
+  helperText={helperText}
+  InputProps={{
+    startAdornment: Icon && (
+      <InputAdornment position="start">
+        <Icon />
+      </InputAdornment>
+    ),
+    ...rest.InputProps,
+  }}
+  style={inputStyle}
+  {...rest}
+/>
+</div>)
+}
+  </>
+
+  )
+    
 };
-
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password','file']),
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),

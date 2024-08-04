@@ -5,6 +5,7 @@ import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
 
 export const router = createBrowserRouter([
+
     {
         path: '',
         element: <Layout />,
@@ -27,4 +28,5 @@ export const router = createBrowserRouter([
             }
         ]
     },
+    
 ])

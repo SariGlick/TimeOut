@@ -5,6 +5,6 @@ const PreferenceSchema= new mongoose.Schema({
     sendNotificationTime:{type:Number,default:30,required:true},
     soundVoice:{type:String,default:'×××ª ××¢× ×¢×©×'},
     timeZone:{type:String,default:'UTC'},
-    language:{type:String,default:'en'}
+    language:{type:String, default:'en',emum:['en','es','he']}
 })
 export default mongoose.model('Preference',PreferenceSchema);

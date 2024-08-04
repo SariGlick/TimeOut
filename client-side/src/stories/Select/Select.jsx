@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { OPTION_SELSCT } from './select.constat';
 import './select.scss';
 
+
 const Select = ({
   className,
   options = OPTION_SELSCT,
@@ -47,6 +48,7 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
+
   className: PropTypes.string.isRequired,
   widthOfSelect: PropTypes.string,
   value: PropTypes.any.isRequired

@@ -9,10 +9,12 @@ export const getAllPreference = async (req, res, next) => {
         return next({ message: error.message, status: 500 })
     }
 };
-export const getPreferenceById = async (req, res, next) => {
-    const id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'id is not valid' });
+export const getPreferenceById=async(req,res,next)=>{
+    const id= req.params.id;
+    if(!mongoose.Types.ObjectId.isValid(id))
+        return  next({message:'id is not valid'})
+   
+  
 
     try {
         const PreferencesById = await Preference.findById(id, { __v: false });
