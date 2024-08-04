@@ -21,11 +21,10 @@ export  const router = createBrowserRouter([
                 element:<ProfileList/>
             },
             {
-                path:'/settings',
+                path:'/setting',
                 element:<Settings/>
         
             }
-            
         ]
     },
     
