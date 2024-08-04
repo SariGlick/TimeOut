@@ -26,7 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
       blockedSitesList.innerHTML = '';
       blockedSites.forEach((hostname) => {
         const li = document.createElement("li");
-        li.textContent = hostname;
+        const a = document.createElement("a");
+        a.href = `http://${hostname}`;
+        a.textContent = hostname;
+        a.target = "_blank";
+        li.appendChild(a);
         blockedSitesList.appendChild(li);
       });
     });
@@ -42,7 +46,11 @@ document.addEventListener('DOMContentLoaded', function () {
       allowedSitesList.innerHTML = '';
       allowedSites.forEach((hostname) => {
         const li = document.createElement("li");
-        li.textContent = hostname;
+        const a = document.createElement("a");
+        a.href = `http://${hostname}`;
+        a.textContent = hostname;
+        a.target = "_blank";
+        li.appendChild(a);
         allowedSitesList.appendChild(li);
       });
     });
@@ -68,7 +76,11 @@ document.addEventListener('DOMContentLoaded', function () {
           chrome.runtime.sendMessage({ action: 'addBlockedSite', hostname: hostname }, (response) => {
             if (response.success) {
               const li = document.createElement("li");
-              li.textContent = inputUrl;
+              const a = document.createElement("a");
+              a.href = `http://${hostname}`;
+              a.textContent = hostname;
+              a.target = "_blank";
+              li.appendChild(a);
               blockedSitesList.appendChild(li);
             } else {
               console.error(response.message);
@@ -94,7 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
           chrome.runtime.sendMessage({ action: 'addAllowedSite', hostname: hostname }, (response) => {
             if (response.success) {
               const li = document.createElement("li");
-              li.textContent = allowedUrl;
+              const a = document.createElement("a");
+              a.href = `http://${hostname}`;
+              a.textContent = hostname;
+              a.target = "_blank";
+              li.appendChild(a);
               allowedSitesList.appendChild(li);
             } else {
               console.error(response.message);
