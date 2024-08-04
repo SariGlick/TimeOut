@@ -64,15 +64,9 @@ export const addMessage = async (req, res) => {
 };
 export const updateMessage = async (req, res) => {
   try {
-    const { type, userId, date, read } = req.body;
-    if (type !== undefined) updateFields.type = type;
-    if (userId !== undefined) updateFields.userId = userId;
-    if (date !== undefined) updateFields.date = date;
-    if (read !== undefined) updateFields.read = read;
-
     const message = await Message.findByIdAndUpdate(
       req.params.id,
-      { type, userId, date, read },
+      req.body,
       { new: true, runValidators: true }
     );   
     if (!message) {
