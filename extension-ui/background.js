@@ -38,18 +38,19 @@ function handleBeforeNavigate(details) {
     }
 
     const hostname = url.hostname.toLowerCase();
-    console.log(`Navigating to: ${hostname}`);
 
     if (isBlackList) {
-      console.log(`Checking against blocked sites: ${blockedSitesCache}`);
+      // מצב רשימה שחורה
       if (blockedSitesCache.some(site => hostname.includes(site))) {
-        console.log(`Blocking site: ${hostname}`);
         blockSite(details.tabId);
       }
     } else {
-      console.log(`Checking against allowed sites: ${allowedSitesCache}`);
-      if (!allowedSitesCache.some(site => hostname.includes(site))) {
-        console.log(`Blocking site: ${hostname}`);
+      // מצב רשימה לבנה
+      if (allowedSitesCache.some(site => hostname.includes(site))) {
+        // האתר מותר, אין צורך לחסום
+        return;
+      } else {
+        // האתר אינו ברשימה הלבנה, חסום אותו
         blockSite(details.tabId);
       }
     }
