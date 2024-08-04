@@ -1,0 +1,13 @@
+// MessageListComponent.scss
+
+.MuiSvgIcon-root {
+    color: rgb(103, 252, 210);
+}
+
+.message:hover .icon-wrapper {
+    display: block;
+}
+
+.icon-wrapper {
+    display: none;
+}
