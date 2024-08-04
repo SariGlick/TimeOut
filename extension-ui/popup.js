@@ -13,9 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var addAllowedSiteForm = document.getElementById('addAllowedSiteForm');
   var allowedSiteInput = document.getElementById('allowedSiteInput');
 
-  // חדש - כפתור למעבר בין רשימה שחורה לרשימה לבנה
-  var toggleModeBtn = document.getElementById('toggleModeBtn');
-
   enterSite.addEventListener('click', function () {
     chrome.tabs.create({ url: 'http://localhost:3000/home' });
   });
@@ -111,23 +108,15 @@ document.addEventListener('DOMContentLoaded', function () {
     allowedSiteInput.value = "";
   });
 
-  // חדש - מעבר בין רשימה שחורה לרשימה לבנה
-  toggleModeBtn.addEventListener('click', function () {
-    chrome.runtime.sendMessage({ action: 'toggleMode' }, (response) => {
-      if (response.isBlackList) {
-        toggleModeBtn.textContent = "Switch to Whitelist Mode";
-      } else {
-        toggleModeBtn.textContent = "Switch to Blacklist Mode";
-      }
-    });
+  // חדש - החלפת מצב רשימה שחורה/לבנה
+  const toggleModeBtn = document.getElementById("toggleModeBtn");
+  chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
+    toggleModeBtn.textContent = response.isBlackList ? 'Switch to Whitelist Mode' : 'Switch to Blacklist Mode';
   });
 
-  // חדש - עדכון טקסט כפתור לפי המצב הנוכחי
-  chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
-    if (response.isBlackList) {
-      toggleModeBtn.textContent = "Switch to Whitelist Mode";
-    } else {
-      toggleModeBtn.textContent = "Switch to Blacklist Mode";
-    }
+  toggleModeBtn.addEventListener('click', () => {
+    chrome.runtime.sendMessage({ action: 'toggleMode' }, (response) => {
+      toggleModeBtn.textContent = response.isBlackList ? 'Switch to Whitelist Mode' : 'Switch to Blacklist Mode';
+    });
   });
 });
