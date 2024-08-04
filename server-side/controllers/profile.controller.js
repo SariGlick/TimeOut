@@ -11,7 +11,6 @@ export const getAllProfiles = async (req, res, next) => {
     }
 };
 
-
 export const createProfile = async (req, res, next) => {
     try {
         const newProfile = new Profiles(req.body);
