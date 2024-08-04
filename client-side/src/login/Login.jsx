@@ -12,17 +12,18 @@ import './login.scss';
 import GenericButton from '../stories/Button/GenericButton';
 import GenericInput from '../stories/GenericInput/genericInput';
 import { setCurrentUser } from '../redux/auth/auth.slice';
+import { MESSAGES } from '../constans';
 
 const SignInSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email format').required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  email: Yup.string().email(MESSAGES.INVALID_EMAIL_FORMAT).required(MESSAGES.EMAIL_REQUIRED),
+  password: Yup.string().required(MESSAGES.PASSWORD_REQUIRED),
 });
 
-function Login({ apiUrl = 'http://localhost:5004' }) {
+function Login({ apiUrl =process.env.REACT_APP_API_URL}) {
   const [error, setError] = useState(null);
   const [isNotExists, setIsNotExists] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [capVal, setCapVal] = useState(null);
+  const [robotPass, setRobotPass] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,8 +38,8 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
 
   const userLogin = async (user) => {
     try {
-      if (!capVal) {
-        setError('Please complete the ReCAPTCHA to proceed.');
+      if (!robotPass) {
+        setError(MESSAGES.RECAPTCHA_ERROR);
         setIsNotExists(true);
         return;
       }
@@ -58,14 +59,14 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
 
       if (error.response) {
         if (error.response.status === 401) {
-          setError('Invalid email or password. Please try again.');
+          setError(MESSAGES.INVALID_EMAIL_PASSWORD);
         } else {
-          setError('An unexpected error occurred. Please try again later.');
+          setError(MESSAGES.UNEXPECTED_ERROR);
         }
       } else if (error.request) {
-        setError('Unable to connect to the server. Please check your network connection.');
+        setError(MESSAGES.NETWORK_ERROR);
       } else {
-        setError('An unexpected error occurred. Please try again later.');
+        setError(MESSAGES.UNEXPECTED_ERROR);
       }
       setIsNotExists(true);
     } finally {
@@ -85,15 +86,15 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
 
   return (
     <div className="login-container">
-      <h2>Welcome back</h2>
+      <h2>{MESSAGES.WELCOME_BACK}</h2>
       <div className="signup-link">
-        Don't have an account? <span onClick={handleSignUpClick} className="signup-text">Sign up</span>.
+      {MESSAGES.SIGNUP_PROMPT} <span onClick={handleSignUpClick} className="signup-text"> {MESSAGES.SIGNUP_LINK}</span>.
       </div>
       <form onSubmit={formik.handleSubmit}>
         <div className="email">
           <div className="form-group">
             <GenericInput
-              label="Email"
+              label={MESSAGES.EMAIL_LABEL}
               type="email"
               name="email"
               value={formik.values.email}
@@ -101,7 +102,7 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
               onBlur={formik.handleBlur}
               width="100%"
               size="medium"
-              placeholder="example@example.com"
+              placeholder={MESSAGES.EMAIL_PLACEHOLDER}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
             />
@@ -111,7 +112,7 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
           <div className="password">
 
             <GenericInput
-              label="Password"
+              label={MESSAGES.PASSWORD_LABEL}
               type={showPassword ? 'text' : 'password'}
               name="password"
               value={formik.values.password}
@@ -132,7 +133,7 @@ function Login({ apiUrl = 'http://localhost:5004' }) {
         </div>
         <ReCAPTCHA
           sitekey={process.env.REACT_APP_SECRET_CODE_CAPVAL}
-          onChange={(val) => setCapVal(val)}
+          onChange={(val) => setRobotPass(val)}
         />
         <GenericButton
           className="secondary"
