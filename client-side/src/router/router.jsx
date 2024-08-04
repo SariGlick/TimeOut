@@ -1,8 +1,9 @@
 import React from "react";
-import {createBrowserRouter } from "react-router-dom";
+import { createHashRouter } from "react-router-dom";  
 import ProfileList from "../components/profileComponent.jsx";
 import Layout from "./layout.jsx";
-export  const router = createBrowserRouter([
+
+export const router = createHashRouter([   
     {
         path: '',
         element: <Layout/>,
@@ -21,4 +22,4 @@ export  const router = createBrowserRouter([
             }
         ]
     },
-])
+]);
