@@ -5,4 +5,4 @@ import resolvers from './reslovers.js';
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen()
+server.listen();
