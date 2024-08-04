@@ -315,6 +315,7 @@ const ProfilePageComponent = ({ userId }) => {
             statusOptions={statusOptions}
             addButton={true}
             handleAddRow={handleAddRow}
+            pageSize={5} 
           />
         </div>
       ) : (

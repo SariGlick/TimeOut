@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import PropTypes from 'prop-types';
@@ -18,7 +19,8 @@ const TableComponent = ({
   handleFieldChange,
   statusOptions,
   addButton,
-  handleAddRow
+  handleAddRow,
+  pageSize 
 }) => {
   let columns = dataObject.headers.map((header, i) => ({
     field: header,
@@ -110,10 +112,11 @@ const TableComponent = ({
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: pageSize || 5 }, 
           },
         }}
-        pageSizeOptions={[4, 8]}
+        pageSizeOptions={[4, 8, 10]} 
+        pageSize={pageSize || 5} 
       />
       {addButton && (
         <div style={{ textAlign: 'center', marginTop: '10px' }}>
@@ -147,6 +150,7 @@ TableComponent.propTypes = {
   })).isRequired,
   addButton: PropTypes.bool,
   handleAddRow: PropTypes.func,
+  pageSize: PropTypes.number, 
 };
 
 TableComponent.defaultProps = {
@@ -156,5 +160,7 @@ TableComponent.defaultProps = {
   handleFieldChange: null,
   addButton: false,
   handleAddRow: null,
+  pageSize: 5, 
 };
+
 export default TableComponent;
