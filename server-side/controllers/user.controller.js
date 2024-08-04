@@ -29,36 +29,9 @@ export const getUserById = async (req, res) => {
   }
 };
 
-let transporter = nodemailer.createTransport({
-    
-  service: 'hotmail',
-  secureConnection: true,
- 
- 
-  auth: {
-     user: 'timeout1@outlook.co.il',
-     pass: 'time1122'}
-});
 
-export const sendEmail = async (req, res) => {
-  //  const { to, subject, text } = req.body;
-  const user= "st3196420@gmail.com"
-debugger
-  try {
-      await transporter.sendMail({
-          from: 'איפוס סיסמאTIMEOUT ',
-          to: user,
-          subject : "succsesssssss",
-          text: "this is the kod"
-      });
-     console.log({ message: 'Email sent successfully!' });
-  } catch (error) {
-      console.error('Error sending email:', error);
-      // res.status(500).json({ message: 'Failed to send email.' });
-  }
-};
-// module.exports = { sendEmail };
-// sendEmail({}, {});
+
+
 
 export const addUser = async (req, res,next) => {
   const { name, password, email } = req.body;
@@ -81,35 +54,27 @@ export const addUser = async (req, res,next) => {
 };
 export const signIn = async (req, res, next) => {
   try {
-    console.log(req.body,"klkl");
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (user) {
-      console.log('Password from request:', password);
-      console.log('Password from database:', user.password);
-      
       bcrypt.compare( password, user.password, (err, same) => {
         if (err) {
           console.log("Error in bcrypt compare:", err);
           return next(new Error(err.message));
         }
-
         if (same) {
           user.password = "****";
           const token=generateToken(user);
-          console.log("Password match successful");
-          return res.send({ user,token });
+          res.cookie('token', token, { httpOnly: true, secure: true });
+          return res.send({ user });
         } else {
-          console.log("Password does not match");
           return res.status(401).send({ message: 'Auth Failed' });
         }
       });
     } else {
-      console.log("User not found");
       return res.status(401).send({ message: 'Auth Failed' });
     }
   } catch (error) {
-    console.log("Server error:", error);
     return next(new Error('Server Error'));
   }
 };

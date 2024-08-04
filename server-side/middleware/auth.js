@@ -10,6 +10,6 @@ exports.auth=(req,res,next)=>{
        next();
     }catch(err)
     {
-        next({message:err,status:401})
+        next({message:'Not authorized',status:401})
     }
 }

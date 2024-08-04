@@ -3,7 +3,7 @@ import express from 'express';
 import morgan from 'morgan'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
+import cookieParser  from 'cookie-parser';
 import preferencesRouter from './router/preference.router.js';
 
 import WebsitesRouter from './router/websites.router.js';
@@ -15,6 +15,7 @@ import {connecMongo} from './config/db.js'
 
 
 const app=express();
+app.use(cookieParser());
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 app.use(morgan('dev'));//הדפסת המידע של כל הבקשה 
