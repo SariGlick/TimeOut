@@ -1,9 +1,9 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
-import Preferences  from './preferences';
+import Preferences from './preferences.jsx';
 import AccountTab from './accountTab';
-import Notifications from './Notifications';
+import Notifications from './notifications.jsx';
 import {LABELS} from './constantSetting.js'
 const  Settings =()=> {
   const elements = [
