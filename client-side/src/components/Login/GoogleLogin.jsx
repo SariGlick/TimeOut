@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import {GoogleLogin, googleLogout } from '@react-oauth/google';
 import GenericButton from "../../stories/Button/GenericButton";
 import { getUserByGoogleAccount } from "../../axios/login-services";
-
+import Text from "./Text";
 export default function () {
   const [userData, setUserData] = useState();
   const GLogin = async(user)=>{
@@ -44,7 +44,7 @@ export default function () {
             setUserData(userData);
           }}
           onError={() => {
-            console.log('Login Failed');
+            console.log(Text.LOGIN_FAILED);
           }}
         />
       )}

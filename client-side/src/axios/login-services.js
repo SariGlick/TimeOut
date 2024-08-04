@@ -1,3 +1,5 @@
+import axiosInstance from "./axios";
+
 export const getUserByGoogleAccount = async (token, email) => {
     try {
       const response = await axiosInstance.get(`/api/users/${token}/${email}`);
