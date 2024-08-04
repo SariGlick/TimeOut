@@ -1,6 +1,6 @@
 let blockedSitesCache = null;
 let allowedSitesCache = null;
-let isBlackList = true;
+let isBlackList = false; // שימי לב שהגדרת isBlackList ל-false כדי לבדוק את הרשימה הלבנה
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
@@ -9,6 +9,7 @@ function initializeCaches(callback) {
   chrome.storage.local.get(["blockedSites", "allowedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
     allowedSitesCache = data.allowedSites || [];
+    console.log("Caches initialized:", { blockedSitesCache, allowedSitesCache }); // לוגים
     if (typeof callback === "function") {
       callback();
     }
@@ -37,14 +38,19 @@ function handleBeforeNavigate(details) {
     }
 
     const hostname = url.hostname.toLowerCase();
+    console.log("Navigating to:", hostname); // לוגים
 
     if (isBlackList) {
       if (blockedSitesCache.some(site => hostname.includes(site))) {
+        console.log("Blocking site (blacklist):", hostname); // לוגים
         blockSite(details.tabId);
       }
     } else {
       if (!allowedSitesCache.some(site => hostname.includes(site))) {
+        console.log("Blocking site (whitelist):", hostname); // לוגים
         blockSite(details.tabId);
+      } else {
+        console.log("Site allowed (whitelist):", hostname); // לוגים
       }
     }
   } catch (error) {
