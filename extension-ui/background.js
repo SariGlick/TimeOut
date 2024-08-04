@@ -40,17 +40,13 @@ function handleBeforeNavigate(details) {
     const hostname = url.hostname.toLowerCase();
 
     if (isBlackList) {
-      // מצב רשימה שחורה
       if (blockedSitesCache.some(site => hostname.includes(site))) {
         blockSite(details.tabId);
       }
     } else {
-      // מצב רשימה לבנה
       if (allowedSitesCache.some(site => hostname.includes(site))) {
-        // האתר מותר, אין צורך לחסום
         return;
       } else {
-        // האתר אינו ברשימה הלבנה, חסום אותו
         blockSite(details.tabId);
       }
     }

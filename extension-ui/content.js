@@ -10,20 +10,15 @@ function initializeCache(callback) {
     if (callback) callback();
   });
 }
-
-// שינוי פונקציה לinitializeCache
 initializeCache(() => {
   const hostname = window.location.hostname.toLowerCase();
 
-  // בדיקה לפי משתנה isBlackList
   if (isBlackList) {
-    // חסום אם האתר נמצא ברשימת החסומות
     if (blockedSitesCache && blockedSitesCache.includes(hostname)) {
       window.location.href = chrome.runtime.getURL('oops.html');
     }
   } else {
-    // חסום אם האתר אינו נמצא ברשימת האתרים המורשים
-    if (allowedSitesCache && !allowedSitesCache.includes(hostname)) {
+    if (allowedSitesCache && !(allowedSitesCache.includes(hostname))) {
       window.location.href = chrome.runtime.getURL('oops.html');
     }
   }
