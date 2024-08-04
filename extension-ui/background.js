@@ -1,15 +1,15 @@
 let blockedSitesCache = null;
 let allowedSitesCache = null;
-let isBlackList = false; // שימי לב שהגדרת isBlackList ל-false כדי לבדוק את הרשימה הלבנה
+let isBlackList = true;
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
 
 function initializeCaches(callback) {
-  chrome.storage.local.get(["blockedSites", "allowedSites"], (data) => {
+  chrome.storage.local.get(["blockedSites", "allowedSites", "isBlackList"], (data) => {
     blockedSitesCache = data.blockedSites || [];
     allowedSitesCache = data.allowedSites || [];
-    console.log("Caches initialized:", { blockedSitesCache, allowedSitesCache }); // לוגים
+    isBlackList = data.isBlackList !== undefined ? data.isBlackList : true;
     if (typeof callback === "function") {
       callback();
     }
@@ -38,19 +38,14 @@ function handleBeforeNavigate(details) {
     }
 
     const hostname = url.hostname.toLowerCase();
-    console.log("Navigating to:", hostname); // לוגים
 
     if (isBlackList) {
       if (blockedSitesCache.some(site => hostname.includes(site))) {
-        console.log("Blocking site (blacklist):", hostname); // לוגים
         blockSite(details.tabId);
       }
     } else {
       if (!allowedSitesCache.some(site => hostname.includes(site))) {
-        console.log("Blocking site (whitelist):", hostname); // לוגים
         blockSite(details.tabId);
-      } else {
-        console.log("Site allowed (whitelist):", hostname); // לוגים
       }
     }
   } catch (error) {
@@ -85,16 +80,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           sendResponse({ success: true });
         });
       } else {
-        sendResponse({ success: false, message: 'Site already blocked' });
+        sendResponse({ success: false, message: "Site is already blocked." });
       }
     });
     return true;
-  } else if (request.action === 'getBlockedSites') {
-    ensureCachesInitialized(() => {
-      sendResponse({ blockedSites: blockedSitesCache });
-    });
-    return true;
-  } else if (request.action === 'addAllowedSite') {
+  }
+
+  if (request.action === 'addAllowedSite') {
     const hostname = request.hostname.toLowerCase();
     ensureCachesInitialized(() => {
       if (!allowedSitesCache.includes(hostname)) {
@@ -103,11 +95,37 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           sendResponse({ success: true });
         });
       } else {
-        sendResponse({ success: false, message: 'Site already allowed' });
+        sendResponse({ success: false, message: "Site is already allowed." });
       }
     });
     return true;
-  } else if (request.action === 'getAllowedSites') {
+  }
+
+  if (request.action === 'toggleMode') {
+    ensureCachesInitialized(() => {
+      isBlackList = !isBlackList;
+      chrome.storage.local.set({ isBlackList: isBlackList }, () => {
+        sendResponse({ isBlackList: isBlackList });
+      });
+    });
+    return true;
+  }
+
+  if (request.action === 'getMode') {
+    ensureCachesInitialized(() => {
+      sendResponse({ isBlackList: isBlackList });
+    });
+    return true;
+  }
+
+  if (request.action === 'getBlockedSites') {
+    ensureCachesInitialized(() => {
+      sendResponse({ blockedSites: blockedSitesCache });
+    });
+    return true;
+  }
+
+  if (request.action === 'getAllowedSites') {
     ensureCachesInitialized(() => {
       sendResponse({ allowedSites: allowedSitesCache });
     });
