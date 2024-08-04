@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
+import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import './header.scss';
@@ -97,8 +97,8 @@ function ResponsiveAppBar() {
             >
                         <LabTabs
           nameOfClass="navbar-tabs"
-          text={['edit user profile','manage notifications']}
-          nav={['/editUserProfile','/manageNotifications'] }
+          text={['edit user profile','settings']}
+          nav={['/editUserProfile','/settings'] }
         />
             </Menu>
           </Box>

@@ -11,7 +11,8 @@ const Select = ({
   onChange = () => {},
   title,
   size = 'large',
-  widthOfSelect
+  widthOfSelect, 
+  value
 }) => {
   return ( 
     <div className='selectWrapper'>
@@ -21,10 +22,11 @@ const Select = ({
           <SelectMui style={{width: widthOfSelect}} label={title}
             className={` genericSelect ${className} `}
             onChange={(event) => onChange(event.target.value)}
+            value={value}
           >
             {options.map((option, index) => (
               <MenuItem key={index}  value={option.value}>
-                {<img className="img" src={option.iconSrc}  />}
+                {option.iconSrc && <img className="img" src={option.iconSrc}  alt=""/>}
                 {option.text}
               </MenuItem>
             ))}
@@ -46,7 +48,8 @@ Select.propTypes = {
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
   className: PropTypes.string.isRequired,
-  widthOfSelect: PropTypes.string
+  widthOfSelect: PropTypes.string,
+  value: PropTypes.any.isRequired
 };
 
 export default Select;
