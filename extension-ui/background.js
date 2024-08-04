@@ -82,3 +82,21 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // כדי להורות שהתגובה היא אסינכרונית
   }
 });
+
+chrome.runtime.onInstalled.addListener(() => {
+  const userId = 'm123';
+
+  fetch(`http://localhost:3000/api/settings/${userId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(settings => {
+      chrome.storage.local.set({ userSettings: settings }, () => {
+      });
+    })
+    .catch(error => console.error('Failed to fetch user settings:', error));
+});
+
