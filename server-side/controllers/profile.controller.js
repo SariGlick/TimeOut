@@ -9,8 +9,7 @@ export const getAllProfiles = async (req, res) => {
     }
 };
 
-export const createProfile = async (req, res) => {
-    const newProfile = new Profile(req.body);
+export const createProfile = async (req, res, next) => {
     try {
         const savedProfile = await newProfile.save();
         res.status(201).json(savedProfile);

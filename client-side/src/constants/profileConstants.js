@@ -83,7 +83,7 @@ export const TOAST_MESSAGES = {
     PROFILE_CREATE_ERROR: 'Error creating profile',
     PROFILE_CREATE_SUCCESS: 'Success creating profile',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
-    WEBSITE_CREATE_SUCCESS:'Profile created successfully!'
+    WEBSITE_CREATE_SUCCESS:'Website created successfully!'
 };
 
 export const VALIDATE_MESSAGES = {

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Radio, FormControlLabel, RadioGroup, FormControl } from '@mui/material';
 import './radio-Button.scss';
 
-const RadioButtonComponent = ({ name, options = [], selectedOption, onChange }) => {
+const RadioButtonComponent = ({ options, selectedOption, onChange }) => {
     return (
         <FormControl component="fieldset" className="custom-radio-group">
-            <RadioGroup value={selectedOption} onChange={onChange} name={name} row>
+            <RadioGroup value={selectedOption} onChange={onChange}>
                 {options.map(option => (
                     <FormControlLabel
                         key={option.value}
                         value={option.value}
-                        label={option.label}
                         control={<Radio className="custom-radio" />}
+                        label={option.label}
                         className={`custom-form-control-label ${selectedOption === option.value ? 'Mui-checked' : ''}`}
-                        labelPlacement="end"
+                        labelPlacement="start"
                     />
                 ))}
             </RadioGroup>
@@ -23,7 +23,6 @@ const RadioButtonComponent = ({ name, options = [], selectedOption, onChange }) 
 };
 
 RadioButtonComponent.propTypes = {
-    name: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(
         PropTypes.shape({
             value: PropTypes.string.isRequired,
