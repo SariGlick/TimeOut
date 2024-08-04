@@ -17,7 +17,7 @@ function App() {
      <RouterProvider router={router} />
       <Provider store={store}>
         <Footer />
-      </Provider>
+        </Provider>
     </>
   );
 }

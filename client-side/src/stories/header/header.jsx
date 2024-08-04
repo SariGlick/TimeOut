@@ -1,3 +1,5 @@
+
+
 import * as React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -69,6 +71,7 @@ function ResponsiveAppBar() {
                       nameOfClass="navbar-tabs"
                       text={['setting']}
                       nav={['setting']}
+
                     />
                   </Menu>
                 </Box>
@@ -207,6 +210,7 @@ function ResponsiveAppBar() {
 
                       text={['setting ']}
                       nav={['/setting']}
+
                     />
                   </Menu>
                 </Box>
