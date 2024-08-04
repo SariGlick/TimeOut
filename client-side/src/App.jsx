@@ -6,7 +6,6 @@ import { store } from './redux/store.jsx';
 import './App.scss';
 import Header from './stories/header/header'
 import Footer from './stories/footer/FooterComponent'
-import VerticalTabs from './stories/verticalTabs/verticalTabss.jsx'
 function App() {
  
   
