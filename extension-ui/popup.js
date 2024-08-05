@@ -8,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var allowedSitesBtn = document.getElementById('allowedSitesBtn');
   var allowedSitesDiv = document.getElementById('allowedSitesDiv');
   var allowedSitesList = document.getElementById('allowedSitesList');
-  var addAllowedSiteForm = document.getElementById('addAllowedSiteForm');
-  var allowedSiteInput = document.getElementById('allowedSiteInput');
-  var toggleModeBtn = document.getElementById('toggleModeBtn');
   var modeDisplay = document.getElementById('modeDisplay');
 
   enterSite.addEventListener('click', function () {
@@ -91,41 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
     siteInput.value = "";
-  });
-
-  addAllowedSiteForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const allowedUrl = allowedSiteInput.value.trim();
-    if (allowedUrl) {
-      try {
-        const url = new URL(allowedUrl);
-        const hostname = url.hostname.toLowerCase();
-        if (hostname) {
-          chrome.runtime.sendMessage({ action: 'addAllowedSite', hostname: hostname }, (response) => {
-            if (response.success) {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = `http://${hostname}`;
-              a.textContent = hostname;
-              a.target = "_blank";
-              li.appendChild(a);
-              allowedSitesList.appendChild(li);
-            } else {
-              console.error(response.message);
-            }
-          });
-        }
-      } catch (e) {
-        console.error('Invalid URL');
-      }
-    }
-    allowedSiteInput.value = "";
-  });
-
-  toggleModeBtn.addEventListener('click', function () {
-    chrome.runtime.sendMessage({ action: 'toggleMode' }, (response) => {
-      updateModeDisplay(response.isBlackList);
-    });
   });
 
   function updateModeDisplay(isBlackList) {

@@ -1,14 +1,14 @@
 let blockedSitesCache = null;
 let allowedSitesCache = ["example.com"]; // רשימה זמנית לצורך פיתוח
-let isBlackList = true;
+let isBlackList = true; // מצב זמני לצורך פיתוח
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
 
 function initializeCaches(callback) {
-  chrome.storage.local.get(["blockedSites", "isBlackList"], (data) => {
+  chrome.storage.local.get(["blockedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
-    isBlackList = data.isBlackList !== undefined ? data.isBlackList : true;
+    // isBlackList צריך להיות מאופס דרך מסד הנתונים ולא מההרחבה
     if (typeof callback === "function") {
       callback();
     }
@@ -85,17 +85,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 
-  if (request.action === 'addAllowedSite') {
-    const hostname = request.hostname.toLowerCase();
-    if (!allowedSitesCache.includes(hostname)) {
-      allowedSitesCache.push(hostname);
-      sendResponse({ success: true });
-    } else {
-      sendResponse({ success: false, message: "Site is already allowed." });
-    }
-    return true;
-  }
-
+  // הסרת האפשרות לשנות את המצב דרך ההרחבה
+  /*
   if (request.action === 'toggleMode') {
     ensureCachesInitialized(() => {
       isBlackList = !isBlackList;
@@ -105,6 +96,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
     return true;
   }
+  */
 
   if (request.action === 'getMode') {
     ensureCachesInitialized(() => {
