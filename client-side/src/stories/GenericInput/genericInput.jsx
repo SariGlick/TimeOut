@@ -77,6 +77,7 @@ const GenericInput = ({
   error={error}
   disabled={disabled}
   helperText={helperText}
+ 
   InputProps={{
     startAdornment: Icon && (
       <InputAdornment position="start">
@@ -84,6 +85,11 @@ const GenericInput = ({
       </InputAdornment>
     ),
     ...rest.InputProps,
+    
+  }}
+  inputProps={{
+    min: min,
+    max: max
   }}
   style={inputStyle}
   {...rest}

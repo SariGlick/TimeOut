@@ -24,6 +24,7 @@ const user={
 
 
 const  Settings =()=> {
+  
   const elements = [
     <AccountTab/>,
     <Notifications currentUser={user}/>,
