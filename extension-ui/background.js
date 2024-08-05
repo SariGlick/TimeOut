@@ -1,6 +1,6 @@
 let blockedSitesCache = null;
-let allowedSitesCache = ["example.com"]; 
-let isBlackList = true; 
+let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
+let isBlackList = false; 
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
