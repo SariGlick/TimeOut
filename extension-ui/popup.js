@@ -5,9 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var browsingDataDiv = document.getElementById('browsingDataDiv');
   var blockedSitesList = document.getElementById('blockedSitesList');
   var enterSite = document.getElementById('enterSite');
-  var allowedSitesBtn = document.getElementById('allowedSitesBtn');
-  var allowedSitesDiv = document.getElementById('allowedSitesDiv');
-  var allowedSitesList = document.getElementById('allowedSitesList');
   var modeDisplay = document.getElementById('modeDisplay');
 
   enterSite.addEventListener('click', function () {
@@ -17,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function () {
   blockSitesBtn.addEventListener('click', function () {
     blockDiv.classList.remove('hidden');
     browsingDataDiv.classList.add('hidden');
-    allowedSitesDiv.classList.add('hidden');
     chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
       const blockedSites = response.blockedSites || [];
       blockedSitesList.innerHTML = '';
@@ -33,29 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  allowedSitesBtn.addEventListener('click', function () {
-    allowedSitesDiv.classList.remove('hidden');
-    blockDiv.classList.add('hidden');
-    browsingDataDiv.classList.add('hidden');
-    chrome.runtime.sendMessage({ action: 'getAllowedSites' }, (response) => {
-      const allowedSites = response.allowedSites || [];
-      allowedSitesList.innerHTML = '';
-      allowedSites.forEach((hostname) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = `http://${hostname}`;
-        a.textContent = hostname;
-        a.target = "_blank";
-        li.appendChild(a);
-        allowedSitesList.appendChild(li);
-      });
-    });
-  });
-
   browsingDataBtn.addEventListener('click', function () {
     browsingDataDiv.classList.remove('hidden');
     blockDiv.classList.add('hidden');
-    allowedSitesDiv.classList.add('hidden');
     browsingDataDiv.innerHTML = '<h3>Browsing Data:</h3><p>This is where browsing data will be displayed.</p>';
   });
 
