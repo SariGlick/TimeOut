@@ -1,14 +1,13 @@
 let blockedSitesCache = null;
-let allowedSitesCache = null;
+let allowedSitesCache = ["example.com"]; // רשימה זמנית לצורך פיתוח
 let isBlackList = true;
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
 
 function initializeCaches(callback) {
-  chrome.storage.local.get(["blockedSites", "allowedSites", "isBlackList"], (data) => {
+  chrome.storage.local.get(["blockedSites", "isBlackList"], (data) => {
     blockedSitesCache = data.blockedSites || [];
-    allowedSitesCache = data.allowedSites || [];
     isBlackList = data.isBlackList !== undefined ? data.isBlackList : true;
     if (typeof callback === "function") {
       callback();
@@ -17,7 +16,7 @@ function initializeCaches(callback) {
 }
 
 function ensureCachesInitialized(callback) {
-  if (blockedSitesCache === null || allowedSitesCache === null) {
+  if (blockedSitesCache === null) {
     initializeCaches(callback);
   } else if (typeof callback === "function") {
     callback();
@@ -44,8 +43,7 @@ function handleBeforeNavigate(details) {
         blockSite(details.tabId);
       }
     } else {
-      if (allowedSitesCache.some(site => hostname.includes(site))) {
-      } else {
+      if (!allowedSitesCache.some(site => hostname.includes(site))) {
         blockSite(details.tabId);
       }
     }
@@ -89,16 +87,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   if (request.action === 'addAllowedSite') {
     const hostname = request.hostname.toLowerCase();
-    ensureCachesInitialized(() => {
-      if (!allowedSitesCache.includes(hostname)) {
-        allowedSitesCache.push(hostname);
-        chrome.storage.local.set({ allowedSites: allowedSitesCache }, () => {
-          sendResponse({ success: true });
-        });
-      } else {
-        sendResponse({ success: false, message: "Site is already allowed." });
-      }
-    });
+    if (!allowedSitesCache.includes(hostname)) {
+      allowedSitesCache.push(hostname);
+      sendResponse({ success: true });
+    } else {
+      sendResponse({ success: false, message: "Site is already allowed." });
+    }
     return true;
   }
 
@@ -127,9 +121,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 
   if (request.action === 'getAllowedSites') {
-    ensureCachesInitialized(() => {
-      sendResponse({ allowedSites: allowedSitesCache });
-    });
+    sendResponse({ allowedSites: allowedSitesCache });
     return true;
   }
 });

@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var browsingDataDiv = document.getElementById('browsingDataDiv');
   var blockedSitesList = document.getElementById('blockedSitesList');
   var enterSite = document.getElementById('enterSite');
-
-  // חדש - הוספת אלמנטים לרשימה הלבנה
   var allowedSitesBtn = document.getElementById('allowedSitesBtn');
   var allowedSitesDiv = document.getElementById('allowedSitesDiv');
   var allowedSitesList = document.getElementById('allowedSitesList');
   var addAllowedSiteForm = document.getElementById('addAllowedSiteForm');
   var allowedSiteInput = document.getElementById('allowedSiteInput');
+  var toggleModeBtn = document.getElementById('toggleModeBtn');
+  var modeDisplay = document.getElementById('modeDisplay');
 
   enterSite.addEventListener('click', function () {
     chrome.tabs.create({ url: 'http://localhost:3000/home' });
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
   blockSitesBtn.addEventListener('click', function () {
     blockDiv.classList.remove('hidden');
     browsingDataDiv.classList.add('hidden');
-    allowedSitesDiv.classList.add('hidden'); // מסתיר את הרשימה הלבנה
+    allowedSitesDiv.classList.add('hidden');
     chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
       const blockedSites = response.blockedSites || [];
       blockedSitesList.innerHTML = '';
@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // חדש - הצגת הרשימה הלבנה
   allowedSitesBtn.addEventListener('click', function () {
     allowedSitesDiv.classList.remove('hidden');
     blockDiv.classList.add('hidden');
@@ -59,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
   browsingDataBtn.addEventListener('click', function () {
     browsingDataDiv.classList.remove('hidden');
     blockDiv.classList.add('hidden');
-    allowedSitesDiv.classList.add('hidden'); // מסתיר את הרשימה הלבנה
+    allowedSitesDiv.classList.add('hidden');
     browsingDataDiv.innerHTML = '<h3>Browsing Data:</h3><p>This is where browsing data will be displayed.</p>';
   });
 
@@ -94,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
     siteInput.value = "";
   });
 
-  // חדש - הוספת אתר לרשימה הלבנה
   addAllowedSiteForm.addEventListener("submit", (event) => {
     event.preventDefault();
     const allowedUrl = allowedSiteInput.value.trim();
@@ -124,15 +122,18 @@ document.addEventListener('DOMContentLoaded', function () {
     allowedSiteInput.value = "";
   });
 
-  // חדש - החלפת מצב רשימה שחורה/לבנה
-  const toggleModeBtn = document.getElementById("toggleModeBtn");
-  chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
-    toggleModeBtn.textContent = response.isBlackList ? 'Switch to Whitelist Mode' : 'Switch to Blacklist Mode';
+  toggleModeBtn.addEventListener('click', function () {
+    chrome.runtime.sendMessage({ action: 'toggleMode' }, (response) => {
+      updateModeDisplay(response.isBlackList);
+    });
   });
 
-  toggleModeBtn.addEventListener('click', () => {
-    chrome.runtime.sendMessage({ action: 'toggleMode' }, (response) => {
-      toggleModeBtn.textContent = response.isBlackList ? 'Switch to Whitelist Mode' : 'Switch to Blacklist Mode';
-    });
+  function updateModeDisplay(isBlackList) {
+    modeDisplay.textContent = isBlackList ? "Blacklist Mode" : "Whitelist Mode";
+  }
+
+  // Initial load
+  chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
+    updateModeDisplay(response.isBlackList);
   });
 });
