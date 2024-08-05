@@ -4,8 +4,8 @@ import Select from '../../stories/Select/Select.jsx'
 import {LANGUAGE,LABELS} from './constantSetting.js'
 
  const  Preferences =()=> {
-    const [lng,setLng] =useState('en');
     const {t,i18n}= useTranslation();
+    const [lng,setLng] =useState(i18n.resolvedLanguage);
     const handleLngChange=(value)=>{
         console.log('value= ', value);
          i18n.changeLanguage(value);
@@ -21,6 +21,10 @@ import {LANGUAGE,LABELS} from './constantSetting.js'
       className='select-class' 
       size={'large'}
       widthOfSelect='200px'
-      onChange={handleLngChange}/>  )
+      value={lng}
+
+        
+      onChange={handleLngChange}/>  
+    )
 }
 export default Preferences;

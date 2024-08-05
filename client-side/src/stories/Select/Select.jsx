@@ -12,7 +12,8 @@ const Select = ({
   onChange = () => {},
   title,
   size = 'large',
-  widthOfSelect
+  widthOfSelect,
+  value
 }) => {
   return ( 
     <div className='selectWrapper'>
@@ -22,6 +23,7 @@ const Select = ({
           <SelectMui style={{width: widthOfSelect}} label={title}
             className={` genericSelect ${className} `}
             onChange={(event) => onChange(event.target.value)}
+            value={value}
           >
             {options.map((option, index) => (
               <MenuItem key={index}  value={option.value}>

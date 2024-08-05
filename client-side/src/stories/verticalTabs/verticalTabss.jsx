@@ -9,10 +9,10 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements})=> {
   const handleClick =(i)=>{
      setActiveIndex(i)
   }
-  const {t} =useTranslation();
+  const {t,i18n} =useTranslation();
   return ( 
 
-    <div className='tab-warper'>
+    <div className={i18n.resolvedLanguage==='he'? 'tab-warper dir' :'tab-warper'} >
       <div  className='but-warper'>
       {labels.map((label,index)=>{
       return ( 
@@ -29,7 +29,8 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements})=> {
      )}
       </div>
        <div className='tab'>
-        {elements[activeIndex]}
+        <div className='elments'>{elements[activeIndex]}</div>
+        
        </div>
        
      </div>

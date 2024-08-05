@@ -33,12 +33,17 @@
     height: 75vh;
     display: flex;
     justify-content: center;
-    padding: 2%;
-
 }
+
 .tab-warper{
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding: 2%;
+}
+.dir{
+    direction: rtl;
+}
+.elments{
+    padding: 3%;
 }
