@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import { uploadFile } from './uploadFileUtil.js'
-import Preferences from './Preference.jsx';
 import { LABELS } from './constantSetting.js'
 const Notifications = ({ currentUser = {} }) => {
   const { emailFrequency, sendNotificationTime, _id, soundVoice } = currentUser.preference
@@ -38,21 +37,32 @@ const Notifications = ({ currentUser = {} }) => {
     <>
       <div>
         <div className='uploadWarper'>
-
-          <GenericInput type='file' label={t(LABELS.CHANGE_RINGTONE)} onChange={handleFileChange} size='medium' accept='audio/mp3' />
-
+          <GenericInput
+            type='file'
+            label={t(LABELS.CHANGE_RINGTONE)}
+            onChange={handleFileChange}
+            size='medium'
+            accept='audio/mp3'
+          />
         </div>
         <div>
           <audio controls>
             <source src={audioSrc} ></source>
           </audio>
         </div>
-        <GenericInput size='small' width='200px' label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='gInput' min={0} max={60}/>
+        <GenericInput
+          size='small'
+          width='200px'
+          label={t(LABELS.CHANGE_NOTIFICATION_TIME)}
+          onChange={changeNotificationTime}
+          value={notificationTime}
+          type='number'
+          className='gInput'
+          min={0} max={60}
+        />
       </div>
       <GenericButton size='small' label={t(LABELS.SEND_PREFERENCE)} onClick={sendPreference} className='but-send' />
-
     </>
-
   );
 };
 Notifications.propTypes = {
