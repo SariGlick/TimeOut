@@ -37,94 +37,6 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      {i18next.resolvedLanguage === 'he' ? (
-        <div className="arooundDiv">
-          <AppBar position="static" className="navbar">
-            <Container maxWidth="xl">
-              <Toolbar disableGutters>
-                <Box>
-                  <Tooltip title={t('open-settings')}>
-                    <IconButton onClick={handleOpenUserMenu}>
-                      <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right',
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    <LabTabs
-                      nameOfClass="navbar-tabs"
-                      text={[t('settings')]}
-                      nav={['/settings']}
-                    />
-                  </Menu>
-                </Box>
-                <Box className="middle-side-box">
-                  <LabTabs
-                    nameOfClass="navbar-tabs"
-                    text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                    nav={['/home', '/reports', '/statistics', '/profiles']}
-                  />
-                </Box>
-                <Typography
-                  variant="h5"
-                  noWrap
-                  component="a"
-                  href="#app-bar-with-responsive-menu"
-                  className="logo"
-                >
-                  {t('timeout')}
-                </Typography>
-                <Box className="left-side-box">
-                  <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="menu-appbar"
-                    aria-haspopup="true"
-                    onClick={handleOpenNavMenu}
-                    color="inherit"
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                  <Menu
-                    id="menu-appbar"
-                    anchorEl={anchorElNav}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'left',
-                    }}
-                    open={Boolean(anchorElNav)}
-                    onClose={handleCloseNavMenu}
-                    className="menu"
-                  >
-                    <LabTabs
-                      nameOfClass="navbar-tabs"
-                      text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                      nav={['/home', '/reports', '/statistics', '/profiles']}
-                    />
-                  </Menu>
-                </Box>
-              </Toolbar>
-            </Container>
-          </AppBar>
-        </div>
-      ) : (
         <div className="arooundDiv">
           <AppBar position="static" className="navbar">
             <Container maxWidth="xl">
@@ -211,7 +123,6 @@ function ResponsiveAppBar() {
             </Container>
           </AppBar>
         </div>
-      )}
     </>
   );
 }

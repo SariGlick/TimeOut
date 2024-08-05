@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import { uploadFile } from './uploadFileUtil.js'
-import Preferences from './preferences.jsx';
+import Preferences from './Preference.jsx';
 import { LABELS } from './constantSetting.js'
 const Notifications = ({ currentUser = {} }) => {
   const { emailFrequency, sendNotificationTime, _id, soundVoice } = currentUser.preference

@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
-import Preferences from './preferences.jsx';
+import Preferences from './Preference.jsx';
 import AccountTab from './accountTab';
 import Notifications from './Notifications.jsx';
 import {LABELS} from './constantSetting.js'
