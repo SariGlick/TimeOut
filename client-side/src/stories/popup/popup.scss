@@ -1,47 +1,46 @@
 @import '../variables.scss';
 
-.popup-body {
-  width: max-content;
-  padding: 5% 7%;
-  margin: 5%;
-  border-radius: 8px;
-  border: 1px solid ;
-  box-shadow: 0px 4px 8px $primary-color;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 500;
-  font-size: 0.875rem;
-  z-index: 1;
-
-  &[data-theme='dark'] {
-
-    box-shadow: 0px 4px 8px $primary-color;
+.ReactModal__Overlay {
+    background-color: rgba(0, 0, 0, 0.5);
   }
-}
-
-.button {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 600;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  padding: 5% 7%;
-  border-radius: 8px;
-  color: $standardInfoColor;
-  transition: all 150ms ease;
-  cursor: pointer;
-
-  &:active {
-    box-shadow: none;
+  
+  .ReactModal__Content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $standardInfoColor;
+    border-radius: 8px;
+    padding: 20px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px $primary-color;
   }
-
-  &:focus-visible {
-    outline: none;
-
+  
+  .modal-header {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
   }
-
-  &.disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    box-shadow: none;
+  
+  .modal-body {
+    margin-bottom: 20px;
   }
-}
-
+  
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .modal-button {
+    background-color: $primary-color;
+    border: none;
+    color: $standardInfoColor;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-button.close {
+    background-color: $secondary-color;
+  }
+  

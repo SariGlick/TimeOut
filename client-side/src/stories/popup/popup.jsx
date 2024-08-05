@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { Unstable_Popup as BasePopup } from '@mui/base/Unstable_Popup';
-import GenericButton from '../Button/GenericButton';
-import './popup.scss';
+import React from 'react';
+import Modal from 'react-modal';
+import './popup.scss';  
 
-export default function BasicPopup({popupContent }) {
+export const popup = ({ popupContent, isOpen, onClose }) => {
+  const close = () => {
+    onClose('param', 'param2', 'param3');
+  };
 
   return (
-    <div>
-      <BasePopup>
-        <div className='popup-body'>
-           {popupContent}
-        </div>
-       </BasePopup>
-    </div>
+    <Modal isOpen={isOpen} className="ReactModal__Content" overlayClassName="ReactModal__Overlay">
+      <div className="modal-body">
+        {popupContent}
+      </div>
+        <button className="modal-button" onClick={close}>Close</button>
+    </Modal>
   );
-}
-
+};
