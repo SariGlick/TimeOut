@@ -17,7 +17,7 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements})=> {
       {labels.map((label,index)=>{
       return ( 
         <div 
-        className= 'genericButton'
+        className={ activeIndex ===index ? 'genericButton clickButton' : 'genericButton' }
         onClick={()=>handleClick(index)}
           key={index}  
           >
