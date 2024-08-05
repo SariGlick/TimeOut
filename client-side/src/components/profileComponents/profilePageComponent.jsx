@@ -14,11 +14,12 @@ import Loader from '../../stories/loader/loader.jsx';
 import AddProfileComponent from './addProfileComponent.jsx';
 import UpdateProfileComponent from './updateProfileCpmponent.jsx';
 import ProfileActivationTimer from './profileActivationComponent.jsx';
+import TimerActivationButton from './timerActivation.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-const ProfilePageComponent = ({userId}) => {
+const ProfilePageComponent = ({ userId }) => {
   const dispatch = useDispatch();
   const [selectedProfile, setSelectedProfile] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -46,7 +47,7 @@ const ProfilePageComponent = ({userId}) => {
       fetchProfiles(userId);
     }
   }, [dispatch, userId]);
-  
+
 
   const handleProfileSelect = (event) => {
     const selectedProfileId = event.target.value;
@@ -97,15 +98,16 @@ const ProfilePageComponent = ({userId}) => {
       name: website.websiteId.name,
       url: website.websiteId.url,
       status: website.status,
-      limitedMinutes: website.status === 'limit' ? website.limitedMinutes :0,
+      limitedMinutes: website.status === 'limit' ? website.limitedMinutes : 0,
     });
   };
+
   const handleSave = async (id) => {
     if (!selectedProfile || !editRowId || !editedRows) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_UPDATED_ERROR} type="error" />);
       return;
     }
-    if (editedRows.status === 'limit'&& (editedRows.limitedMinutes===''||editedRows.limitedMinutes === 0)){
+    if (editedRows.status === 'limit' && (editedRows.limitedMinutes === '' || editedRows.limitedMinutes === 0)) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_WITHOUT_TIME} type="error" />);
       return;
     }
@@ -117,7 +119,7 @@ const ProfilePageComponent = ({userId}) => {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.INVALID_URL} type="error" />);
       return;
     }
-    if (editedRows.id==='new'&&(isWebsiteInProfile(editedRows.url, selectedProfile))) {
+    if (editedRows.id === 'new' && (isWebsiteInProfile(editedRows.url, selectedProfile))) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_ALREADY_EXISTS} type="error" />);
       return;
     }
@@ -287,17 +289,18 @@ const ProfilePageComponent = ({userId}) => {
           onChange={handleProfileSelect}
           className="profile-list-select"
         />
-        {time !== 0 &&
-          <div className='timer'>
-            <ProfileActivationTimer profileActivationTime={time} />
-          </div>}
         {selectedProfile &&
-          <div className="component-update">
-            <UpdateProfileComponent profile={selectedProfile} />
+          <div >
+            <div className="component-update">
+              <UpdateProfileComponent profile={selectedProfile} />
+            </div>
+            <div className="component-timer">
+              <TimerActivationButton profileName={selectedProfile.profileName}/>
+            </div>
           </div>}
       </div>
       {loading ? (
-        <div className="profile-list-loading"><Loader/></div>
+        <div className="profile-list-loading"><Loader /></div>
       ) : selectedProfile ? (
         <div className="profile-list-details">
           <h1>
@@ -325,6 +328,7 @@ const ProfilePageComponent = ({userId}) => {
           <h2>Please select a profile</h2>
         </div>
       )}
+
     </div>
   );
 };

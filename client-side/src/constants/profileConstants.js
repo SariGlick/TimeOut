@@ -11,6 +11,7 @@ export const INPUT_LABELS = {
 };
 
 export const TOOLTIP_TEXTS = {
+    TIMER_ACTIVATION: 'Timer Activation',
     ADD_WEBSITE: 'Add Website',
     WEBSITE_NAME: 'This field is optional',
     URL: 'Enter the URL of the website',
@@ -45,16 +46,19 @@ export const SELECT_OPTIONS = {
 };
 
 export const BUTTON_LABELS = {
+    TIMER_ACTIVATION: 'Timer Activation',
     EDIT_PROFILE: 'Edit Profile',
     ADD_WEBSITE: 'Add Website',
     CANCEL: 'Cancel',
     DELETE_PROFILE: 'Delete Profile',
     SAVE: 'Save',
     DELETE: 'Delete',
-    ADDING: 'Adding'
+    ADDING: 'Adding',
+    START: 'Start'
 };
 
 export const DIALOG_TITLES = {
+    TIMER_ACTIVATION: 'Timer Activation',
     ADD_PROFILE: 'Add a new profile',
     EDIT_PROFILE: 'Edit Profile',
     PROFILE_TIME:' Enter profile start time and profile end time',

@@ -14,13 +14,18 @@
   align-items: center;
 }
 
+.timer-titel {
+  font-size: 78%;
+  color: $primary-color;
+}
+
 .timer-time {
-  font-size: 90%;
+  font-size: 75%;
   color: $primary-color;
 }
 
 .timer-label {
-  font-size: 60%;
+  font-size: 50%;
   margin-top: 4%;
   color: $secondary-color;
 }
@@ -28,6 +33,25 @@
 .countdown-circle-timer {
   stroke-width: 0.25%;
   size: 6.25%;
-//   trail-color: $standardInfoColor; // Use standard info color for trail
-  
+  //trail-color: $standardInfoColor; // Use standard info color for trail
+}
+
+.profile-list-container {
+  .profile-timer-button {
+    background-color: transparent;
+    border: 2px solid $secondary-color;
+    color: $secondary-color;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    &:hover {
+      background-color: $secondary-color;
+      color: white;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
 }
