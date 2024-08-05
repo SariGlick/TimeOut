@@ -45,7 +45,6 @@ function handleBeforeNavigate(details) {
       }
     } else {
       if (allowedSitesCache.some(site => hostname.includes(site))) {
-        return;
       } else {
         blockSite(details.tabId);
       }
@@ -79,7 +78,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (!blockedSitesCache.includes(hostname)) {
         blockedSitesCache.push(hostname);
         chrome.storage.local.set({ blockedSites: blockedSitesCache }, () => {
-          console.log(`Added to blocked sites: ${hostname}`);
           sendResponse({ success: true });
         });
       } else {
@@ -95,7 +93,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       if (!allowedSitesCache.includes(hostname)) {
         allowedSitesCache.push(hostname);
         chrome.storage.local.set({ allowedSites: allowedSitesCache }, () => {
-          console.log(`Added to allowed sites: ${hostname}`);
           sendResponse({ success: true });
         });
       } else {
@@ -109,7 +106,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     ensureCachesInitialized(() => {
       isBlackList = !isBlackList;
       chrome.storage.local.set({ isBlackList: isBlackList }, () => {
-        console.log(`Switched to ${isBlackList ? 'blacklist' : 'whitelist'} mode`);
         sendResponse({ isBlackList: isBlackList });
       });
     });
