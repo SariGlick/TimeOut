@@ -12,7 +12,8 @@ const Select = ({
   onChange = () => {},
   title,
   size = 'large',
-  widthOfSelect,
+
+  widthOfSelect, 
   value
 }) => {
   return ( 
@@ -27,7 +28,7 @@ const Select = ({
           >
             {options.map((option, index) => (
               <MenuItem key={index}  value={option.value}>
-                {<img className="img" src={option.iconSrc}  />}
+                {option.iconSrc && <img className="img" src={option.iconSrc}  alt=""/>}
                 {option.text}
               </MenuItem>
             ))}
@@ -50,7 +51,8 @@ Select.propTypes = {
   size: PropTypes.oneOf(['small', 'large']),
 
   className: PropTypes.string.isRequired,
-  widthOfSelect: PropTypes.string
+  widthOfSelect: PropTypes.string,
+  value: PropTypes.any.isRequired
 };
 
 export default Select;

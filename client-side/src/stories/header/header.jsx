@@ -1,5 +1,3 @@
-
-
 import * as React from 'react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,9 +9,7 @@ import {
   IconButton,
   Typography,
   Menu,
-  MenuItem,
   Tooltip,
-  Button,
   Avatar,
   Container
 } from '@mui/material';
@@ -69,9 +65,8 @@ function ResponsiveAppBar() {
                   >
                     <LabTabs
                       nameOfClass="navbar-tabs"
-                      text={['setting']}
-                      nav={['setting']}
-
+                      text={[t('settings')]}
+                      nav={['/settings']}
                     />
                   </Menu>
                 </Box>
@@ -207,10 +202,8 @@ function ResponsiveAppBar() {
                   >
                     <LabTabs
                       nameOfClass="navbar-tabs"
-
-                      text={['setting ']}
-                      nav={['/setting']}
-
+                      text={[t('settings')]}
+                      nav={['/settings']}
                     />
                   </Menu>
                 </Box>
