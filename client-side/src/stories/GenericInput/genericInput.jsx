@@ -14,6 +14,8 @@ const GenericInput = ({
   icon: Icon=null, 
   disabled= false,
   accept,
+  min,
+  max,
   validation  = () => {}, 
   ...rest 
 }) => {
@@ -102,6 +104,9 @@ GenericInput.propTypes = {
   width: PropTypes.string,
   icon: PropTypes.elementType,
   validation: PropTypes.func,
+  accept:PropTypes.string,
+  min:PropTypes.number,
+  max:PropTypes.number
 };
 
 export default GenericInput;

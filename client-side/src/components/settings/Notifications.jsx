@@ -47,7 +47,7 @@ const Notifications = ({ currentUser = {} }) => {
             <source src={audioSrc} ></source>
           </audio>
         </div>
-        <GenericInput size='small' width='200px' label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='' />
+        <GenericInput size='small' width='200px' label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='gInput' min={0} max={60}/>
       </div>
       <GenericButton size='small' label={t(LABELS.SEND_PREFERENCE)} onClick={sendPreference} className='but-send' />
 

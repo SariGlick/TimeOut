@@ -17,5 +17,7 @@
     "account": "cuenta",
     "display-setting": "configuración de pantalla",
     "fotter": "© Desarrollado por el equipo ExtraTech. Visítanos:",
-    "settings": "ajustes"
+    "settings": "ajustes",
+    "open-settings":"Configuración abierta"
+
 }

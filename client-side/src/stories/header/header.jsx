@@ -43,7 +43,7 @@ function ResponsiveAppBar() {
             <Container maxWidth="xl">
               <Toolbar disableGutters>
                 <Box>
-                  <Tooltip title="Open settings">
+                  <Tooltip title={t('open-settings')}>
                     <IconButton onClick={handleOpenUserMenu}>
                       <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                     </IconButton>
@@ -180,7 +180,7 @@ function ResponsiveAppBar() {
                   />
                 </Box>
                 <Box>
-                  <Tooltip title="Open settings">
+                  <Tooltip title={t('open-settings')}>
                     <IconButton onClick={handleOpenUserMenu}>
                       <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
                     </IconButton>
