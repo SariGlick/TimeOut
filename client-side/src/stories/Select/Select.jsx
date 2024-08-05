@@ -12,7 +12,6 @@ const Select = ({
   onChange = () => {},
   title,
   size = 'large',
-
   widthOfSelect, 
   value
 }) => {
@@ -49,7 +48,6 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
-
   className: PropTypes.string.isRequired,
   widthOfSelect: PropTypes.string,
   value: PropTypes.any.isRequired
