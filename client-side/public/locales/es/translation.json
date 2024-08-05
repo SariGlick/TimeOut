@@ -1,13 +1,23 @@
 {
-    "welcome":"welcome {{user-name}}" ,
-    "send preferences":"Cambiar ajustes",
-    "change-ringtone":"cambiar-tono",
-    "home":"hogar",
-    "reports":"informe",
-    "statistics":"Estadísticas",
-    "profiles":"perfiles",
-    "timeout":"se acabó el tiempo",
-    "sleect-language":"seleccione el idioma"
+    "welcome": "welcome {{user-name}}",
+    "send preferences": "Cambiar ajustes",
+    "change-ringtone": "cambiar-tono",
+    "home": "hogar",
+    "reports": "informe",
+    "statistics": "Estadísticas",
+    "profiles": "perfiles",
+    "timeout": "se acabó el tiempo",
+    "sleect-language": "seleccione el idioma",
+    "change-notification-time": "cambiar la hora de notificación",
+    "Account": "Cuenta",
+    "Notifications": "Notificaciones",
+    "Preference": "Preferencia",
+    "Display-Setting": "Configuración de pantalla",
+    "Message": "Mensaje",
+    "account": "cuenta",
+    "display-setting": "configuración de pantalla",
+    "fotter": "© Desarrollado por el equipo ExtraTech. Visítanos:",
+    "settings": "ajustes",
+    "open-settings":"Configuración abierta"
 
- 
 }
