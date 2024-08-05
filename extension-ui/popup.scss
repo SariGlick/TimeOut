@@ -10,21 +10,21 @@ body {
 .container {
   text-align: center;
   background-color: #FFFFFF;
-  border-radius: 8px;
+  border-radius: 2%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 300px;
+  padding: 5%;
+  width: 80%;
 }
 
 button {
   background-color: #007BFF;
   color: #FFFFFF;
   border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  margin: 5px;
+  border-radius: 2%;
+  padding: 2.5% 5%;
+  margin: 1%;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 100%;
   transition: background-color 0.3s;
 }
 
@@ -33,15 +33,15 @@ button:hover {
 }
 
 form {
-  margin: 20px 0;
+  margin: 5% 0;
 }
 
 input[type="text"] {
-  padding: 8px;
+  padding: 2%;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 2%;
   width: 80%;
-  margin: 5px 0;
+  margin: 1% 0;
 }
 
 input[type="text"]:focus {
@@ -57,7 +57,7 @@ ul {
 li {
   background-color: #F8F9FA;
   border: 1px solid #DEE2E6;
-  border-radius: 4px;
-  padding: 10px;
-  margin: 5px 0;
+  border-radius: 2%;
+  padding: 2.5%;
+  margin: 1% 0;
 }
