@@ -1,19 +1,30 @@
-import axios from 'axios'
+import { getUserById } from './controllers/user.controller.js';
 
-export default function activeProfile(userId) {
-    const hourNow = new Date().toLocaleTimeString('en-US', { hour12: false }).split(':')[0];
-    const user = axios.get(`http://localhost:3000/users/:${userId}`)
-    user.then((user) => {
-        const fieldValue = user.data.profiles.map((item) => item.listWebsites.filter((website) => {
-            return website.limitedTimes.some((item) => {
-                return item.start.split('T')[1].split('.')[0].split(':')[0] <= hourNow &&
-                    item.end.split('T')[1].split('.')[0].split(':')[0] >= hourNow
-            })
-        }
-        ))
-        console.log(fieldValue);
-    });
-    return user;
+function getcurrentTime(timeZone, date) {
+    const options = {
+        timeZone: timeZone,
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    };
+    return date.toLocaleString('en-US', options);
 }
 
-//קיץ 4-11
+export default async function activeProfile(userId) {
+
+    try {
+        const user = await getUserById(userId);
+        const currentTime = getcurrentTime(user.preferences.timeZone, new Date());
+        const activeProfile = user.profiles.filter((item) => item.listWebsites.filter((website) => {
+            return website.limitedTimes.some((item) => {
+                return getcurrentTime(user.preferences.timeZone, item.start) <= currentTime &&
+                    getcurrentTime(user.preferences.timeZone, item.end) >= currentTime;
+            })
+        }))
+        return activeProfile
+    }
+    catch (error) {
+        throw error
+    }
+}

@@ -32,8 +32,6 @@ app.use(pageNotFound);
 app.use(serverErrors)
 let port= process.env.PORT;
 
-const user=activeProfile("669645be78def8e48726043e")
-
 app.listen(port,()=>{
     console.log(` running at http://localhost:${port}`);
 })
