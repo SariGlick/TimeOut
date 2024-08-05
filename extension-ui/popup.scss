@@ -1,15 +1,26 @@
+:root {
+  --background-color: #F0F0F0;
+  --container-background: #FFFFFF;
+  --button-background: #007BFF;
+  --button-background-hover: #0056b3;
+  --text-color: #FFFFFF;
+  --border-color: #ccc;
+  --list-background: #F8F9FA;
+  --list-border: #DEE2E6;
+}
+
 body {
   font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #F0F0F0;
+  background-color: var(--background-color);
 }
 
 .container {
   text-align: center;
-  background-color: #FFFFFF;
+  background-color: var(--container-background);
   border-radius: 2%;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   padding: 5%;
@@ -17,8 +28,8 @@ body {
 }
 
 button {
-  background-color: #007BFF;
-  color: #FFFFFF;
+  background-color: var(--button-background);
+  color: var(--text-color);
   border: none;
   border-radius: 2%;
   padding: 2.5% 5%;
@@ -29,7 +40,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-background-hover);
 }
 
 form {
@@ -38,7 +49,7 @@ form {
 
 input[type="text"] {
   padding: 2%;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 2%;
   width: 80%;
   margin: 1% 0;
@@ -46,7 +57,7 @@ input[type="text"] {
 
 input[type="text"]:focus {
   outline: none;
-  border-color: #007BFF;
+  border-color: var(--button-background);
 }
 
 ul {
@@ -55,8 +66,8 @@ ul {
 }
 
 li {
-  background-color: #F8F9FA;
-  border: 1px solid #DEE2E6;
+  background-color: var(--list-background);
+  border: 1px solid var(--list-border);
   border-radius: 2%;
   padding: 2.5%;
   margin: 1% 0;
