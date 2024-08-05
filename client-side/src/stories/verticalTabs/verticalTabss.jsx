@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button } from '@mui/material'
-import GenericButton from '../Button/GenericButton';
 import { useTranslation } from 'react-i18next';
 import './verticalTabs.scss'
 const  VerticalTabs=({ labels=['tab1','tab2'],elements})=> {
