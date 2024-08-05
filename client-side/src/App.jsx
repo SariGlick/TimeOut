@@ -4,16 +4,25 @@ import Footer from './stories/footer/FooterComponent';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import './App.scss';
+import ThemeToggleButton from './components/settings/ThemeToggleButton.jsx';
+import { ThemeProvider } from './themes/ThemeContext.jsx';
 
 function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
-      <Provider store={store}>
-        <Footer />
+      <ThemeProvider>
+        <div className="app">
+          <RouterProvider router={router} />
+          <Provider store={store}>
+          <ThemeToggleButton />
 
-      </Provider>
+            <Footer />
+
+          </Provider>
+        </div>
+      </ThemeProvider>
+
     </>
   );
 }

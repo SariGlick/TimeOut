@@ -1,8 +1,11 @@
-@import '../stylies.scss';
+@import '../variables.scss';
 
 .footer-wrapper {
     background-color: $primary-color;
+    // background-color: var(--mui-palette-background-paper);
     color: $secondary-color;
+    // color: var(--mui-palette-text-primary);
+    // color: var(--footer-text);
     padding: 20px;
     text-align: left;
     position: fixed;
@@ -16,6 +19,8 @@
   }
   .link-style {
     color: $secondary-color;
+    // color: var(--footer-link);
+
     font-family: "Nanum Gothic", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
