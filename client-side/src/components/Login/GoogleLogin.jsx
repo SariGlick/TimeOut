@@ -44,7 +44,7 @@ export default function () {
             setUserData(userData);
           }}
           onError={() => {
-            console.log(Text.LOGIN_FAILED);
+            console.error(Text.LOGIN_FAILED);
           }}
         />
       )}
