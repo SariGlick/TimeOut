@@ -1,8 +1,5 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import React from 'react';
+import {Box,InputLabel,MenuItem,FormControl}from '@mui/material';
 import SelectMui from '@mui/material/Select';
 import PropTypes from 'prop-types';
 import './select.scss';

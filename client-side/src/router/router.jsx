@@ -2,6 +2,7 @@ import React from "react";
 import {createBrowserRouter } from "react-router-dom";
 import ProfilePageComponent from "../components/profileComponents/profilePageComponent.jsx";
 import Layout from "./layout.jsx";
+import HomePage from "../components/homeComponent/homePageComponent.jsx"
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -13,7 +14,8 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/home',
-                element: <h1>home</h1>
+                element: <HomePage />
+                
             },
             {
                 path: '/profiles',

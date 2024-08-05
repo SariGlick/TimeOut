@@ -6,4 +6,10 @@ $primary-color: black;
 $secondary-color: rgb(103, 252, 210);
 $standardSuccessColor: rgb(103, 252, 210);
 $error-color:red;
+/* variables.scss */
+
+$secondary-color-hard: #00796b; // Define the new variable here
+$text-color: #333; // Default text color
+$background-class: #f4f4f4; // Example background color, adjust as needed
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
