@@ -1,3 +1,8 @@
 node_modules
+<<<<<<< HEAD
 uploads/*
 !uploads/.gitkeep
+=======
+.env
+package-lock.json
+>>>>>>> 24f4ec152de525dfbc8d377834dd4ca3ef7caa94

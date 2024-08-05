@@ -4,29 +4,25 @@ import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} 
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import './header.scss';
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
-    <AppBar position="static">
-      <Container  className='navbar'  maxWidth="xl">
+    <div className='arooundDiv'>
+    <AppBar position="static" className='navbar' >
+      <Container   maxWidth="xl">
         <Toolbar disableGutters>
           <Box className="left-side-box">
             <IconButton
@@ -78,7 +74,6 @@ function ResponsiveAppBar() {
           nav={["/home","/reports","/statistics","/profiles"] }
         />
           </Box>
-
           <Box >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} >
@@ -110,6 +105,7 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar>
+    </div>
   );
 }
 export default ResponsiveAppBar;
