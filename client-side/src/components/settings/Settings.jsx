@@ -7,6 +7,7 @@ import Notifications from './Notifications.jsx';
 import {LABELS} from './constantSetting.js'
 
 const  Settings =()=> {
+  
   const elements = [
     <AccountTab/>,
     <Notifications/>,
