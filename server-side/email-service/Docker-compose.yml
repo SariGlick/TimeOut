@@ -10,6 +10,8 @@ services:
       - kafka
     environment:
       KAFKA_BROKER: kafka:9092
+      EMAIL_USER: prwyyqtsly@gmail.com
+      EMAIL_PASS: zkwxmlwamjenijqp
     ports:
       - "4001:4001"
 

@@ -1,8 +1,7 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import { insertEvent } from './producer.js';
 import path from 'path';
-
+import dotenv from 'dotenv';
+dotenv.config();
 /**
  * Sends an email with the specified details through Kafka producer.
  * @param {string} email - The recipient's email address.
@@ -20,10 +19,9 @@ const sendEmailWithAttachment = (email, subject, text, attachmentPaths) => {
   });
 };
 
-// Example usage
 const email = 'b0556729929@gmail.com';
-const subject = 'אלופות';
-const text = '🤣😘😂😊😍😁we sucess to send email!!!'
+const subject = '';
+const text = ''
 const attachmentPaths = [
   path.join('C:', 'Users', '1', 'OneDrive', 'email-service', 'app', 'bati.txt')
 ];

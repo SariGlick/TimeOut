@@ -1,9 +1,8 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import nodemailer from 'nodemailer';
 import Bottleneck from 'bottleneck';
 import retry from 'async-retry';
-
+import dotenv from 'dotenv';
+dotenv.config();
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {

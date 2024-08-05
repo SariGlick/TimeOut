@@ -1,6 +1,6 @@
+import { exec } from 'child_process';
 import dotenv from 'dotenv';
 dotenv.config();
-import { exec } from 'child_process';
 const indexScript = exec('node index.js');
 const producerScript = exec('node producer.js');
 const consumerScript = exec('node consumer.js');

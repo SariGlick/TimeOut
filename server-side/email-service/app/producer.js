@@ -1,7 +1,6 @@
+import kafka from 'kafka-node';
 import dotenv from 'dotenv';
 dotenv.config();
-import kafka from 'kafka-node';
-import { sendEmailWithAttachment } from './index.js';
 const Producer = kafka.Producer;
 const Admin = kafka.Admin;
 const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
@@ -24,16 +23,6 @@ admin.createTopics(topicToCreate, async (err, res) => {
 });
 
 const producer = new Producer(client);
-const email = 'b0556729929@gmail.com';
-const subject = 'אלופות';
-const text = '💌💌💌💌💌💌';
-producer.on('ready', () => {
-  insertEvent('emailTopic', 'sendEmail', {
-    to: email,
-    subject: subject,
-    text: text
-  });
-});
 
 producer.on('error', (err) => {
   console.error('Producer error:', err);
