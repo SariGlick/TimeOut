@@ -11,9 +11,9 @@ function App() {
   return (
 
 
-    <>
+    <> 
+    <RouterProvider router={router}/>
       <Provider store={store}>
-     
         <Footer />
       </Provider>
     </>
