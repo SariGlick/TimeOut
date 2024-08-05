@@ -1,5 +1,4 @@
-import { SELECT_OPTIONS, VALIDATE_MESSAGES } from '../constants/profileConstants.js';
-
+import { SELECT_OPTIONS ,VALIDATE_MESSAGES } from '../constants/profileConstants.js';
 export const formatProfileData = (profile) => {
     return {
         id: profile._id,

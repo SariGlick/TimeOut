@@ -41,8 +41,10 @@ const ProfilePageComponent = ({ userId }) => {
   };
 
   useEffect(() => {
-    fetchProfiles();
-  }, [dispatch]);
+    if (userId) {
+      fetchProfiles(userId);
+    }
+  }, [dispatch, userId]);
 
   const handleProfileSelect = (event) => {
     const selectedProfileId = event.target.value;

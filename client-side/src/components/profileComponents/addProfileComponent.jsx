@@ -41,11 +41,11 @@ export default function AddProfile({ userId }) {
     setOpen(true);
   }, []);
 
-
+ 
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-
+   
     setData(prevData => ({
       ...prevData,
       [name]: value
@@ -69,19 +69,19 @@ export default function AddProfile({ userId }) {
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
     const profileData = {
-      userId: userId,
+      userId:userId ,
       profileName: data.name,
       statusBlockedSites: data.status,
-      timeProfile: {
+           timeProfile: {
         start: data.timeStart,
         end: data.timeEnd,
       }
     };
     try {
       await createProfile(profileData);
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />); 
       dispatch(addProfile(profileData));
-      setTimeout(() => navigate(0), 2000);
+      setTimeout(() => navigate(0), 2000);      
       handleClose();
     } catch (error) {
       console.error(TOAST_MESSAGES.PROFILE_CREATE_ERROR, error);
@@ -89,7 +89,7 @@ export default function AddProfile({ userId }) {
     }
   }, [data, dispatch, navigate, handleClose, enqueueSnackbar]);
 
-
+ 
 
   return (
     <React.Fragment>
@@ -106,7 +106,7 @@ export default function AddProfile({ userId }) {
         <DialogTitle>{DIALOG_TITLES.NEW_PROFILE}</DialogTitle>
         <DialogContent>
           <DialogContentText className='dialog-content-text'>
-          {DIALOG_TITLES.CREATE_FORM}
+            {DIALOG_TITLES.CREATE_FORM}
           </DialogContentText>
           <GenericInput
             type="text"
@@ -147,7 +147,8 @@ export default function AddProfile({ userId }) {
               selectedOption={data.status}
               onChange={handleChange}
             />
-          </div>
+           
+          </div> 
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose}>
