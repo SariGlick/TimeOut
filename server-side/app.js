@@ -9,7 +9,6 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
 import invitationsRouter from './router/invitation.router.js'
 import pendingUsersRouter from './router/pendingUser.router.js'
-
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
 
