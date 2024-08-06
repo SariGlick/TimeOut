@@ -12,8 +12,8 @@ usersRouter.post('/',upload.single('profileImage'), addUser);
 usersRouter.delete('/:id', deleteUser);
 usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 usersRouter.get('/getByEmail/:email', getByEmail);
-usersRouter.get('/getNewPassword/:email/:password', getCode);
-usersRouter.get("/users/:token/:email", getUserByGoogleAccount)
+usersRouter.get('/getCode/:email/:password', getCode);
+usersRouter.get("/getUserByGoogleAccount/:token/:email", getUserByGoogleAccount)
 
 export default usersRouter;
 
