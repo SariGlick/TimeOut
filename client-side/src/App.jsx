@@ -1,26 +1,22 @@
-import { Route, Routes } from 'react-router';
-import LabTabs from './stories/tabs/tabs';
-import Header from './stories/header/header';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { RouterProvider } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
-import ProfileActivationTimer from './stories/ProfileActivationTimer'
-
+import { router } from './router/router.jsx';
+import { store } from './redux/store.jsx';
+import { SnackbarProvider } from 'notistack';
 import './App.scss';
-
 function App() {
 
   const profileActivationTime = 1;
 
   return (
-    <div className="App">
-      <Header/> 
-
-      <ProfileActivationTimer profileActivationTime={profileActivationTime} />
-
-      <Footer/>
-     
-
-    </div>
+    <SnackbarProvider maxSnack={3}>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+        <Footer />
+      </Provider>
+    </SnackbarProvider>
   );
 }
-
 export default App;

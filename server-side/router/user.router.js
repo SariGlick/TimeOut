@@ -1,4 +1,5 @@
 import express from 'express';
+<<<<<<< HEAD
 import { 
   getUsers, 
   getUserById, 
@@ -8,15 +9,24 @@ import {
   updateUserProfileImage 
 } 
 from '../controllers/user.controller.js';
+=======
+import { getUsers, getUserById, addUser, deleteUser, updatedUser } from '../controllers/user.controller.js';
+>>>>>>> f053a445fbff4cdfeb96452c39deb0b58dcc1936
 import upload from '../middleware/uploadFiles.js';
 
-const router = express.Router();
+const usersRouter = express.Router();
 
-router.get('/users', getUsers);
-router.get('/users/:id', getUserById);
-router.post('/users', addUser);
-router.delete('/users/:id', deleteUser);
-router.put('/users/:id', updatedUser);
-router.put('/users/:id/profile-image', upload.single('profileImage'), updateUserProfileImage);
+usersRouter.get('/', getUsers);
+usersRouter.get('/:id', getUserById);
+usersRouter.post('/',upload.single('profileImage'), addUser);
+usersRouter.delete('/:id', deleteUser);
+usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 
+<<<<<<< HEAD
 export default router;
+=======
+
+export default usersRouter;
+
+
+>>>>>>> f053a445fbff4cdfeb96452c39deb0b58dcc1936

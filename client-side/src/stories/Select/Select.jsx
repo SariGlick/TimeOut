@@ -1,46 +1,48 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import React from 'react';
+import {Box,InputLabel,MenuItem,FormControl}from '@mui/material';
 import SelectMui from '@mui/material/Select';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import './select.scss';
 
-const Select = ({className, options, onChange, title,size,widthOfSelect}) => {
-  return ( 
-     <div className='selectWrapper' >
+const Select = ({ className, options = [{ text: "option1", icon: '🖋️' }, { text: "option2", icon: '🖋️' }], onChange = undefined, title, size = 'large', widthOfSelect, value, name }) => {
+  return (
+    <div className='selectWrapper'>
       <Box>
-       <FormControl  size={size} variant="outlined">
-        <InputLabel  className='input' >{title}</InputLabel>
-        <SelectMui  style={{width:widthOfSelect}} label={title}
-          className={`genericSelect ${className ? `genericSelect ${className}` : ''}`}
-          onChange={onChange}
-        >
-          {options.map((option, index) => (
-            <MenuItem key={index} value={option} >
-              {option.text}
-              {option.icon}
-            </MenuItem>
-          ))}
-        </SelectMui>
-      </FormControl>
-    </Box></div>
+        <FormControl size={size} variant="outlined">
+          <InputLabel className='input'>{title}</InputLabel>
+          <SelectMui
+            style={{ width: widthOfSelect }}
+            label={title}
+            className={`genericSelect ${className ? `genericSelect ${className}` : ''}`}
+            onChange={onChange}
+            value={value}
+            name={name}
+          >
+            {options.map((option, index) => (
+              <MenuItem key={index} value={option.value}>
+                {option.text}
+                {option.icon}
+              </MenuItem>
+            ))}
+          </SelectMui>
+        </FormControl>
+      </Box>
+    </div>
   );
 };
 
 Select.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+    icon: PropTypes.node
+  })).isRequired,
+  value: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
-  className: PropTypes.string.isRequired
-};
-
-Select.defaultProps = {
-  size: 'large',
-  onChange: undefined,
-  options:[{text:"option1",icon:'🖋️'},{text:"option2",icon:'🖋️'}]
+  className: PropTypes.string,
+  name: PropTypes.string
 };
 
 export default Select;
