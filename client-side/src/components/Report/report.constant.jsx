@@ -15,3 +15,5 @@ export const TIME = {
 export const OPTION_ARRAY=[TIME.DAY,TIME.Month,TIME.YEAR,TIME.CUSTOM];
 export const LABEL_OF_PDF_DOWNLOAD="download as pdf";
 export const LABEL_OF_PDF_DOWNLOAD_HTML="download as pdf";
+
+export const TEXT="developed by ExtraTeck"

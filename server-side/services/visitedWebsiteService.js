@@ -9,7 +9,7 @@ async function visitedWebsiteservice(data) {
   const { userId, type, customDates } = data;
   const now = new Date();
   let startDate, endDate, div;
-  
+
   switch (type) {
     case 'day':
       startDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -47,7 +47,7 @@ async function visitedWebsiteservice(data) {
 
     try {
       const websiteData = await getVisitedWebsiteById(websiteId);
-  
+
       if (websiteData && websiteData.visitsTime) {
         const totalActivityTime = websiteData.visitsTime.reduce((total, visit) => {
           if (visit.visitDate >= startDate && visit.visitDate <= endDate) {
@@ -62,12 +62,11 @@ async function visitedWebsiteservice(data) {
           total_time: totalActivityTime,
           avg_for_day: avg.toFixed(2)
         };
-        if(totalActivityTime>0)
-        {
+        if (totalActivityTime > 0) {
           results.push(result);
           i++;
         }
-        
+
       } else {
         console.log(`Website with ID ${websiteId} has no visitsTime data.`);
       }
@@ -75,7 +74,7 @@ async function visitedWebsiteservice(data) {
       console.error(`Error fetching website data for ID ${websiteId}:`, error);
     }
   }
-
+  
   return results;
 }
 
