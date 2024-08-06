@@ -1,8 +1,8 @@
 import kafka from 'kafka-node';
 import dotenv from 'dotenv';
 dotenv.config();
-const Producer = kafka.Producer;
-const Admin = kafka.Admin;
+
+const {Producer, Admin} = kafka;
 const client = new kafka.KafkaClient({ kafkaHost: process.env.KAFKA_BROKER });
 const admin = new Admin(client);
 
