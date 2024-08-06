@@ -4,7 +4,7 @@ import { Button } from '@mui/material'
 import GenericButton from '../Button/GenericButton';
 import { useTranslation } from 'react-i18next';
 import './verticalTabs.scss'
-const  VerticalTabs=({ labels=['tab1','tab2'],elements})=> {
+const  VerticalTabs=({ labels=['tab1','tab2'],elements=[<p>tab 1</p>, <pp>tab 2</pp>]})=> {
   const [activeIndex,setActiveIndex]= useState(0);
   const handleClick =(i)=>{
      setActiveIndex(i)
