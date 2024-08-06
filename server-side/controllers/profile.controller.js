@@ -4,6 +4,7 @@ import Profiles from '../models/profile.model.js';
 
 export const getAllProfiles = async (req, res, next) => {
     try {
+
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
         res.json(profiles);
     } catch (err) {
@@ -11,9 +12,7 @@ export const getAllProfiles = async (req, res, next) => {
     }
 };
 
-  
 
-    
 
 
 export const createProfile = async (req, res, next) => {
