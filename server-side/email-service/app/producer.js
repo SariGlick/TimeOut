@@ -17,8 +17,6 @@ const topicToCreate = [
 admin.createTopics(topicToCreate, async (err, res) => {
   if (err) {
     console.error('Failed to create topics:', err);
-  } else {
-    console.log('Topics created:', res);
   }
 });
 
@@ -34,9 +32,7 @@ const insertEvent = (topic, eventType, payload) => {
   producer.send(payloads, (err, data) => {
     if (err) {
       console.error('Failed to send message:', err);
-    } else {
-      console.log('Message sent:', data);
-    }
+    } 
   });
 };
 
