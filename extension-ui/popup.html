@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Website Blocker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- TODO to use generic components and style this page -->
+  <div class="container">
+    <button id="blockSitesBtn">Block Websites</button>
+    <button id="browsingDataBtn">Browsing Data</button>
+    <button id="enterSite">Enter to Site</button>
+    <div id="blockDiv" class="hidden">
+      <h3>Blocked Sites:</h3>
+      <ul id="blockedSitesList"></ul>
+      <form id="blockForm">
+        <input type="text" id="siteInput" placeholder="Enter site name">
+        <button type="submit">Block Site</button>
+      </form>
+    </div>
+    <div id="browsingDataDiv" class="hidden">
+      <h3>Browsing Data:</h3>
+      <p>This is where browsing data will be displayed.</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
