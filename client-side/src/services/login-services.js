@@ -1,9 +1,8 @@
-import axiosInstance from "./axios";
+import { handleGet} from '../axios/middleware.js'
 
 export const getUserByGoogleAccount = async (token, email) => {
     try {
-      const response = await axiosInstance.get(`/api/users/${token}/${email}`);
-      console.log(response.data); 
+      const response = await handleGet(`/users/${token}/${email}`); 
       return response.data;
     } catch (error) {
       console.error('Failed to fetch user by Google account:', error);

@@ -5,6 +5,7 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import './App.scss';
 import GoogleLogin from './components/Login/GoogleLogin.jsx';
+import OAuthProvider from './components/Login/OAuthProvider.jsx';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <Provider store={store}>
         <Footer />
       </Provider>
-      <GoogleLogin></GoogleLogin>
+    
     </>
   );
 }

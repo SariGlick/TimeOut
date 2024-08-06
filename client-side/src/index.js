@@ -10,9 +10,7 @@ import OAuthProvider from '../src/components/Login/OAuthProvider'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <OAuthProvider>
-      <App />
-    </OAuthProvider>
+    <App />
   </React.StrictMode>
 );
 reportWebVitals();
