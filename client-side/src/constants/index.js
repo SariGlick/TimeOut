@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const EMAIL_FREQUENCY_ENUM = {
   NEVER: 'never',
   DAILY: 'daily',
@@ -11,6 +10,9 @@ const MESSAGES = {
   ERROR_UPDATE_SETTINGS: 'Failed to update settings. Please try again.',
   INVALID_EMAIL_FREQUENCY: 'Invalid email frequency selected. Please choose a valid option.',
   CONFIRM_LOCATION: 'Allow us to get your location and preferred language for a better experience?',
+  UNSUCCESS_UPLOAD_FILE_TYPE: 'Unsupported file type. Please upload an image (JPEG, PNG, GIF).!',
+  UNSUCCESS_UPLOAD_FILE: 'error updating image',
+  SUCCESS_UPDATED_SETTINGS: 'Settings updated successfully!',
 };
 const MAIN_TITLE = {
   SETTINGS:'Settings',
@@ -21,7 +23,9 @@ const TITLES = {
 };
 const LABELS = {
   UPDATE_USER_SETTINGS: 'Update User Settings',
-  SIGN_UP:'sign up'
+  SIGN_UP:'sign up',
+  ADD_IMAGE: 'add image',
+  UPLOAD_IMAGE: 'upload image',
 };
 const LANGUAGE = {
   en: 'english',
@@ -34,25 +38,7 @@ const CONSTANTS = {
   MAIN_TITLE,
   TITLES,
   LABELS,
-  LANGUAGE
+  LANGUAGE,
 };
 
 export default CONSTANTS;
-
-=======
-const LABELS = {
-  ADD_IMAGE: 'add image',
-  UPLOAD_IMAGE: 'upload image',
-};
-
-const MESSAGES = {
-  UNSUCCESS_UPLOAD_FILE_TYPE: 'Unsupported file type. Please upload an image (JPEG, PNG, GIF).!',
-  UNSUCCESS_UPLOAD_FILE: 'error updating image',
-  SUCCESS_UPDATED_SETTINGS: 'Settings updated successfully!',
-};
-
-const CONSTANTS = {
-  LABELS, MESSAGES
-};
-export default CONSTANTS;
->>>>>>> 295121b620a2d268c1501cd8bf2cc33d3409df5f

@@ -1,27 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-<<<<<<< HEAD
-import { TextField, InputAdornment ,styled,Button} from '@mui/material';
-import { INVALID_INPUT_MESSAGE } from './constants';
-import './genericInput.scss';
-
-const GenericInput = ({ 
-  label, 
-  type = 'text', 
-  value = '', 
-  onChange = () => {}, 
-  size = 'medium', 
-  width = '20%', 
-  icon: Icon=null, 
-  disabled= false,
-  accept,
-  min,
-  max,
-  validation  = () => {}, 
-  ...rest 
-=======
-import { TextField, InputAdornment } from '@mui/material';
-import Button from '@mui/material/Button';
+import { TextField, InputAdornment, styled, Button } from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
@@ -34,9 +13,12 @@ const GenericInput = ({
   width = '20%',
   icon: Icon = null,
   disabled = false,
+  accept,
+  min,
+  max,
   validation = () => { },
   ...rest
->>>>>>> 295121b620a2d268c1501cd8bf2cc33d3409df5f
+
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
@@ -69,55 +51,6 @@ const GenericInput = ({
   const inputStyle = {
     width,
   };
-<<<<<<< HEAD
-  
-  
-  return(
-  <>
-  {type==='file' ?(<div className="file-upload" style={inputStyle}>
-   <Button
-      component="label"
-      size={size}
-      disabled={disabled}
-      className='generic-input-file'
-    >
-    {label}
-
-    <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled} accept={accept}/>
-  </Button>
-  {error && <div className="helper-text error">{helperText}</div>}
-  </div>) :(<div className="generic-input">
-
-<TextField
-  label={label}
-  type={type}
-  value={inputValue}
-  onChange={handleChange}
-  size={size}
-  error={error}
-  disabled={disabled}
-  helperText={helperText}
- 
-  InputProps={{
-    startAdornment: Icon && (
-      <InputAdornment position="start">
-        <Icon />
-      </InputAdornment>
-    ),
-    ...rest.InputProps,
-    
-  }}
-  inputProps={{
-    min: min,
-    max: max
-  }}
-  style={inputStyle}
-  {...rest}
-/>
-</div>)
-}
-  </>
-=======
 
   return (
     <>
@@ -130,7 +63,7 @@ const GenericInput = ({
         >
           {label}
 
-          <input type='file' onChange={onChange} id='hidenInput' disabled={disabled} />
+          <input type='file' onChange={onChange} id='hidenInput' disabled={disabled} accept={accept} />
         </Button>
         {error && <div className="helper-text error">{helperText}</div>}
       </div>) : (<div className="generic-input">
@@ -144,6 +77,7 @@ const GenericInput = ({
           error={error}
           disabled={disabled}
           helperText={helperText}
+
           InputProps={{
             startAdornment: Icon && (
               <InputAdornment position="start">
@@ -151,6 +85,11 @@ const GenericInput = ({
               </InputAdornment>
             ),
             ...rest.InputProps,
+
+          }}
+          inputProps={{
+            min: min,
+            max: max
           }}
           style={inputStyle}
           {...rest}
@@ -158,7 +97,6 @@ const GenericInput = ({
       </div>)
       }
     </>
->>>>>>> 295121b620a2d268c1501cd8bf2cc33d3409df5f
 
   )
 
@@ -172,9 +110,9 @@ GenericInput.propTypes = {
   width: PropTypes.string,
   icon: PropTypes.elementType,
   validation: PropTypes.func,
-  accept:PropTypes.string,
-  min:PropTypes.number,
-  max:PropTypes.number
+  accept: PropTypes.string,
+  min: PropTypes.number,
+  max: PropTypes.number
 };
 
 export default GenericInput;
