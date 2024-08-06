@@ -1,9 +1,11 @@
 import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';
-require('dotenv').config();
-const messages = require('./messages');
-const crypto = require('crypto');
+import dotenv from 'dotenv';
+dotenv.config();
+import crypto from 'crypto';
+import { messages } from './messages.js'; 
+
 
 export const getUsers = async (req, res,next) => {
   try {
