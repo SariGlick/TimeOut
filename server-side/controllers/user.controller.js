@@ -54,8 +54,6 @@ export const updatedUser = async (req, res,next) => {
 };
 
 export const getUserByGoogleAccount =async (req, res) =>{
-  console.log("dfghjkl;")
-  
   const clientId = process.env.CLIENT_ID;
   const secretCode = process.env.SECRET_CODE;
   const user = getByEmail1 ( req.params.email);
