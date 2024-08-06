@@ -13,14 +13,17 @@ const Select = ({
   widthOfSelect,
   value
 }) => {
+  console.log('Select value prop:', value);
   return (
     <div className='selectWrapper'>
       <Box>
         <FormControl size={size} variant="outlined">
           <InputLabel className='input'>{title}</InputLabel>
-          <SelectMui style={{width: widthOfSelect}} label={title}
+          <SelectMui style={{width: widthOfSelect}} _id={title} label={title}
             className={` genericSelect ${className} `}
-            onChange={(event) => onChange(event.target.value)}
+            onChange={(event) => {
+              onChange(event.target.value);
+            }}
             value={value}
           >
             {options.map((option, index) => (

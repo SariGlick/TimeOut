@@ -5,4 +5,4 @@ const PreferenceSchema= new mongoose.Schema({
     sendNotificationTime:{type:Number,default:30,required:true},
     soundVoice:{type:String,default:'×××ª ××¢× ×¢×©×'},
 })
-export default mongoose.model('Preference',PreferenceSchema);
+export default mongoose.model('preference',PreferenceSchema);

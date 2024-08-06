@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   profileImage: { type: String,default:"profile.jpg" },
   visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
-  preferences: [{ type: Schema.Types.ObjectId, ref: 'Preference' }]
+  preference: { type: Schema.Types.ObjectId, ref: 'preference' }
 });
 
 export default mongoose.model('Users', userSchema);

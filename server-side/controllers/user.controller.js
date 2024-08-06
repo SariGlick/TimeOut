@@ -31,22 +31,26 @@ export const getUserById = async (req, res,next) => {
 };
 
 
-export const addUser = async (req, res,next) => {
+export const addUser = async (req, res, next) => {
   try {
-    if (req.file ) {
-     req.body.profileImage=req.file.originalname;
-     req.body.password= await bcrypt.hash(req.body.password, 10);
+    if (!req.body.name || !req.body.email) {
+      throw new Error('Missing required fields');
+    }
+    if (req.file) {
+      req.body.profileImage = req.file.originalname;
+    }
+    req.body.password = await bcrypt.hash(req.body.password, 10);
     const newUser = new Users(req.body);
     await newUser.validate();
     await newUser.save();
     res.status(201).json(newUser);
-  } 
-}
-  catch (err) {
+  } catch (err) {
     console.error(err);
-    next({message:err.message,status:500})
+    next({ message: err.message, status: 400 }); 
   }
 };
+
+
 
 
 
@@ -71,14 +75,15 @@ export const updatedUser = async (req, res, next) => {
   const id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id))
     return next({ message: 'id is not valid' });
-
   try {
-    if (req.file) 
+    if (req.file) {
+      console.log("req.file.originalname   ",req.file.originalname)
       req.body.profileImage = req.file.originalname;
+    }
+     
 
-    // שינוי פורמט התאריך, נניח אם יש שדה בשם date
-    if (req.body.date) {
-      req.body.date = moment(req.body.date).format('yyyy-MM-dd'); // החלף בפורמט הרצוי
+    if (req.body.dateFormat) {
+      req.body.formatedDate = req.body.dateFormat; 
     }
 
     const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
