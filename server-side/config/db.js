@@ -8,6 +8,8 @@ mongoose.connect(process.env.DB_URL)
 }
 
 export const disconnectMongo = async () => {
-    await mongoose.disconnect();
-    console.log('mongo db disconnected');
+     mongoose.disconnect()
+     .then(()=>{    console.log('mongo db disconnected')})
+     .catch(err=>console.log(err.message))
+
   };
