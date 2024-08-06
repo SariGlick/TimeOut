@@ -3,19 +3,19 @@ import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';
 
 
-export const getUsers = async (req, res,next) => {
+export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find().populate('visitsWebsites profiles preferences' ).select('-__v')
-    .select('-__v')
+    const users = await Users.find().populate('visitsWebsites profiles preferences').select('-__v')
+      .select('-__v')
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
-    next({message:err.message,status:500})
+    next({ message: err.message, status: 500 })
   }
 };
 
 export const getUserById = async (req, res, next) => {
-  const id = req.params?.id || req;
+  const id = req.params
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return next({ message: 'id is not valid' })
@@ -28,13 +28,13 @@ export const getUserById = async (req, res, next) => {
     if (res) {
       res.send(user);
     }
-    return user; 
+    return user;
   } catch (err) {
     console.error(err);
-    if (res) {
-      next({ message: err.message, status: 500 }); 
+    if (next) {
+      next({ message: err.message, status: 500 });
     } else {
-      throw err; 
+      throw err;
     }
   }
 }

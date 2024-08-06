@@ -9,7 +9,6 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
-import activeProfile from './profileMngr.js'
 
 const app=express();
 app.use(express.json())
