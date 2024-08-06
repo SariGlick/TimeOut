@@ -9,6 +9,7 @@ export const getAllProfiles = async (req, res) => {
     }
 };
 
+
 export const createProfile = async (req, res) => {
     const newProfile = new Profile(req.body);
     try {
