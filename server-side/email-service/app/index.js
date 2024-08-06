@@ -19,16 +19,7 @@ const sendEmailWithAttachment = (email, subject, text, attachmentPaths) => {
   });
 };
 
-const email = 'b0556729929@gmail.com';
-const subject = '';
-const text = ''
-const attachmentPaths = [
-  path.join('C:', 'Users', '1', 'OneDrive', 'email-service', 'app', 'bati.txt')
-];
-
   sendEmailWithAttachment(email, subject, text, attachmentPaths);
-
-
 
 process.on('SIGINT', () => {
   process.exit(0);
