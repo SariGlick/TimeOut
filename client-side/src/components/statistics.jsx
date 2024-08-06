@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import DateTimePicker from './report.jsx';
 import VisitedWebsitesComponent from './statistics/graphs.jsx';
-import { Provider } from 'react-redux';
-import {store} from '../redux/store.jsx'
 
 const Statistics = () => {
     const [startDate, setStartDate] = useState('');
@@ -27,9 +25,7 @@ const Statistics = () => {
         <>
             <ApolloProvider client={client}>
                 <DateTimePicker onDateSubmit={handleDateSubmit} />
-                <Provider store={store}>
-                    {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
-                </Provider>
+                {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
             </ApolloProvider>
         </>
     );
