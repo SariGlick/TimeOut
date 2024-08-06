@@ -6,7 +6,6 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import Footer from './stories/footer/FooterComponent'
 
-
 function App() {
   return (
 
@@ -15,6 +14,7 @@ function App() {
       <Provider store={store}>
         <Footer />
         </Provider>
+
     </>
   );
 }

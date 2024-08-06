@@ -1,5 +1,24 @@
+@import './stories/variables.scss';
+:root {
+  --background-default-light: #ffffff;
+  --background-default-dark: #121212;
+  --text-primary-light: #000000;
+  --text-primary-dark: #ffffff;
+}
+body[data-theme='light'] {
+  background-color: var(--background-default-light);
+  color: var(--text-primary-light);
+}
+
+body[data-theme='dark'] {
+  background-color: var(--background-default-dark);
+  color: var(--text-primary-dark);
+}
+
 .App {
   text-align: center;
+  // background-color: var(--background-default);
+  // color: var(--text-primary);
 }
 
 .App-logo {
@@ -15,6 +34,7 @@
 
 .App-header {
   background-color: #282c34;
+  // background-color: var(--mui-palette-background-paper);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,10 +42,14 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  // color: var(--mui-palette-text-primary);
+
 }
 
 .App-link {
   color: #61dafb;
+  // color: var(--mui-palette-primary-main);
+
 }
 
 @keyframes App-logo-spin {

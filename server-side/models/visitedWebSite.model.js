@@ -18,7 +18,6 @@ const visitedWebsitesSchema = new mongoose.Schema({
                 required: true
             }
         }]
-   
 });
 
 export default mongoose.model("VisitedWebsite", visitedWebsitesSchema)
