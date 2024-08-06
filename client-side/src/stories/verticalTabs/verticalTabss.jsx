@@ -12,7 +12,7 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements=[<p>tab 1</p>, <pp>tab 2<
   const {t,i18n} =useTranslation();
   return ( 
 
-    <div className={i18n.resolvedLanguage==='he'? 'tab-warper dir' :'tab-warper'} >
+    <div className='tab-warper' >
       <div  className='but-warper'>
       {labels.map((label,index)=>{
       return ( 
