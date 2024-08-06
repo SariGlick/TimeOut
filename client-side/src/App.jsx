@@ -5,15 +5,19 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import Footer from './stories/footer/FooterComponent'
+import { SnackbarProvider } from 'notistack';
+
 
 function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
+        <RouterProvider router={router} />
         <Footer />
       </Provider>
+    </SnackbarProvider>
     </>
   );
 }
