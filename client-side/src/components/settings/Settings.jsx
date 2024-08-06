@@ -42,7 +42,6 @@ const Settings = ({user}) => {
     Object.entries(preferencesData).forEach(([key, value]) => {
       formData.append(key, value);
     });
-console.log('dataaaaa',formData)
     try {
       await uploadFile(preferencesUrl, formData, 'put');
       enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
