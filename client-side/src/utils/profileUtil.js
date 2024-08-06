@@ -1,4 +1,5 @@
-import { SELECT_OPTIONS ,VALIDATE_MESSAGES } from '../constants/profileConstants.js';
+import { SELECT_OPTIONS, VALIDATE_MESSAGES } from '../constants/profileConstants.js';
+
 export const formatProfileData = (profile) => {
     return {
         id: profile._id,
@@ -59,19 +60,6 @@ export const extractWebsiteName = (url) => {
 };
 
 
-export function validateProfileDate(formData) {
-    let isValid = true;
-
-    if (!formData.timeProfile.timeStart.trim()) {
-        isValid = false;
-    }
-
-    if (!formData.timeProfile.timeEnd.trim()) {
-        isValid = false;
-    }
-
-    return isValid;
-}
 export const validateName = (inputValue) => {
     if (inputValue.length < 2) {
         return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
@@ -90,4 +78,45 @@ export const isValidURL = (string) => {
 };
 export const isWebsiteInProfile = (url, profile) => {
     return profile.listWebsites.some(website => website.websiteId.url === url);
+};
+
+export const handleFieldChange = (e, setFormData) => {
+    const { name, value } = e.target;
+    setFormData(prevState => {
+        if (name === 'profileName') {
+            return { ...prevState, profileName: value };
+        } else if (name === "statusBlockedSites") {
+            return updateFormDataWithStatusBlockedSites(prevState, value);
+        } else if (name === "timeStart" || name === "timeEnd") {
+            return {
+                ...prevState,
+                timeProfile: {
+                    ...prevState.timeProfile,
+                    [name]: value
+                }
+            };
+        } else {
+            return { ...prevState, [name]: value };
+        }
+    });
+};
+
+
+export const validateProfileDate = (formData) => {
+    const startTime = new Date();
+    const endTime = new Date();
+
+    const [startHours, startMinutes] = formData.timeProfile.timeStart.split(":");
+    startTime.setHours(parseInt(startHours));
+    startTime.setMinutes(parseInt(startMinutes));
+
+    const [endHours, endMinutes] = formData.timeProfile.timeEnd.split(":");
+    endTime.setHours(parseInt(endHours));
+    endTime.setMinutes(parseInt(endMinutes));
+
+    if (startTime > endTime) {
+        return false;
+    }
+
+    return true;
 };
