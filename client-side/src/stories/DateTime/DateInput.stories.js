@@ -1,10 +1,10 @@
 import React from "react";
 
-import DateInputs from './DateInputs';
+import DateInput from './DateInput';
 
 
 export default{
-    title: 'DateInputs',
+    title: 'DateInput',
     component: DateInputs,
     argTypes:{
     }
@@ -14,6 +14,6 @@ export default{
 
 const Template = (args) => <DateInputs {...args}/>;
 
-export const ClasicDateInputs = Template.bind({});
+export const ClasicDateInput = Template.bind({});
 
 

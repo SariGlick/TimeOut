@@ -4,14 +4,14 @@ import Header from './stories/header/header'
 import Footer from './stories/footer/FooterComponent'
 import './App.scss';
 import DatePicker from './components/report';
-import DateInputs from './stories/DateTime/DateInputs';
+import DateInput from './stories/DateTime/DateInput';
 
 function App() {
   return (
     <div className="App">
       <Header/> 
       <Footer/>
-      <DatePicker/>
+      <DateInput/>
      
 
     </div>
