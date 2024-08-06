@@ -15,6 +15,8 @@ function App() {
         {/* <SignUp/> */}
         {/* <Login/> */}
         <Footer />
+
+        
         
       </Provider>
     </>
