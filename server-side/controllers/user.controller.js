@@ -53,10 +53,10 @@ export const updatedUser = async (req, res,next) => {
 
 export const getUserByGoogleAccount =async (req, res) =>{
   const clientId = process.env.CLIENT_ID;
-  const secretCode = process.env.SECRET_CODE
-  const user = getByEmail1 ( req.params.email)
+  const secretCode = process.env.SECRET_CODE;
+  const user = getByEmail1 ( req.params.email);
   if (user)
-    return res.status(200).send(user)
+    return res.status(200).send(user);
   else{
         const { tokenId } = req.params.token;
         try {
@@ -75,18 +75,14 @@ export const getUserByGoogleAccount =async (req, res) =>{
           console.error(messages.error.G_LOGIN_FAILED, error);
           res.status(500).json({ error: messages.error.G_LOGIN_FAILED});
         }
-        {
-          
-        }
       };
-
   }
 
   export const getByEmail = async (req, res) =>
     {
       try{
-        const em= req.params.email
-        const user = await User.findOne({ email: em })
+        const email= req.params;
+        const user = await User.findOne({ email: email});
        if(user)
         res.status(200).send(user)
       }
@@ -105,21 +101,20 @@ export const getUserByGoogleAccount =async (req, res) =>{
           }
       };
   export const getCode = async (req, res)=>{
-    const us=req.params.email
+    const email=req.params.email;
+    const password= req.params.password;
     try{
-      const user = await getByEmail1( us);
+      const user = await getByEmail1( email);
       if(user){
-        sendEmail(user)
-        res.status(200).send(messages.message.SEND_EMAIL + user.email )
+        sendEmail(user,password);
+        res.status(200).send(messages.message.SEND_EMAIL + user.email );
       }
-      else
-      {
-        res.status(404).send(messages.error.EMAIL_NOT_FOUND)
+      else{
+        res.status(404).send(messages.error.EMAIL_NOT_FOUND);
       }
     }
     catch{
       res.status(500).send(messages.error.INTERNAL_SERVER_ERROR);
-
     }
   
   
@@ -127,7 +122,7 @@ export const getUserByGoogleAccount =async (req, res) =>{
 
 export const addUser = async (req, res) => {
   const { name, password, email, googleId} = req.body;
-{
+  {
     try {
         if (googleId) {
           const randomPassword = crypto.randomBytes(16).toString('hex');
@@ -158,10 +153,7 @@ export const addUser = async (req, res) => {
       console.error(err);
       res.status(500).send(messages.error.INTERNAL_SERVER_ERROR);
     }
-
   }
-    
-
  }
 
 export const deleteUser = async (req, res) => {
