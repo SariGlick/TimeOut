@@ -6,15 +6,14 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import Footer from './stories/footer/FooterComponent'
 
-
 function App() {
-  return (
 
+  return (
     <>
-     <RouterProvider router={router} />
+      <RouterProvider router={router} />
       <Provider store={store}>
         <Footer />
-        </Provider>
+      </Provider>
     </>
   );
 }

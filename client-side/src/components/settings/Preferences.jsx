@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'
 import Select from '../../stories/Select/Select.jsx'
 import CONSTANTS from './constantSetting.js'
-import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
+import { useSnackbar } from 'notistack';
 import { uploadFile } from './uploadFileUtil.js'
 import moment from 'moment-timezone';
+import { format } from 'date-fns';
 
 const createTimeZones = () => {
   return moment.tz.names().map(timezone => ({
@@ -15,14 +16,17 @@ const createTimeZones = () => {
   }));
 };
 
+const formatDate = (date, dateFormat) => {
+  return format(date, dateFormat);
+};
+
 const Preferences = ({ currentUser = {} }) => {
-  const { MESSAGES, TITLES, LABELS, LANGUAGE } = CONSTANTS;
-  const { timeZone: initialTimeZone, language: initialLanguage, _id: preferenceId } = currentUser.preference;
+  const { MESSAGES, LABELS, LANGUAGE,DATE_FORMATS } = CONSTANTS;
+  const { timeZone: initialTimeZone, language: initialLanguage, dateFormat: initialDateFormat, _id: preferenceId } = currentUser.preference;
   const [language, setLanguage] = useState(initialLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
-  const [toastOpen, setToastOpen] = useState(false);
-  const [toastType, setToastType] = useState('success');
-  const [toastMessage, setToastMessage] = useState('');
+  const [dateFormat, setDateFormat] = useState(initialDateFormat)
+  const { enqueueSnackbar } = useSnackbar();
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const preferencesUrl = `${baseUrl}/preferences/${preferenceId}`
   const { t, i18n } = useTranslation();
@@ -37,24 +41,18 @@ const Preferences = ({ currentUser = {} }) => {
     const formData = new FormData();
     formData.append('language', language);
     formData.append('timeZone', timeZone);
+    formData.append('dateFormat', dateFormat);
 
     try {
       await uploadFile(preferencesUrl, formData, 'put');
-      setToastType('success');
-      setToastMessage(MESSAGES.SUCCESS_UPDATED_SETTINGS);
+      enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
     } catch (error) {
-      setToastType('error');
-      setToastMessage(MESSAGES.ERROR_UPDATE_SETTINGS);
-    } finally {
-      setToastOpen(true);
+      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
     }
   };
 
   const handleChangeTimeZone = (selectedTimeZone) => {
     setTimeZone(selectedTimeZone);
-  };
-  const handleToastClose = () => {
-    setToastOpen(false); 
   };
 
   return (
@@ -84,19 +82,20 @@ const Preferences = ({ currentUser = {} }) => {
         size='medium'
         widthOfSelect='210px'
       />
-
-      <GenericButton
-        className='Update User Settings'
-        label={t(LABELS.UPDATE)}
-        size='medium'
-        onClick={handleFormSubmit}
+      <Select
+        className='select-date-format'
+        options={DATE_FORMATS.map(({ value, label }) => ({
+          text: t(label),
+          value: value
+          
+        }))}
+        value={dateFormat}
+        onChange={setDateFormat}
+        title={t(LABELS.SELECT_DATE_FORMAT)}
+        size='large'
+        widthOfSelect='210px'
       />
-      <ToastMessage
-        open={toastOpen}
-        type={toastType}
-        message={toastMessage}
-        onClose={handleToastClose}
-      />
+      
     </div>
   )
 };

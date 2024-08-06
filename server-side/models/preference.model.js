@@ -5,6 +5,7 @@ const PreferenceSchema= new mongoose.Schema({
     sendNotificationTime:{type:Number,default:30,required:true},
     soundVoice:{type:String,default:'alertSound.mp3'},
     timeZone:{type:String,default:'UTC'},
-    language:{type:String, default:'en',emum:['en','es','he']}
+    language:{type:String, default:'en',emum:['en','es','he']},
+    dataFormat:{type:String,default:'DD-MM-YYYY',emum:['MM-DD-YYYY','DD-MM-YYYY','YYYY-MM-DD']}
 })
 export default mongoose.model('Preference',PreferenceSchema);

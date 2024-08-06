@@ -25,6 +25,10 @@
     "weekly": "שבועי",
     "monthly": "חודשי",
     "yearly": "שנתי",
-    "Select Time Zone":"בחר אזור זמן",
-    "Update":"עדכן"
+    "Select Time Zone": "בחר אזור זמן",
+    "Update": "עדכן",
+    "select date format": "בחר פורמט תאריך",
+    "MM-DD-YYYY": "שנה / חודש / יום",
+    "DD-MM-YYYY": "שנה / חודש / יום",
+    "YYYY-MM-DD": "יום / חודש / שנה"
 }

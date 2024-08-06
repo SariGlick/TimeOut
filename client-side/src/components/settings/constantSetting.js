@@ -9,7 +9,8 @@ const LABELS = {
   PREFERENCE: 'Preference',
   MESSAGE: 'Message',
   UPDATE: 'Update',
-  SELECT_TIME_ZONE:'Select Time Zone'
+  SELECT_TIME_ZONE:'Select Time Zone',
+  SELECT_DATE_FORMAT:'select date format'
 };
 const TITLES = {
   SELECT_EMAIL_FREQUENCY: 'Select Email Frequency',
@@ -41,12 +42,19 @@ const LANGUAGE = {
     icon: 'https://cdn.pixabay.com/photo/2013/07/13/14/17/spain-162428_640.png'
   }
 };
+const DATE_FORMATS = [
+  { value: 'MM-DD-YYYY', label: 'MM-DD-YYYY' },
+  { value: 'DD-MM-YYYY', label: 'DD-MM-YYYY' },
+  { value: 'YYYY-MM-DD', label: 'YYYY-MM-DD' },
+];
+
 const CONSTANTS = {
   EMAIL_FREQUENCY_ENUM,
   MESSAGES,
   TITLES,
   LABELS,
-  LANGUAGE
+  LANGUAGE,
+  DATE_FORMATS
 };
 
 export default CONSTANTS;
