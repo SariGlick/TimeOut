@@ -1,5 +1,5 @@
 let blockedSitesCache = null;
-let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
+let allowedSitesCache = ["https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&lp=1&hl=en&flowName=GlifWebSignIn&flowEntry=ServiceLogin#identifier","http://localhost:3000","https://github.com","https://monoreposmartax-fronted.onrender.com/clientSearch/clientSearch"]; 
 let isBlackList = false; 
 
 chrome.runtime.onStartup.addListener(() => initializeCaches());

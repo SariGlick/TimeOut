@@ -85,5 +85,30 @@ export const updatedUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
-
+export const signIn = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await Users.findOne({ email });
+    if (user) {
+      bcrypt.compare(password, user.password, (err, same) => {
+        if (err) {
+          console.log("Error in bcrypt compare:", err);
+          return next(new Error(err.message));
+        }
+        if (same) {
+          user.password = "****";
+          const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+          res.cookie('token', token, { httpOnly: true, secure: true });
+          return res.send({ user });
+        } else {
+          return res.status(401).send({ message: 'Auth Failed' });
+        }
+      });
+    } else {
+      return res.status(401).send({ message: 'Auth Failed' });
+    }
+  } catch (error) {
+    return next(new Error('Server Error'));
+  }
+};
 
