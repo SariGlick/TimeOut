@@ -8,8 +8,7 @@ export const MainPopup = ({title}) => {
   const popupManager = usePopupManager();
   const openModal = () => {
     popupManager.open(popup, {
-      title: 'my modal',
-      onClose: (...params) => console.log('modal has closed with:', ...params), 
+      title: 'my modal' 
     }); 
   }
   return (

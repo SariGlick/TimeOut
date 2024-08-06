@@ -2,45 +2,44 @@
 
 .ReactModal__Overlay {
     background-color: rgba(0, 0, 0, 0.5);
-  }
+}
   
-  .ReactModal__Content {
+.ReactModal__Content {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: $standardInfoColor;
-    border-radius: 8px;
-    padding: 20px;
+    border-radius: 1%; 
+    padding: 2%; 
     width: 80%;
-    max-width: 600px;
+    max-width: 60%; 
     box-shadow: 0 4px 8px $primary-color;
-  }
+}
   
-  .modal-header {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
+.modal-header {
+    font-size: 2%; 
+    margin-bottom: 1%; 
+}
   
-  .modal-body {
-    margin-bottom: 20px;
-  }
+.modal-body {
+    margin-bottom: 2%;
+}
   
-  .modal-footer {
+.modal-footer {
     display: flex;
     justify-content: flex-end;
-  }
+}
   
-  .modal-button {
+.modal-button {
     background-color: $primary-color;
     border: none;
     color: $standardInfoColor;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 1%; 
+    border-radius: 0.5%;
     cursor: pointer;
-  }
+}
   
-  .modal-button.close {
+.modal-button.close {
     background-color: $secondary-color;
-  }
-  
+}
