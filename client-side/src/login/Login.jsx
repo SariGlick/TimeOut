@@ -12,7 +12,7 @@ import './login.scss';
 import GenericButton from '../stories/Button/GenericButton';
 import GenericInput from '../stories/GenericInput/genericInput';
 import { setCurrentUser } from '../redux/auth/auth.slice';
-import { MESSAGES } from '../constans';
+import { MESSAGES } from '../constants';
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email(MESSAGES.INVALID_EMAIL_FORMAT).required(MESSAGES.EMAIL_REQUIRED),
