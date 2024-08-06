@@ -2,7 +2,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const url = process.env.SERVER_URL;
+const url = process.env.REACT_APP_BASE_URL;
 
 export async function handleGet(path) {
     const response = await axios.create({ baseURL: url }).get(path);

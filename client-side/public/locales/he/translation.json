@@ -30,5 +30,7 @@
     "select date format": "בחר פורמט תאריך",
     "MM-DD-YYYY": "שנה / חודש / יום",
     "DD-MM-YYYY": "שנה / חודש / יום",
-    "YYYY-MM-DD": "יום / חודש / שנה"
+    "YYYY-MM-DD": "יום / חודש / שנה",
+    "Display notification for income messages":"הצג התראה עבור הודעות נכנסות",
+    "Display browsing time limit notification":"הצג הודעת מגבלת זמן גלישה"
 }

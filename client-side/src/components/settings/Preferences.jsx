@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'
 import Select from '../../stories/Select/Select.jsx'
 import CONSTANTS from './constantSetting.js'
-import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
-import { useSnackbar } from 'notistack';
-import { uploadFile } from './uploadFileUtil.js'
 import moment from 'moment-timezone';
 import { format } from 'date-fns';
+import './Preferences.scss';
 
 const createTimeZones = () => {
   return moment.tz.names().map(timezone => ({
@@ -20,36 +18,26 @@ const formatDate = (date, dateFormat) => {
   return format(date, dateFormat);
 };
 
-const Preferences = ({ currentUser = {} }) => {
-  const { MESSAGES, LABELS, LANGUAGE,DATE_FORMATS } = CONSTANTS;
-  const { timeZone: initialTimeZone, language: initialLanguage, dateFormat: initialDateFormat, _id: preferenceId } = currentUser.preference;
+const Preferences = ({ currentUser, onUpdate}) => {
+  const {  LABELS, LANGUAGE,DATE_FORMATS } = CONSTANTS;
+  const { timeZone: initialTimeZone, language: initialLanguage, dateFormat: initialDateFormat } = currentUser.preference;
   const [language, setLanguage] = useState(initialLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [dateFormat, setDateFormat] = useState(initialDateFormat)
-  const { enqueueSnackbar } = useSnackbar();
-  const baseUrl = process.env.REACT_APP_BASE_URL;
-  const preferencesUrl = `${baseUrl}/preferences/${preferenceId}`
   const { t, i18n } = useTranslation();
 
+  useEffect(() => {
+    onUpdate({
+      language,
+      timeZone,
+      dateFormat
+    });
+  }, [language, timeZone, dateFormat, onUpdate]);
 
   const handleLanguageChange = (value) => {
     i18n.changeLanguage(value);
     setLanguage(value)
   }
-
-  const handleFormSubmit = async () => {
-    const formData = new FormData();
-    formData.append('language', language);
-    formData.append('timeZone', timeZone);
-    formData.append('dateFormat', dateFormat);
-
-    try {
-      await uploadFile(preferencesUrl, formData, 'put');
-      enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
-    } catch (error) {
-      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
-    }
-  };
 
   const handleChangeTimeZone = (selectedTimeZone) => {
     setTimeZone(selectedTimeZone);
@@ -95,7 +83,6 @@ const Preferences = ({ currentUser = {} }) => {
         size='large'
         widthOfSelect='210px'
       />
-      
     </div>
   )
 };
