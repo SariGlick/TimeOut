@@ -9,7 +9,10 @@ export const getAllProfiles = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 24adc4d3e39a781941f81828502cab718cfb8500
 export const createProfile = async (req, res) => {
     const newProfile = new Profile(req.body);
     try {

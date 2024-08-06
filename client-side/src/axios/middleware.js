@@ -9,6 +9,7 @@ export async function handleGet(path) {
 };
 
 export async function handlePost(path, data) {
+    console.log(path)
     const response = await axios.create({ baseURL: url }).post(path, data);
     return response;
 

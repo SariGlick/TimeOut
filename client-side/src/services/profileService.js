@@ -12,6 +12,7 @@ export const getAllProfiles = async () => {
 
 export const createProfile = async (profileData) => {
     try {
+        console.log(profileData)
         const response = await handlePost('/profiles', profileData);
         return response.data;
     } catch (err) {
