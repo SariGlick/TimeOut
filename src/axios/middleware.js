@@ -2,12 +2,7 @@ import axios from 'axios';
 
 const url = process.env.REACT_APP_SERVER_URL;
 
-const axiosInstance = axios.create({
-    baseURL: url,
-    headers: {
-        'Content-Type': 'application/json',
-    },
-});
+
 
 export async function handlePost(path, data) {
     console.log(path,data,"ooo");
@@ -18,12 +13,6 @@ export async function handlePost(path, data) {
                    }
                 }
     )
-    // const response = await axios.post('http://localhost:5004/users/', data
-    //       , {
-    //            headers: {
-    //          'Content-Type': 'application/json'
-    //           }
-    //         });
     console.log(response,"respon");
     return response;
 }
