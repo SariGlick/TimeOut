@@ -1,4 +1,3 @@
-
 import express from 'express';
 import morgan from 'morgan'
 import cors from 'cors'
@@ -37,3 +36,5 @@ let port= process.env.PORT;
 app.listen(port,()=>{
     console.log(` running at http://localhost:${port}`);
 })
+
+export default app;

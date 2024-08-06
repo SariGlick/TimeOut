@@ -111,8 +111,6 @@ export default function Report() {
             </div>
           </div>}
       </div>
-      {/* {data ==-1 && <h1>There are no sites that have been used in the given date range</h1>} */}
-
       <div className="table-wrapper">
         {data[0] && <TableComponent {...args} />}
 

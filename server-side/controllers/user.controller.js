@@ -31,14 +31,6 @@ export const getUserById = async (req, res,next) => {
 };
 
 
-
-
-
-
-
-
-
-
 export const addUser = async (req, res,next) => {
   try {
     if (req.file ) {

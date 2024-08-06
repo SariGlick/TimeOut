@@ -5,7 +5,6 @@ import GenericButton from '../../stories/Button/GenericButton';
 import { LABEL_OF_PDF_DOWNLOAD, LABEL_OF_PDF_DOWNLOAD_HTML } from './report.constant';
 
 const DownloadPage = ({divID,nameFile="timeOut-Report",sizePage="a4",directly="p",size="mm"}) => {
-
   const downloadPDF = () => {
     const input = document.getElementById(divID);
     html2canvas(input, { useCORS: true }).then((canvas) => {
