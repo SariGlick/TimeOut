@@ -19,7 +19,7 @@ const SignInSchema = Yup.object().shape({
   password: Yup.string().required(MESSAGES.PASSWORD_REQUIRED),
 });
 
-function Login({ apiUrl =process.env.REACT_APP_API_URL}) {
+function Login({ apiUrl =process.env.REACT_APP_SERVER_URL}) {
   const [error, setError] = useState(null);
   const [isNotExists, setIsNotExists] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
