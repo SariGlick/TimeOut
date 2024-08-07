@@ -83,13 +83,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function showNotification(site, num) {
+function showNotification(site, num, options = {}) {
   var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
-  chrome.notifications.create({
+  var notificationOptions = {
     type: 'basic',
-    iconUrl: 'images/icon48.png',
+    iconUrl: options.iconUrl || 'images/icon48.png',
     title: NOTIFICATION_TITLE,
     message: message,
-    priority: 2
-  });
+    priority: options.priority || 2
+  };
+  
+  chrome.notifications.create(notificationOptions);
 }
