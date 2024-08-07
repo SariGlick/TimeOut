@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.scss';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
@@ -8,11 +9,13 @@ import Footer from './stories/footer/FooterComponent'
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
 
-function App() {
-  return (
 
+function App() {
+
+  return (
     <>
      <RouterProvider router={router} />
+
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <Footer />
