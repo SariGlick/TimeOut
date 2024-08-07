@@ -8,14 +8,12 @@ import { SnackbarProvider } from 'notistack';
 import './App.scss';
 function App() {
   return (
-    <>
+    <Provider store={store}>
       <SnackbarProvider maxSnack={3}>
-      <Provider store={store}>
         <RouterProvider router={router} />
         <Footer />
-      </Provider>
-    </SnackbarProvider>
-    </>
+      </SnackbarProvider>
+    </Provider>
   );
 }
 export default App;

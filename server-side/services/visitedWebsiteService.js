@@ -38,8 +38,6 @@ async function visitedWebsiteservice(data) {
 
   const user = await Users.findById(userId);
 
-  endDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate() + 1);
-
   const results = [];
   let i = 0;
 
@@ -74,7 +72,10 @@ async function visitedWebsiteservice(data) {
       console.error(`Error fetching website data for ID ${websiteId}:`, error);
     }
   }
-  
+  if(i==0)
+  {
+    results[0]=-1;
+  }
   return results;
 }
 

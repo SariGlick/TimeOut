@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import Select from '../../stories/Select/Select.jsx';
 import TableComponent from '../../stories/table/TableComponent';
 import Loader from "../../stories/loader/loader";
 import GenericButton from '../../stories/Button/GenericButton';
 import DateInput from "../../stories/DateTime/DateInput";
-import PdfGenerator from "./pdf.jsx"
+import PdfGenerator from "./pdf.jsx";
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import { OPTION_ARRAY, TIME } from './report.constant.jsx';
 import './report.scss'
 
@@ -78,12 +81,13 @@ export default function Report() {
       await axios.post(`http://localhost:5000/vistedWebsite/showVisitedWebsite`, body)
         .then(res => {
           setData(res.data)
+          
         })
     }
     catch {
       console.log("faild")
     }
-
+    
   }
 
   let args = {
@@ -112,15 +116,18 @@ export default function Report() {
           </div>}
       </div>
       <div className="table-wrapper">
-        {data[0] && <TableComponent {...args} />}
-
+        {data[0] && data[0] != -1 && <TableComponent {...args} />}
       </div>
+
       <div className="loader">
         {!data.length && <Loader className="secondary" />}
       </div>
       <div className="pdf-wrap">
-        {data[0] && <PdfGenerator data={data} />}
+        {data[0] && data[0] != -1 && <PdfGenerator data={data} />}
       </div>
+      
+      {data[0]==-1 && <ToastMessage open={true} type={'info'} message={"No websites were browsed in the given date range"}/>}
+
     </>
   )
 }

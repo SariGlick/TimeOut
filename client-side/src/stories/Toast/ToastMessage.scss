@@ -1,4 +1,5 @@
-@import './variables.scss';
+@import '../variables.scss';
+
 .MuiAlert-root {
   font-family: 'Montserrat', sans-serif;
 }
@@ -17,4 +18,5 @@
 
 .MuiSnackbar-root .MuiAlert-standardInfo {
   background-color: $standardInfoColor; 
+  margin-bottom: 8%;
 }
