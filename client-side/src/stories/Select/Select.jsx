@@ -5,13 +5,16 @@ import PropTypes from 'prop-types';
 import { OPTION_SELSCT } from './select.constat';
 import './select.scss';
 
+
 const Select = ({
   className,
   options = OPTION_SELSCT,
   onChange = () => {},
   title,
   size = 'large',
-  widthOfSelect
+
+  widthOfSelect, 
+  value
 }) => {
   return ( 
     <div className='selectWrapper'>
@@ -21,10 +24,11 @@ const Select = ({
           <SelectMui style={{width: widthOfSelect}} label={title}
             className={` genericSelect ${className} `}
             onChange={(event) => onChange(event.target.value)}
+            value={value}
           >
             {options.map((option, index) => (
               <MenuItem key={index}  value={option.value}>
-                {<img className="img" src={option.iconSrc}  />}
+                {option.iconSrc && <img className="img" src={option.iconSrc}  alt=""/>}
                 {option.text}
               </MenuItem>
             ))}
@@ -45,8 +49,10 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
+
   className: PropTypes.string.isRequired,
-  widthOfSelect: PropTypes.string
+  widthOfSelect: PropTypes.string,
+  value: PropTypes.any.isRequired
 };
 
 export default Select;
