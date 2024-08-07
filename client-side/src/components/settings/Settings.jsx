@@ -4,6 +4,7 @@ import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import Preferences from './Preference.jsx';
 import AccountTab from './accountTab';
 import Notifications from './Notifications.jsx';
+import DisplaySettings from './DisplaySettings.jsx';
 import {LABELS} from './constantSetting.js'
 
 const  Settings =()=> {
@@ -11,13 +12,16 @@ const  Settings =()=> {
   const elements = [
     <AccountTab/>,
     <Notifications/>,
-    <Preferences/>
-  ] 
+    <Preferences/>,
+    <DisplaySettings />,
+  ];
+
   const {t} = useTranslation();
   return (
     <> 
     <VerticalTabs labels={[LABELS.ACCOUNT, LABELS.NOTIFICATIONS, LABELS.PREFERENCE, LABELS.DISPLAY_SETTING , LABELS.MESSAGE]} elements={elements}/>
     </>
-  )
-}
+  );
+};
+
 export default  Settings;

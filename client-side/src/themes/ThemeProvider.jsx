@@ -15,8 +15,9 @@ export const ThemeProvider = ({ children }) => {
       toggleTheme: () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
       },
+      currentTheme: theme,
     }),
-    []
+    [theme]
   );
 
   useEffect(() => {

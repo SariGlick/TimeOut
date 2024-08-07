@@ -12,7 +12,7 @@ export const lightTheme = createTheme({
     },
     background: {
       default: '#ffffff',
-      paper: '#000000',
+      paper: '#f5f5f5',
 
     },
     text: {
@@ -31,13 +31,11 @@ export const darkTheme = createTheme({
       main: '#f48fb1',
     },
     background: {
-      default: '#424242',
-      default: '#424242',
-
+      default: '#303030',
       paper: '#424242',
     },
     text: {
-      primary: '#fff', // צבע הטקסט
+      primary: '#ffffff', // צבע הטקסט
       secondary: 'rgba(255, 255, 255, 0.7)'
     },
   },

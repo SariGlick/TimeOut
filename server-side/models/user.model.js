@@ -9,11 +9,7 @@ const userSchema = new mongoose.Schema({
   visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
   preference: { type: Schema.Types.ObjectId, ref: 'Preference' }
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> 295121b620a2d268c1501cd8bf2cc33d3409df5f
 });
 
 export default mongoose.model('Users', userSchema);
