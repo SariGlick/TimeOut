@@ -9,6 +9,27 @@ import { useTranslation } from 'react-i18next';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
 
+const user = {
+  "_id": "66940b051ccb2852370d5a17",
+  "name": "Alice Johnson",
+  "email": "alice.johnson@example.com",
+  "password": "securePassword123",
+  "visitsWebsites": [],
+  "profiles": [],
+  "profileImage": "profile.jpg",
+  "preference": {
+
+      "_id": "66930c2e2aad987e24078e12",
+      "emailFrequency": "weekly",
+      "timeZone": "US/Central",
+      "language": "en",
+      "sendNotificationTime": 30,
+      "soundVoice": "alertSound.mp3",
+      "dateFormat": "DD-MM-YYYY",
+      "displayBrowsingTimeLimit": true,
+      "displayIncomeMessages": true
+  }
+}
 
 function App() {
   
@@ -18,7 +39,7 @@ function App() {
    useEffect(()=>{
     i18n.changeLanguage(user.preference.language)
    },[])
-   
+
   return (
     <>
      <RouterProvider router={router} />
