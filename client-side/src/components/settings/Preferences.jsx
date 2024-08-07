@@ -14,12 +14,12 @@ const createTimeZones = () => {
 };
 
 const Preferences = ({ currentUser, onUpdate}) => {
+  const { t, i18n } = useTranslation();
   const {  LABELS, LANGUAGE,DATE_FORMATS } = CONSTANTS;
   const { timeZone: initialTimeZone, language: initialLanguage, dateFormat: initialDateFormat } = currentUser.preference;
-  const [language, setLanguage] = useState(initialLanguage);
+  const [language, setLanguage] = useState(i18n.resolvedLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [dateFormat, setDateFormat] = useState(initialDateFormat)
-  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     onUpdate({
