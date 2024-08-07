@@ -7,8 +7,8 @@ import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
 import Notifications from './Notifications.jsx';
 import CONSTANTS from './constantSetting.js'
-import { uploadFile } from './uploadFileUtil.js'
 import { useSnackbar } from 'notistack';
+import { updatePreference } from '../../services/preferenceService.js';
 import './Settings.scss';
 
 const Settings = ({user}) => {
@@ -20,9 +20,6 @@ const Settings = ({user}) => {
   const [preferencesData, setPreferencesData] = useState({});
 
   const preferenceId = user.preference._id;
-  const baseUrl = process.env.REACT_APP_BASE_URL;
-  const preferencesUrl = `${baseUrl}/preferences/${preferenceId}`
- 
 
   const elements = [
     <AccountTab />,
@@ -43,7 +40,7 @@ const Settings = ({user}) => {
       formData.append(key, value);
     });
     try {
-      await uploadFile(preferencesUrl, formData, 'put');
+      await updatePreference(preferenceId, formData);
       enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
     } catch (error) {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
