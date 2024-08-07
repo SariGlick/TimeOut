@@ -5,7 +5,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 import crypto from 'crypto';
 import { messages } from './messages.js'; 
+import { OAuth2Client } from 'google-auth-library';
+import jwt from 'jsonwebtoken';
 
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 export const getUsers = async (req, res,next) => {
   try {
@@ -53,33 +56,82 @@ export const updatedUser = async (req, res,next) => {
   }
 };
 
-export const getUserByGoogleAccount =async (req, res) =>{
+
+// export const getUserByGoogleAccount = async (req, res) => {
+//   const clientId = process.env.CLIENT_ID;
+//   const secretCode = process.env.SECRET_CODE;
+//   const email = req.params.email;
+//   const token = req.headers.authorization?.split(' ')[1]; 
+//   if (!token) {
+//     return res.status(400).json({ error: 'Token not provided' });
+//   }
+//   try {
+//     const user = await getByEmail1(email);
+//     if (user) {
+//       return res.status(200).send(user);
+//     } else {
+//       const ticket = await client.verifyIdToken({
+//         idToken: token,
+//         audience: clientId
+//       });
+//       const payload = ticket.getPayload();
+//       const { email, name, picture } = payload;
+//       const newToken = jwt.sign({ email, name, picture }, secretCode, { expiresIn: '1h' });
+//       res.json({
+//         token: newToken,
+//         userData: { email, name, picture }
+//       });
+//     }
+//   } catch (error) {
+//     console.error(messages.error.G_LOGIN_FAILED, error);
+//     res.status(500).json({ error: messages.error.G_LOGIN_FAILED });
+//   }
+// };
+export const getUserByGoogleAccount = async (req, res) => {
   const clientId = process.env.CLIENT_ID;
   const secretCode = process.env.SECRET_CODE;
-  const token=req.header
-  const user = getByEmail1 ( req.params.email);
-  if (user)
-    return res.status(200).send(user);
-  else{
-        const { tokenId } = req.params.token;
-        try {
-          const ticket = await client.verifyIdToken({
-            idToken: tokenId,
-            audience: clientId
-          });
-          const payload = ticket.getPayload();
-          const { email, name, picture } = payload;
-          const token = jwt.sign({ email, name, picture },secretCode, { expiresIn: '1h' }); 
-          res.json({
-            token,
-            userData: { email, name, picture }
-          });
-        } catch (error) {
-          console.error(messages.error.G_LOGIN_FAILED, error);
-          res.status(500).json({ error: messages.error.G_LOGIN_FAILED});
-        }
-      };
+
+  // קבלת הטוקן מהכותרת של הבקשה
+  const token = req.headers['authorization']?.split(' ')[1]; // מצפים לקבל את הטוקן בכותרת Authorization: Bearer <token>
+
+  if (!token) {
+    return res.status(400).json({ error: 'Token is required' });
   }
+
+  try {
+    // Verify the token with Google
+    console.log("=========================================================================================================================================================")
+    
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+      audience: clientId
+    });
+    console.log("sfdghj")
+    
+    // Get user information from token payload
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+    
+    // Check if the user exists in your database
+    const user = await getByEmail1(email);
+    
+    if (user) {
+      return res.status(200).send(user);
+    } else {
+      // Create a JWT token to send back to the client
+      const newToken = jwt.sign({ email, name, picture }, secretCode, { expiresIn: '1h' });
+      
+      // Respond with user data and JWT token
+      res.json({
+        token: newToken,
+        userData: { email, name, picture }
+      });
+    }
+  } catch (error) {
+    console.error('Error verifying Google token:', error);
+    res.status(500).json({ error: 'Failed to verify Google token' });
+  }
+};
 
   export const getByEmail = async (req, res) =>
     {
@@ -95,13 +147,8 @@ export const getUserByGoogleAccount =async (req, res) =>{
      }
     }
   export const getByEmail1 = async (email) => {
-          try {
               const user = await User.findOne({ email });
               return user; 
-          } catch (error) {
-              console.error(messages.error.INTERNAL_SERVER_ERROR, error);
-              throw new Error(messages.error.INTERNAL_SERVER_ERROR);
-          }
       };
   export const getCode = async (req, res)=>{
     const {email}=req.params.email;
