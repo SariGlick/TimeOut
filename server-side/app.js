@@ -14,7 +14,7 @@ import {connectMongo} from './config/db.js'
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
-app.use(morgan('dev'));//הדפסת המידע של כל הבקשה 
+app.use(morgan('dev'));
 app.use(cors());
 
 dotenv.config();
@@ -33,7 +33,4 @@ app.use(serverErrors)
 let port= process.env.PORT;
 
 app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
 })
-
-export default app;
