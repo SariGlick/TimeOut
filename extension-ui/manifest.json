@@ -20,7 +20,14 @@
   "action": {
     "default_popup": "popup.html"
   },
-   "web_accessible_resources": 
-   [{"resources": ["oops.html"],
-    "matches": ["<all_urls>"]}]
+  "web_accessible_resources": [
+    {
+      "resources": ["oops.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "script-src": ["'self'", "https://*"],
+    "object-src": ["'self'"]
+  }
 }

@@ -1,17 +1,16 @@
 let blockedSitesCache = null;
-let allowedSitesCache = ["https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&lp=1&hl=en&flowName=GlifWebSignIn&flowEntry=ServiceLogin#identifier","http://localhost:3000","https://github.com","https://monoreposmartax-fronted.onrender.com/clientSearch/clientSearch"];
+let allowedSitesCache = ["https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&lp=1&hl=en&flowName=GlifWebSignIn&flowEntry=ServiceLogin#identifier", "http://localhost:3000", "https://github.com", "https://monoreposmartax-fronted.onrender.com/clientSearch/clientSearch"];
 let isBlackList = false;
 
-// Fetch user data from the server
+
 function fetchUserData() {
-  fetch('http://localhost:5000/api/user/me', { // Endpoint to get the current user profile
+  fetch('http://localhost:5000/api/user/me', {
     method: 'GET',
-    credentials: 'include' // Ensure cookies are sent with the request
+    credentials: 'include'
   })
     .then(response => response.json())
     .then(data => {
       console.log('User data:', data);
-      // Process user data if needed
     })
     .catch(error => console.error('Error fetching user data:', error));
 }
