@@ -1,4 +1,4 @@
-
+import { BASE_URL } from './constants';
 let blockedSitesCache = null;
 
 // Initialize cache when the extension is loaded
@@ -82,3 +82,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // כדי להורות שהתגובה היא אסינכרונית
   }
 });
+
+chrome.runtime.onInstalled.addListener(() => {
+
+  fetch(`${BASE_URL}/${userId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(settings => {
+      chrome.storage.local.set({ userSettings: settings }, () => {
+      });
+    })
+    .catch(error => console.error('Failed to fetch user settings:', error));
+});
+

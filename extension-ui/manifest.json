@@ -8,11 +8,13 @@
     "scripting",
     "webNavigation",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "windows"
   ],
   "host_permissions": [
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "http://localhost:3000/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -20,7 +22,10 @@
   "action": {
     "default_popup": "popup.html"
   },
-   "web_accessible_resources": 
-   [{"resources": ["oops.html"],
-    "matches": ["<all_urls>"]}]
+  "web_accessible_resources": [
+    {
+      "resources": ["oops.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
