@@ -76,7 +76,6 @@ export const activeProfileByUserId = async(req, res) => {
     try {
         const userId = req.body;
         const profile = await activeProfile(userId);
-        console.log(profile);
         
         res.status(201).json(profile);
     }

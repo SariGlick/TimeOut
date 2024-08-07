@@ -106,3 +106,15 @@ chrome.tabs.onCreated.addListener((tab) => {
       console.error('Error fetching active profile:', error.message);
     });
 });
+function showNotification(site, num, options = {}) {
+  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
+  var notificationOptions = {
+    type: 'basic',
+    iconUrl: options.iconUrl || 'images/icon48.png',
+    title: NOTIFICATION_TITLE,
+    message: message,
+    priority: options.priority || 2
+  };
+  
+  chrome.notifications.create(notificationOptions);
+}
