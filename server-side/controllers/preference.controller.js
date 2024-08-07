@@ -9,13 +9,10 @@ export const getAllPreference = async (req, res, next) => {
         return next({ message: error.message, status: 500 })
     }
 };
-export const getPreferenceById=async(req,res,next)=>{
-    const id= req.params.id;
-    if(!mongoose.Types.ObjectId.isValid(id))
-        return  next({message:'id is not valid'})
-   
-  
-
+export const getPreferenceById = async (req, res, next) => {
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return next({ message: 'id is not valid' })
     try {
         const PreferencesById = await Preference.findById(id, { __v: false });
         res.json(PreferencesById);
@@ -42,8 +39,8 @@ export const updatePreference = async (req, res, next) => {
 
 export const addPreference = async (req, res, next) => {
     try {
-         if(req.file)
-           req.body.soundVoice = req.file.originalname;
+        if (req.file)
+            req.body.soundVoice = req.file.originalname;
         const newPreference = new Preference(req.body);
         await newPreference.validate();
         await newPreference.save();
