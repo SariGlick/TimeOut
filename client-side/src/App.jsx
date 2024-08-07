@@ -13,7 +13,6 @@ function App() {
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
-        <h1>hello</h1>
         <Footer />
       </Provider>
     </SnackbarProvider>
