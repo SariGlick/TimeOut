@@ -1,4 +1,3 @@
-importScripts('constants.js');
 let blockedSitesCache = null;
 
 // Initialize cache when the extension is loaded
@@ -32,13 +31,12 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 function handleBeforeNavigate(details) {
   try {
     const url = new URL(details.url);
-    
+
     if (url.protocol === 'chrome:' || url.protocol === 'about:') {
       return;
     }
 
     const hostname = url.hostname.toLowerCase();
-    
     if (blockedSitesCache.some(site => hostname.includes(site))) {
       chrome.tabs.get(details.tabId, (tab) => {
         if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
@@ -48,7 +46,7 @@ function handleBeforeNavigate(details) {
           target: { tabId: details.tabId },
           func: () => {
             //TODO  add UI for the oops window
-             window.stop();
+            window.stop();
             window.location.href = chrome.runtime.getURL('oops.html');
           }
         }).catch(error => {
@@ -83,13 +81,28 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function showNotification(site, num) {
-  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
-  chrome.notifications.create({
-    type: 'basic',
-    iconUrl: 'images/icon48.png',
-    title: NOTIFICATION_TITLE,
-    message: message,
-    priority: 2
-  });
-}
+
+chrome.tabs.onCreated.addListener((tab) => {
+  fetch('http://localhost:3000/activeProfile/activeProfile', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      params: "669645be78def8e48726043e"
+    })
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch active profile. Status: ' + response.status);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Active Profile Data:', data);
+      // Perform any actions with the received data here
+    })
+    .catch(error => {
+      console.error('Error fetching active profile:', error.message);
+    });
+});
