@@ -1,4 +1,4 @@
-
+import { BASE_URL } from './constants';
 let blockedSitesCache = null;
 
 // Initialize cache when the extension is loaded
@@ -84,9 +84,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 chrome.runtime.onInstalled.addListener(() => {
-  const userId = 'm123';
 
-  fetch(`http://localhost:3000/api/settings/${userId}`)
+  fetch(`${BASE_URL}/${userId}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
