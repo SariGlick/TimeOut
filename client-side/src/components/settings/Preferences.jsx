@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next'
 import Select from '../../stories/Select/Select.jsx'
 import CONSTANTS from './constantSetting.js'
 import moment from 'moment-timezone';
-import { format } from 'date-fns';
 import './Preferences.scss';
 
 const createTimeZones = () => {
@@ -12,10 +11,6 @@ const createTimeZones = () => {
     value: timezone,
     text: timezone,
   }));
-};
-
-const formatDate = (date, dateFormat) => {
-  return format(date, dateFormat);
 };
 
 const Preferences = ({ currentUser, onUpdate}) => {
