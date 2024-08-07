@@ -12,4 +12,5 @@ i18n
         fallbackLng:'he'
     }
 )
+export default i18n
 

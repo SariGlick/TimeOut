@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next';
-import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
+import VerticalTabs from '../../stories/verticalTabs/verticalTabs.jsx';
 import Preferences from './Preference.jsx';
 import AccountTab from './accountTab';
 import Notifications from './Notifications.jsx';
