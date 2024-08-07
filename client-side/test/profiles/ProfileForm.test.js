@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ProfileForm from './ProfileForm';
+import ProfileForm from '../../src/components/profileComponents/ProfileForm';
 
 const formData = {
     userId: '1',

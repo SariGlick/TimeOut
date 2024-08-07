@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ProfileActions from './ProfileActions';
+import ProfileActions from '../../src/components/profileComponents/ProfileActions';
 
 describe('ProfileActions', () => {
     const handleSave = jest.fn();
@@ -38,5 +38,10 @@ describe('ProfileActions', () => {
         render(<ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />);
         fireEvent.click(screen.getByText('Delete'));
         expect(handleDelete).toHaveBeenCalled();
+    });
+});
+describe('Profile Actions Tests', () => {
+    test('sample test', () => {
+        expect(true).toBe(true);
     });
 });

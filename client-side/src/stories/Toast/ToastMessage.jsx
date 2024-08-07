@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Alert, Snackbar } from '@mui/material';
 import './ToastMessage.scss';
-
 const ToastMessage = ({ message, type, onClose }) => {
   return (
     <Snackbar open autoHideDuration={1000} onClose={onClose}>

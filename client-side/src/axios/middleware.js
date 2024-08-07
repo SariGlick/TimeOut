@@ -3,6 +3,7 @@ import axios from 'axios';
 const url = process.env.REACT_APP_SERVER_URL;
 
 export async function handleGet(path) {
+    console.log(url)
     const response = await axios.create({ baseURL: url }).get(path);
     return response;
 
