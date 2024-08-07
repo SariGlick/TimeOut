@@ -27,7 +27,8 @@ const Text = {
   info: {
       SYSTEM_MAINTENANCE: 'The system is under maintenance',
       RESET_CODE: "Didn't receive code?",
-      SEND_EMAIL: "We've sent the password to your email:"
+      SEND_EMAIL: "We've sent the password to your email:",
+      LOG_OUT: "Log out",
 
   },
 };

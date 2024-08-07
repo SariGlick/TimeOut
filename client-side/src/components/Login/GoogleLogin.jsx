@@ -8,8 +8,7 @@ export default function () {
   const [userData, setUserData] = useState();
   const GLogin = async(user)=>{
       try {
-        const { email } = user;
-        const token = user.token; 
+        const {email,token} = user; 
         const response = await getUserByGoogleAccount(token, email);
         if (response) {
           setUserData({
@@ -52,7 +51,7 @@ export default function () {
         <div>
           <GenericButton
            className="primary"
-            label="Log out"
+            label={Text.info.LOG_OUT}
             onClick={logOut}
             size="medium"
           ></GenericButton>

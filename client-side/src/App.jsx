@@ -8,6 +8,7 @@ import OTPInput from './components/Login/OTPInput.jsx';
 import { createContext, useState } from 'react';
 import Reset from './components/Login/Reset.jsx';
 import Nav from './router/Nav.jsx';
+import { GoogleLogin } from '@react-oauth/google';
 
 export const RecoveryContext = createContext();
 
@@ -15,7 +16,6 @@ export const RecoveryContext = createContext();
 
   const [page, setPage] = useState("/Login");
   const [email, setEmail] = useState("anonimi");
-
   const [otp, setOTP] = useState("0000");
 
   return (
@@ -25,6 +25,7 @@ export const RecoveryContext = createContext();
         value={{ page, setPage, otp, setOTP, setEmail, email }} >
           <Provider store={store}>
           <Footer />
+          
           <Nav></Nav>
           </Provider>
         </RecoveryContext.Provider>

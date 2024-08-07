@@ -1,15 +1,14 @@
-
 import React, { useState, useContext } from "react";
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import '../../style/forgetPassword.scss'
-import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { RecoveryContext } from "../../App";
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { IconButton } from "@mui/material";
 import GenericButton from "../../stories/Button/GenericButton";
 import GenericInput from "../../stories/GenericInput/genericInput";
 import PasswordStrengthMeter from "./PasswordStrengthMeter ";
-import Text from "./Text";
 import { resetPassword } from "../../axios/login-services";
+import { RecoveryContext } from "../../App";
+import Text from "./Text";
+import '../../style/forgetPassword.scss'
 
 export default function Reset() {
   const { email } = useContext(RecoveryContext);
