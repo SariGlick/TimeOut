@@ -18,11 +18,12 @@ const Settings = ({user}) => {
 
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
+  const [currentUser,setCurrentUser]= useState({})
 
   const preferenceId = user.preference._id;
 
   const elements = [
-    <AccountTab />,
+    <AccountTab onUpdate={setCurrentUser}/>,
     <Notifications currentUser={user} onUpdate={setNotificationsData}/>,
     <Preferences currentUser={user} onUpdate={setPreferencesData}/>
   ]
