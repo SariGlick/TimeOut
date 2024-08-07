@@ -1,3 +1,4 @@
+import React from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
