@@ -1,12 +1,12 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
 
-export const getAllProfiles = async (req, res) => {
+export const getAllProfiles = async (req, res, next) => {
     try {
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId').select('-__v');
         res.json(profiles);
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        next({message:err.message,status:500})
     }
 };
 

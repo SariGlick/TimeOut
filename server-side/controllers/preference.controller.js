@@ -60,11 +60,9 @@ export const deletePreference = async (req, res, next) => {
         const PreferenceForDelet = await Preference.findByIdAndDelete(id);
         if (!PreferenceForDelet)
             return next({ message: 'Preferencs not found !!' })
-
-        await Preference.findByIdAndDelete(id);
-        res.status(204).send('deleted succesfully !!');
+        res.json({ message: 'deleted succesfully!!' }).status(204)
     } catch (error) {
-        return next({ message: error.message });
+        return next({ message: error.message, status: 500 });
 
     }
 };
