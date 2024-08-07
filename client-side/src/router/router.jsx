@@ -3,20 +3,6 @@ import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
 import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
-  const user ={
-    "preference": {
-    "timeZone": "UTC",
-    "dateFormat": "DD-MM-YYYY",
-    "displayIncomeMessages": false,
-    "displayBrowsingTimeLimit": false,
-    "_id": "66953d2791606a13857abd26",
-    "emailFrequency": "weekly",
-    "sendNotificationTime": 20,
-    "soundVoice": "seatear.mp3",
-    "__v": 0,
-    "language": "en"
-  }
-  }
 
 export const router = createBrowserRouter([
  
