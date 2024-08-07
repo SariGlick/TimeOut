@@ -6,8 +6,6 @@ import Button from '@mui/material/Button';
 
 import './GenericButton.scss';
 
-
-
 const GenericButton = ({className, label, onClick, size = "medium", disabled = false})=>{
     return(
         <div className='buttonWrapper'>

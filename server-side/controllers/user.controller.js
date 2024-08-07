@@ -1,114 +1,88 @@
-import User from '../models/user.model.js';
+import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
-import path from 'path';
-import fs from 'fs';
+import Users from '../models/user.model.js';
 
-export const getUsers = async (req, res) => {
+
+export const getUsers = async (req, res,next) => {
   try {
-    const users = await User.find().populate('visitsWebsites profiles preferences');
+    const users = await Users.find().populate('visitsWebsites profiles preference' ).select('-__v')
+    .select('-__v')
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error retrieving users');
+    next({message:err.message,status:500})
   }
 };
 
-export const getUserById = async (req, res) => {
+export const getUserById = async (req, res,next) => {
+  const id = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(id))
+    return next({message:'id is not valid'})
   try {
-    const idParams = req.params.id;
-    const user = await User.findById(idParams).populate('visitsWebsites profiles preferences');
+    const user = await Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
     if (!user) {
-      res.status(404).send('User not found');
-      return;
+        return next({message:'user not found ',status:404})
     }
     res.send(user);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error retrieving user');
+    next({message:err.message,status:500})
   }
 };
 
-export const addUser = async (req, res) => {
-  const { name, password, email } = req.body;
+
+export const addUser = async (req, res,next) => {
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      name,
-      password: hashedPassword,
-      email,
-    });
+    if (req.file ) {
+     req.body.profileImage=req.file.originalname;
+     req.body.password= await bcrypt.hash(req.body.password, 10);
+    const newUser = new Users(req.body);
+    await newUser.validate();
     await newUser.save();
-    res.send('Data saved successfully!');
-  } catch (err) {
+    res.status(201).json(newUser);
+  } 
+}
+  catch (err) {
     console.error(err);
-    res.status(500).send('Error saving user');
+    next({message:err.message,status:500})
   }
 };
 
-export const deleteUser = async (req, res) => {
+
+
+export const deleteUser = async (req, res,next) => {
+  const id = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(id))
+    return next({message:'id is not valid'})
   try {
-    const idParams = req.params.id;
-    const user = await User.findByIdAndDelete(idParams);
+    const user = await Users.findByIdAndDelete(id);
     if (!user) {
-      res.status(404).send('User not found');
-      return;
+      return next({message:'user not found ',status:404})
+      
     }
     res.send('User deleted successfully!');
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error deleting user');
+    next({message:err.message,status:500})
   }
 };
 
-export const updatedUser = async (req, res) => {
+export const updatedUser = async (req, res,next) => {
+  const id = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(id))
+    return next({message:'id is not valid'})
   try {
-    const idParams = req.params.id;
-    const { name, password, email } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      idParams,
-      { name, password, email },
-      { new: true }
-    );
+    if (req.file) 
+      req.body.profileImage = req.file.originalname;
+      
+    const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
     if (!updatedUser) {
-      res.status(404).send('User not found...');
-      return;
+      return next({message:'user not found ',status:404})
     }
-    res.status(200).send(updatedUser);
+    res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error updating user');
-  }
-};
-
-export const updateUserProfileImage = async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const profileImage = req.file;
-
-    if (!profileImage) {
-      return res.status(400).send('No file uploaded.');
-    }
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send('User not found.');
-    }
-
-    // מחיקה של התמונה הישנה אם קיימת
-    if (user.profileImage) {
-      const oldImagePath = path.join('uploads', path.basename(user.profileImage));
-      fs.unlink(oldImagePath, (err) => {
-        if (err) console.error('Failed to delete old image:', err);
-      });
-    }
-
-    user.profileImage = `uploads/${profileImage.filename}`;
-    await user.save();
-
-    res.status(200).send('Profile image updated successfully!');
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Error updating profile image.');
+    next({message:err.message,status:500})
   }
 };
 

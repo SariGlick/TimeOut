@@ -1,13 +1,9 @@
-.start {
-    margin-bottom: 100px;
-}
-
 .submit {
     background-color: white; 
     color: black !important; 
     
     &:disabled {
-      background-color: #ccc; // Change background to gray when disabled
-      color: #666; // Change text color to a darker shade when disabled
+      background-color: #ccc;
+      color: #666; 
     }
   }
