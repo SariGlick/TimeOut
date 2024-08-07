@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ProfileActions from '../../src/components/profileComponents/ProfileActions';
+import ProfileActions from '../../../src/components/profileComponents/ProfileActions.jsx';
+import '@testing-library/jest-dom';
 
 describe('ProfileActions', () => {
     const handleSave = jest.fn();
@@ -17,9 +18,15 @@ describe('ProfileActions', () => {
         expect(screen.getByText('Cancel')).toBeInTheDocument();
     });
 
-    test('renders Delete button', () => {
+    test('renders Delete Profile button', () => {
         render(<ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />);
-        expect(screen.getByText('Delete')).toBeInTheDocument();
+        expect(screen.getByText('Delete Profile')).toBeInTheDocument();
+    });
+
+    test('calls handleDelete on Delete Profile button click', () => {
+        render(<ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />);
+        fireEvent.click(screen.getByText('Delete Profile'));
+        expect(handleDelete).toHaveBeenCalled();
     });
 
     test('calls handleSave on Save button click', () => {
@@ -32,16 +39,5 @@ describe('ProfileActions', () => {
         render(<ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />);
         fireEvent.click(screen.getByText('Cancel'));
         expect(handleClose).toHaveBeenCalled();
-    });
-
-    test('calls handleDelete on Delete button click', () => {
-        render(<ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />);
-        fireEvent.click(screen.getByText('Delete'));
-        expect(handleDelete).toHaveBeenCalled();
-    });
-});
-describe('Profile Actions Tests', () => {
-    test('sample test', () => {
-        expect(true).toBe(true);
     });
 });

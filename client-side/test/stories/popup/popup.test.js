@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import SimplePopup from '../../../src/stories/popup/popup';
+import '@testing-library/jest-dom';
 
 test('renders the SimplePopup component and toggles the popup', () => {
   const customMessage = 'Hello, this is a custom message!';
