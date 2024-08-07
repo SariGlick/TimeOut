@@ -27,7 +27,6 @@ app.use('/websites',websitesRouter);
 app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
 app.use('/users',usersRouter);
-app.use('/activeProfile',profilesRouter)
 app.use(pageNotFound);
 app.use(serverErrors)
 

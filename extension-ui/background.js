@@ -83,7 +83,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 
 chrome.tabs.onCreated.addListener((tab) => {
-  fetch('http://localhost:3000/activeProfile/activeProfile', {
+  fetch('http://localhost:3000/profiles/activeProfile', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
