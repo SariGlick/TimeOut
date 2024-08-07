@@ -1,9 +1,6 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
 import Button from '@mui/material/Button';
-
 import './GenericButton.scss';
 
 const GenericButton = ({className, label, onClick, size = "medium", disabled = false})=>{
@@ -14,6 +11,9 @@ const GenericButton = ({className, label, onClick, size = "medium", disabled = f
             onClick={onClick}
             size={size}
             disabled={disabled}
+            
+            color="primary"
+
             >
             {label}
             </Button>

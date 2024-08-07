@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-$color-border: rgb(61, 192, 155);
-$color-border-hover: rgb(45, 158, 126);
-$color-error: red;
-$color-black: black;
+@import './style.scss';
 
 .generic-input {
   .MuiOutlinedInput-root {
@@ -28,12 +24,12 @@ $color-black: black;
     }
 
     &.Mui-disabled {
-      opacity: 0.7; 
-      cursor: not-allowed; 
+      opacity: 0.7;
+      cursor: not-allowed;
 
       input {
-        color: rgba($color-black, 0.7); 
-        pointer-events: none; 
+        color: rgba($color-black, 0.7);
+        pointer-events: none;
       }
     }
 
@@ -75,4 +71,41 @@ $color-black: black;
   }
 }
 
+.file-upload {
+  display: inline-block;
 
+  .generic-input-file {
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: $color-border;
+    border-width: 1px;
+    background-color: $color-border ;
+    color: $color-black;
+    font-family: 'Montserrat', sans-serif;
+
+    &:hover {
+      box-shadow: 0 0 5px rgba($color-border, 0.5);
+      background-color: $color-border-hover ;
+      transition: color 0.3s ease;
+
+    }
+
+    &.Mui-disabled,
+    &[aria-disabled='true'] {
+      opacity: 0.7;
+      cursor: not-allowed;
+      pointer-events: auto;
+
+    }
+
+    #hidenInput {
+      clip: rect(0 0 0 0);
+      height: 1;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 1;
+    }
+  }
+}

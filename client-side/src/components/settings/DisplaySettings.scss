@@ -1,0 +1,20 @@
+.display-settings {
+    .select-container {
+      margin-bottom: 20px;
+      
+      .select-theme,
+      .select-notifications-location {
+        width: 210px;
+        
+        .select-dropdown {
+          width: 100%;
+        }
+  
+        .select-label {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+  
