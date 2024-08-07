@@ -12,7 +12,7 @@ function App() {
     <Provider store={store}>
       <HashRouter>
         <Routes>
-
+           {/* TODO Enter the real routes */}
           <Route path="/" element={<Layout />}>
             <Route index element={<h1>home</h1>} />
             <Route path="home" element={<h1>home</h1>} />
