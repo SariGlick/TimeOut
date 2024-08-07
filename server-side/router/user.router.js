@@ -13,7 +13,7 @@ usersRouter.delete('/:id', deleteUser);
 usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 usersRouter.get('/getByEmail/:email', getByEmail);
 usersRouter.get('/getCode/:email/:password', getCode);
-usersRouter.get("/getUserByGoogleAccount/:token/:email", getUserByGoogleAccount)
+usersRouter.get("/getUserByGoogleAccount/:email", getUserByGoogleAccount)
 
 export default usersRouter;
 

@@ -56,6 +56,7 @@ export const updatedUser = async (req, res,next) => {
 export const getUserByGoogleAccount =async (req, res) =>{
   const clientId = process.env.CLIENT_ID;
   const secretCode = process.env.SECRET_CODE;
+  const token=req.header
   const user = getByEmail1 ( req.params.email);
   if (user)
     return res.status(200).send(user);
@@ -103,7 +104,7 @@ export const getUserByGoogleAccount =async (req, res) =>{
           }
       };
   export const getCode = async (req, res)=>{
-    const email=req.params.email;
+    const {email}=req.params.email;
     const password= req.params.password;
     try{
       const user = await getByEmail1( email);
