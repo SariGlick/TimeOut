@@ -10,7 +10,6 @@ import usersRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
 
-
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
@@ -30,6 +29,7 @@ app.use('/vistedWebsites',visitedWebSitesRouter);
 app.use('/users',usersRouter);
 app.use(pageNotFound);
 app.use(serverErrors)
+
 let port= process.env.PORT;
 
 app.listen(port,()=>{
