@@ -1,0 +1,64 @@
+
+@import '../variables.scss';
+
+
+.wrapper {
+    background-color: #ffffff; 
+    padding: 12px;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    width: 220px; 
+    border-radius: 10px; 
+    border: 1px solid #e0e0e0; 
+   
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+
+.MuiListItem-root {
+    background-color: #ffffff; 
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0; 
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); 
+    transition: background-color 0.3s, box-shadow 0.3s;
+
+    &:hover {
+        background-color: #f7f7f7; 
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+}
+
+
+.message-text {
+    font-family: 'Nanum Gothic', sans-serif;
+    font-size: 14px;
+    color: $primary-color; 
+    margin: 0; 
+}
+
+
+.unread {
+    font-weight: 600; 
+    background-color: #f9f9f9; 
+}
+
+
+.read {
+    color: #888888; 
+}
+
+// עיצוב עבור אייקון התגובה
+.MuiIconButton-root {
+    .MuiSvgIcon-root {
+        color: #333333; /* צבע אפור כהה לאייקון */
+        transition: color 0.3s;
+
+        &:hover {
+            color: #000000; /* גוון כהה יותר של אפור בעת ריחוף */
+        }
+    }
+}
