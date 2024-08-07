@@ -13,15 +13,16 @@ const user = {
     "profiles": [],
     "profileImage": "profile.jpg",
     "preference": {
-      "sendNotificationTime": 30,
-      "soundVoice": "alertSound.mp3",
-      "_id": "66930c2e2aad987e24078e12",
-      "emailFrequency": "weekly",
-      "timeZone": "UTC",
-      "language": "he",
-      "dateFormat": "DD-MM-YYYY",
-      "displayIncomeMessages":false,
-      "displayBrowsingTimeLimit":false
+
+        "_id": "66930c2e2aad987e24078e12",
+        "emailFrequency": "weekly",
+        "timeZone": "US/Central",
+        "language": "he",
+        "sendNotificationTime": 30,
+        "soundVoice": "alertSound.mp3",
+        "dateFormat": "DD-MM-YYYY",
+        "displayBrowsingTimeLimit": true,
+        "displayIncomeMessages": true
     }
   }
 export const router = createBrowserRouter([

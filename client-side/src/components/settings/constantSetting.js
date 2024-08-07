@@ -1,7 +1,7 @@
 const LABELS = {
   SEND_PREFERENCE: 'send preferences',
   CHANGE_RINGTONE: 'change-ringtone',
-  SELECT_LANGUAGES: 'select-language',
+  SELECT_LANGUAGES: 'select language',
   CHANGE_NOTIFICATION_TIME: 'change-notification-time',
   ACCOUNT: 'account',
   NOTIFICATIONS: 'Notifications',

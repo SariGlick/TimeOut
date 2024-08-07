@@ -107,6 +107,7 @@ const Notifications = ({ currentUser , onUpdate}) => {
   );
 };
 Notifications.propTypes = {
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired
 }
 export default Notifications;

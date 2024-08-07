@@ -87,6 +87,7 @@ const Preferences = ({ currentUser, onUpdate}) => {
   )
 };
 Preferences.propTypes = {
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired
 }
 export default Preferences;
