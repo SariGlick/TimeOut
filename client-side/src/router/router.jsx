@@ -1,11 +1,35 @@
 import React from "react";
-import {createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
+import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
-export  const router = createBrowserRouter([
+const user = {
+    "_id": "66940b051ccb2852370d5a17",
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "password": "securePassword123",
+    "visitsWebsites": [],
+    "profiles": [],
+    "profileImage": "profile.jpg",
+    "preference": {
+
+        "_id": "66930c2e2aad987e24078e12",
+        "emailFrequency": "weekly",
+        "timeZone": "US/Central",
+        "language": "en",
+        "sendNotificationTime": 30,
+        "soundVoice": "alertSound.mp3",
+        "dateFormat": "DD-MM-YYYY",
+        "displayBrowsingTimeLimit": true,
+        "displayIncomeMessages": true
+    }
+  }
+
+export const router = createBrowserRouter([
+ 
     {
         path: '',
-        element: <Layout/>,
+        element: <Layout />,
         children: [
             {
                 path: '/',
@@ -17,8 +41,13 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
-                element:<ProfileList/>
+                element: <ProfileList />
+            },
+            {
+                path: '/settings',
+                element: <Settings user={user}/>
             }
         ]
     },
+    
 ])

@@ -1,10 +1,9 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
 
-
 export const getAllProfiles = async (req, res, next) => {
     try {
-        const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
+        const profiles = await Profiles.find().populate('limitedWebsites.websiteId').select('-__v');
         res.json(profiles);
     } catch (err) {
         next({message:err.message,status:500})
@@ -71,7 +70,3 @@ export const deleteProfile = async (req, res, next) => {
          next({message:err.message,status:500});
     }
 };
-
-
-
-
