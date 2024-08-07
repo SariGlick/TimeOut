@@ -20,17 +20,23 @@ const MAIN_TITLE = {
 
 const TITLES = {
   SELECT_EMAIL_FREQUENCY: 'Select Email Frequency',
+  SELECT_THEME: 'Select Theme',
 };
 const LABELS = {
   UPDATE_USER_SETTINGS: 'Update User Settings',
   SIGN_UP:'sign up',
   ADD_IMAGE: 'add image',
   UPLOAD_IMAGE: 'upload image',
+  THEME: 'Theme',
 };
 const LANGUAGE = {
   en: 'english',
   he: 'עברית',
   es: 'española'
+}
+const TEHEMES = {
+  LIGHT: 'light',
+  DARK: 'dark',
 }
 const CONSTANTS = {
   EMAIL_FREQUENCY_ENUM,
@@ -39,6 +45,7 @@ const CONSTANTS = {
   TITLES,
   LABELS,
   LANGUAGE,
+  TEHEMES,
 };
 
 export default CONSTANTS;

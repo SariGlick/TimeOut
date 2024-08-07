@@ -5,18 +5,16 @@ import PropTypes from 'prop-types';
 import { OPTION_SELSCT } from './select.constat';
 import './select.scss';
 
-
 const Select = ({
   className,
   options = OPTION_SELSCT,
   onChange = () => {},
   title,
   size = 'large',
-
   widthOfSelect, 
   value
 }) => {
-  return ( 
+  return (
     <div className='selectWrapper'>
       <Box>
         <FormControl size={size} variant="outlined">
@@ -36,10 +34,8 @@ const Select = ({
         </FormControl>
       </Box>
     </div>
-    
   );
 };
-
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.any.isRequired,
@@ -49,7 +45,6 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
-
   className: PropTypes.string.isRequired,
   widthOfSelect: PropTypes.string,
   value: PropTypes.any.isRequired

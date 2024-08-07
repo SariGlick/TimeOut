@@ -1,3 +1,8 @@
 node_modules/
+<<<<<<< HEAD
 uploads/*
 !uploads/.gitkeep
+=======
+!uploads/.gitkeep
+
+>>>>>>> 34a29d06bd1f23bf148f5759a584a6617abcef17

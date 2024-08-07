@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const url = process.env.REACT_APP_SERVER_URL;
+dotenv.config();
+const url = process.env.REACT_APP_BASE_URL;
+
 
 export async function handleGet(path) {
     const response = await axios.create({ baseURL: url }).get(path);

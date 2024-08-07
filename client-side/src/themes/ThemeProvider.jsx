@@ -1,4 +1,4 @@
-import React, { createContext, useMemo, useState, useContext , useEffect  } from 'react';
+import React, { createContext, useMemo, useState, useContext, useEffect } from 'react';
 import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import { lightTheme, darkTheme } from './themes';
 
@@ -12,8 +12,8 @@ export const ThemeProvider = ({ children }) => {
 
   const themeMode = useMemo(
     () => ({
-      toggleTheme: () => {
-        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+      toggleTheme: (selectedTheme) => {
+        setTheme(selectedTheme);
       },
       currentTheme: theme,
     }),
@@ -24,11 +24,11 @@ export const ThemeProvider = ({ children }) => {
     document.body.dataset.theme = theme;
   }, [theme]);
 
-  const currentTheme = theme === 'light' ? lightTheme : darkTheme;
+  const currentThemeObject = theme === 'light' ? lightTheme : darkTheme;
 
   return (
     <ThemeContext.Provider value={themeMode}>
-      <MUIThemeProvider theme={currentTheme}>{children}</MUIThemeProvider>
+      <MUIThemeProvider theme={currentThemeObject}>{children}</MUIThemeProvider>
     </ThemeContext.Provider>
   );
 };
