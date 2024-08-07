@@ -2,7 +2,9 @@ import nodemailer from 'nodemailer';
 import Bottleneck from 'bottleneck';
 import retry from 'async-retry';
 import dotenv from 'dotenv';
+
 dotenv.config();
+
 let transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -26,8 +28,8 @@ const validateEmail = (email) => {
 };
 
 const sendEmail = async (email) => {
+  validateEmail(email);
   try {
-    validateEmail(email);
     await retry(async () => {
       await transporter.sendMail({
         to: email.to,
@@ -42,6 +44,7 @@ const sendEmail = async (email) => {
     });
   } catch (error) {
     console.error(`Failed to send email to ${email.to}:`, error);
+    throw error;  // Re-throw the error to be caught by the test
   }
 };
 
