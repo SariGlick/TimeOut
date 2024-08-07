@@ -14,6 +14,9 @@ function App() {
       <Provider store={store}>
         <Footer />
       </Provider>
+      <OAuthProvider>
+<GoogleLogin></GoogleLogin>
+</OAuthProvider>
     
     </>
   );
