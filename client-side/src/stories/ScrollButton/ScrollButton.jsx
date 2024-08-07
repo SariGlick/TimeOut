@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import GenericButton from "../Button/GenericButton";
 import "./ScrollButton.scss";
 
+const SCROLL_TO_TOP_TEXT = "Scroll to top"
 const ScrollButton = () => {
     const [showButton, setShowButton] = useState(true); 
 
@@ -28,7 +29,7 @@ const ScrollButton = () => {
 
     return (
         <div className={`scroll-button ${showButton ? 'show' : 'hide'}`}>
-            <GenericButton onClick={scrollToTop} className="myBtn" label="↑" size="large">Top</GenericButton>
+            <GenericButton onClick={scrollToTop} className="myBtn" label={SCROLL_TO_TOP_TEXT} size="large">{SCROLL_TO_TOP_TEXT}</GenericButton>
         </div>
     );
 };
