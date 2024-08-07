@@ -30,9 +30,10 @@ export default function GLogin1() {
 
   const GLogin = async (user) => {
     try {
-      const response = await getUserByGoogleAccount(token, email);
       const { email, token } = user;
-      alert(response)
+      console.log(token)
+      const response = await getUserByGoogleAccount(token, email);
+      
       if (response) {
         setUserData({
           ...user,
