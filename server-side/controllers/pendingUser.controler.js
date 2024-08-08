@@ -3,7 +3,7 @@ import PendingUsers from '../models/pendingUser.model.js';
 
 export const getAllPendingUsers = async (req, res, next) => {
     try {
-        const pendingUsers = await PendingUsers.find().populate('userID').select('-__v');
+        const pendingUsers = await PendingUsers.find().populate('PendingUserID').select('-__v');
         res.json(pendingUsers);
     } catch (err) {
         next({ message: err.message, status: 500 });
@@ -30,7 +30,7 @@ export const getPendingUserById = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return next({ message: 'ID is not valid', status: 400 });
     try {
-        const pendingUser = await PendingUsers.findById(req.params.id).populate('userID').select('-__v');
+        const pendingUser = await PendingUsers.findById(req.params.id).populate('PendingUserID').select('-__v');
         if (!pendingUser) {
             return next({ message: 'Pending user was not found ', status: 404 });
         }

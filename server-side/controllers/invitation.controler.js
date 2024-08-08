@@ -3,7 +3,7 @@ import Invitations from '../models/invitation.model.js';
 
 export const getAllInvitations = async (req, res, next) => {
     try {
-        const invitations = await Invitations.find().populate('invitedUserID profileID').select('-__v');
+        const invitations = await Invitations.find().populate('inviterID invitedUserID profileID').select('-__v');
         res.json(invitations);
     } catch (err) {
         next({ message: err.message, status: 500 });
@@ -29,7 +29,7 @@ export const getInvitationById = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return next({ message: 'ID is not valid', status: 400 });
     try {
-        const invitation = await Invitations.findById(req.params.id).populate('invitedUserID profileID').select('-__v');
+        const invitation = await Invitations.findById(req.params.id).populate('inviterID invitedUserID profileID').select('-__v');
         if (!invitation) {
             return next({ message: 'Invitation was not found ', status: 404 });
         }
