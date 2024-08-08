@@ -9,6 +9,7 @@ import './App.scss';
 
 function App() {
   return (
+
     <>
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
