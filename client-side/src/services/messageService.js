@@ -1,8 +1,8 @@
-import axiosInstance from '../axios/axios.js';
+import { handleGet, handlePost, handlePut, handleDelete } from '../axios/middleware.js';
 
 const updateMessageStatus = async (message, newReadStatus) => {
   try {
-    const response = await axiosInstance.put('/messages/updateStatus', {
+    const response = await handlePut('/messages/updateStatus', {
       id: message.id,
       read: newReadStatus
     });
@@ -14,4 +14,14 @@ const updateMessageStatus = async (message, newReadStatus) => {
   }
 };
 
-export { updateMessageStatus };
+const deleteMessageById = async (messageId) => {
+  try {
+    const response = await handleDelete(`/messages/${messageId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting message:', error);
+    throw error;
+  }
+};
+
+export { updateMessageStatus, deleteMessageById };
