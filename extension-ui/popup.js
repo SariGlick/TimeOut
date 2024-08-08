@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var enterSite = document.getElementById('enterSite');
 
   enterSite.addEventListener('click', function () {
-   //TODO change address to be according to docker-file
-    chrome.tabs.create({ url: 'http://localhost:3000/home' });
+    //TODO Insert a folder-client-side inside a folder extension-ui
+    chrome.tabs.create({ url: chrome.runtime.getURL('client-side/dist/index.html') });
   });
 
   blockSitesBtn.addEventListener('click', function () {

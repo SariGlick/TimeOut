@@ -25,6 +25,6 @@
     "48": "images/icon48.png"
 },
    "web_accessible_resources": 
-   [{"resources": ["oops.html"],
+   [{"resources": ["oops.html","client-side/dist/index.html"],
     "matches": ["<all_urls>"]}]
 }
