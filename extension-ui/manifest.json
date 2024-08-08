@@ -8,11 +8,14 @@
     "scripting",
     "webNavigation",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "alarms",
+     "notifications"
   ],
   "host_permissions": [
     "http://*/*",
-    "https://*/*"
+    "https://*/*",
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
@@ -20,6 +23,9 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "icons": {
+    "48": "images/icon48.png"
+},
    "web_accessible_resources": 
    [{"resources": ["oops.html"],
     "matches": ["<all_urls>"]}]

@@ -11,9 +11,9 @@ function App() {
   return (
 
     <>
-     <RouterProvider router={router} />
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
+      <RouterProvider router={router} />
         <Footer />
         </Provider>
     </SnackbarProvider>
