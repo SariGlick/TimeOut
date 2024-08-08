@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import ProfileActions from '../../../src/components/profileComponents/ProfileActions.jsx';
+import ProfileActions from '../../../src/components/profileComponents/profileActions.jsx';
 import '@testing-library/jest-dom';
 
 describe('ProfileActions', () => {
