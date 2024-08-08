@@ -2,7 +2,7 @@ import axiosInstance from '../axios/axios.js';
 
 const updateMessageStatus = async (message, newReadStatus) => {
   try {
-    const response = await axiosInstance.post('/messages/updateStatus', {
+    const response = await axiosInstance.put('/messages/updateStatus', {
       id: message.id,
       read: newReadStatus
     });

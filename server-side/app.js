@@ -9,13 +9,13 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
-import  messageRouter from './router/message.router.js';
-
+import MessageRouter from './router/message.router.js';
+import messageTypeRouter from './router/messageType.router.js';
 
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
-app.use(morgan('dev'));//הדפסת המידע של כל הבקשה 
+app.use(morgan('dev'));
 app.use(cors());
 
 dotenv.config();
@@ -30,6 +30,8 @@ app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
 app.use('/messages',messageRouter);
 app.use('/users',usersRouter);
+app.use('/message',MessageRouter);
+app.use('/messageType',messageTypeRouter);
 app.use(pageNotFound);
 app.use(serverErrors)
 let port= process.env.PORT;

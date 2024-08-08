@@ -1,11 +1,13 @@
 import  express from 'express';
-import  upload from '../middleware/uploadFiles.js';
-import updateMessageStatus  from '../controllers/messagesController.js';
 
-const messageRouter=express.Router();
+import { getMessages,getMessageById,addMessage, updateMessage, deleteMessage,getMessagesByUserId } from '../controllers/message.controller.js';
+const MessageRouter=express.Router();
 
-messageRouter.put('/',updateMessageStatus);
+MessageRouter.get('/',getMessages);
+MessageRouter.get('/:id', getMessageById);
+MessageRouter.get('/user/:userId',getMessagesByUserId );
+MessageRouter.post('/',addMessage);
+MessageRouter.put('/:id',updateMessage);
+MessageRouter.delete('/:id',deleteMessage);
 
-
-
-export default messageRouter;
+export default MessageRouter;
