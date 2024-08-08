@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import { TextField, InputAdornment } from '@mui/material';
-import '../GenericInput/genericInput.scss';
+//import '../GenericInput/genericInput.scss';
 
 const GenericInput = ({ 
   label, 
