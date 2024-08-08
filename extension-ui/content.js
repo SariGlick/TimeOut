@@ -1,18 +1,25 @@
 let blockedSitesCache = null;
+let allowedSitesCache = null;
+let isBlackList = true;
 
-function initializeBlockedSitesCache(callback) {
-  chrome.storage.local.get("blockedSites", (data) => {
+function initializeCache(callback) {
+  chrome.storage.local.get(["blockedSites", "allowedSites", "isBlackList"], (data) => {
     blockedSitesCache = data.blockedSites || [];
+    allowedSitesCache = data.allowedSites || [];
+    isBlackList = data.isBlackList !== undefined ? data.isBlackList : true;
     if (callback) callback();
   });
 }
-
-initializeBlockedSitesCache(() => {
+initializeCache(() => {
   const hostname = window.location.hostname.toLowerCase();
-  const domain = hostname.split(".")[1];
-  if (blockedSitesCache && blockedSitesCache.includes(domain)) {
-    window.location.href = chrome.runtime.getURL('oops.html');
+
+  if (isBlackList) {
+    if (blockedSitesCache && blockedSitesCache.includes(hostname)) {
+      window.location.href = chrome.runtime.getURL('oops.html');
+    }
+  } else {
+    if (allowedSitesCache && !(allowedSitesCache.includes(hostname))) {
+      window.location.href = chrome.runtime.getURL('oops.html');
+    }
   }
 });
-
-
