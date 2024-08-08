@@ -17,7 +17,7 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
-                element:<ProfilePageComponent  userId = {'6698da056e5c07ebd3c11ec1'}/>
+                element:<ProfilePageComponent  userId = {'66a0ccd1649ed11c91d9b688'}/>
             }
         ]
     },

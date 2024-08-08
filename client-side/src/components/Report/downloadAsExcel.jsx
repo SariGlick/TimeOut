@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { saveAs } from 'file-saver';
 import * as XLSX from 'xlsx';
-import GenericButton from '../stories/Button/GenericButton';
+import GenericButton from '../../stories/Button/GenericButton';
 
 const downloadExcel = (data, sheetName, fileName) => {
   const workbook = XLSX.utils.book_new();
@@ -16,7 +16,7 @@ const downloadExcel = (data, sheetName, fileName) => {
 const DownloadAsExcel = ({ data, sheetName = 'Browsing Data', fileName = 'browsing_data.xlsx' }) => {
   return (
     <div>
-      <GenericButton onClick={() => downloadExcel(data, sheetName, fileName)}>Download as Excel</GenericButton>
+      <GenericButton label='Download as Excel' className="profile-list-button" onClick={() => downloadExcel(data, sheetName, fileName)}></GenericButton>
     </div>
   );
 };

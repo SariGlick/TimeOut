@@ -18,6 +18,10 @@ import TimerActivationButton from './timerActivation.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
+//
+import DownloadAsExcel from '../Report/downloadAsExcel.jsx'; // Import the DownloadAsExcel component
+// import FileUpload from './FileUpload.jsx';
+// import { uploadDataToServer } from '../../services/profileService.js';
 
 const ProfilePageComponent = ({ userId }) => {
   const dispatch = useDispatch();
@@ -278,6 +282,42 @@ const ProfilePageComponent = ({ userId }) => {
     return { headers, rows };
   };
 
+  //
+
+  const formatProfileDataForExcel = (profile) => {
+    if (!profile || !profile.listWebsites || profile.listWebsites.length === 0) {
+      return [];
+    }
+   // Profile-level data
+   const profileData = {
+    'Profile Name': profile.profileName,
+    'Status Blocked Sites': profile.statusBlockedSites,
+    'Start Time': profile.timeProfile.start,
+    'End Time': profile.timeProfile.end,
+    
+  };
+   // Map websites to create website-level data
+   const websiteData = profile.listWebsites.map(website => ({
+    'Website Name': website.websiteId.name,
+    'Website URL': website.websiteId.url,
+    'Website Status': website.status,
+    'Limited Minutes': website.limitedMinutes,
+  }));
+
+  // Return an array with the profile-level data and the website-level data
+  return [profileData, ...websiteData];
+};
+
+  const formattedData = selectedProfile ? formatProfileDataForExcel(selectedProfile) : [];
+
+  //  const handleFileUpload = async (data) => {
+  //     try {
+  //       await uploadDataToServer(data);
+  //       alert('Data successfully uploaded!');
+  //     } catch (error) {
+  //       alert('Error uploading data: ' + error.message);
+  //     }
+  //   };
   return (
     <div className="profile-list-container">
       <div className="profile-list-select-wrapper">
@@ -328,8 +368,20 @@ const ProfilePageComponent = ({ userId }) => {
           <h2>Please select a profile</h2>
         </div>
       )}
-
+      {/* // */}
+{selectedProfile && (
+  <div className="export-section">
+    {/* <h3>Export Profile Data</h3> */}
+    <DownloadAsExcel
+      data={formattedData}
+      sheetName={`${selectedProfile.profileName} Profile`}  
+      fileName={`${selectedProfile.profileName}_profile.xlsx`} 
+    />
+  </div>
+)}
+{/* <FileUpload onFileUpload={handleFileUpload} /> */}
     </div>
+    
   );
 };
 export default ProfilePageComponent;
