@@ -4,7 +4,7 @@ import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import Preferences from './Preferences.jsx';
-import AccountTab from './AccountTab.jsx';
+import AccountTab from './accountTab.jsx';
 import Notifications from './Notifications.jsx';
 import CONSTANTS from './constantSetting.js'
 import { useSnackbar } from 'notistack';
