@@ -1,0 +1,82 @@
+@import '../stories/variables';
+
+.login-container {
+  max-width: 400px;
+  margin: 4% auto 0;
+  padding: 3%;
+  border: 2px solid $light-black;
+  border-radius: 1%;
+  box-shadow: 0 4px 8px $light-black;
+  text-align: right;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  h2 {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .form-group {
+    margin-bottom: 3%;
+    position: relative;
+  }
+
+  button {
+    margin-top: 7%;
+    width: 100%;
+    padding: 5%;
+    cursor: pointer;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+
+  .alert-error {
+    width: 100%;
+    margin-top: 3%;
+    text-align: center;
+    margin-bottom: -10%;
+  }
+
+  .icon {
+    margin-bottom: 5%;
+    margin-left: 33%;
+    width: 4%;
+    height: 1%;
+
+  }
+
+  .email {
+    width: 85%;
+  }
+
+  .signup-link {
+    margin-bottom: 14%;
+    text-align: center;
+    font-size: 100%;
+  }
+
+  .password {
+    display: flex;
+    align-items: center;
+  }
+
+  .signup-text {
+    cursor: pointer;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .login-container {
+    margin: 15% auto 0;
+  }
+}

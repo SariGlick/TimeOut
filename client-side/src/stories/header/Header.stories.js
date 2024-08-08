@@ -4,8 +4,8 @@ import Header from './header';
 export default {
     title:"header",
     component:"Header"
-}
+};
 
-const Template=(args)=><Header/>
+const Template=()=><Header/>;
 
-export const clasicHeader=Template.bind({})
+export const clasicHeader=Template.bind({});

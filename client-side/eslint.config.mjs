@@ -13,6 +13,7 @@ export default [
   {
     rules: {
       'semi': ['error', 'always'], 
+       "node":true
       //'indent': ['error', 2],     // enforce 2 spaces for indentation
     }
   }

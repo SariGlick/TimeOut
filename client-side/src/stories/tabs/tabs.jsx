@@ -44,6 +44,3 @@ LabTabs.propTypes = {
   nav:PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-LabTabs.defaultProps = {
-  nameOfClass: "every-tabs"
-};

@@ -1,5 +1,4 @@
 import React from "react";
-
 import GenericButton from './GenericButton';
 
 
@@ -21,12 +20,12 @@ Primary.args ={
     className:"primary",
     label: "primary button",
     size: "medium"
-}
+};
 
 export const Secondary = Template.bind({});
 Secondary.args = {
     className: "secondary",
     label: "secondary button",
     size: "medium"
-}
+};
 

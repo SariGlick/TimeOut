@@ -6,7 +6,7 @@ export const getAllWebsites=async(req,res,next)=>{
      const allWebSites= await Websites.find().select('-__v');
      return res.json(allWebSites);
     } catch (error) {
-        next({message:error.message});
+        next({message:error.message,status:500});
     }
    
 }
@@ -19,7 +19,7 @@ export const getWebsiteById=async(req,res,next)=>{
     return res.json(websitesBYId);
 
     } catch (error) {
-       return  next({message:error.message});
+       return  next({message:error.message,status:500});
     }
     
 }
@@ -28,23 +28,24 @@ export const UpdateWebSite=async(req,res,next)=>{
     if(!mongoose.Types.ObjectId.isValid(id))
         return next({message:'id is not valid'});
     try {
-        const prevWebSites=await Websites.findById(id);
-        if(!prevWebSites)
+        const newWebsite=await Websites.findByIdAndUpdate(id, req.body,{new:true})
+        if(!newWebsite)
             return next({message:'websites is not found !!'})
-         const  newWebsite=await Websites.findByIdAndUpdate(id, req.body,{new:true})
          return res.json(newWebsite).status(201);
     } catch (error) {
-        return next({message:error.message});
+        return next({message:error.message,status:500});
     }
 }
+
 export const addWebSite=async(req,res,next)=>{
     try {
         const newWebsite= new Websites(req.body);
+        await newWebsite.validate();
         await newWebsite.save();
         return res.json(newWebsite).status(201);
       
     } catch (error) {
-       return  next({message:error.message});
+       return  next({message:error.message,status:500});
     }
    
 };
@@ -53,13 +54,12 @@ export const deleteWebsite=async(req,res,next)=>{
    if(!mongoose.Types.ObjectId.isValid(id))
       return next({message:'id is not valid'})
     try {
-        const deletedWebsite= await Websites.findById(id);
+        const deletedWebsite= await Websites.findByIdAndDelete(id);
     if(!deletedWebsite)
         return next({message:'website not found'});
-    await Websites.findByIdAndDelete(id);
-    return res.status(204).send();
+    return res.status(204).json({message:'website deleted succesfully'});
     } catch (error) {
-        return next({message: error.message});
+        return next({message: error.message,status:500});
     } 
     
 }

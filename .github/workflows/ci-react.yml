@@ -1,0 +1,54 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - 'name/*'
+  pull_request:
+    branches:
+      - 'name/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Adjust as needed
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests in 'test' directory
+        run: |
+          if [[ -d test ]]; then  # Use double square brackets for security
+            for file in test/*; do
+              if [[ -f "$file" ]]; then
+                npm test "$file"
+              fi
+            done
+          else
+            echo "'test' directory not found. Skipping tests."
+          fi
+
+      - name: Build project
+        run: npm run build
+
+      # Validate branch name
+      - name: Validate branch name
+        run: |
+          echo "Validating branch name..."
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BRANCH_NAME=${{ github.head_ref }}
+          else
+            BRANCH_NAME=${{ github.ref_name }}
+          fi
+          echo "Current branch: $BRANCH_NAME"
+          if [[ ! "$BRANCH_NAME" =~ ^name/[a-zA-Z0-9_-]+$ && "$BRANCH_NAME" != "master" ]]; then
+            echo "Branch name does not follow the required pattern (name/branchname or master)."
+            exit 1
+          fi
+          echo "Branch name is valid."
