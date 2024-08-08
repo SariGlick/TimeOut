@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.div .every-tabs,
+.div .profile-tabs,
+.div .footer-tabs,
+.div .navbar-tabs {
+  background-color: black;
+  color: rgb(103, 252, 210);
+  font-family: "Nanum Gothic", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.div .every-tabs.Mui-selected,
+.div .profile-tabs.Mui-selected,
+.div .footer-tabs.Mui-selected,
+.div .navbar-tabs.Mui-selected {
+  color: rgb(103, 252, 210);
+}
+.div .tabs {
+  background-color: rgb(103, 252, 210);
+}/*# sourceMappingURL=tabs.css.map */

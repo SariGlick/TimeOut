@@ -1,0 +1,20 @@
+@import './variables.scss';
+.MuiAlert-root {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.MuiSnackbar-root .MuiAlert-standardSuccess {
+  background-color: $standardSuccessColor;
+}
+
+.MuiSnackbar-root .MuiAlert-standardError {
+  background-color: $standardErrorColor;
+}
+
+.MuiSnackbar-root .MuiAlert-standardWarning {
+  background-color: $standardWarningColor; 
+}
+
+.MuiSnackbar-root .MuiAlert-standardInfo {
+  background-color: $standardInfoColor; 
+}
