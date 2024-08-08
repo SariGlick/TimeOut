@@ -6,6 +6,7 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
+import DateTimePicker from './components/report';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Provider store={store}>
         <RouterProvider router={router} />
         <Footer />
+        <DateTimePicker/>
       </Provider>
     </SnackbarProvider>
     </>
