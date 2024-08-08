@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, InputAdornment ,styled,Button} from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
-import './genericInput.scss';
+import '../GenericInput/genericInput.scss';
 
 const GenericInput = ({ 
   label, 
-  type = 'text', 
+  type = 'text',
+  name = '', 
   value = '', 
   onChange = () => {}, 
   size = 'medium', 
@@ -30,8 +31,7 @@ const GenericInput = ({
   const handleChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    if(onChange)
-       onChange(newValue);
+    onChange(e);
   };
 
   const handleValidation = (inputValue) => {
@@ -64,38 +64,43 @@ const GenericInput = ({
     <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled} accept={accept}/>
   </Button>
   {error && <div className="helper-text error">{helperText}</div>}
-  </div>) :(<div className="generic-input">
+  </div>) :(
+    <div className="generic-input">
 
-<TextField
-  label={label}
-  type={type}
-  value={inputValue}
-  onChange={handleChange}
-  size={size}
-  error={error}
-  disabled={disabled}
-  helperText={helperText}
-  InputProps={{
-    startAdornment: Icon && (
-      <InputAdornment position="start">
-        <Icon />
-      </InputAdornment>
-    ),
-    ...rest.InputProps,
-  }}
-  style={inputStyle}
-  {...rest}
-/>
+    <TextField
+        label={label}
+        type={type}
+        name={name}
+        value={inputValue}
+        onChange={handleChange}
+        size={size}
+        error={error}
+        disabled={disabled}
+        helperText={helperText}
+        InputProps={{
+          startAdornment: Icon && (
+            <InputAdornment position="start">
+              <Icon />
+            </InputAdornment>
+          ),
+          ...rest.InputProps,
+        }}
+        style={inputStyle}
+        {...rest}
+      />
 </div>)
 }
   </>
 
   )
     
+
 };
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password','file']),
+
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
