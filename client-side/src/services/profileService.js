@@ -9,6 +9,7 @@ export const getAllProfiles = async () => {
         throw err;
     }
 };
+
 export const createProfile = async (profileData) => {
     try {
         const response = await handlePost('/profiles', profileData);
@@ -18,6 +19,7 @@ export const createProfile = async (profileData) => {
         throw err;
     }
 };
+
 export const getProfileById = async (id) => {
     try {
         const response = await handleGet(`/profiles/${id}`);
@@ -27,7 +29,9 @@ export const getProfileById = async (id) => {
         throw err;
     }
 };
-export const updateProfile = async (id, profileData) => {
+
+
+export const updateProfileApi = async (id, profileData) => {
     try {
         const response = await handlePut(`/profiles/${id}`, profileData);
         return response.data;
@@ -36,16 +40,18 @@ export const updateProfile = async (id, profileData) => {
         throw err;
     }
 };
-export const getProfilesByUserId = async (userId) => {
+
+export const getProfilesByUserId = async (id) => {
     try {
-        const response = await handleGet(`/profiles/user/${userId}`);
+        const response = await handleGet(`/profiles/user/${id}`);
         return response.data;
     } catch (err) {
-        console.error(`Error getting profiles for user ${userId}:`, err);
+        console.error(`Error getting profiles for user ${id}:`, err);
         throw err;
     }
 };
-export const deleteProfile = async (id) => {
+
+export const deleteProfileApi = async (id) => {
     try {
         const response = await handleDelete(`/profiles/${id}`);
         return response.data;
@@ -54,3 +60,4 @@ export const deleteProfile = async (id) => {
         throw err;
     }
 };
+

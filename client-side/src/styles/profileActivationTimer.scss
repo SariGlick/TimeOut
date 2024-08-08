@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import '../stories/variables.scss';
+
+
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-time {
+  font-size: 90%;
+  color: $primary-color;
+}
+
+.timer-label {
+  font-size: 60%;
+  margin-top: 4%;
+  color: $secondary-color;
+}
+
+.countdown-circle-timer {
+  stroke-width: 0.25%;
+  size: 6.25%;
+//   trail-color: $standardInfoColor; // Use standard info color for trail
+  
+}

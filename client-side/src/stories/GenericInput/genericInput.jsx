@@ -27,11 +27,11 @@ const GenericInput = ({
     }
   }, [inputValue]);
 
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    onChange(e);
-  };
+const handleChange = (e) => {
+  const newValue = e.target.value;
+  setInputValue(newValue);
+  if (onChange) onChange(e);
+};
 
   const handleValidation = (inputValue) => {
     const validationResult = validation(inputValue);
@@ -55,6 +55,7 @@ const GenericInput = ({
         type={type}
         name={name}
         value={inputValue}
+        name={name}
         onChange={handleChange}
         size={size}
         error={error}
