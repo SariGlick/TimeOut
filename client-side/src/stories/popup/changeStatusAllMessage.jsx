@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { IconButton, Tooltip } from '@mui/material';
 import { CheckCircleOutline, RadioButtonUnchecked } from '@mui/icons-material';
-import './MessageStatusUpdater.scss'; // Import the SCSS file
+import './MessageStatusUpdater.scss';
 
 const MessageStatusUpdater = () => {
     const [hoveredIcon, setHoveredIcon] = useState(null);
 
     const handleUpdateStatus = async (readStatus) => {
-        const response = await fetch('/api/update', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ read: readStatus })
-        });
-
-        const data = await response.text();
-        console.log(data); // Output: 'Status updated successfully'
+        for (const message of messages) {
+            try {
+                await update(message.id, readStatus);
+            } catch (error) {
+                console.error(`Error updating message with id ${message.id}:`, error);
+            }
+        }
     };
 
     return (
