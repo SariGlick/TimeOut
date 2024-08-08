@@ -1,12 +1,31 @@
 import React from "react";
-import {createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
+import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
-export  const router = createBrowserRouter([
+  const user ={
+    _id:'66b0bebd6069279e60d06cc4',
+    "preference": {
+    "timeZone": "UTC",
+    "dateFormat": "DD-MM-YYYY",
+    "displayIncomeMessages": false,
+    "displayBrowsingTimeLimit": false,
+    "_id": "66953d2791606a13857abd26",
+    "emailFrequency": "weekly",
+    "sendNotificationTime": 20,
+    "soundVoice": "alertSound.mp3",
+    "__v": 0,
+    "language": "en"
+  }
+  }
+
+export const router = createBrowserRouter([
+ 
+
     {
         path: '',
-        element: <Layout/>,
+        element: <Layout />,
         children: [
             {
                 path: '/',
@@ -18,7 +37,12 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
-                element:<ProfileList/>
+                element: <ProfileList />
+            },
+            {
+                path: '/settings',
+                element: <Settings user={user}/>
+                // element:<ProfileList/>
             },
             {
                 path: '/login',
@@ -26,4 +50,5 @@ export  const router = createBrowserRouter([
             }
         ]
     },
+    
 ])
