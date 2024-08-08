@@ -20,6 +20,7 @@ const TITLES = {
 const MESSAGES = {
   SUCCESS_UPDATED_SETTINGS: 'Settings updated successfully!',
   ERROR_UPDATE_SETTINGS: 'Failed to update settings. Please try again.',
+  ERROR_UPDATE_USER:'failed update user please try again ',
   INVALID_EMAIL_FREQUENCY: 'Invalid email frequency selected. Please choose a valid option.',
   CONFIRM_LOCATION: 'Allow us to get your location and preferred language for a better experience?',
 };

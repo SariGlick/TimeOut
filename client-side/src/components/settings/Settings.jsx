@@ -9,6 +9,7 @@ import Notifications from './Notifications.jsx';
 import CONSTANTS from './constantSetting.js'
 import { useSnackbar } from 'notistack';
 import { updatePreference } from '../../services/preferenceService.js';
+import {updateUser}  from '../../services/userService.js'
 import './Settings.scss';
 
 const Settings = ({user}) => {
@@ -30,6 +31,7 @@ const Settings = ({user}) => {
 
   const handleFormSubmit = async () => {
     const formData = new FormData();
+    const userFormData= new FormData();
     Object.entries(notificationsData).forEach(([key, value]) => {
       if (key === 'ringtoneFile' && value) {
         formData.append('soundVoice', value);
@@ -46,6 +48,19 @@ const Settings = ({user}) => {
     } catch (error) {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
     }
+    // user update 
+    console.log(currentUser);
+    
+    Object.entries(currentUser).forEach(([key,value])=>{
+        userFormData.append(key,value)
+    })
+    try {
+      await updateUser(user._id,userFormData)
+    } catch (error) {
+      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_USER} type="error" />);
+
+    }
+
   };
 
   return (

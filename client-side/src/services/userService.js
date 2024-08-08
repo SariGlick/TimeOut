@@ -6,7 +6,7 @@ export const getAllUser = async() =>{
         const response =  handleGet(userUrl)
         return response.data;
     } catch (error) {
-       console.error('error geting all user',rror.message);
+       console.error('error geting all user',error.message);
          throw error;
     }
  
