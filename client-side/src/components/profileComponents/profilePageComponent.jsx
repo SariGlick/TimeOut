@@ -320,7 +320,7 @@ const ProfilePageComponent = ({ userId }) => {
             statusOptions={statusOptions}
             addButton={true}
             handleAddRow={handleAddRow}
-            pageSize={5} 
+            pageSize={4} 
           />
         </div>
       ) : (

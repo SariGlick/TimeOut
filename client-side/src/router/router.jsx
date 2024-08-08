@@ -2,6 +2,7 @@ import React from "react";
 import {createBrowserRouter } from "react-router-dom";
 import ProfilePageComponent from "../components/profileComponents/profilePageComponent.jsx";
 import Layout from "./layout.jsx";
+import Login from "../login/Login.jsx";
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -17,7 +18,15 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
+
                 element:<ProfilePageComponent  userId = {'6698da056e5c07ebd3c11ec1'}/>
+
+                
+            },
+            {
+                path: '/login',
+                element: <Login/>
+
             }
         ]
     },
