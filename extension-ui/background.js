@@ -85,7 +85,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 });
-
+importScripts('constants.js');
 let blockedSitesCache = null;
 
 // Initialize cache when the extension is loaded
@@ -180,3 +180,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true; // כדי להורות שהתגובה היא אסינכרונית
   }
 });
+
+function showNotification(site, num, options = {}) {
+  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
+  var notificationOptions = {
+    type: 'basic',
+    iconUrl: options.iconUrl || 'images/icon48.png',
+    title: NOTIFICATION_TITLE,
+    message: message,
+    priority: options.priority || 2
+  };
+  
+  chrome.notifications.create(notificationOptions);
+}
