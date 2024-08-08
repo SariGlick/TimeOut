@@ -1,0 +1,23 @@
+{
+    "welcome":"  {{user-name}} ברוכה הבאה !!",
+    "send preferences":"שינוי העדפות",
+    "change-ringtone":"שנה צליל",
+    "home":"בית",
+    "reports":"דוחות",
+    "statistics":"סטטיסטיקות",
+    "profiles":"פרופילים",
+    "timeout":"פסק-זמן",
+    "sleect-language":"בחר שפה",
+    "change-notification-time":"שנה זמן קבלת התראות",
+    "Account" :"Cuenta",
+    "Notifications" :"התראות",
+    "Preference":"הגדרות אישיות",
+    "Display-Setting" :" הגדרות תצוגה",
+    "Message" :"הודעות",
+    "account":"חשבון",
+    "display-setting":"הגדרות תצוגה",
+    "fotter":"בקרו אותנו  ExtraTech  פותח  עי צות",
+    "settings":"הגדרות",
+    "open-settings":"פתח הגדרות"
+
+}

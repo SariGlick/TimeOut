@@ -1,16 +1,35 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
+
+import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Tooltip,
+  Avatar,
+  Container
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import MessageIcon from './Icon'
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
+
+import './header.scss';
+
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const { t, i18n } = useTranslation();
   const { user } = useSelector(selectAuth); 
+
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -31,6 +50,7 @@ function ResponsiveAppBar() {
   };
 
   return (
+
     <div className='arooundDiv'>
     <AppBar position="static" className='navbar' >
       <Container   maxWidth="xl">
@@ -64,7 +84,7 @@ function ResponsiveAppBar() {
             >
           <LabTabs
           nameOfClass="navbar-tabs"
-          text={["home", "reports", "statistics", "profiles"]}
+          text={[t("home"), t("reports"), t("statistics"), t("profiles")]}
           nav={["/home","/reports","/statistics","/profiles"] }
         />
             </Menu>
@@ -81,7 +101,7 @@ function ResponsiveAppBar() {
           <Box className="middle-side-box">
           <LabTabs
           nameOfClass="navbar-tabs"
-          text={["home", "reports", "statistics", "profiles"]}
+          text={[t("home"), t("reports"), t("statistics"), t("profiles")]}
           nav={["/home","/reports","/statistics","/profiles"] }
         />
           </Box>
@@ -108,8 +128,8 @@ function ResponsiveAppBar() {
             >
                         <LabTabs
           nameOfClass="navbar-tabs"
-          text={['edit user profile','manage notifications']}
-          nav={['/editUserProfile','/manageNotifications'] }
+          text={[t('settings')]}
+          nav={['/settings']}
         />
             </Menu>
           <MessageIcon/>
@@ -120,4 +140,5 @@ function ResponsiveAppBar() {
     </div>
   );
 }
+
 export default ResponsiveAppBar;

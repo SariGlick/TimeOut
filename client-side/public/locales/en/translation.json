@@ -1,0 +1,23 @@
+{
+    "welcome":"bienvenida {{user-name}}",
+    "send preferences":" change setting ",
+    "change-ringtone":"change ringtoe",
+    "home":"Home",
+    "settings":"Settings",
+    "reports":"reports",
+    "statistics":"statistic",
+    "profiles":"profiles",
+    "timeout":"TimeOut",
+    "sleect-language":"sleect language",
+    "change-notification-time":"change notification time",
+    "Acount" :"Acount",
+    "Notifications" :"Notifications",
+    "Preference":"Preference",
+    "Display-Setting" :"Display Setting",
+    "Message" :"Message",
+    "account":"Account",
+    "display-setting":"Display Setting",
+    "fotter":"© Developed by  ExtraTech team. visit us:",
+    "open-settings":"Open settings"
+
+}
