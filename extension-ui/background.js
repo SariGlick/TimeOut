@@ -1,3 +1,4 @@
+importScripts('constants.js');
 let blockedSitesCache = null;
 let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
 let isBlackList = false; 
@@ -103,3 +104,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
 });
+
+function showNotification(site, num, options = {}) {
+  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
+  var notificationOptions = {
+    type: 'basic',
+    iconUrl: options.iconUrl || 'images/icon48.png',
+    title: NOTIFICATION_TITLE,
+    message: message,
+    priority: options.priority || 2
+  };
+  
+  chrome.notifications.create(notificationOptions);
+}
