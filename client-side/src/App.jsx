@@ -1,8 +1,10 @@
+import React from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
+import { SnackbarProvider } from 'notistack';
 import './App.scss';
 import GoogleLogin from './components/Login/GoogleLogin.jsx';
 import OAuthProvider from './components/Login/OAuthProvider.jsx';
@@ -10,14 +12,13 @@ import OAuthProvider from './components/Login/OAuthProvider.jsx';
 function App() {
   return (
     <>
-      <RouterProvider router={router} />
+      <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
+        <RouterProvider router={router} />
         <Footer />
       </Provider>
-      <OAuthProvider>
-<GoogleLogin></GoogleLogin>
-</OAuthProvider>
-    
+    </SnackbarProvider>
+
     </>
   );
 }
