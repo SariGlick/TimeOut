@@ -9,4 +9,3 @@ visitedWebSitesRouter.post('/',createVisitedWebsite)
 visitedWebSitesRouter.put('/:id',updateVisitedWebsite)
 visitedWebSitesRouter.delete('/:id',deleteVisitedWebsite)
 export default visitedWebSitesRouter;
-

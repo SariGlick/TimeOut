@@ -85,5 +85,3 @@ export const updatedUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
-
-
