@@ -1,19 +1,25 @@
 let blockedSitesCache = null;
-let allowedSitesCache = ["https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com%2Fmail%2F&lp=1&hl=en&flowName=GlifWebSignIn&flowEntry=ServiceLogin#identifier","http://localhost:3000","https://github.com","https://monoreposmartax-fronted.onrender.com/clientSearch/clientSearch"];
-let isBlackList = true;
-
+let allowedSitesCache = ["https://chatgpt.com"];
+let isBlackList = false;
 
 function fetchUserData() {
-  fetch('http://localhost:5000/users/me', { 
+  fetch('https://localhost:5000/users/me', { 
     method: 'GET',
     credentials: 'include' 
   })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(data => {
       console.log('User data:', data);
     })
     .catch(error => console.error('Error fetching user data:', error));
 }
+
+
 
 
 chrome.runtime.onStartup.addListener(() => {

@@ -91,9 +91,10 @@ export const signIn = async (req, res, next) => {
           const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
           res.cookie('token', token, {
             httpOnly: true,
-            secure: true,
-            sameSite: 'None'
+            secure: false,
+            sameSite: 'None' // וודא שזה מוגדר נכון
           });
+
           return res.send({ user });
         } else {
           return res.status(401).send({ message: 'Auth Failed' });
@@ -109,23 +110,17 @@ export const signIn = async (req, res, next) => {
 
 
 
+
 export const getUserProfile = async (req, res, next) => {
   try {
     const token = req.cookies.token;
     if (!token) {
       return res.status(401).send({ message: 'No token provided' });
     }
-
     jwt.verify(token, JWT_SECRET, async (err, decoded) => {
       if (err) {
         return res.status(401).send({ message: 'Failed to authenticate token' });
       }
-      console.log('Decoded JWT:', decoded);
-      
-      if (!mongoose.Types.ObjectId.isValid(decoded.id)) {
-        return res.status(400).send({ message: 'ID is not valid' });
-      }
-
       const user = await Users.findById(decoded.id).select('-__v -password');
       if (!user) {
         return res.status(404).send({ message: 'User not found' });
@@ -133,8 +128,6 @@ export const getUserProfile = async (req, res, next) => {
       res.send({ user });
     });
   } catch (error) {
-    console.error('Server Error:', error);
     return next(new Error('Server Error'));
   }
 };
-

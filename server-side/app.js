@@ -1,8 +1,9 @@
 import express from 'express';
+import https from 'https';
+import fs from 'fs';
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import cookieParser from 'cookie-parser';
 import preferencesRouter from './router/preference.router.js';
 import websitesRouter from './router/websites.router.js';
 import profilesRouter from './router/profile.router.js';
@@ -16,21 +17,18 @@ connectMongo();
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
-app.use(cookieParser()); // שימוש ב-cookie-parser
-
-// הגדרות CORS
 const corsOptions = {
-  origin: 'chrome-extension:// bcmdbgmbffljogmenfmblpikdmlfdaca', 
-  credentials: true, 
+  origin: 'chrome-extension://bcmdbgmbffljogmenfmblpikdmlfdaca',
+  credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: ['Content-Type'],
   exposedHeaders: ['set-cookie'],
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.send('welcome to time out');
@@ -45,10 +43,13 @@ app.use('/users', usersRouter);
 app.use(pageNotFound);
 app.use(serverErrors);
 
-let port = process.env.PORT;
+const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(` running at http://localhost:${port}`);
+const options = {
+  key: fs.readFileSync('../mykey.key'),
+  cert: fs.readFileSync('../mycert.crt'),
+};
+
+https.createServer(options, app).listen(port, () => {
+  console.log(`Server running at https://localhost:${port}`);
 });
-
-export default app;

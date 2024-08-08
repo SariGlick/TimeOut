@@ -11,6 +11,7 @@
     "activeTab"
   ],
   "host_permissions": [
+     "https://localhost:5000/*",
     "http://*/*",
     "https://*/*"
   ],
