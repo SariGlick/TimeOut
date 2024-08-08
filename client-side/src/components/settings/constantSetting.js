@@ -12,7 +12,8 @@ const LABELS = {
   SELECT_TIME_ZONE:'Select Time Zone',
   SELECT_DATE_FORMAT:'select date format',
   DISPLAY_INCOME_MESSAGES:'Display notification for income messages',
-  DISPLAY_BROWSING_TIME_LIMIT:'Display browsing time limit notification'
+  DISPLAY_BROWSING_TIME_LIMIT:'Display browsing time limit notification',
+  UPLOAD_IMAGE:'upload-image'
 };
 const TITLES = {
   SELECT_EMAIL_FREQUENCY: 'Select Email Frequency',

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'
+import { selectAuth } from '../../redux/auth/auth.selector';
+import { useSelector } from 'react-redux';
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
@@ -12,16 +14,22 @@ import { updatePreference } from '../../services/preferenceService.js';
 import {updateUser}  from '../../services/userService.js'
 import './Settings.scss';
 
-const Settings = ({user}) => {
+const Settings = () => {
   const {MESSAGES, LABELS } = CONSTANTS;
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-
+  const user = useSelector(selectAuth)
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
   const [currentUser,setCurrentUser]= useState({})
-
-  const preferenceId = user.preference._id;
+ 
+  let preferenceId = ''
+  let userId =''
+  if(user._id)
+  {
+    preferenceId=user.preference._id;
+    userId=user._id
+  }
 
   const elements = [
     <AccountTab onUpdate={setCurrentUser}/>,
@@ -48,14 +56,12 @@ const Settings = ({user}) => {
     } catch (error) {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
     }
-    // user update 
-    console.log(currentUser);
     
     Object.entries(currentUser).forEach(([key,value])=>{
         userFormData.append(key,value)
     })
     try {
-      await updateUser(user._id,userFormData)
+      await updateUser(userId,userFormData)
     } catch (error) {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_USER} type="error" />);
 

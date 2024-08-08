@@ -25,6 +25,8 @@
     "weekly": "semanalmente",
     "monthly": "mensual",
     "yearly": "anual",
-    "Select Time Zone":"Selecciona la zona horaria"
+    "Select Time Zone":"Selecciona la zona horaria",
+    "upload-image":"cargar imagen"
+
 
 }

@@ -7,6 +7,8 @@ import { store } from './redux/store.jsx';
 import Footer from './stories/footer/FooterComponent'
 import { useTranslation } from 'react-i18next';
 import { SnackbarProvider } from 'notistack';
+import { selectAuth } from './redux/auth/auth.selector';
+import { useSelector } from 'react-redux';
 import './App.scss';
 
 
@@ -14,36 +16,19 @@ function App() {
   
 
   const  { i18n } = useTranslation();
-  
+   const user = useSelector(selectAuth)
    useEffect(()=>{
-    const user={
-      "preference": {
-      "timeZone": "UTC",
-      "dateFormat": "DD-MM-YYYY",
-      "displayIncomeMessages": false,
-      "displayBrowsingTimeLimit": false,
-      "_id": "66953d2791606a13857abd26",
-      "emailFrequency": "weekly",
-      "sendNotificationTime": 20,
-      "soundVoice": "seatear.mp3",
-      "__v": 0,
-        "language": "es"
-      }
-    }
-    console.log('user language ' , user.preference.language);
-    
-    i18n.changeLanguage(user.preference.language)
+
+    if(user.preference)
+      i18n.changeLanguage(user.preference.language)
      
    },[])
   return (
 
     <>
-     <RouterProvider router={router} />
-      <SnackbarProvider maxSnack={3}>
-      <Provider store={store}>
+      
+      <RouterProvider router={router} />
         <Footer />
-        </Provider>
-    </SnackbarProvider>
     </>
   );
 }

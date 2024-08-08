@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import GenericButton  from '../../stories/Button/GenericButton.jsx';
+import { selectAuth } from '../../redux/auth/auth.selector';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import './account.scss'
+import CONSTANTS from './constantSetting.js'
+import { Label } from '@mui/icons-material';
 const   AccountTab=({onUpdate})=> {
-  const user = {
-    "_id": "66b0bebd6069279e60d06cc4",
-   "name": "shiraAs",
-   "email": "shiraAs@gmail.com",
-   "password": "$2b$10$MKAPg/ateCM7eGIZvs.sBu9y0EGT1fAIfxyN5Wt9/XYJakt.I9a1.",
-   "googleId": "hghgh677",
-   "profileImage": "snow.jpeg",
- };
- let imagesrc=''
+  
+  const { user } = useSelector(selectAuth); 
+  const {LABELS} =CONSTANTS
+  const {t} =useTranslation();
   const url=process.env.REACT_APP_BASE_URL;
-  if(user.profileImage)
+  let imagesrc=''
+  if(user)
     imagesrc=`${url}/uploads/${user.profileImage}`
   const [imageFile,setImageFile]= useState(null);
   const [preview, setPreview] = useState(imagesrc);
@@ -38,15 +38,11 @@ const   AccountTab=({onUpdate})=> {
     }
   }; 
 
-  const handleUploadPicture = async () => {
-    const formData = new FormData();
-    formData.append('profileImage', imageFile);
-    
-  };
+
   return (
    <div className='account-warper'>
        <div>
-        <GenericInput type="file" accept="image/*" onChange={handleFilePicture} label='upload image' size='small'/>
+        <GenericInput type="file" accept="image/*" onChange={handleFilePicture} label={t(LABELS.UPLOAD_IMAGE)} size='small'/>
         {preview  &&   <div className='profile-picture-container'>            <img src={preview} alt="Profile Preview" className="profile-picture" />
         </div>  }
        </div>
