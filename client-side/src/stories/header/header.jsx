@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import { useTranslation } from 'react-i18next';
 import {
   AppBar,
@@ -14,12 +16,16 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import { selectAuth } from '../../redux/auth/auth.selector';
+
 import './header.scss';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { t } = useTranslation();
+  const { user } = useSelector(selectAuth); 
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -32,6 +38,12 @@ function ResponsiveAppBar() {
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const getAvatarLetter = () => {
+    if (user && user.name) {
+      return user.name.charAt(0).toUpperCase();
+    }
+    return '';
   };
 
   return (
@@ -49,6 +61,7 @@ function ResponsiveAppBar() {
                 color="inherit"
               >
                 <MenuIcon />
+  
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -92,7 +105,7 @@ function ResponsiveAppBar() {
             <Box>
               <Tooltip title={t('open-settings')}>
                 <IconButton onClick={handleOpenUserMenu}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar>{getAvatarLetter()}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

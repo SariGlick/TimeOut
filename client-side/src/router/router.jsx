@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
 import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
+import Login from "../login/Login.jsx";
   const user ={
     _id:'66b0bebd6069279e60d06cc4',
     "preference": {
@@ -21,6 +22,7 @@ import Layout from "./layout.jsx";
 
 export const router = createBrowserRouter([
  
+
     {
         path: '',
         element: <Layout />,
@@ -40,6 +42,11 @@ export const router = createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings user={user}/>
+                // element:<ProfileList/>
+            },
+            {
+                path: '/login',
+                element: <Login/>
             }
         ]
     },

@@ -36,6 +36,7 @@ function App() {
      
    },[])
   return (
+
     <>
      <RouterProvider router={router} />
       <SnackbarProvider maxSnack={3}>

@@ -5,8 +5,9 @@ import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
 const GenericInput = ({
-  label,
+  label, 
   type = 'text',
+  name = '', 
   value = '',
   onChange = () => { },
   size = 'medium',
@@ -18,6 +19,7 @@ const GenericInput = ({
   max,
   validation = () => { },
   ...rest
+
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
@@ -32,8 +34,8 @@ const GenericInput = ({
   const handleChange = (e) => {
     const newValue = type === 'checkbox' ? e.target.checked : e.target.value;
     setInputValue(newValue);
-    if (onChange)
-      onChange(newValue);
+
+    onChange(e);
   };
 
   const handleValidation = (inputValue) => {
@@ -51,6 +53,7 @@ const GenericInput = ({
     width,
   };
 
+ 
 
   return (
     <>
@@ -88,6 +91,7 @@ const GenericInput = ({
           <TextField
             label={label}
             type={type}
+            name={name}
             value={inputValue}
             onChange={handleChange}
             size={size}
@@ -120,8 +124,10 @@ const GenericInput = ({
 };
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password', 'file', 'checkbox']),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  name: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
   width: PropTypes.string,
