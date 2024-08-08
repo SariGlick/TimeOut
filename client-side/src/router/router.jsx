@@ -19,6 +19,10 @@ export const router = createHashRouter([
             {
                 path: '/profiles',
                 element:<ProfileList/>
+            },
+            {
+                path: '/login',
+                element: <Login/>
             }
         ]
     },

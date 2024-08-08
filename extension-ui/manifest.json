@@ -8,7 +8,8 @@
     "scripting",
     "webNavigation",
     "tabs",
-    "activeTab"
+    "activeTab",
+     "notifications"
   ],
   "host_permissions": [
     "http://*/*",
@@ -20,6 +21,9 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "icons": {
+    "48": "images/icon48.png"
+},
    "web_accessible_resources": 
    [{"resources": ["oops.html","client-side/dist/index.html"],
     "matches": ["<all_urls>"]}]
