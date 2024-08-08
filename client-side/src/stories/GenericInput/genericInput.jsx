@@ -55,6 +55,7 @@ const GenericInput = ({
         type={type}
         name={name}
         value={inputValue}
+        name={name}
         onChange={handleChange}
         size={size}
         error={error}
