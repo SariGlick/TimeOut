@@ -6,3 +6,8 @@ mongoose.connect("mongodb+srv://sh3000444:EuACQK5n92JI3vn4@cluster0.2ttcjcg.mong
 .then(()=>console.log('mongo db connected'))
 .catch(err=>console.log(err.message));
 }
+
+export const disconnectMongo = async () => {
+    await mongoose.disconnect();
+    console.log('mongo db disconnected');
+  };
