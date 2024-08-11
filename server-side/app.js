@@ -1,7 +1,7 @@
 import express from 'express';
-import morgan from 'morgan'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import preferencesRouter from './router/preference.router.js';
 import websitesRouter from './router/websites.router.js';
 import profilesRouter from './router/profile.router.js'
@@ -34,11 +34,15 @@ app.use('/users',usersRouter);
 app.use('/message',MessageRouter);
 app.use('/messageType',messageTypeRouter);
 app.use(pageNotFound);
-app.use(serverErrors)
-let port= process.env.PORT;
+app.use(serverErrors);
+
+const port = process.env.PORT;
+app.listen(port, () => {
+});
 
 app.listen(port,()=>{
     console.log(` running at http://localhost:${port}`);
 })
 
 export default app;
+
