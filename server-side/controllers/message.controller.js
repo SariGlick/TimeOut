@@ -49,6 +49,7 @@ export const getMessagesByUserId = async (req, res) => {
 
 export const addMessage = async (req, res) => {
   try {
+    debugger
     const { type, userId, date, read } = req.body;
     const messageType = await MessageType.findById(type);
     if (!messageType) {
@@ -80,6 +81,12 @@ export const updateMessage = async (req, res) => {
     );   
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
+    }
+    else{
+      if(read){
+        const countUnreadMessages = await getCountUnreadMessages(message.userId);
+        eventEmitter.emit('new-message', { message:message.userId, countUnreadMessages });
+      }
     }
     res.status(200).json(message);
   } catch (error) {
