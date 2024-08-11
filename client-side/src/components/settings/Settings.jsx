@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next'
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
-import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx'
 import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
 import Notifications from './Notifications.jsx';
@@ -39,9 +39,6 @@ const Settings = () => {
     Object.entries(preferencesData).forEach(([key, value]) => {
       formData.append(key, value);
     });
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}:`, pair[1]);
-    }
     try {
       await updatePreference(preferenceId, formData);
       enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
