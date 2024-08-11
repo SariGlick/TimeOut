@@ -7,7 +7,7 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements=[<p>tab 1</p>, <pp>tab 2<
   const handleClick =(i)=>{
      setActiveIndex(i)
   }
-  const {t,i18n} =useTranslation();
+  const { t: translate} = useTranslation();
   return ( 
 
     <div className='tab-warper' >
@@ -19,7 +19,7 @@ const  VerticalTabs=({ labels=['tab1','tab2'],elements=[<p>tab 1</p>, <pp>tab 2<
         onClick={()=>handleClick(index)}
           key={index}  
           >
-          <p> {t(label)}</p>
+          <p> {translate(label)}</p>
             
          </div>
       )

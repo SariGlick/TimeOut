@@ -1,60 +1,27 @@
-.select-class,
-.select-time-zone,
-.select-date-format {
-  margin-bottom: 20px;
-
-  .select-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-
-    .select-label {
-      font-size: 16px;
-      margin-bottom: 5px;
-      color: #333;
-    }
-
-    .select-input {
-      width: 100%;
-      padding: 10px;
-      font-size: 16px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      background-color: #fff;
-      color: #333;
-      cursor: pointer;
-
-      &:focus {
-        outline: none;
-        border-color: #007bff;
-      }
-    }
-  }
-
-  .select-icon {
-    margin-right: 10px;
-    width: 24px;
-    height: 24px;
+.preferences-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Centers items horizontally
+  justify-content: center; // Centers items vertically
+  padding: 5%; // Adjust padding as needed
+  
+  .select-class,
+  .select-time-zone,
+  .select-date-format {
+    width: 100%; // Ensures full width within container
+    max-width: 210px; // Limits width of select elements to match provided width
+    margin-bottom: 5%; // Adjust spacing between selects
   }
 }
 
-.select-time-zone {
-  .select-input {
-    border-color: #f0ad4e;
-
-    &:focus {
-      border-color: #ec971f;
-    }
+@media (max-width: 600px) {
+  .preferences-container {
+    padding: 3%; // Adjust padding for smaller screens if needed
   }
-}
 
-.select-date-format {
-  .select-input {
-    border-color: #5bc0de;
-
-    &:focus {
-      border-color: #31b0d5;
-    }
+  .select-class,
+  .select-time-zone,
+  .select-date-format {
+    max-width: 100%; // Ensures select elements fit smaller screens
   }
 }

@@ -1,6 +1,6 @@
 import { handleGet, handlePost, handlePut, handleDelete } from '../axios/middleware.js';
 
-const preferenceUrl = `${process.env.REACT_APP_BASE_URL}/preferences`;
+const preferenceUrl = `${process.env.REACT_APP_SERVER_URL}/preferences`;
 
 /**
  * Fetch all preferences.

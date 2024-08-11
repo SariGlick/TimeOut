@@ -9,12 +9,15 @@ import Notifications from './Notifications.jsx';
 import CONSTANTS from './constantSetting.js'
 import { useSnackbar } from 'notistack';
 import { updatePreference } from '../../services/preferenceService.js';
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../redux/auth/auth.selector.js'
 import './Settings.scss';
 
-const Settings = ({user}) => {
-  const {MESSAGES, LABELS } = CONSTANTS;
-  const { t } = useTranslation();
+const Settings = () => {
+  const { MESSAGES, LABELS } = CONSTANTS;
+  const { t: translate } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
+  const { user } = useSelector(selectAuth);
 
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
@@ -23,22 +26,22 @@ const Settings = ({user}) => {
 
   const elements = [
     <AccountTab />,
-    <Notifications currentUser={user} onUpdate={setNotificationsData}/>,
-    <Preferences currentUser={user} onUpdate={setPreferencesData}/>
+    <Notifications onUpdate={setNotificationsData} />,
+    <Preferences onUpdate={setPreferencesData} />
   ]
 
   const handleFormSubmit = async () => {
+    
     const formData = new FormData();
     Object.entries(notificationsData).forEach(([key, value]) => {
-      if (key === 'ringtoneFile' && value) {
-        formData.append('soundVoice', value);
-      } else {
-        formData.append(key, value);
-      }
+      formData.append(key, value);
     });
     Object.entries(preferencesData).forEach(([key, value]) => {
       formData.append(key, value);
     });
+    for (let pair of formData.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
     try {
       await updatePreference(preferenceId, formData);
       enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
@@ -50,15 +53,15 @@ const Settings = ({user}) => {
   return (
     <div className="settings-container">
       <div className="tabs-container">
-      <VerticalTabs labels={[LABELS.ACCOUNT, LABELS.NOTIFICATIONS, LABELS.PREFERENCE, LABELS.DISPLAY_SETTING, LABELS.MESSAGE]} elements={elements} />
+        <VerticalTabs labels={[LABELS.ACCOUNT, LABELS.NOTIFICATIONS, LABELS.PREFERENCE, LABELS.DISPLAY_SETTING, LABELS.MESSAGE]} elements={elements} />
       </div>
       <div className="button-container">
-      <GenericButton
-        className='UpdateSettings'
-        label={t(LABELS.UPDATE)}
-        size='medium'
-        onClick={handleFormSubmit}
-      />
+        <GenericButton
+          className='UpdateSettings'
+          label={translate(LABELS.UPDATE)}
+          size='medium'
+          onClick={handleFormSubmit}
+        />
       </div>
     </div>
   )

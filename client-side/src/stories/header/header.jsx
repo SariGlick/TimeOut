@@ -1,26 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Tooltip,
-  Avatar,
-  Container
-} from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next'
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Tooltip, Avatar, Container } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import MessageIcon from './Icon'
 import './header.scss';
 
+import { selectAuth } from '../../redux/auth/auth.selector';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t } = useTranslation();
-
+  const { t: translate } = useTranslation();
+  const { user } = useSelector(selectAuth);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -34,9 +27,16 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  const getAvatarLetter = () => {
+    if (user && user.name) {
+      return user.name.charAt(0).toUpperCase();
+    }
+    return '';
+  };
+
   return (
-    <div className="arooundDiv">
-      <AppBar position="static" className="navbar">
+    <div className='arooundDiv'>
+      <AppBar position="static" className='navbar' >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box className="left-side-box">
@@ -64,12 +64,12 @@ function ResponsiveAppBar() {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                className="menu"
+                className='menu'
               >
                 <LabTabs
                   nameOfClass="navbar-tabs"
-                  text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                  nav={['/home', '/reports', '/statistics', '/profiles']}
+                  text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
+                  nav={["/home", "/reports", "/statistics", "/profiles"]}
                 />
               </Menu>
             </Box>
@@ -78,21 +78,21 @@ function ResponsiveAppBar() {
               noWrap
               component="a"
               href="#app-bar-with-responsive-menu"
-              className="logo"
+              className='logo'
             >
-              {t('timeout')}
+              TimeOut
             </Typography>
             <Box className="middle-side-box">
               <LabTabs
                 nameOfClass="navbar-tabs"
-                text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                nav={['/home', '/reports', '/statistics', '/profiles']}
+                text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
+                nav={["/home", "/reports", "/statistics", "/profiles"]}
               />
             </Box>
-            <Box>
-              <Tooltip title={t('open-settings')}>
-                <IconButton onClick={handleOpenUserMenu}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+            <Box >
+              <Tooltip title={translate("Open settings")}>
+                <IconButton onClick={handleOpenUserMenu} >
+                  <Avatar>{getAvatarLetter()}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -112,10 +112,11 @@ function ResponsiveAppBar() {
               >
                 <LabTabs
                   nameOfClass="navbar-tabs"
-                  text={[t('settings')]}
+                  text={[translate('settings')]}
                   nav={['/settings']}
                 />
               </Menu>
+              <MessageIcon />
             </Box>
           </Toolbar>
         </Container>

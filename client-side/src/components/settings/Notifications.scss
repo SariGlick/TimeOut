@@ -1,33 +1,33 @@
 .notifications-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    
-    .select-container, .input-container, .file-container {
-      width: 100%;
-      max-width: 300px;
-      margin-bottom: 20px;
-    }
-    
-    .audio-player {
-      width: 100%;
-      max-width: 300px;
-      margin-top: 10px;
-    }
-    
-    .but-send {
-      margin-top: 20px;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5%; 
+  max-width: 100%;
+
+  .select-container, .input-container, .file-container {
+    width: 100%;
+    max-width: 100%; // Replaces max-width: 300px
+    margin-bottom: 5%; // Adjust margin as needed to replace 20px
   }
-  
-  @media (max-width: 600px) {
-    .select-container, .input-container, .file-container, .audio-player {
-      max-width: 100%;
-    }
-    
-    .but-send {
-      width: 100%;
-    }
+
+  .audio-player {
+    width: 50%;
+    max-width: 100%; // Replaces max-width: 300px
+    margin-top: 2%; // Adjust margin as needed to replace 10px
   }
-  
+
+  .but-send {
+    margin-top: 5%; // Adjust margin as needed to replace 20px
+  }
+}
+
+@media (max-width: 600px) {
+  .select-container, .input-container, .file-container, .audio-player {
+    max-width: 100%;
+  }
+
+  .but-send {
+    width: 100%;
+  }
+}

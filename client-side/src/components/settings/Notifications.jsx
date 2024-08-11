@@ -1,38 +1,97 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'
 import Select from '../../stories/Select/Select.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
 import CONSTANTS from './constantSetting.js'
+import { useSelector } from 'react-redux';
+import { selectAuth } from '../../redux/auth/auth.selector.js'
 import './Notifications.scss';
 
-const Notifications = ({ currentUser , onUpdate}) => {
+const Notifications = ({ onUpdate }) => {
+  const { user } = useSelector(selectAuth);
   const { EMAIL_FREQUENCY_ENUM, TITLES, LABELS } = CONSTANTS;
-  const { sendNotificationTime:notificationTime, soundVoice:initialSoundVoice,displayIncomeMessages:showIncomeMessages,
-     displayBrowsingTimeLimit:showBrowsingTimeLimit, emailFrequency: initialEmailFrequency,  } = currentUser.preference;
+  const {
+    sendNotificationTime: notificationTime = 10,
+    soundVoice: initialSoundVoice = "alertSound.mp3",
+    displayIncomeMessages: showIncomeMessages = false,
+    displayBrowsingTimeLimit: showBrowsingTimeLimit = false,
+    emailFrequency: initialEmailFrequency = EMAIL_FREQUENCY_ENUM.NEVER
+  } = user.preference || {};
   const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
   const [ringtoneFile, setRingtoneFile] = useState(null);
-  const url = process.env.REACT_APP_BASE_URL;
+  const url = process.env.REACT_APP_SERVER_URL;
   const [soundVoice, setSoundVoice] = useState(`${url}/uploads/${initialSoundVoice}`);
   const [sendNotificationTime, setSendNotificationTime] = useState(notificationTime);
   const [displayIncomeMessages, setDisplayIncomeMessages] = useState(showIncomeMessages);
   const [displayBrowsingTimeLimit, setDisplayBrowsingTimeLimit] = useState(showBrowsingTimeLimit);
-  const { t } = useTranslation();
+  const { t: translate } = useTranslation();
+
+  const emailFrequencyOptions = Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
+    text: translate(key.toLowerCase()),
+    value: EMAIL_FREQUENCY_ENUM[key]
+  }));
+
+  const prevValues = useRef({
+    emailFrequency,
+    ringtoneFileName: null,
+    sendNotificationTime,
+    displayIncomeMessages,
+    displayBrowsingTimeLimit
+  });
 
   useEffect(() => {
-    onUpdate({
-      emailFrequency,
-      ringtoneFile,
-      sendNotificationTime,
-      displayIncomeMessages,
-      displayBrowsingTimeLimit
-    });
-  }, [emailFrequency, ringtoneFile, sendNotificationTime, displayIncomeMessages, displayBrowsingTimeLimit, onUpdate]);
+    
+    const changes = {};
+    if (prevValues.current.emailFrequency !== emailFrequency) {
+      changes.emailFrequency = emailFrequency;
+    }
+    if (prevValues.current.sendNotificationTime !== sendNotificationTime) {
+      changes.sendNotificationTime = sendNotificationTime;
+    }
+    if (prevValues.current.displayIncomeMessages !== displayIncomeMessages) {
+      changes.displayIncomeMessages = displayIncomeMessages;
+    }
+    if (prevValues.current.displayBrowsingTimeLimit !== displayBrowsingTimeLimit) {
+      changes.displayBrowsingTimeLimit = displayBrowsingTimeLimit;
+    }
+    if (prevValues.current.ringtoneFileName === null) {
+      // Update if the previous ringtone file was null
+      if (ringtoneFile) {
+        changes.soundVoice = ringtoneFile;
+      }
+    } else if (ringtoneFile && prevValues.current.ringtoneFileName !== ringtoneFile.name) {
+      // Update if the previous ringtone file is different from the current one
+      changes.soundVoice = ringtoneFile;
+    }
+    
+
+    if (Object.keys(changes).length > 0) {
+      onUpdate(changes);
+      prevValues.current = { 
+        emailFrequency, 
+        ringtoneFileName: ringtoneFile ? ringtoneFile.name : null, 
+        sendNotificationTime, 
+        displayIncomeMessages, 
+        displayBrowsingTimeLimit 
+      };
+    }
+  }, [
+    emailFrequency, 
+    ringtoneFile, 
+    sendNotificationTime, 
+    displayIncomeMessages, 
+    displayBrowsingTimeLimit, 
+    onUpdate
+  ]);
 
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setRingtoneFile(e.target.files[0]);
       setSoundVoice(URL.createObjectURL(e.target.files[0]));
+    }else {
+      setRingtoneFile(null);
+      setSoundVoice('');
     }
 
   };
@@ -42,23 +101,23 @@ const Notifications = ({ currentUser , onUpdate}) => {
     }
     setEmailFrequency(selectedFrequency);
   };
- 
+
   const changeNotificationTime = (event) => {
     setSendNotificationTime(event);
   }
- 
+
 
   return (
     <div className="notifications-container">
       <div className="notifications-settings">
         <GenericInput
-          label={t(LABELS.DISPLAY_INCOME_MESSAGES)}
+          label={translate(LABELS.DISPLAY_INCOME_MESSAGES)}
           type="checkbox"
           checked={displayIncomeMessages}
           onChange={(e) => setDisplayIncomeMessages(e)}
         />
         <GenericInput
-          label={t(LABELS.DISPLAY_BROWSING_TIME_LIMIT)}
+          label={translate(LABELS.DISPLAY_BROWSING_TIME_LIMIT)}
           type="checkbox"
           checked={displayBrowsingTimeLimit}
           onChange={(e) => setDisplayBrowsingTimeLimit(e)}
@@ -67,11 +126,8 @@ const Notifications = ({ currentUser , onUpdate}) => {
       <div className="select-container">
         <Select
           className='select-email-frequency'
-          options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
-            text: t(key.toLowerCase()),
-            value: EMAIL_FREQUENCY_ENUM[key]
-          }))}
-          title={t(TITLES.SELECT_EMAIL_FREQUENCY)}
+          options={emailFrequencyOptions}
+          title={translate(TITLES.SELECT_EMAIL_FREQUENCY)}
           onChange={handleChangeEmailFreq}
           value={emailFrequency}
           size='medium'
@@ -82,7 +138,7 @@ const Notifications = ({ currentUser , onUpdate}) => {
         <GenericInput
           size='medium'
           width='210px'
-          label={t(LABELS.CHANGE_NOTIFICATION_TIME)}
+          label={translate(LABELS.CHANGE_NOTIFICATION_TIME)}
           onChange={changeNotificationTime}
           value={sendNotificationTime}
           type='number'
@@ -93,7 +149,7 @@ const Notifications = ({ currentUser , onUpdate}) => {
       <div className="file-container">
         <GenericInput
           type='file'
-          label={t(LABELS.CHANGE_RINGTONE)}
+          label={translate(LABELS.CHANGE_RINGTONE)}
           onChange={handleFileChange}
           size='medium'
           width='210px'

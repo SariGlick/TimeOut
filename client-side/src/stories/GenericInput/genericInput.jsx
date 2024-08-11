@@ -51,7 +51,6 @@ const GenericInput = ({
     width,
   };
 
-
   return (
     <>
       {type === 'file' ? (
@@ -122,6 +121,7 @@ GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['text', 'number', 'email', 'password', 'file', 'checkbox']),
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  name: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
   width: PropTypes.string,
