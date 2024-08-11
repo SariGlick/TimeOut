@@ -3,7 +3,7 @@ let allowedSitesCache = ["https://chatgpt.com"];
 let isBlackList = false;
 
 function fetchUserData() {
-  fetch('https://localhost:5000/users/me', { 
+  fetch('http://localhost:5000/users/me', { 
     method: 'GET',
     credentials: 'include' 
   })
@@ -18,10 +18,6 @@ function fetchUserData() {
     })
     .catch(error => console.error('Error fetching user data:', error));
 }
-
-
-
-
 chrome.runtime.onStartup.addListener(() => {
   initializeCaches();
   fetchUserData();

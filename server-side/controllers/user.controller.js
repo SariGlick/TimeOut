@@ -91,9 +91,10 @@ export const signIn = async (req, res, next) => {
           const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
           res.cookie('token', token, {
             httpOnly: true,
-            secure: false,
-            sameSite: 'None' // וודא שזה מוגדר נכון
+            secure: false, 
+            sameSite: 'None'
           });
+          
 
           return res.send({ user });
         } else {
@@ -121,13 +122,15 @@ export const getUserProfile = async (req, res, next) => {
       if (err) {
         return res.status(401).send({ message: 'Failed to authenticate token' });
       }
-      const user = await Users.findById(decoded.id).select('-__v -password');
+      const user = await Users.findById(decoded.id).select('_id');
       if (!user) {
         return res.status(404).send({ message: 'User not found' });
       }
       res.send({ user });
     });
   } catch (error) {
+    console.error('Error fetching user profile:', error);
     return next(new Error('Server Error'));
   }
 };
+
