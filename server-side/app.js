@@ -20,9 +20,11 @@ app.use(cors());
 
 dotenv.config();
 connectMongo();
+
 app.get('/',(req,res)=>{
     res.send('welcome to time out ');
-})
+});
+
 app.use('/uploads',express.static('uploads'))
 app.use('/preferences',preferencesRouter);
 app.use('/websites',websitesRouter);

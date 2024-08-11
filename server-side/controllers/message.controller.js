@@ -1,20 +1,20 @@
 
 
+import mongoose from 'mongoose';
 import Message from '../models/Message.model.js';
 import MessageType from '../models/MessageType.model.js';
-
-
+import { eventEmitter } from '../webSocket.js'; // Import event emitter
 
 export const getMessages = async (req, res) => {
   try {
-    const messages = await Message.find().select('-__v');
+    debugger
+     const messages = await Message.find().select('-__v');
 
     res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 export const getMessageById = async (req, res) => {
   try {
@@ -29,7 +29,6 @@ export const getMessageById = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 export const getMessagesByUserId = async (req, res) => {
   try {
@@ -46,22 +45,26 @@ export const getMessagesByUserId = async (req, res) => {
   }
 };
 
+
+
 export const addMessage = async (req, res) => {
   try {
-    const { type, userId, date, read } = req.body;    
-    
+    const { type, userId, date, read } = req.body;
     const messageType = await MessageType.findById(type);
     if (!messageType) {
       return res.status(400).json({ error: 'Invalid message type' });
     }
-    
     const message = new Message({ type, userId, date, read });
     await message.save();
+    const countUnreadMessages = await getCountUnreadMessages(userId);
+    eventEmitter.emit('new-message', { userId, countUnreadMessages });
     res.status(201).json(message);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+
+
 export const updateMessage = async (req, res) => {
   try {
     const { type, userId, date, read } = req.body;
@@ -98,3 +101,14 @@ export const deleteMessage = async (req, res) => {
 };
 
 
+export const getCountUnreadMessages = async (userId) => {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error('ID is not valid');
+  }
+  try {
+    const allUserMassage = await Message.find({ userId , read: false }).select('-__v');
+    return allUserMassage.length;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
