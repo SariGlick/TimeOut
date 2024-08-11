@@ -10,7 +10,7 @@ describe('Vertical tabs component' , ()=>{
     test('render labels and elements correctly' , () =>{
         const labels = ['Tab 1', 'Tab 2'];
         const elements = [<p>Content 1</p>, <p>Content 2</p>];   
-        const {getByText} = render(
+       render(
             <I18nextProvider i18n={i18n}>
               <VerticalTabs labels={labels} elements={elements}/>
             </I18nextProvider>
@@ -27,7 +27,7 @@ describe('Vertical tabs component' , ()=>{
     test('change active tab on clicking ' , () =>{
         const labels = ['Tab 1', 'Tab 2'];
         const elements = [<p>Content 1</p>, <p>Content 2</p>];   
-        const {getByText} = render(
+         render(
             <I18nextProvider i18n={i18n}>
               <VerticalTabs labels={labels} elements={elements}/>
             </I18nextProvider>
@@ -44,7 +44,7 @@ describe('Vertical tabs component' , ()=>{
     
     })
     test('renders with default props', () => {
-        const { getByText } = render(
+        render(
           <I18nextProvider i18n={i18n}>
             <VerticalTabs />
           </I18nextProvider>
