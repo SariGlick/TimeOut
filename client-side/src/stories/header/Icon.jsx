@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Badge, IconButton } from '@mui/material';
 import { MailOutline, Mail } from '@mui/icons-material';
 import useWebSocket from '../../webSocket';
-// import messages from '../../components/messages/messages'
+import messages from '../../components/messages/messages'
 import './icon.scss';
 
 const MessageIcon = () => {
@@ -25,7 +25,7 @@ const MessageIcon = () => {
       ) : (
         <MailOutline />
       )}
-      {/* {openMesagges &&  <messages/>} */}
+      {openMesagges &&  <messages/>}
     </IconButton>
   );
 };
