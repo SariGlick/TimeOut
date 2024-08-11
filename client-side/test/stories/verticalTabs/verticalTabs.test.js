@@ -37,7 +37,7 @@ describe('Vertical tabs component' , ()=>{
         expect(screen.queryByText('Content 2')).not.toBeInTheDocument();
 
         //check if hte tab switch on clicking on htedocument
-        fireEvent.click(getByText('Tab 2'))
+        fireEvent.click(screen.getByText('Tab 2'))
         //checko if the content has been change 
         expect(screen.getByText('Content 2')).toBeInTheDocument();
         expect(screen.queryByText('Content 1')).not.toBeInTheDocument()
