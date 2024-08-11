@@ -193,3 +193,198 @@ function showNotification(site, num, options = {}) {
   
   chrome.notifications.create(notificationOptions);
 }
+
+let timeoutId = null;
+let notificationTimeoutId = null;
+let remainingTime = initialTime;
+let lastVisitTime = Date.now();
+let lastVisitDate = new Date().toDateString();
+let isSiteBlocked = false;
+let notificationShown = false;
+let currentTabId = null;
+let currentTabUrl = null;
+let isTabActive = false; 
+
+function updateStorage() {
+  chrome.storage.local.set({
+    lastVisitDate,
+    remainingTime,
+    isSiteBlocked,
+    notificationShown
+  });
+}
+
+function checkForNewDay() {
+  const currentDate = new Date().toDateString();
+  if (currentDate !== lastVisitDate) {
+    remainingTime = initialTime;
+    lastVisitDate = currentDate;
+    isSiteBlocked = false;
+    notificationShown = false;
+    updateStorage();
+  }
+}
+
+function startTimer() {
+  checkForNewDay();
+  clearTimeout(notificationTimeoutId);
+  clearTimeout(timeoutId);
+
+  const warningTime = remainingTime - notificationTime;
+  if (warningTime <= 0) {
+    remainingTime = 0;
+    isSiteBlocked = true;
+    updateStorage();
+    redirectToOopsPage();
+    return;
+  }
+
+  notificationTimeoutId = setTimeout(() => {
+    if (!notificationShown) {
+      showNotification(site, notificationTime);
+      notificationShown = true;
+      updateStorage();
+    }
+    timeoutId = setTimeout(() => {
+      isSiteBlocked = true;
+      updateStorage();
+      redirectToOopsPage();
+    }, notificationTime);
+  }, warningTime);
+}
+
+function updateRemainingTime() {
+  if (isTabActive && currentTabUrl && currentTabUrl.includes(site)) {
+    const now = Date.now();
+    const timeSpent = now - lastVisitTime;
+    remainingTime -= timeSpent;
+    lastVisitTime = now;
+    if (remainingTime <= 0) {
+      remainingTime = 0;
+      isSiteBlocked = true;
+      updateStorage();
+      clearTimeout(notificationTimeoutId);
+      clearTimeout(timeoutId);
+      redirectToOopsPage();
+    } else {
+      updateStorage();
+    }
+  }
+}
+
+function resetTimer() {
+  clearTimeout(notificationTimeoutId);
+  clearTimeout(timeoutId);
+  notificationShown = false;
+}
+
+function handleTab(tab) {
+  if (tab.url.includes(site)) {
+    if (isSiteBlocked) {
+      chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+      return; 
+    }
+
+    if (currentTabId !== tab.id) {
+      if (isTabActive) {
+        updateRemainingTime();
+      }
+      startTimer();
+      lastVisitTime = Date.now();
+      isTabActive = true;
+    }
+    currentTabUrl = tab.url;
+    currentTabId = tab.id;
+  } else {
+    if (isTabActive) {
+      updateRemainingTime();
+    }
+    resetTimer();
+    isTabActive = false;
+  }
+}
+
+function checkIfSiteBlocked(tab) {
+  if (isSiteBlocked && tab.url.includes(site)) {
+    chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+  }
+}
+
+function redirectToOopsPage() {
+  chrome.tabs.query({ url: '*://${site}/*' }, (tabs) => {
+    tabs.forEach(tab => {
+      chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+    });
+  });
+}
+
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
+  chrome.tabs.get(activeInfo.tabId, async (tab) => {
+    if(isSiteBlocked)
+      redirectToOopsPage();
+    handleTab(tab);
+    checkIfSiteBlocked(tab); 
+  });
+});
+
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    if(isSiteBlocked)
+      redirectToOopsPage();
+    handleTab(tab);
+    checkIfSiteBlocked(tab); 
+  }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  if (tabId === currentTabId) {
+    if (isTabActive) {
+      updateRemainingTime();
+    }
+    resetTimer();
+    currentTabId = null;
+    currentTabUrl = null;
+    isTabActive = false;
+  }
+});
+
+chrome.windows.onFocusChanged.addListener((windowId) => {
+  if (windowId === chrome.windows.WINDOW_ID_NONE) {
+    if (isTabActive) {
+      updateRemainingTime();
+    }
+    resetTimer();
+  } else {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length > 0) {
+        handleTab(tabs[0]);
+        checkIfSiteBlocked(tabs[0]);
+      }
+    });
+  }
+});
+
+chrome.storage.local.get(['lastVisitDate', 'remainingTime', 'isSiteBlocked', 'notificationShown'], (data) => {
+  if (data.lastVisitDate) {
+    lastVisitDate = data.lastVisitDate;
+  }
+  if (data.remainingTime) {
+    remainingTime = data.remainingTime;
+  }
+  if (data.isSiteBlocked) {
+    isSiteBlocked = data.isSiteBlocked;
+    if (isSiteBlocked) {
+      chrome.tabs.query({ url: '*://${site}/*' }, (tabs) => {
+        tabs.forEach(tab => {
+          chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+        });
+      });
+    }
+  }
+  if (data.notificationShown !== undefined) {
+    notificationShown = data.notificationShown;
+  }
+  if (remainingTime > 0 && !isSiteBlocked && currentTabUrl && currentTabUrl.includes(site)) {
+    startTimer();
+  }
+});
