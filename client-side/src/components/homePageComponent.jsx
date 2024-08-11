@@ -3,8 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { AccountCircle, Settings, Report, People } from '@mui/icons-material';
-import { homePageTexts } from '../../constants/homePageconstants';
-import '../../styles/homePage.scss';
+import { homePageTexts } from '../../src/constants/homePageconstatnts';
+import '../styles/homePage.scss';
 
 const HomePage = () => {
   return (
