@@ -18,6 +18,21 @@
     "display-setting": "configuración de pantalla",
     "fotter": "© Desarrollado por el equipo ExtraTech. Visítanos:",
     "settings": "ajustes",
-    "open-settings":"Configuración abierta"
-
+    "open-settings":"Configuración abierta",
+    "Select Email Frequency": "Seleccionar frecuencia de correo electrónico",
+    "never": "nunca",
+    "daily": "diario",
+    "weekly": "semanalmente",
+    "monthly": "mensual",
+    "yearly": "anual",
+    "Select Time Zone":"Selecciona la zona horaria",
+    "Message Box":"Cuadro de mensaje",
+    "Messages Inbox":"Bandeja de entrada de mensajes",
+    "Messages Count":"Los mensajes cuentan",
+    "title only":"solo título",
+    "abbreviated message":"mensaje abreviado",
+    "full messages":"mensajes completos",
+    "group by date":"agrupar por fecha",
+    "group by read":"agrupar por lectura",
+    "group by unread":"agrupar por no leídos"
 }

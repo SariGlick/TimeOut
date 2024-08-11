@@ -112,5 +112,28 @@
     
   }
   
-  
+
+}
+
+.generic-input-checkbox {
+  display: flex;
+  align-items: center;
+  .MuiCheckbox-root {
+    color: $color-border; // צבע הכפתור
+    &.Mui-checked {
+      color: $color-border-hover; // צבע הכפתור כשנבחר
+    }
+    &.Mui-disabled {
+      opacity: 0.7; 
+      cursor: not-allowed; 
+    }
+  }
+
+  .MuiFormControlLabel-label {
+    color: $color-black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
 }

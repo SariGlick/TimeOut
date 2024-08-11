@@ -22,7 +22,7 @@ const MESSAGE_DISPLAY = [
 
 const TITLES = {
   SELECT_EMAIL_FREQUENCY: 'Select Email Frequency',
-  MESSAGE_BOX: 'Message Box',
+ 
 };
 const LABELS = {
   UPDATE_USER_SETTINGS: 'Update User Settings',

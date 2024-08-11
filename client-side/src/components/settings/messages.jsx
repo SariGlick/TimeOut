@@ -1,56 +1,82 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "../../stories/Select/Select";
-import CONSTANTS from '../../constants/index';
-import {uploadFile} from '../settings/uploadFileUtil';
+import GenericInput from '../../stories/GenericInput/genericInput'
+import CONSTANTS from './constantSetting';
 import PropTypes from 'prop-types';
+import { useTranslation } from "react-i18next";
+import './messages.scss'
 
 
-const Messages = ({ currentUser }) => {
-    const { TITLES, MESSAGE_DISPLAY } = CONSTANTS;
-    const messageDisplay = currentUser?.messageDisplay || 'title_only'; 
-    const [display, setDisplay] = useState(messageDisplay);
-    const baceUrl = process.env.REACT_APP_BASE_URL;
 
-    const sendFormatDate = async () => {
-        try {
-          const formData = new FormData();
-          formData.append('display', display);
+const Messages = ({ currentUser, onUpdate }) => {
+    const { TITLES, MESSAGE_DISPLAY_ENUM , LABELS,INBOX_ENUM} = CONSTANTS;
+    const initialMessageDisplay = currentUser?.messageDisplay || 'title_only';
+    const initialInboxDisplay = currentUser?.inboxDisplay || 'group_by_date';
+    const initialMessagesCount = currentUser?.messagesCount || 0;
+    const [messageDisplay, setMessageDisplay] = useState(initialMessageDisplay);
+    const [inboxDisplay, setInboxDisplay] = useState(initialInboxDisplay);
+    const [messagesCount,setMessagesCount]=useState(initialMessagesCount);
+    const {t}=useTranslation();
     
-          const url = `${baceUrl}/users/${currentUser._id}`;
-          await uploadFile(url, formData, 'put');
-    
-        } catch (error) {
-          console.error('Error sending format date:', error);
-        }
-      };
+    useEffect(() => {
+        console.log('Updating with:', { messageDisplay, inboxDisplay, messagesCount });
+        onUpdate({
+        messageDisplay,
+        inboxDisplay,
+        messagesCount
+        });
+    }, [messageDisplay,inboxDisplay, messagesCount]);
 
-    const handleDisplayChange = (value) => {
-        setDisplay(value);       
-    };
+    if (!currentUser) {
+        return <div>Loading...</div>; 
+    }
 
     return (
-        <>
+        <div className="messages-settings">
             <Select 
-                title={TITLES.MESSAGE_BOX} 
-                options={ MESSAGE_DISPLAY.map(displayMessage => ({
-                    value: displayMessage.dataKey,
-                    text: displayMessage.title,
-                }))}
-                className='message-display' 
+                className="select-messages-inbox"
+                options={MESSAGE_DISPLAY_ENUM.map(({ value, label }) => ({
+                    text: t(label),
+                    value: value
+                    
+                  }))}
+                title={t(TITLES.MESSAGE_BOX)} 
                 size={'large'}
                 widthOfSelect='200px'
-                value={display}      
-                onChange={handleDisplayChange}
-            />        
-        </>
+                value={messageDisplay}      
+                onChange={setMessageDisplay}
+            /> 
+
+            <GenericInput
+                type="number"
+                label={t(LABELS.MESSAGES_COUNT)}
+                value={messagesCount}
+                onChange={setMessagesCount}
+                size="medium"
+                width='200px'           
+            />    
+
+        <Select
+          className='select-inbox'
+          options={INBOX_ENUM.map(({ value, label }) => ({
+            text:t(label),
+            value: value          
+          }))}
+          title={t(TITLES. MESSAGES_INBOX)}
+          onChange={setInboxDisplay}
+          value={inboxDisplay}
+           size={'large'}
+          widthOfSelect='200px'
+        />
+        </div>
     )
     
 }
 
 Messages.propTypes = {
-    currentUser: PropTypes.shape({
-        messageDisplay: PropTypes.string,
-    }),
-  };
+    currentUser: PropTypes.object.isRequired,
+    onUpdate: PropTypes.func.isRequired
+    };
+
 
 export default Messages;

@@ -1,61 +1,113 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next'
-import GenericButton from '../../stories/Button/GenericButton.jsx';
+import Select from '../../stories/Select/Select.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import { uploadFile } from './uploadFileUtil.js'
-import Preferences from './Preference.jsx';
-import { LABELS } from './constantSetting.js'
-const Notifications = ({ currentUser = {} }) => {
-  const { emailFrequency, sendNotificationTime, _id, soundVoice } = currentUser.preference
-  const url = process.env.REACT_APP_BASE_URL;
-  const preferencesUrl = `${url}/preferences/${_id}`
+import CONSTANTS from './constantSetting.js'
+import './Notifications.scss';
+
+const Notifications = ({ currentUser , onUpdate}) => {
+  const { EMAIL_FREQUENCY_ENUM, TITLES, LABELS } = CONSTANTS;
+  const { sendNotificationTime:notificationTime, soundVoice:initialSoundVoice,displayIncomeMessages:showIncomeMessages,
+     displayBrowsingTimeLimit:showBrowsingTimeLimit, emailFrequency: initialEmailFrequency,  } = currentUser.preference;
+  const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
   const [ringtoneFile, setRingtoneFile] = useState(null);
-  const [audioSrc, setAudioSrc] = useState(`${url}/uploads/${soundVoice}`);
-  const [notificationTime, setNotificationTime] = useState(sendNotificationTime);
+  const url = process.env.REACT_APP_BASE_URL;
+  const [soundVoice, setSoundVoice] = useState(`${url}/uploads/${initialSoundVoice}`);
+  const [sendNotificationTime, setSendNotificationTime] = useState(notificationTime);
+  const [displayIncomeMessages, setDisplayIncomeMessages] = useState(showIncomeMessages);
+  const [displayBrowsingTimeLimit, setDisplayBrowsingTimeLimit] = useState(showBrowsingTimeLimit);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    onUpdate({
+      emailFrequency,
+      ringtoneFile,
+      sendNotificationTime,
+      displayIncomeMessages,
+      displayBrowsingTimeLimit
+    });
+  }, [emailFrequency, ringtoneFile, sendNotificationTime, displayIncomeMessages, displayBrowsingTimeLimit, onUpdate]);
+
   const handleFileChange = (e) => {
     if (e.target.files[0]) {
       setRingtoneFile(e.target.files[0]);
-      setAudioSrc(URL.createObjectURL(e.target.files[0]));
+      setSoundVoice(URL.createObjectURL(e.target.files[0]));
     }
 
   };
-
-
-  const changeNotificationTime = (event) => {
-    setNotificationTime(event);
-  }
-  const sendPreference = async () => {
-    const formData = new FormData();
-    formData.append('soundVoice', ringtoneFile);
-    formData.append('sendNotificationTime', notificationTime);
-    formData.append('emailFrequency', emailFrequency);
-    uploadFile(preferencesUrl, formData, 'put')
+  const handleChangeEmailFreq = (selectedFrequency) => {
+    if (!Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase())) {
+      return;
+    }
+    setEmailFrequency(selectedFrequency);
   };
+ 
+  const changeNotificationTime = (event) => {
+    setSendNotificationTime(event);
+  }
+ 
 
   return (
-    <>
-      <div>
-        <div className='uploadWarper'>
-
-          <GenericInput type='file' label={t(LABELS.CHANGE_RINGTONE)} onChange={handleFileChange} size='medium' accept='audio/mp3' />
-
-        </div>
-        <div>
-          <audio controls>
-            <source src={audioSrc} ></source>
-          </audio>
-        </div>
-        <GenericInput size='small' width='200px' label={t(LABELS.CHANGE_NOTIFICATION_TIME)} onChange={changeNotificationTime} type='number' className='gInput' min={0} max={60}/>
+    <div className="notifications-container">
+      <div className="notifications-settings">
+        <GenericInput
+          label={t(LABELS.DISPLAY_INCOME_MESSAGES)}
+          type="checkbox"
+          checked={displayIncomeMessages}
+          onChange={(e) => setDisplayIncomeMessages(e)}
+        />
+        <GenericInput
+          label={t(LABELS.DISPLAY_BROWSING_TIME_LIMIT)}
+          type="checkbox"
+          checked={displayBrowsingTimeLimit}
+          onChange={(e) => setDisplayBrowsingTimeLimit(e)}
+        />
       </div>
-      <GenericButton size='small' label={t(LABELS.SEND_PREFERENCE)} onClick={sendPreference} className='but-send' />
-
-    </>
-
+      <div className="select-container">
+        <Select
+          className='select-email-frequency'
+          options={Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
+            text: t(key.toLowerCase()),
+            value: EMAIL_FREQUENCY_ENUM[key]
+          }))}
+          title={t(TITLES.SELECT_EMAIL_FREQUENCY)}
+          onChange={handleChangeEmailFreq}
+          value={emailFrequency}
+          size='medium'
+          widthOfSelect='210px'
+        />
+      </div>
+      <div className="input-container">
+        <GenericInput
+          size='medium'
+          width='210px'
+          label={t(LABELS.CHANGE_NOTIFICATION_TIME)}
+          onChange={changeNotificationTime}
+          value={sendNotificationTime}
+          type='number'
+          className='gInput'
+          min={0} max={60}
+        />
+      </div>
+      <div className="file-container">
+        <GenericInput
+          type='file'
+          label={t(LABELS.CHANGE_RINGTONE)}
+          onChange={handleFileChange}
+          size='medium'
+          width='210px'
+          accept='audio/mp3'
+        />
+        <audio controls className="audio-player">
+          <source src={soundVoice} />
+        </audio>
+      </div>
+    </div>
   );
 };
 Notifications.propTypes = {
-  currentUser: PropTypes.object.isRequired
+  currentUser: PropTypes.object.isRequired,
+  onUpdate: PropTypes.func.isRequired
 }
 export default Notifications;

@@ -1,12 +1,12 @@
-import mongoose  from 'mongoose';
+
 import VisitedWebsite from '../models/visitedWebSite.model.js';
 
-export const getAllVisitedWebsites = async (req, res,next) => {
+export const getAllVisitedWebsites = async (req, res) => {
     try {
         const visitedWebsites = await VisitedWebsite.find().populate('websiteId').select('-__v');
         res.json(visitedWebsites);
     } catch (err) {
-        next({message:err.message,status:500})
+        res.status(500).json({ message: err.message });
     }
 };
 
