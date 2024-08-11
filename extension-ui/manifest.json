@@ -9,11 +9,14 @@
     "webNavigation",
     "tabs",
     "activeTab",
+    "alarms",
+     "notifications",
     "windows"
   ],
   "host_permissions": [
     "http://*/*",
     "https://*/*",
+    "<all_urls>",
     "http://localhost:3000/*"
   ],
   "background": {
@@ -22,6 +25,9 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "icons": {
+    "48": "images/icon48.png"
+},
   "web_accessible_resources": [
     {
       "resources": ["oops.html"],
