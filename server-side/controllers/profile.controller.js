@@ -3,7 +3,7 @@ import Profile from '../models/profile.model.js';
 export const getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profile.find();
-        res.json(profiles);
+        return res.json(profiles);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -13,7 +13,7 @@ export const createProfile = async (req, res) => {
     const newProfile = new Profile(req.body);
     try {
         const savedProfile = await newProfile.save();
-        res.status(201).json(savedProfile);
+        return res.status(201).json(savedProfile);
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -25,7 +25,7 @@ export const getProfileById = async (req, res) => {
         if (!profile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json(profile);
+        return res.json(profile);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -37,7 +37,7 @@ export const updateProfile = async (req, res) => {
         if (!updatedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json(updatedProfile);
+        return res.json(updatedProfile);
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -53,7 +53,7 @@ export const getProfilesByUserId = async (req, res) => {
         if (!profiles.length) {
             return res.status(404).json({ message: 'No profiles found for this user' });
         }
-        res.json(profiles);
+        return res.json(profiles);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -65,7 +65,7 @@ export const deleteProfile = async (req, res) => {
         if (!deletedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json({ message: 'Profile deleted successfully' });
+        return res.json({ message: 'Profile deleted successfully' });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
