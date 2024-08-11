@@ -10,29 +10,9 @@ import { AuthUser } from "../../types/types.js";
 
 /** @type {AuthStateType} */
 const initialState = {
-    user: {
-        "_id": "66940b051ccb2852370d5a17",
-        "name": "Alice Johnson",
-        "email": "alice.johnson@example.com",
-        "password": "securePassword123",
-        "visitsWebsites": [],
-        "profiles": [],
-        "preferences": [],
-        "profileImage": "profile1.jpg",
-        "preference": {
-            "_id": "66930c2e2aad987e24078e12",
-            "emailFrequency": "never",
-            "timeZone": "Europe/Gibraltar",
-            "language": "en",
-            "sendNotificationTime": 43,
-            "soundVoice": "alertSound.mp3",
-            "dateFormat": "YYYY-MM-DD",
-            "displayBrowsingTimeLimit": false,
-            "displayIncomeMessages": false
-        },
-    },
-    isAuthenticated: true,
-    isInitialized: true
+    user: null,
+    isAuthenticated: false,
+    isInitialized: false
 };
 
 const authSlice = createSlice({

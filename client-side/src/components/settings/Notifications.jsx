@@ -56,12 +56,10 @@ const Notifications = ({ onUpdate }) => {
       changes.displayBrowsingTimeLimit = displayBrowsingTimeLimit;
     }
     if (prevValues.current.ringtoneFileName === null) {
-      // Update if the previous ringtone file was null
       if (ringtoneFile) {
         changes.soundVoice = ringtoneFile;
       }
     } else if (ringtoneFile && prevValues.current.ringtoneFileName !== ringtoneFile.name) {
-      // Update if the previous ringtone file is different from the current one
       changes.soundVoice = ringtoneFile;
     }
     
@@ -86,10 +84,11 @@ const Notifications = ({ onUpdate }) => {
   ]);
 
   const handleFileChange = (e) => {
-    if (e.target.files[0]) {
-      setRingtoneFile(e.target.files[0]);
-      setSoundVoice(URL.createObjectURL(e.target.files[0]));
-    }else {
+    const file = e.target.files[0];
+    if (file) {
+      setRingtoneFile(file);
+      setSoundVoice(URL.createObjectURL(file));
+    } else {
       setRingtoneFile(null);
       setSoundVoice('');
     }
@@ -102,11 +101,6 @@ const Notifications = ({ onUpdate }) => {
     setEmailFrequency(selectedFrequency);
   };
 
-  const changeNotificationTime = (event) => {
-    setSendNotificationTime(event);
-  }
-
-
   return (
     <div className="notifications-container">
       <div className="notifications-settings">
@@ -114,13 +108,13 @@ const Notifications = ({ onUpdate }) => {
           label={translate(LABELS.DISPLAY_INCOME_MESSAGES)}
           type="checkbox"
           checked={displayIncomeMessages}
-          onChange={(e) => setDisplayIncomeMessages(e)}
+          onChange={setDisplayIncomeMessages}
         />
         <GenericInput
           label={translate(LABELS.DISPLAY_BROWSING_TIME_LIMIT)}
           type="checkbox"
           checked={displayBrowsingTimeLimit}
-          onChange={(e) => setDisplayBrowsingTimeLimit(e)}
+          onChange={setDisplayBrowsingTimeLimit}
         />
       </div>
       <div className="select-container">
@@ -139,7 +133,7 @@ const Notifications = ({ onUpdate }) => {
           size='medium'
           width='210px'
           label={translate(LABELS.CHANGE_NOTIFICATION_TIME)}
-          onChange={changeNotificationTime}
+          onChange={setSendNotificationTime}
           value={sendNotificationTime}
           type='number'
           className='gInput'
