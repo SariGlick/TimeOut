@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import MessageIcon from './Icon'
 import './header.scss';
 
 function ResponsiveAppBar() {
@@ -134,6 +135,7 @@ function ResponsiveAppBar() {
           </AppBar>
         </div>
     </>
+
 
   );
 }
