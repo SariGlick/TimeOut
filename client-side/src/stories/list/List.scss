@@ -1,142 +1,23 @@
-@import '../variables.scss';
-
-
 .wrapper {
 
     background-color: #ffffff;
-    padding: 12px;
+    padding: 1%;
     position: absolute;
-    right: 10px;
-    top: 50px;
-    width: 220px;
-    border-radius: 10px;
+    right: 1%;
+    top: 7%;
+    width: 18%;
+    border-radius: 6%;
     border: 1px solid #e0e0e0;
 
     z-index: 1000;
     overflow-y: auto;
 }
-
-
-.MuiListItem-root {
-    background-color: #ffffff;
-    padding: 10px 12px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s, box-shadow 0.3s;
-
-    &:hover {
-        background-color: #f7f7f7;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-}
-
-
-.message-text {
-    font-family: 'Nanum Gothic', sans-serif;
-    font-size: 14px;
-    color: $primary-color;
-    margin: 0;
-    z-index: 1;
-}
-
-
-.unread {
-    font-weight: 600;
-    background-color: #f9f9f9;
-}
-
-
-.read {
-    color: #888888;
-}
-
-
-.MuiIconButton-root {
-    .MuiSvgIcon-root {
-        color: #333333;
-        transition: color 0.3s;
-
-        &:hover {
-            color: $primary-color;
-        }
-    }
-}
-
-
-
-
-
-
-.icons-wrapper .MuiIconButton-root {
-    position: relative;
-}
-
-@keyframes slideIn {
-    from {
-        transform: translateX(0%);
-        opacity: 0.5;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes bounceIn {
-    0% {
-        opacity: 0;
-        transform: scale(0.5);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.1);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.icons-wrapper {
+.icons-container {
     position: absolute;
     top: 0;
     right: 0;
-    max-width: 80%;
-    animation: slideIn 0.8s ease-in-out;
-    width: 45%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 15px;
-    margin: 0 15px;
     z-index: 2;
-    padding-right: 15px;
-}
+ 
 
-.icons-wrapper:hover {
-    box-shadow: 0px 4px 8px $primary-color;
-    transform: translateY(-2px);
-}
-
-
-.line {
-    position: absolute;
-    top: 5;
-    width: 30px;
-    height: 3px;
-    background-color: $primary-color;
-    transform: rotate(45deg);
-    z-index: 3;
-
-}
-
-.eye-icon {
-    position: relative;
 }
