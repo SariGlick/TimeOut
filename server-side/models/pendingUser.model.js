@@ -1,7 +1,7 @@
 import mongoose, {Schema} from 'mongoose';
 
 const PendingUsersSchema = new mongoose.Schema({
-    userID: { type: Schema.Types.ObjectId, ref: 'pendingUsers', required: true },
+    userID: { type: String, required: true },
     email: { type: String, required: true }
 });
 
