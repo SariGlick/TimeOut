@@ -9,7 +9,7 @@ beforeAll(async () => {
   afterAll(async () => {
     await disconnectMongo(); // Closes database connection after tests
   });
-  
+
 describe('GET /', () => {
     it('should return "welcome to time out"', async () => {
         const response = await request(app).get('/');

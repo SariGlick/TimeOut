@@ -1,6 +1,6 @@
 export const messages = {
   success: {
-    USER_REGISTERED: "User has been successfully registered.",
+    USER_REGISTERED: "User successfully registered.",
     PASSWORD_RESET: "Password has been successfully reset.",
     EMAIL_VERIFIED: "Email has been successfully verified.",
     DATA_SAVED: "Data has been successfully saved.",
@@ -14,9 +14,11 @@ export const messages = {
     PASSWORD_RESET_FAILED: "Failed to reset password. Please try again.",
     EMAIL_NOT_FOUND: "Email address not found.",
     UNAUTHORIZED: "You are not authorized to perform this action.",
-    INTERNAL_SERVER_ERROR: "An internal server error occurred. Please try again later.",
+    INTERNAL_SERVER_ERROR: "Internal server error.",
     REQ_PASS: 'Password is required',
-    USER_NOT_FOUND: 'User not found'
+    USER_NOT_FOUND: 'User not found',
+    REQ_PASS_EMAIL: "email and password is required",
+    REQ_EMAIL: 'Email is required',
   },
   message: {
     SEND_EMAIL: "We will send you a verification code to your email: ",
