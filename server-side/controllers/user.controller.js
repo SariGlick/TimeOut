@@ -5,8 +5,7 @@ import Users from '../models/user.model.js';
 
 export const getUsers = async (req, res,next) => {
   try {
-    const users = await Users.find().populate('visitsWebsites profiles preference' ).select('-__v')
-    .select('-__v')
+    const users = await Users.find().populate({path: 'visitsWebsites',populate: {path: 'websiteId'}}).populate('profiles preference').select('-__v');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
@@ -30,7 +29,6 @@ export const getUserById = async (req, res,next) => {
   }
 };
 
-
 export const addUser = async (req, res,next) => {
   try {
     if (req.file ) {
@@ -47,7 +45,6 @@ export const addUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
-
 
 
 export const deleteUser = async (req, res,next) => {
