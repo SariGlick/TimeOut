@@ -13,8 +13,7 @@ import { selectProfile } from '../../redux/profile/profile.selector.js';
 import Loader from '../../stories/loader/loader.jsx';
 import AddProfileComponent from './addProfileComponent.jsx';
 import UpdateProfileComponent from './updateProfileCpmponent.jsx';
-import ProfileActivationTimer from './profileActivationComponent.jsx';
-import TimerActivationButton from './timerActivation.jsx';
+import TimerActivationButton from './timerActivationButton.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
@@ -26,7 +25,7 @@ const ProfilePageComponent = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);
   const [editedRows, setEditedRows] = useState(null);
-  const [time, setTime] = useState(0);
+
   const profiles = useAppSelector(selectProfile);
   const statusOptions = selectedProfile ? getStatusOptions(selectedProfile.statusBlockedSites) : [];
 
@@ -55,16 +54,6 @@ const ProfilePageComponent = ({ userId }) => {
     setSelectedProfile(profile);
     setEditRowId(null);
     setEditedRows(null);
-
-    const start = parseTimeStringToDate(profile.timeProfile.start);
-    const end = parseTimeStringToDate(profile.timeProfile.end);
-    const durationMinutes = (end - start) / 1000 / 60;
-    if (durationMinutes >= 0) {
-      setTime(durationMinutes);
-    } else {
-      setTime(durationMinutes * -1);
-    }
-
   };
 
   function parseTimeStringToDate(timeString) {

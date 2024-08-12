@@ -10,16 +10,17 @@ export const formatProfileData = (profile) => {
             timeEnd: profile?.timeProfile?.end || '00:00'
         },
         statusBlockedSites: profile.statusBlockedSites || 'black list',
-        websites: profile.listWebsites.map((website, index) => ({
+        websites: (profile.listWebsites || []).map((website, index) => ({
             index: index,
-            websiteId: website.websiteId._id,
-            name: website.websiteId.name,
-            url: website.websiteId.url,
+            websiteId: website.websiteId?._id || '',
+            name: website.websiteId?.name || '',
+            url: website.websiteId?.url || '', 
             status: website.status || 'open',
             limitedMinutes: website.limitedMinutes || 0
         }))
     };
 };
+
 
 export const updateFormDataWithStatusBlockedSites = (formData, value) => {
     const updatedWebsites = formData.websites.map(website => {
