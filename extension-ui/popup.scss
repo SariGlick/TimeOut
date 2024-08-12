@@ -1,16 +1,16 @@
 :root {
-  --background-color: #F0F0F0;
-  --container-background: #FFFFFF;
-  --button-background: #007BFF;
-  --button-background-hover: #0056b3;
-  --text-color: #FFFFFF;
-  --border-color: #ccc;
-  --list-background: #F8F9FA;
-  --list-border: #DEE2E6;
+  --background-color: #f8f9fa;
+  --container-background: #ffffff;
+  --button-background: #28a745;
+  --button-background-hover: #218838;
+  --text-color: #ffffff;
+  --border-color: #ced4da;
+  --list-background: #f1f3f5;
+  --list-border: #dee2e6;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,38 +21,41 @@ body {
 .container {
   text-align: center;
   background-color: var(--container-background);
-  border-radius: 2%;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 5%;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   width: 80%;
+  max-width: 400px;
 }
 
 button {
   background-color: var(--button-background);
   color: var(--text-color);
   border: none;
-  border-radius: 2%;
-  padding: 2.5% 5%;
-  margin: 1%;
+  border-radius: 5px;
+  padding: 12px 20px;
+  margin: 10px 0;
   cursor: pointer;
-  font-size: 100%;
-  transition: background-color 0.3s;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
 button:hover {
   background-color: var(--button-background-hover);
+  transform: translateY(-2px);
 }
 
 form {
-  margin: 5% 0;
+  margin: 20px 0;
 }
 
 input[type="text"] {
-  padding: 2%;
+  padding: 10px;
   border: 1px solid var(--border-color);
-  border-radius: 2%;
+  border-radius: 5px;
   width: 80%;
-  margin: 1% 0;
+  margin: 10px 0;
+  font-size: 14px;
 }
 
 input[type="text"]:focus {
@@ -68,7 +71,11 @@ ul {
 li {
   background-color: var(--list-background);
   border: 1px solid var(--list-border);
-  border-radius: 2%;
-  padding: 2.5%;
-  margin: 1% 0;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.hidden {
+  display: none;
 }
