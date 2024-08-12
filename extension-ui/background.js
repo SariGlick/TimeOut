@@ -13,9 +13,6 @@ function fetchUserData() {
       }
       return response.json();
     })
-    .then(data => {
-      console.log('User data:', data);
-    })
     .catch(error => console.error('Error fetching user data:', error));
 }
 chrome.runtime.onStartup.addListener(() => {

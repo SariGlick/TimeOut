@@ -83,7 +83,6 @@ export const signIn = async (req, res, next) => {
     if (user) {
       bcrypt.compare(password, user.password, (err, same) => {
         if (err) {
-          console.log("Error in bcrypt compare:", err);
           return next(new Error(err.message));
         }
         if (same) {
