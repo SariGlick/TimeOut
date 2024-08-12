@@ -14,13 +14,13 @@ body {
 }
 
 .content {
-  margin-bottom: 20px;
+  margin-bottom: 2%;
 }
 
 h1 {
   color: #ff6b6b;
   font-size: 10em;
-  margin-bottom: 10px;
+  margin-bottom: 1%;
   font-weight: 900;
 }
 @media (max-width: 768px) {
@@ -37,7 +37,7 @@ h1 {
 p {
   font-size: 3em;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 2%;
 }
 @media (max-width: 768px) {
   p {
@@ -55,33 +55,33 @@ p {
 }
 
 .btn {
-  width: 300px;
+  width: 30%;
   height: 90px;
   font-size: 1.5em;
-  margin: 20px auto;
+  margin: 2% auto;
   color: #fff;
-  border-radius: 5px;
-  padding: 10px 25px;
+  border-radius: 1%;
+  padding: 0;
   font-family: "Lato", sans-serif;
   font-weight: 500;
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, 0.5), 7px 7px 20px 0px rgba(0, 0, 0, 0.1), 4px 4px 5px 0px rgba(0, 0, 0, 0.1);
   outline: none;
   text-align: center;
   background: radial-gradient(circle, rgb(225, 235, 237) 0%, rgb(145, 171, 177) 100%);
-  line-height: 42px;
-  padding: 0;
   border: none;
 }
 .btn:before, .btn:after {
   position: absolute;
   content: "";
   height: 0%;
-  width: 1px;
+  width: 1%;
   box-shadow: -1px -1px 20px 0px rgb(255, 255, 255), -4px -4px 5px 0px rgb(255, 255, 255), 7px 7px 20px 0px rgba(0, 0, 0, 0.4), 4px 4px 5px 0px rgba(0, 0, 0, 0.3);
 }
 .btn:before {
@@ -100,23 +100,21 @@ p {
   box-shadow: none;
 }
 .btn:hover:before {
-  transition: all 500ms ease;
   height: 100%;
 }
 .btn:hover:after {
-  transition: all 500ms ease;
   height: 100%;
 }
 @media (max-width: 768px) {
   .btn {
-    width: 200px;
+    width: 30%;
     height: 70px;
     font-size: 1.2em;
   }
 }
 @media (max-width: 480px) {
   .btn {
-    width: 150px;
+    width: 30%;
     height: 50px;
     font-size: 1em;
   }
