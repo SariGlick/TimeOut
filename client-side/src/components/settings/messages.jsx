@@ -19,7 +19,6 @@ const Messages = ({ currentUser, onUpdate }) => {
     const {t}=useTranslation();
     
     useEffect(() => {
-        console.log('Updating with:', { messageDisplay, inboxDisplay, messagesCount });
         onUpdate({
         messageDisplay,
         inboxDisplay,

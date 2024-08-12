@@ -7,7 +7,6 @@ import {LANGUAGE,LABELS} from './constantSetting.js'
     const {t,i18n}= useTranslation();
     const [lng,setLng] =useState(i18n.resolvedLanguage);
     const handleLngChange=(value)=>{
-        console.log('value= ', value);
          i18n.changeLanguage(value);
             setLng(value)
        }

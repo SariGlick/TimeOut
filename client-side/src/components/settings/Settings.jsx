@@ -46,17 +46,13 @@ const Settings = ({user}) => {
       formData.append(key, value);
   });
 
-  console.log('FormData to be sent:', Object.fromEntries(formData.entries()));
-
     try {
       await updatePreference(preferenceId, formData);
-      console.log('Update successful');
       enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
     } catch (error) {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
     }
     
-   
     
   };
 
