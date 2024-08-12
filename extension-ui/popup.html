@@ -8,11 +8,10 @@
 </head>
 <body>
   <div class="container">
-    <h2>Extension Control Panel</h2>
-    <div id="modeDisplay"></div>
-    <button id="blockSitesBtn">Manage Blocked Sites</button>
-    <button id="browsingDataBtn">View Browsing Data</button>
-    <button id="enterSite">Enter Site</button>
+    <h2 id="controlPanelHeading"></h2>
+    <button id="blockSitesBtn"></button>
+    <button id="browsingDataBtn"></button>
+    <button id="enterSite"></button>
     <div id="blockDiv" class="hidden">
       <h3>Blocked Sites</h3>
       <ul id="blockedSitesList"></ul>
@@ -23,6 +22,7 @@
     </div>
     <div id="browsingDataDiv" class="hidden"></div>
   </div>
+  <script src="constants.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

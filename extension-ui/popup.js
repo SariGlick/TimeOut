@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
+  document.getElementById('controlPanelHeading').textContent = TEXTS.CONTROL_PANEL_HEADING;
+  document.getElementById('blockSitesBtn').textContent = TEXTS.BLOCK_WEBSITES_BUTTON;
+  document.getElementById('browsingDataBtn').textContent = TEXTS.BROWSING_DATA_BUTTON;
+  document.getElementById('enterSite').textContent = TEXTS.ENTER_SITE_BUTTON;
+
   var blockSitesBtn = document.getElementById('blockSitesBtn');
   var browsingDataBtn = document.getElementById('browsingDataBtn');
   var blockDiv = document.getElementById('blockDiv');
@@ -70,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
     modeDisplay.textContent = isBlackList ? "Blacklist Mode" : "Whitelist Mode";
   }
 
-  // Initial load
   chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
     updateModeDisplay(response.isBlackList);
   });
