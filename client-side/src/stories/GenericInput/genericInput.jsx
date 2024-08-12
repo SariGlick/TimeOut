@@ -85,7 +85,6 @@ const GenericInput = ({
         </div>
       ) : (
         <div className="generic-input">
-
           <TextField
             label={label}
             type={type}
@@ -121,8 +120,9 @@ const GenericInput = ({
 };
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password', 'file', 'checkbox']),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  name: PropTypes.string,
+  value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
   width: PropTypes.string,

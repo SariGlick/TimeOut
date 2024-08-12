@@ -4,6 +4,7 @@ import ProfileList from "../components/profileComponent.jsx";
 import Settings from "../components/settings/Settings.jsx";
 import Layout from "./layout.jsx";
 
+
 // const user = {
 //     "_id": "66ab55c006621cb2275dd0e5",
 //     "name": "John Doe",
@@ -23,8 +24,9 @@ import Layout from "./layout.jsx";
 //         "__v": 0
 //     }
 //   }
-export const router = createBrowserRouter([
 
+import Login from "../login/Login.jsx";
+export  const router = createBrowserRouter([
     {
         path: '',
         element: <Layout />,
@@ -45,6 +47,10 @@ export const router = createBrowserRouter([
             {
                 path: '/settings',
                 element: <Settings />
+            },
+            {
+                path: '/login',
+                element: <Login/>
             }
         ]
     },
