@@ -1,9 +1,9 @@
 let blockedSitesCache = null;
-let allowedSitesCache = ["https://chatgpt.com"];
+let allowedSitesCache = [];
 let isBlackList = false;
-
+const baseURL='http://localhost:5000/users/me'
 function fetchUserData() {
-  fetch('http://localhost:5000/users/me', { 
+  fetch(baseURL, { 
     method: 'GET',
     credentials: 'include' 
   })
