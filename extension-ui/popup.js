@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('blockSitesBtn').textContent = TEXTS.BLOCK_WEBSITES_BUTTON;
   document.getElementById('browsingDataBtn').textContent = TEXTS.BROWSING_DATA_BUTTON;
   document.getElementById('enterSite').textContent = TEXTS.ENTER_SITE_BUTTON;
-
   var blockSitesBtn = document.getElementById('blockSitesBtn');
   var browsingDataBtn = document.getElementById('browsingDataBtn');
   var blockDiv = document.getElementById('blockDiv');
@@ -11,26 +10,28 @@ document.addEventListener('DOMContentLoaded', function () {
   var blockedSitesList = document.getElementById('blockedSitesList');
   var enterSite = document.getElementById('enterSite');
   var modeDisplay = document.getElementById('modeDisplay');
+  function populateBlockedSitesList(blockedSites) {
+    blockedSitesList.innerHTML = '';
+    blockedSites.forEach((hostname) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `http://${hostname}`;
+      a.textContent = hostname;
+      a.target = "_blank";
+      li.appendChild(a);
+      blockedSitesList.appendChild(li);
+    });
+  }
 
   enterSite.addEventListener('click', function () {
     chrome.tabs.create({ url: 'http://localhost:3000/home' });
   });
-
   blockSitesBtn.addEventListener('click', function () {
     blockDiv.classList.remove('hidden');
     browsingDataDiv.classList.add('hidden');
     chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
       const blockedSites = response.blockedSites || [];
-      blockedSitesList.innerHTML = '';
-      blockedSites.forEach((hostname) => {
-        const li = document.createElement("li");
-        const a = document.createElement("a");
-        a.href = `http://${hostname}`;
-        a.textContent = hostname;
-        a.target = "_blank";
-        li.appendChild(a);
-        blockedSitesList.appendChild(li);
-      });
+      populateBlockedSitesList(blockedSites);
     });
   });
 
@@ -52,13 +53,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hostname) {
           chrome.runtime.sendMessage({ action: 'addBlockedSite', hostname: hostname }, (response) => {
             if (response.success) {
-              const li = document.createElement("li");
-              const a = document.createElement("a");
-              a.href = `http://${hostname}`;
-              a.textContent = hostname;
-              a.target = "_blank";
-              li.appendChild(a);
-              blockedSitesList.appendChild(li);
+              chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
+                const blockedSites = response.blockedSites || [];
+                populateBlockedSitesList(blockedSites);
+              });
             } else {
               console.error(response.message);
             }
@@ -70,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     siteInput.value = "";
   });
+
 
   function updateModeDisplay(isBlackList) {
     modeDisplay.textContent = isBlackList ? "Blacklist Mode" : "Whitelist Mode";
