@@ -1,8 +1,9 @@
 import express from 'express';
-import http from 'http'; // שינוי מ-https ל-http
+import http from 'http'; 
 import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import preferencesRouter from './router/preference.router.js';
 import websitesRouter from './router/websites.router.js';
 import profilesRouter from './router/profile.router.js';
@@ -10,7 +11,6 @@ import visitedWebSitesRouter from './router/visitedWebsite.router.js';
 import usersRouter from './router/user.router.js';
 import { pageNotFound, serverErrors } from './middleware/handleErrors.js';
 import { connectMongo } from './config/db.js';
-import cookieParser from 'cookie-parser';
 
 dotenv.config();
 connectMongo();
@@ -25,6 +25,8 @@ const corsOptions = {
   allowedHeaders: ['Content-Type'],
   exposedHeaders: ['set-cookie'],
 };
+app.use(cors(corsOptions));
+
 app.use(cors(corsOptions));
 
 
@@ -53,7 +55,6 @@ app.use(serverErrors);
 
 const port = process.env.PORT || 5000;
 
-// השתמש ב-http.createServer במקום https.createServer
 http.createServer(app).listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });

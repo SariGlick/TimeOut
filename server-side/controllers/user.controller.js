@@ -1,135 +1,116 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import Users from '../models/user.model.js';
-import dotenv from 'dotenv';
+import * as userService from '../services/user.service.js';
 
-dotenv.config();
-
-const JWT_SECRET = process.env.JWT_SECRET;
 
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find().populate('visitsWebsites profiles preference').select('-__v');
-    res.status(200).send(users);
+    const users = await userService.getUsers();
+    return res.status(200).send(users);
   } catch (err) {
     console.error(err);
-    next({ message: err.message, status: 500 });
+    return next({ message: err.message, status: 500 });
   }
 };
+
+
 
 export const getUserById = async (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) return next({ message: 'ID is not valid' });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next({ message: 'ID is not valid', status: 400 });
+  }
   
   try {
-    const user = await Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
-    if (!user) return next({ message: 'User not found', status: 404 });
-    res.send(user);
+    const user = await userService.getUserById(id);
+    if (!user) {
+      return next({ message: 'User not found', status: 404 });
+    }
+    return res.status(200).send(user);
   } catch (err) {
     console.error(err);
-    next({ message: err.message, status: 500 });
+    return next({ message: err.message, status: 500 });
   }
 };
+
+
 
 export const addUser = async (req, res, next) => {
   try {
-    if (req.file) {
-      req.body.profileImage = req.file.originalname;
-      req.body.password = await bcrypt.hash(req.body.password, 10);
-      const newUser = new Users(req.body);
-      await newUser.validate();
-      await newUser.save();
-      res.status(201).json(newUser);
-    }
+    const newUser = await userService.addUser(req.body, req.file);
+    return res.status(201).json(newUser);
   } catch (err) {
     console.error(err);
-    next({ message: err.message, status: 500 });
+    return next({ message: err.message, status: 500 });
   }
 };
+
+
 
 export const deleteUser = async (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) return next({ message: 'ID is not valid' });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next({ message: 'ID is not valid', status: 400 });
+  }
 
   try {
-    const user = await Users.findByIdAndDelete(id);
-    if (!user) return next({ message: 'User not found', status: 404 });
-    res.send('User deleted successfully!');
+    const user = await userService.deleteUser(id);
+    if (!user) {
+      return next({ message: 'User not found', status: 404 });
+    }
+    return res.status(200).send('User deleted successfully!');
   } catch (err) {
     console.error(err);
-    next({ message: err.message, status: 500 });
+    return next({ message: err.message, status: 500 });
   }
 };
+
+
 
 export const updatedUser = async (req, res, next) => {
   const id = req.params.id;
-  if (!mongoose.Types.ObjectId.isValid(id)) return next({ message: 'ID is not valid' });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next({ message: 'ID is not valid', status: 400 });
+  }
 
   try {
-    if (req.file) req.body.profileImage = req.file.originalname;
-    const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
-    if (!updatedUser) return next({ message: 'User not found', status: 404 });
-    res.status(200).json(updatedUser);
+    const updatedUser = await userService.updatedUser(id, req.body, req.file);
+    if (!updatedUser) {
+      return next({ message: 'User not found', status: 404 });
+    }
+    return res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
-    next({ message: err.message, status: 500 });
+    return next({ message: err.message, status: 500 });
   }
 };
+
+
+
 export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await Users.findOne({ email });
-    if (user) {
-      bcrypt.compare(password, user.password, (err, same) => {
-        if (err) {
-          return next(new Error(err.message));
-        }
-        if (same) {
-          user.password = "****";
-          const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-          res.cookie('token', token, {
-            httpOnly: true,
-            secure: false, 
-            sameSite: 'None'
-          });
-          
-
-          return res.send({ user });
-        } else {
-          return res.status(401).send({ message: 'Auth Failed' });
-        }
-      });
-    } else {
-      return res.status(401).send({ message: 'Auth Failed' });
-    }
+    const { user, token } = await userService.signIn(email, password);
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: false, 
+      sameSite: 'None'
+    });
+    return res.status(200).send({ user });
   } catch (error) {
-    return next(new Error('Server Error'));
+    return next({ message: 'Auth Failed', status: 401 });
   }
 };
-
-
 
 
 export const getUserProfile = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const { token } = req.cookies;
     if (!token) {
       return res.status(401).send({ message: 'No token provided' });
     }
-    jwt.verify(token, JWT_SECRET, async (err, decoded) => {
-      if (err) {
-        return res.status(401).send({ message: 'Failed to authenticate token' });
-      }
-      const user = await Users.findById(decoded.id).select('_id');
-      if (!user) {
-        return res.status(404).send({ message: 'User not found' });
-      }
-      res.send({ user });
-    });
+    const user = await userService.getUserProfile(token);
+    return res.status(200).send({ user });
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    return next(new Error('Server Error'));
+    return next({ message: 'Server Error', status: 500 });
   }
 };
-
