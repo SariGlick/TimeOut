@@ -1,13 +1,10 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 @import '../stories/variables.scss';
 
-$primary-color: rgb(103, 252, 210);
-$black-color: #000000;
-$white-color: #ffffff;
-$hover-color: rgba(103, 252, 210, 0.8);
 
 .homepage {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: $font-family-primary;
   margin: 0;
   padding: 0;
   color: $black-color;
@@ -18,24 +15,26 @@ $hover-color: rgba(103, 252, 210, 0.8);
   background-color: $white-color;
 }
 
+
 .btn-primary {
   background-color: $white-color;
   color: $primary-color;
-  border: 2px solid $primary-color;
+  border: 0.125rem solid $primary-color-home;
   padding: 1.5rem 3rem;
   text-decoration: none;
   font-size: 1.25rem;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   transition: background-color 0.3s, color 0.3s;
   text-align: center;
   display: inline-block;
-  min-width: 200px;
+  min-width: 70%;
+
+  &:hover {
+    background-color: $primary-color-home;
+    color: $white-color;
+  }
 }
 
-.btn-primary:hover {
-  background-color: $primary-color;
-  color: $white-color;
-}
 
 main {
   flex: 1;
@@ -46,85 +45,87 @@ main {
   overflow: hidden;
 }
 
+
 .feature {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 0;
   margin: 0;
+
+  &.odd {
+    background-color: $white-color;
+    color: $black-color;
+    flex-direction: row-reverse;
+  }
+
+  &.even {
+    background-color: $primary-color-home;
+    color: $black-color;
+    flex-direction: row;
+  }
+
+  .content {
+    width: 90%;
+    max-width: 80%;
+    padding: 2rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(33vh + 10cm);
+    border-radius: 2%;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+  }
+
+  .text {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .feature-icon-container {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .feature-icon {
+    font-size: 8rem !important;
+    width: 8rem !important;
+    height: 8rem !important;
+
+    &.odd {
+      color: $primary-color-home;
+    }
+  }
+
+  &:nth-of-type(odd) .text {
+    text-align: left;
+  }
+
+  &:nth-of-type(even) .text {
+    text-align: right;
+  }
 }
 
-.feature.odd {
-  background-color: $white-color;
-  color: $black-color;
-  flex-direction: row-reverse;
-}
-
-.feature.even {
-  background-color: $primary-color;
-  color: $black-color;
-  flex-direction: row;
-}
-
-.feature .content {
-  width: 90%;
-  max-width: 1200px;
-  padding: 2rem;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: calc(33vh + 10cm);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.feature .text {
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.feature-icon-container {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.feature-icon {
-  font-size: 8rem !important;
-  width: 8rem !important;
-  height: 8rem !important;
-}
-
-.feature.odd .feature-icon {
-  color: $primary-color;
-}
-
-.feature:nth-of-type(odd) .text {
-  text-align: left;
-}
-
-.feature:nth-of-type(even) .text {
-  text-align: right;
-}
 
 .btn-secondary {
-  background-color: $primary-color;
+  background-color: $primary-color-home;
   color: $white-color;
-  border: 2px solid $primary-color;
+  border: 2% solid $primary-color-home;
   padding: 1.5rem 3rem;
   text-decoration: none;
   font-size: 1.25rem;
-  border-radius: 8px;
+  border-radius: 8%;
   transition: background-color 0.3s, color 0.3s;
   text-align: center;
   display: inline-block;
-  min-width: 200px;
-}
+  min-width: 200%;
 
-.btn-secondary:hover {
-  background-color: $hover-color;
+  &:hover {
+    background-color: $hover-color;
+  }
 }
