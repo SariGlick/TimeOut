@@ -1,61 +1,39 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import PropTypes from 'prop-types';
 import Select from "../../stories/Select/Select";
 import GenericInput from '../../stories/GenericInput/genericInput'
 import CONSTANTS from './constantSetting';
-import PropTypes from 'prop-types';
-import { useTranslation } from "react-i18next";
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/auth/auth.selector.js'
 import './messages.scss'
 
 
 
-const Messages = ({ /*currentUser,*/ onUpdate }) => {
+const Messages = ({ onUpdate }) => 
+{
     const { TITLES, MESSAGE_DISPLAY_ENUM , LABELS,INBOX_ENUM} = CONSTANTS;
-    const { user } = useSelector(selectAuth);
-    // const { t: translate, i18n: localization } = useTranslation();
-    // const currentUser = useSelector(state => state.user); 
-    // const { timeZone: initialTimeZone="UTC", dateFormat: initialDateFormat="YYYY-MM-DD" } = user.preference;
-    // const { messageDisplay: initialMessageDisplay ="title_only", inboxDisplay: initialInboxDisplay ="group_by_date",
-    //  messagesCount: initialMessagesCount= 0}=user.preference;
-    const initialMessageDisplay = user?.messageDisplay || 'title_only';
-    const initialInboxDisplay = user?.inboxDisplay || 'group_by_date';
-    const initialMessagesCount = user?.messagesCount || 0;
+    const currentUser = useSelector(state => state.user);
+    const initialMessageDisplay = currentUser?.messageDisplay || 'title_only';
+    const initialinboxMessages = currentUser?.inboxMessages || 'group_by_date';
+    const initialMessagesCount = currentUser?.messagesCount || 0;
     const [messageDisplay, setMessageDisplay] = useState(initialMessageDisplay);
-    const [inboxDisplay, setInboxDisplay] = useState(initialInboxDisplay);
+    const [inboxMessages, setinboxMessages] = useState(initialinboxMessages);
     const [messagesCount,setMessagesCount]=useState(initialMessagesCount);
     const {t}=useTranslation();
 
-    const prevValues = useRef({
-            messageDisplay,
-            inboxDisplay,
-            messagesCount
-          });
-    
-          useEffect(() => {
-            const changes = {};
-            if (prevValues.current.messageDisplay !== messageDisplay) {
-                changes.messageDisplay = messageDisplay;
-            }
-            if (prevValues.current.inboxDisplay !== inboxDisplay) {
-                changes.inboxDisplay = inboxDisplay;
-            }
-            if (prevValues.current.messagesCount !== messagesCount) {
-                changes.messagesCount = messagesCount;
-            }
-            if (Object.keys(changes).length > 0) {
-                onUpdate(changes);
-                prevValues.current = {
-                    messageDisplay,
-                    inboxDisplay,
-                    messagesCount
-                };
-            }
-        }, [messageDisplay, inboxDisplay, messagesCount, onUpdate]);
+    useEffect(() => {
+        if (currentUser) {
+            onUpdate({
+                messageDisplay,
+                inboxMessages,
+                messagesCount
+            });
+        }
+    }, [messageDisplay, inboxMessages, messagesCount, currentUser]);
 
-    // if (!currentUser) {
-    //     return <div>Loading...</div>; 
-    // }
+    if (!currentUser) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div className="messages-settings">
@@ -89,16 +67,16 @@ const Messages = ({ /*currentUser,*/ onUpdate }) => {
             value: value          
           }))}
           title={t(TITLES. MESSAGES_INBOX)}
-          onChange={setInboxDisplay}
-          value={inboxDisplay}
+          onChange={setinboxMessages}
+          value={inboxMessages}
            size={'large'}
           widthOfSelect='200px'
         />
         </div>
     )
     
-}
 
+ }
 Messages.propTypes = {
     currentUser: PropTypes.object.isRequired,
     onUpdate: PropTypes.func.isRequired

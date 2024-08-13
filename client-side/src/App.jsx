@@ -13,14 +13,31 @@ import './App.scss';
 
 function App() {
 
-  const { user } = useSelector(selectAuth);
-  const {i18n: localization } = useTranslation();
-  
-  useEffect(() => {
-    if (user && user.preference && user.preference.language) {
-      localization.changeLanguage(user.preference.language);
+  const  { i18n } = useTranslation();
+
+   useEffect(()=>{
+    const user={
+      "preference": {
+      "timeZone": "UTC",
+      "dateFormat": "DD-MM-YYYY",
+      "inboxMessages":'group by date',
+      "messageDisplay":'title only',
+      "messageDisplay":0,
+      "displayIncomeMessages": false,
+      "displayBrowsingTimeLimit": false,
+      "_id": "66aa0b58ba3d93dba635d414",
+      "emailFrequency": "weekly",
+      "sendNotificationTime": 20,
+      "soundVoice": "seatear.mp3",
+      "__v": 0,
+        "language": "es"
+      }
     }
-  }, [user, localization]);
+
+
+    i18n.changeLanguage(user.preference.language)
+
+   },[])
 
   return (
 
