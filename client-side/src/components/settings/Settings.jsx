@@ -24,10 +24,10 @@ const Settings = ({user}) => {
 
   const elements = [
     <AccountTab />,
-    <Notifications currentUser={user} onUpdate={setNotificationsData}/>,
-    <Preferences currentUser={user} onUpdate={setPreferencesData}/>,
+    <Notifications onUpdate={setNotificationsData}/>,
+    <Preferences onUpdate={setPreferencesData}/>,
     <></>,
-    <Messages currentUser={user} onUpdate={setMessagesData}/>
+    <Messages onUpdate={setMessagesData}/>
   ]
 
   const handleFormSubmit = async () => {

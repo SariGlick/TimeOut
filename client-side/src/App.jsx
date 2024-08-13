@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectAuth } from './redux/auth/auth.selector.js';  
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/router.jsx';
@@ -11,29 +13,15 @@ import './App.scss';
 
 function App() {
 
-
-  const  { i18n } = useTranslation();
-
-   useEffect(()=>{
-    const user={
-      "preference": {
-      "timeZone": "UTC",
-      "dateFormat": "DD-MM-YYYY",
-      "displayIncomeMessages": false,
-      "displayBrowsingTimeLimit": false,
-      "_id": "66953d2791606a13857abd26",
-      "emailFrequency": "weekly",
-      "sendNotificationTime": 20,
-      "soundVoice": "seatear.mp3",
-      "__v": 0,
-        "language": "es"
-      }
-    }
+  const { user } = useSelector(selectAuth);
+  const {i18n: localization } = useTranslation();
   
+  useEffect(() => {
+    if (user && user.preference && user.preference.language) {
+      localization.changeLanguage(user.preference.language);
+    }
+  }, [user, localization]);
 
-    i18n.changeLanguage(user.preference.language)
-
-   },[])
   return (
 
     <>
