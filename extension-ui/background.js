@@ -85,15 +85,16 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 });
-importScripts('constants.js');
+importScripts('constants.js');import { BASE_URL } from './constants';
 let blockedSitesCache = null;
+let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
+let isBlackList = false; 
 
-// Initialize cache when the extension is loaded
-chrome.runtime.onStartup.addListener(() => initializeBlockedSitesCache());
-chrome.runtime.onInstalled.addListener(() => initializeBlockedSitesCache());
+chrome.runtime.onStartup.addListener(() => initializeCaches());
+chrome.runtime.onInstalled.addListener(() => initializeCaches());
 
-function initializeBlockedSitesCache(callback) {
-  chrome.storage.local.get("blockedSites", (data) => {
+function initializeCaches(callback) {
+  chrome.storage.local.get(["blockedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
     if (typeof callback === "function") {
       callback();
@@ -101,10 +102,9 @@ function initializeBlockedSitesCache(callback) {
   });
 }
 
-// Use this function to ensure cache is initialized
-function ensureBlockedSitesCacheInitialized(callback) {
+function ensureCachesInitialized(callback) {
   if (blockedSitesCache === null) {
-    initializeBlockedSitesCache(callback);
+    initializeCaches(callback);
   } else if (typeof callback === "function") {
     callback();
   }
@@ -122,7 +122,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
-  ensureBlockedSitesCacheInitialized(() => {
+  ensureCachesInitialized(() => {
     handleBeforeNavigate(details);
   });
 }, { url: [{ schemes: ['http', 'https'] }] });
@@ -130,54 +130,76 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
 function handleBeforeNavigate(details) {
   try {
     const url = new URL(details.url);
-    
     if (url.protocol === 'chrome:' || url.protocol === 'about:') {
       return;
     }
 
     const hostname = url.hostname.toLowerCase();
-    
-    if (blockedSitesCache.some(site => hostname.includes(site))) {
-      chrome.tabs.get(details.tabId, (tab) => {
-        if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
-          return;
-        }
-        chrome.scripting.executeScript({
-          target: { tabId: details.tabId },
-          func: () => {
-            //TODO  add UI for the oops window
-             window.stop();
-            window.location.href = chrome.runtime.getURL('oops.html');
-          }
-        }).catch(error => {
-          console.error("Error executing script: ", error);
-        });
-      });
+
+    if (isBlackList) {
+      if (blockedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
+    } else {
+      if (!allowedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
     }
   } catch (error) {
     console.error("Invalid URL: ", error);
   }
 }
 
+function blockSite(tabId) {
+  chrome.tabs.get(tabId, (tab) => {
+    if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
+      return;
+    }
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: () => {
+        window.stop();
+        window.location.href = chrome.runtime.getURL('oops.html');
+      }
+    }).catch(error => {
+      console.error("Error executing script: ", error);
+    });
+  });
+}
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addBlockedSite') {
     const hostname = request.hostname.toLowerCase();
-    ensureBlockedSitesCacheInitialized(() => {
+    ensureCachesInitialized(() => {
       if (!blockedSitesCache.includes(hostname)) {
         blockedSitesCache.push(hostname);
         chrome.storage.local.set({ blockedSites: blockedSitesCache }, () => {
           sendResponse({ success: true });
         });
       } else {
-        sendResponse({ success: false, message: 'Site already blocked' });
+        sendResponse({ success: false, message: "Site is already blocked." });
       }
     });
-    return true; // כדי להורות שהתגובה היא אסינכרונית
-  } else if (request.action === 'getBlockedSites') {
-    ensureBlockedSitesCacheInitialized(() => {
+    return true;
+  }
+
+  if (request.action === 'getMode') {
+    ensureCachesInitialized(() => {
+      sendResponse({ isBlackList: isBlackList });
+    });
+    return true;
+  }
+
+  if (request.action === 'getBlockedSites') {
+    ensureCachesInitialized(() => {
       sendResponse({ blockedSites: blockedSitesCache });
     });
-    return true; // כדי להורות שהתגובה היא אסינכרונית
+    return true;
+  }
+
+  if (request.action === 'getAllowedSites') {
+    sendResponse({ allowedSites: allowedSitesCache });
+    return true;
   }
 });
 
@@ -193,3 +215,20 @@ function showNotification(site, num, options = {}) {
   
   chrome.notifications.create(notificationOptions);
 }
+
+chrome.runtime.onInstalled.addListener(() => {
+
+  fetch(`${BASE_URL}/${userId}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(settings => {
+      chrome.storage.local.set({ userSettings: settings }, () => {
+      });
+    })
+    .catch(error => console.error('Failed to fetch user settings:', error));
+});
+
