@@ -32,7 +32,7 @@ export const darkTheme = createTheme({
     },
     background: {
       default: '#303030',
-      paper: '#424242',
+      paper: '#1f1f1f',
     },
     text: {
       primary: '#ffffff', // צבע הטקסט

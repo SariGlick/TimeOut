@@ -5,8 +5,6 @@ import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import Preferences from './Preferences.jsx';
-import AccountTab from './AccountTab.jsx';
-import Notifications from './Notifications.jsx';
 import DisplaySettings from './DisplaySettings.jsx';
 import CONSTANTS from './constantSetting.js'
 import { useSnackbar } from 'notistack';
@@ -25,8 +23,6 @@ const Settings = ({user}) => {
   const preferenceId = user.preference._id;
   const elements = [
 
-    <AccountTab />,
-    <Notifications currentUser={user} onUpdate={setNotificationsData}/>,
     <Preferences currentUser={user} onUpdate={setPreferencesData}/>,
     <DisplaySettings currentUser={user} onUpdate={setDisplaySettingsData} />,
   ]

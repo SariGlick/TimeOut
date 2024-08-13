@@ -1,12 +1,12 @@
 import React from 'react';
-import './App.scss';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import './App.scss';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
+import { ThemeProvider } from './themes/ThemeProvider.jsx';
 import Footer from './stories/footer/FooterComponent';
-import { SnackbarProvider } from 'notistack';
-import { ThemeProvider} from './themes/ThemeProvider.jsx'
 
 function App() {
 

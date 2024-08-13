@@ -1,10 +1,9 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next'
-import Select from '../../stories/Select/Select.jsx'
-import CONSTANTS from './constantSetting.js'
+import { useTranslation } from 'react-i18next';
 import moment from 'moment-timezone';
-import './Preferences.scss';
+import Select from '../../stories/Select/Select.jsx';
+import CONSTANTS from './constantSetting.js';
 
 const createTimeZones = () => {
   return moment.tz.names().map(timezone => ({

@@ -17,8 +17,6 @@ body[data-theme='dark'] {
 
 .App {
   text-align: center;
-  // background-color: var(--background-default);
-  // color: var(--text-primary);
 }
 
 .App-logo {
@@ -34,7 +32,6 @@ body[data-theme='dark'] {
 
 .App-header {
   background-color: #282c34;
-  // background-color: var(--mui-palette-background-paper);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -42,13 +39,11 @@ body[data-theme='dark'] {
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-  // color: var(--mui-palette-text-primary);
 
 }
 
 .App-link {
   color: #61dafb;
-  // color: var(--mui-palette-primary-main);
 
 }
 
