@@ -6,10 +6,15 @@ import { store } from './redux/store.jsx';
 import Footer from './stories/footer/FooterComponent'
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
-
+import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 function App() {
+  const {i18n} = useTranslation();
+  useEffect(()=>{
+   i18n.changeLanguage('en')
+  },[])
   return (
-
+     
     <>
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>

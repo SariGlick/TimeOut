@@ -39,6 +39,6 @@ const  VerticalTabs=({ labels=['label 1','label 2'],elements=[<p>tab 1</p>, <pp>
 
 VerticalTabs.propTypes={
   labels:PropTypes.arrayOf(PropTypes.string).isRequired,
-  components:PropTypes.arrayOf(PropTypes.element).isRequired
+  elements:PropTypes.arrayOf(PropTypes.element).isRequired
 }
 export default VerticalTabs
