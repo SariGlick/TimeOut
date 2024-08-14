@@ -37,6 +37,7 @@ async function visitedWebsiteservice(data) {
   }
 
   const user = await Users.findById(userId);
+  endDate = new Date(now.getFullYear()+1, now.getMonth(), now.getDate() + 1);
 
   const results = [];
   let i = 0;
