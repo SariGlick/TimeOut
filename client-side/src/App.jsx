@@ -18,6 +18,10 @@ function App() {
         <Footer />
       </Provider>
     </SnackbarProvider>
+    <OAuthProvider>
+<GoogleLogin></GoogleLogin>
+</OAuthProvider> 
+
 
     </>
   );
