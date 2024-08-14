@@ -26,7 +26,6 @@ Primary.args = {
   size: 'large',
   widthOfSelect: "150px",
   onChange: (selectedValue) => {
-    console.log('Selected value in Primary:', selectedValue);
   },
 };
 
@@ -42,6 +41,6 @@ Secondary.args = {
   size: 'small',
   widthOfSelect: "170px",
   onChange: (selectedValue) => {
-    console.log('Selected value in Secondary:', selectedValue);
   },
 };
+

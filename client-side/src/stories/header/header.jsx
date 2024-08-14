@@ -106,7 +106,7 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                        <LabTabs
+           <LabTabs
           nameOfClass="navbar-tabs"
           text={['edit user profile','manage notifications']}
           nav={['/editUserProfile','/manageNotifications'] }

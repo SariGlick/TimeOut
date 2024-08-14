@@ -1,0 +1,11 @@
+/* messages.scss */
+.messages-settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.messages-settings > * {
+    margin-bottom: 20px; /* מוסיף מרווח בין כל רכיב */
+}

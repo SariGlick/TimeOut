@@ -83,3 +83,9 @@ PasswordInput.args = {
   label: 'Enter password',
   type: 'password',
 };
+export const CheckboxInput = Template.bind({});
+CheckboxInput.args = {
+  label: 'Enable notifications',
+  type: 'checkbox',
+  value: false, 
+};
