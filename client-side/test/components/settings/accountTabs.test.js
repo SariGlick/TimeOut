@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import AccountTab from './AccountTab';
+import AccountTab from '../../stories/verticalTabs/verticalTabs.js';
 
 
 
