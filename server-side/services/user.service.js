@@ -34,22 +34,22 @@ export const updatedUser = async (id, userData, file) => {
   }
   return Users.findByIdAndUpdate(id, userData, { new: true });
 };
-
 export const signIn = async (email, password) => {
-    console.log("i am here");
-    
   const user = await Users.findOne({ email });
-  if (user) {
-    
-    const same = await bcrypt.compare(password, user.password);
-    if (same) {
-      user.password = "****"; 
-      const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-      return { user, token };
-    }
+  if (!user) {
+      throw new Error('Auth Failed');
   }
-  throw new Error('Auth Failed');
+
+  const same = await bcrypt.compare(password, user.password);
+  if (!same) {
+      throw new Error('Auth Failed');
+  }
+
+  user.password = "****"; 
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+  return { user, token };
 };
+
 
 export const getUserProfile = async (token) => {
   const decoded = jwt.verify(token, JWT_SECRET);
