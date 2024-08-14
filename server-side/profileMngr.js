@@ -15,14 +15,18 @@ export default async function activeProfile(userId) {
 
     try {
         const user = await getUserById(userId);
-        const currentTime = getcurrentTime(user.preferences.timeZone, new Date());
-        const activeProfile = user.profiles.filter((item) => item.listWebsites.filter((website) => {
-            return website.limitedTimes.some((item) => {
-                return getcurrentTime(user.preferences.timeZone, item.start) <= currentTime &&
-                    getcurrentTime(user.preferences.timeZone, item.end) >= currentTime;
-            })
-        }))
-        return activeProfile
+        if (user.profiles.length === 0)
+            return [];
+        else {
+            const currentTime = getcurrentTime(user.preferences.timeZone, new Date());
+            const activeProfile = user.profiles.filter((item) => item.listWebsites.filter((website) => {
+                return website.limitedTimes.some((item) => {
+                    return getcurrentTime(user.preferences.timeZone, item.start) <= currentTime &&
+                        getcurrentTime(user.preferences.timeZone, item.end) >= currentTime && item.start <= item.end
+                })
+            }))
+            return activeProfile;
+        }
     }
     catch (error) {
         throw error
