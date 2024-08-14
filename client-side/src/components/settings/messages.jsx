@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import PropTypes from 'prop-types';
+import { selectAuth } from '../../redux/auth/auth.selector';
 import Select from "../../stories/Select/Select";
 import GenericInput from '../../stories/GenericInput/genericInput'
 import CONSTANTS from './constantSetting';
@@ -12,7 +13,7 @@ import './messages.scss'
 const Messages = ({ onUpdate }) => 
 {
     const { TITLES, MESSAGE_DISPLAY_ENUM , LABELS,INBOX_ENUM} = CONSTANTS;
-    const currentUser = useSelector(state => state.user);
+    const { currentUser } = useSelector(selectAuth); 
     const initialMessageDisplay = currentUser?.messageDisplay || 'title_only';
     const initialinboxMessages = currentUser?.inboxMessages || 'group_by_date';
     const initialMessagesCount = currentUser?.messagesCount || 0;
@@ -30,10 +31,6 @@ const Messages = ({ onUpdate }) =>
             });
         }
     }, [messageDisplay, inboxMessages, messagesCount, currentUser]);
-
-    if (!currentUser) {
-        return <div>Loading...</div>; 
-    }
 
     return (
         <div className="messages-settings">
