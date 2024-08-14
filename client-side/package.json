@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",
@@ -35,7 +36,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "webpack --mode production",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
@@ -84,6 +85,7 @@
     "react-scripts": "^5.0.1",
     "regenerator-transform": "^0.15.2",
     "sass": "^1.77.6",
-    "storybook": "^8.1.11"
+    "storybook": "^8.1.11",
+    "webpack-cli": "^5.1.4"
   }
 }

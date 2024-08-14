@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   var modeDisplay = document.getElementById('modeDisplay');
 
   enterSite.addEventListener('click', function () {
-    chrome.tabs.create({ url: 'http://localhost:3000/home' });
+    //TODO Insert a folder-client-side inside a folder extension-ui
+    chrome.tabs.create({ url: chrome.runtime.getURL('client-side/dist/index.html') });
   });
+
 
   blockSitesBtn.addEventListener('click', function () {
     blockDiv.classList.remove('hidden');
