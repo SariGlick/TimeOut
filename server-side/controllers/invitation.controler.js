@@ -3,24 +3,10 @@ import Invitations from '../models/invitation.model.js';
 
 export const getAllInvitations = async (req, res, next) => {
     try {
-        const invitations = await Invitations.find().populate('invitedUserID profileID').select('-__v');
+        const invitations = await Invitations.find().select('-__v');
         res.json(invitations);
     } catch (err) {
         next({ message: err.message, status: 500 });
-    }
-};
-
-export const createInvitation = async (req, res, next) => {
-    
-    try {
-        
-        const newInvitation = new Invitations(req.body);
-        await newInvitation.validate();
-        await newInvitation.save();
-        res.status(201).json(newInvitation);
-    } catch (err) {
-        next({ message: err.message, status: 500 });
-        return;
     }
 };
 
@@ -29,13 +15,26 @@ export const getInvitationById = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return next({ message: 'ID is not valid', status: 400 });
     try {
-        const invitation = await Invitations.findById(req.params.id).populate('invitedUserID profileID').select('-__v');
+        const invitation = await Invitations.findById(id).select('-__v');
         if (!invitation) {
             return next({ message: 'Invitation was not found ', status: 404 });
         }
         res.json(invitation);
     } catch (err) {
         next({ message: err.message, status: 500 });
+    }
+};
+
+export const createInvitation = async (req, res, next) => {
+    
+    try {
+        const newInvitation = new Invitations(req.body);
+        await newInvitation.validate();
+        await newInvitation.save();
+        res.status(201).json(newInvitation);
+    } catch (err) {
+        next({ message: err.message, status: 500 });
+        return;
     }
 };
 
