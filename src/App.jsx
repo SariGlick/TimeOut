@@ -12,11 +12,10 @@ function App() {
     <>
       <RouterProvider router={router} />
       <Provider store={store}>
-        {/* <SignUp/> */}
-        {/* <Login/> */}
+       
         <Footer />
 
-        
+
         
       </Provider>
     </>

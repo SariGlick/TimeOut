@@ -16,7 +16,7 @@ const SignInSchema = Yup.object().shape({
 });
 
 function Login() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isNotExists,setIsNotExists]=useState(false)
   const formik = useFormik({
@@ -52,7 +52,7 @@ function Login() {
         else{
           localStorage.setItem("nameUser",currentUser.data.user.name)
         }
-        navigate('/home')
+        // navigate('/home')
       window.location.reload();
     } catch (error) {
 

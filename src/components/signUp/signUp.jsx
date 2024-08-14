@@ -13,7 +13,7 @@ import MESSAGES from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import { createUser } from '../../services/userService';
 import { addUser } from '../../redux/user/user.slice';
-// ייבוא האקשן
+
 
 
 const SignUpSchema = Yup.object().shape({
@@ -30,7 +30,6 @@ const SignUpSchema = Yup.object().shape({
     .min(4, MESSAGES.password.min)
 });
 function SignUp() {
-  // const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const formik = useFormik({
@@ -46,22 +45,11 @@ function SignUp() {
   });
   const userSignUp = async (user) => {
     try {
-  //     const response = await axios.post('http://localhost:5004/users/', user
-  //  , {
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       }
-  //     });
-  console.log(user,"userlogin");
   const response = await createUser(user); 
-  console.log(response,"rsrs");
-  // console.log(response.data.user);
-      // localStorage.setItem("accessToken", response.data.token);
       localStorage.setItem("nameUser", user.name);
       dispatch(addUser(response.user));
-      // navigate('/home')
-    
-      // window.location.reload();
+
+      window.location.reload();
       
     } catch (error) {
       console.error("error");
