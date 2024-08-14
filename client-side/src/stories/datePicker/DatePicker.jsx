@@ -4,22 +4,22 @@ import DateInput from "../DateTime/DateInput";
 import GenericButton from "../Button/GenericButton";
 import "./DatePicker.scss";
 
- const   DatePicker = ({ onSubmit }) => {
+const DatePicker = ({ onSubmit }) => {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
 
   const storeArr = () => {
     const dataArr = [startDate, endDate];
-    //fillData(dataArr);
+    onSubmit(dataArr)
   }
 
   const isButtonDisabled = (!startDate || !endDate) || startDate > endDate;
 
   const handleDateChange = (inputName, date) => {
     if (inputName === 'start') {
-        setStartDate(date);
+      setStartDate(date);
     } else {
-        setEndDate(date);
+      setEndDate(date);
     }
   }
 
