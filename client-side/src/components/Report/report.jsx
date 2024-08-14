@@ -10,6 +10,7 @@ import DateInput from "../../stories/DateTime/DateInput";
 import PdfGenerator from "./pdf.jsx";
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import { OPTION_ARRAY, TIME } from './report.constant.jsx';
+import {handlePost} from '../../axios/middleware.js'
 import './report.scss'
 
 export default function Report() {
@@ -72,13 +73,13 @@ export default function Report() {
   const fillData = async () => {
 
     const body = {
-      userId: "66a21c983652170a94fe4247",
+      userId: "66bc55ba0848c7062b25610b",
       type: selectType,
       customDates: selectType === "custom" ? customArr : null
     }
 
     try {
-      await axios.post(`http://localhost:5000/vistedWebsite/showVisitedWebsite`, body)
+      await handlePost(`/vistedWebsite/showVisitedWebsite`, body)
         .then(res => {
           setData(res.data)
           

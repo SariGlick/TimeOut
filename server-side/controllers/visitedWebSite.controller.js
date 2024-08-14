@@ -18,17 +18,26 @@ export const createVisitedWebsite = async (req, res) => {
         res.status(400).json({ message: err.message });
     }
 };
-export const getVisitedWebsiteById = async (visitsId) => {
+
+
+export const getVisitedWebsiteById = async (req, res,next) => {
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return next({ message: 'id is not valid' })
     try {
-        const visitedWebsite = await VisitedWebsite.findById(visitsId).populate('websiteId').select('-__v');
+        const visitedWebsite = await VisitedWebsite.findById(id).populate('websiteId').select('-__v');
         if (!visitedWebsite) {
             return next({message:'visited Websites not found ',status:404})
         }
-        return visitedWebsite
+        res.json(visitedWebsite);
     } catch (err) {
-        next({message:err.message})
+        next({message:err.message,status:500})
     }
 };
+
+
+
+
 export const updateVisitedWebsite = async (req, res) => {
     try {
         const updatedVisitedWebsite = await VisitedWebsite.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -52,6 +61,19 @@ export const deleteVisitedWebsite = async (req, res) => {
 
     }
 };
+
+export const getVisitedWebsiteByvisitsId = async (visitsId) => {
+    try {
+        const visitedWebsite = await VisitedWebsite.findById(visitsId).populate('websiteId').select('-__v');
+        if (!visitedWebsite) {
+            throw new Error('ID is not valid');
+        }
+        return visitedWebsite
+    } catch (err) {
+        throw new Error(error.message);
+    }
+};
+
 
 
 export const showVisitedWebsite = async (req, res) => {

@@ -7,6 +7,7 @@ import { getWebsiteById } from '../controllers/websites.controller.js'
 
 async function visitedWebsiteservice(data) {
   const { userId, type, customDates } = data;
+
   const now = new Date();
   let startDate, endDate, div;
 
@@ -37,7 +38,6 @@ async function visitedWebsiteservice(data) {
   }
 
   const user = await Users.findById(userId);
-  endDate = new Date(now.getFullYear()+1, now.getMonth(), now.getDate() + 1);
 
   const results = [];
   let i = 0;
@@ -45,7 +45,7 @@ async function visitedWebsiteservice(data) {
   for (const websiteId of user.visitsWebsites) {
 
     try {
-      const websiteData = await getVisitedWebsiteById(websiteId);
+      const websiteData = await getVisitedWebsiteByvisitsId(websiteId);
 
       if (websiteData && websiteData.visitsTime) {
         const totalActivityTime = websiteData.visitsTime.reduce((total, visit) => {
