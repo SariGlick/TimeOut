@@ -38,6 +38,7 @@ const VisitedWebsitesComponent = ({ startDate, endDate }) => {
             {(websites.loading || users.loading) && <Loader className="secondary" />}
             <Stack className="custom-stack">
                 <PieChart
+                    data-testid="pie-chart"
                     series={[
                         {
                             data: website.map((data) => ({ label: data.name, value: data.time, color: getRandomColor() })),

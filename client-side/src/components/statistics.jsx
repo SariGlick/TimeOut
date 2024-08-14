@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import DateTimePicker from './report.jsx';
+import DateTimePicker from '../stories/datePicker/DatePicker.jsx';
 import VisitedWebsitesComponent from './statistics/graphs.jsx';
 
 const Statistics = () => {
@@ -8,11 +8,11 @@ const Statistics = () => {
     const [endDate, setEndDate] = useState('');
     const [showVisitedWebsites, setShowVisitedWebsites] = useState(false);
 
-    const handleDateSubmit = (start, end) => {
-        setStartDate(start);
-        setEndDate(end);
+    const onSubmit = useCallback((arrDate) => {
+        setStartDate(arrDate[0]);
+        setEndDate(arrDate[1]);
         setShowVisitedWebsites(true);
-    };
+    }, []);
 
     const appolo_server_url = process.env.REACT_APP_APOLLO_SERVER_URL;
 
@@ -22,13 +22,11 @@ const Statistics = () => {
     });
 
     return (
-        <>
-            <ApolloProvider client={client}>
-                <DateTimePicker onDateSubmit={handleDateSubmit} />
-                {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
-            </ApolloProvider>
-        </>
+        <ApolloProvider client={client}>
+            <DateTimePicker onSubmit={onSubmit} />
+            {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
+        </ApolloProvider>
     );
 };
-export default Statistics;
 
+export default Statistics;
