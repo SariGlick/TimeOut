@@ -26,8 +26,7 @@ import './header.scss';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t, i18n } = useTranslation();
-  const { user } = useSelector(selectAuth); 
+  const { t: translate, i18n } = useTranslation();  const { user } = useSelector(selectAuth); 
 
 
   const handleOpenNavMenu = (event) => {
@@ -84,7 +83,7 @@ function ResponsiveAppBar() {
             >
           <LabTabs
           nameOfClass="navbar-tabs"
-          text={[t("home"), t("reports"), t("statistics"), t("profiles")]}
+          text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
           nav={["/home","/reports","/statistics","/profiles"] }
         />
             </Menu>
@@ -101,7 +100,7 @@ function ResponsiveAppBar() {
           <Box className="middle-side-box">
           <LabTabs
           nameOfClass="navbar-tabs"
-          text={[t("home"), t("reports"), t("statistics"), t("profiles")]}
+          text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
           nav={["/home","/reports","/statistics","/profiles"] }
         />
           </Box>
@@ -128,7 +127,7 @@ function ResponsiveAppBar() {
             >
                         <LabTabs
           nameOfClass="navbar-tabs"
-          text={[t('settings')]}
+          text={[translate('settings')]}
           nav={['/settings']}
         />
             </Menu>
