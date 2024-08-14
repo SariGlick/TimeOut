@@ -7,7 +7,9 @@
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
     border-color: $color-border;
     border-width: 1px;
-    width: 100%;
+    width: 50%;
+    margin-right: 200px;
+    
 
     &:hover {
       border-color: $color-border-hover;
@@ -39,6 +41,7 @@
       font-weight: 400;
       font-size: 14px;
       transition: color 0.3s ease;
+      text-align: left; 
     }
 
     &.Mui-error {
@@ -52,6 +55,7 @@
     font-weight: 400;
     font-size: 16px;
     transition: color 0.3s ease;
+  
 
     &.Mui-focused {
       color: $color-border-hover;

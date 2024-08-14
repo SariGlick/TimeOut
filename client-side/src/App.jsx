@@ -6,6 +6,7 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
+import SignUp from './components/signUp/signUp.jsx';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
+        <SignUp/>
         <Footer />
       </Provider>
     </SnackbarProvider>

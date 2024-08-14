@@ -8,6 +8,8 @@ import MessageIcon from './Icon'
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
 function ResponsiveAppBar() {
+  const [currentname, setCurrentname] = useState(localStorage.getItem('nameUser') || null);
+  const [currentProfile, setCurrentProfile] = useState(localStorage.getItem('nameProfile') || null);
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { user } = useSelector(selectAuth); 
@@ -86,10 +88,14 @@ function ResponsiveAppBar() {
         />
           </Box>
           <Box >
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} >
-              <Avatar>{getAvatarLetter()}</Avatar>
-              </IconButton>
+          <Tooltip title={currentname}>
+            { !currentProfile && < IconButton onClick={handleOpenUserMenu} >
+                <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
+              </IconButton>}
+        
+            { currentProfile && < IconButton onClick={handleOpenUserMenu} >
+                <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
+              </IconButton>}
             </Tooltip>
             <Menu
               id="menu-appbar"
