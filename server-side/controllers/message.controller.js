@@ -101,6 +101,8 @@ export const deleteMessage = async (req, res) => {
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }
+            const countUnreadMessages = await getCountUnreadMessages(message.userId);
+        eventEmitter.emit('new-message', { message:message.userId, countUnreadMessages });
     res.status(200).json({ message: 'Message deleted successfully' });
   } catch (error) {
     res.status(500).json({ error: error.message });
