@@ -223,19 +223,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-function showNotification(site, num, options = {}) {
-  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
-  var notificationOptions = {
-    type: 'basic',
-    iconUrl: options.iconUrl || 'images/icon48.png',
-    title: NOTIFICATION_TITLE,
-    message: message,
-    priority: options.priority || 2
-  };
-
-  chrome.notifications.create(notificationOptions);
-}
-
 const siteLimits = {}; 
 
 function getOrCreateSiteLimit(url) {
@@ -265,22 +252,6 @@ function checkIfSiteBlocked(tab) {
   if (siteLimit.isBlocked) {
     chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
   }
-}
-
-function checkProfileChange() {
-  chrome.storage.local.get(['currentProfile'], (data) => {
-    if (data.currentProfile && data.currentProfile !== currentProfile) {
-      currentProfile = data.currentProfile;
-      updateStorage();
-      Object.values(siteLimits).forEach(siteLimit => {
-        siteLimit.limit = profileLimits[currentProfile];
-        siteLimit.updateStorage();
-        if (siteLimit.isBlocked) {
-          siteLimit.redirectToOopsPage();
-        }
-      });
-    }
-  });
 }
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
