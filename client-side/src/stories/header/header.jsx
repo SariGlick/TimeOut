@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import {
   AppBar,
   Box,
@@ -26,7 +24,7 @@ import './header.scss';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t: translate, i18n } = useTranslation();  const { user } = useSelector(selectAuth); 
+  const { t: translate } = useTranslation();  const { user } = useSelector(selectAuth); 
 
 
   const handleOpenNavMenu = (event) => {
