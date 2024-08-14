@@ -1,4 +1,4 @@
-import mongoose,{Schema} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const InvitationsSchema = new mongoose.Schema({
     inviterID: {type: Schema.Types.ObjectId, ref: 'Users', required: true },
@@ -9,4 +9,3 @@ const InvitationsSchema = new mongoose.Schema({
 });
 
 export default mongoose.model('Invitations', InvitationsSchema);
-
