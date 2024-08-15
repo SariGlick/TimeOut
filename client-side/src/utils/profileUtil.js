@@ -128,10 +128,8 @@ export const validateProfileDate = (formData) => {
     if (startTime > endTime) {
         return false;
     }
-
     return true;
 };
-//////////////טסט////////////////
 export function parseTimeStringToDate(timeString) {
     const [hours, minutes] = timeString.split(':').map(Number);
     const date = new Date();
