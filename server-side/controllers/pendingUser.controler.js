@@ -1,71 +1,74 @@
-import mongoose from 'mongoose';
-import PendingUsers from '../models/pendingUser.model.js';
+import {
+    getAllPendingUsers_service,
+    createPendingUser_service,
+    getPendingUserById_service,
+    updatePendingUser_service,
+    deletePendingUser_service
+} from '../services/pendingUserService';
+
 
 export const getAllPendingUsers = async (req, res, next) => {
     try {
-        const pendingUsers = await PendingUsers.find().populate('userID').select('-__v');
-        res.json(pendingUsers);
+        const pendingUsers = await getAllPendingUsers_service();
+        return res.status(200).json(pendingUsers);
     } catch (err) {
-        next({ message: err.message, status: 500 });
-    }
-};
-
-export const createPendingUser = async (req, res, next) => {
-    console.log(req.body);
-
-    try {
-
-        const newPendingUser = new PendingUsers(req.body);
-        await newPendingUser.validate();
-        await newPendingUser.save();
-        res.status(201).json(newPendingUser);
-    } catch (err) {
-        next({ message: err.message, status: 500 });
-        return;
+        return next({ message: err.message, status: 500 });
     }
 };
 
 export const getPendingUserById = async (req, res, next) => {
-    const id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'ID is not valid', status: 400 });
+    const { id } = req.params;
     try {
-        const pendingUser = await PendingUsers.findById(req.params.id).populate('userID').select('-__v');
+        const pendingUser = await getPendingUserById_service(id);
         if (!pendingUser) {
-            return next({ message: 'Pending user was not found ', status: 404 });
+            return next({ message: 'Pending user was not found', status: 404 });
         }
-        res.json(pendingUser);
+        return res.status(200).json(pendingUser);
     } catch (err) {
-        next({ message: err.message, status: 500 });
+        if (err.name === 'CastError') {
+            return next({ message: 'ID is not valid', status: 400 });
+        }
+        return next({ message: err.message, status: 500 });
+    }
+};
+
+export const createPendingUser = async (req, res, next) => {
+    try {
+        const newPendingUser = await createPendingUser_service(req.body);
+        return res.status(201).json(newPendingUser);
+    } catch (err) {
+        return next({ message: err.message, status: 500 });
     }
 };
 
 export const updatePendingUser = async (req, res, next) => {
-    const id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'ID is not valid', status: 400 });
+    const { id } = req.params;
     try {
-        const updatedPendingUser = await PendingUsers.findByIdAndUpdate(id, req.body, { new: true });
+        const updatedPendingUser = await updatePendingUser_service(id, req.body);
         if (!updatedPendingUser) {
             return next({ message: 'Pending user not found', status: 404 });
         }
-        res.json(updatedPendingUser);
+        return res.status(200).json(updatedPendingUser);
     } catch (err) {
-        next({ message: err.message, status: 500 });
+        if (err.name === 'CastError') {
+            return next({ message: 'ID is not valid', status: 400 });
+        }
+        return next({ message: err.message, status: 500 });
     }
 };
 
 export const deletePendingUser = async (req, res, next) => {
-    const id = req.params.id;
-    if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'ID is not valid', status: 400 });
+    const { id } = req.params;
     try {
-        const deletedPendingUser = await PendingUsers.findByIdAndDelete(id);
+        const deletedPendingUser = await deletePendingUser_service(id);
         if (!deletedPendingUser) {
             return next({ message: 'Pending user not found', status: 404 });
         }
-        res.json({ message: 'Pending user deleted successfully' });
+        return res.status(200).json({ message: 'Pending user deleted successfully' });
     } catch (err) {
-        next({ message: err.message, status: 500 });
+        if (err.name === 'CastError') {
+            return next({ message: 'ID is not valid', status: 400 });
+        }
+        return next({ message: err.message, status: 500 });
     }
 };
