@@ -1,4 +1,3 @@
-
 import mongoose from 'mongoose';
 import Users from '../models/user.model.js';
 import dotenv from 'dotenv';
@@ -7,19 +6,48 @@ dotenv.config();
 import { OAuth2Client } from 'google-auth-library';
 import { messages } from './messages.js'; 
 
-
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
+//   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
+
+//   if (!token) {
+//     return res.status(400).send(messages.error.REQ_TOKEN);
+//   }
+
+//   try {
+//     // Verify the token with Google
+//     const ticket = await client.verifyIdToken({
+//       idToken: token,
+//       audience: process.env.CLIENT_ID
+//     });
+//     const payload = ticket.getPayload();
+    
+//     if (!payload) {
+//       return res.status(500).send(messages.error.FAILED_PAYLOAD);
+//     }
+
+//     const { sub: googleId, email, name } = payload; // Extract email from the payload
+
+//     // Check if the user exists in the database
+//     let user = await Users.findOne({ email });
+//     if (!user) {
+//       // Add the user if they do not exist
+//       user = new Users({ email, name, googleId });
+//       await user.save();
+//     }
+    
+//     return res.status(200).json(user);
+
+//   } catch (error) {
+//     console.error(messages.error.VERIFY_G_TOKEN, error);
+//     return res.status(500).send(messages.error.VERIFY_G_TOKEN_MESSAGE);
+//   }
+// };
 export const getUserByGoogleAccount = async (req, res) => {
   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
-  const email = req.params.email; // Extract email from URL params
 
   if (!token) {
-    return res.status(400).json({ error: 'Token is required' });
-  }
-
-  if (!email || !validateEmail(email)) { // Validate email format
-    return res.status(400).json({ error: 'Valid email is required' });
+    return res.status(400).send(messages.error.REQ_TOKEN);
   }
 
   try {
@@ -28,13 +56,13 @@ export const getUserByGoogleAccount = async (req, res) => {
       idToken: token,
       audience: process.env.CLIENT_ID
     });
-
     const payload = ticket.getPayload();
+
     if (!payload) {
-      return res.status(500).send('Failed to get payload from token');
+      return res.status(500).send(messages.error.FAILED_PAYLOAD);
     }
 
-    const { sub: googleId, name } = payload;
+    const { sub: googleId, email, name } = payload; // Extract email from the payload
 
     // Check if the user exists in the database
     let user = await Users.findOne({ email });
@@ -47,16 +75,23 @@ export const getUserByGoogleAccount = async (req, res) => {
     return res.status(200).json(user);
 
   } catch (error) {
-    console.error('Error verifying Google token:', error);
-    return res.status(500).json({ error: 'Failed to verify Google token' });
+    console.error(messages.error.VERIFY_G_TOKEN, error);
+    return res.status(500).send(messages.error.VERIFY_G_TOKEN_MESSAGE);
   }
 };
-
-// Helper function to validate email format
-function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return re.test(email);
-}
+export const getByEmail = async (req, res) => {
+  const { email } = req.params; 
+  try {
+    const user = await Users.findOne({ email });
+    if (user) {
+      return res.status(200).send(user);
+    } else {
+     return res.status(404).send(messages.error.EMAIL_NOT_FOUND);
+    }
+  } catch (error) {
+   return res.status(500).send(messages.error.INTERNAL_SERVER_ERROR); 
+  }
+};
 export const getCode = async (req, res) => {
   const { email, password } = req.query;
   if (!email) {
@@ -77,28 +112,12 @@ export const getCode = async (req, res) => {
     return res.status(500).send(messages.error.INTERNAL_SERVER_ERROR);
   }
 };
-
-export const getByEmail = async (req, res) => {
-  const { email } = req.params; // תיקון כאן כדי לקחת את ה-email מהפרמטרים של ה-URL
-  try {
-    const user = await Users.findOne({ email });
-    if (user) {
-      return res.status(200).send(user);
-    } else {
-     return res.status(404).send(messages.error.EMAIL_NOT_FOUND);
-    }
-  } catch (error) {
-   return res.status(500).send(messages.error.INTERNAL_SERVER_ERROR); // תיקון מצב שגיאה
-  }
-};
-
 export const addUser = async (req, res) => {
   const { name, password, email, googleId } = req.body;
 
   if (!name || !email) {
-    return res.status(400).send('Name and email are required.'); 
+    return res.status(400).send(messages.error.REQ_EMAIL_NAME); 
   }
-  
   try {
     let user;
     if (googleId) {
