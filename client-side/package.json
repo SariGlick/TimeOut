@@ -10,20 +10,14 @@
     "@mui/material": "^5.16.0",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
     "@mui/x-charts": "^7.10.0",
-<<<<<<< HEAD
     "@mui/x-data-grid": "^7.9.0",
     "@react-google-maps/api": "^2.19.3",
-=======
     "@mui/x-data-grid": "^7.10.0",
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
     "@reduxjs/toolkit": "^2.2.6",
     "@testing-library/react": "^13.4.0",
     "@types/redux": "^3.6.31",
     "axios": "^1.7.2",
-<<<<<<< HEAD
-=======
     "formik": "^2.4.6",
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
     "html2canvas": "^1.4.1",
     "html2pdf.js": "^0.10.2",
     "jest": "^29.7.0",
@@ -98,12 +92,10 @@
     "jest-environment-jsdom": "^29.7.0",
     "notistack": "^3.0.1",
     "prop-types": "^15.8.1",
-<<<<<<< HEAD
+
     "redux-mock-store": "^1.5.4",
-=======
     "react-scripts": "^5.0.1",
     "regenerator-transform": "^0.15.2",
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
     "sass": "^1.77.6",
     "storybook": "^8.1.11"
   },

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { useState } from 'react';
-<<<<<<< HEAD
-import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
-=======
 import { useSelector } from 'react-redux';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import MessageIcon from './Icon'

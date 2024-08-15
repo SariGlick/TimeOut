@@ -14,13 +14,7 @@ function App() {
   }, []);
 
   return (
-<<<<<<< HEAD
     <SnackbarProvider maxSnack={3}>
-=======
-
-    <>
-      <SnackbarProvider maxSnack={3}>
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
       <Provider store={store}>
         <RouterProvider router={router} />
         <Footer />
@@ -28,9 +22,5 @@ function App() {
     </SnackbarProvider>
   );
 }
-<<<<<<< HEAD
 
 export default App;
-=======
-export default App;
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e

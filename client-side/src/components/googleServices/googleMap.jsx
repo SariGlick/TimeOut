@@ -73,32 +73,40 @@ const MapComponent = ({ onSaveData }) => {
   }, []);
 
   const getUserLocation = useCallback(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setCenter({ lat: latitude, lng: longitude });
-        setMarkerPosition({ lat: latitude, lng: longitude });
-        fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.results && data.results.length > 0) {
-              setAddress('');
-            } else {
-              enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />);
-            }
-          })
-          .catch((error) => enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />));
-      },
-      (error) => {
-        enqueueSnackbar(<ToastMessage message={MESSAGES.GET_LOCATION_ERROR} type="error" />);
-        setCenter(defaultCenter);
-        setZoom(2);
-      },
-      { enableHighAccuracy: true }
-    );
-  }, []);
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCenter({ lat: latitude, lng: longitude });
+          setMarkerPosition({ lat: latitude, lng: longitude });
+          setZoom(15); // הגדל את הזום כדי להתמקד טוב יותר במיקום הנוכחי
+          fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.results && data.results.length > 0) {
+                setAddress(data.results[0].formatted_address);
+              } else {
+                enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />);
+              }
+            })
+            .catch(() => enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />));
+        },
+        (error) => {
+          enqueueSnackbar(<ToastMessage message={MESSAGES.GET_LOCATION_ERROR} type="error" />);
+          setCenter(defaultCenter);
+          setZoom(2);
+        },
+        { enableHighAccuracy: true }
+      );
+    } else {
+      enqueueSnackbar(<ToastMessage message={MESSAGES.NOT_SUPPORTED_ERROR} type="error" />);
+      setCenter(defaultCenter);
+      setZoom(2);
+    }
+  }, [enqueueSnackbar]);
+  
 
   useEffect(() => {
     if (navigator.geolocation) {

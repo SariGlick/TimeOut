@@ -2,21 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import { TextField, InputAdornment } from '@mui/material';
-<<<<<<< HEAD
 import './genericInput.scss';
 
 const GenericInput = ({ 
   label, 
   name='',
   type = 'text', 
-=======
-import '../GenericInput/genericInput.scss';
-
-const GenericInput = ({ 
-  label, 
-  type = 'text',
-  name = '', 
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
   value = '', 
   onChange = () => {}, 
   size = 'medium', 
@@ -36,19 +27,11 @@ const GenericInput = ({
     }
   }, [inputValue]);
 
-<<<<<<< HEAD
 const handleChange = (e) => {
   const newValue = e.target.value;
   setInputValue(newValue);
   if (onChange) onChange(e);
 };
-=======
-  const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInputValue(newValue);
-    onChange(e);
-  };
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
 
   const handleValidation = (inputValue) => {
     const validationResult = validation(inputValue);
@@ -72,7 +55,6 @@ const handleChange = (e) => {
         type={type}
         name={name}
         value={inputValue}
-        name={name}
         onChange={handleChange}
         size={size}
         error={error}
@@ -95,12 +77,7 @@ const handleChange = (e) => {
 
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-<<<<<<< HEAD
   type: PropTypes.oneOf(['text', 'number', 'email', 'password','time','url']),
-=======
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
-  name: PropTypes.string,
->>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
