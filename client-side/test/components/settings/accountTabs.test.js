@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react';
-import AccountTab from '../../stories/verticalTabs/verticalTabs.js';
-
+import AccountTab from '../../../src/components/settings/accountTab';
 
 
 test('render the components correctly ', () =>{

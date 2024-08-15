@@ -9,8 +9,10 @@ i18n
 .init(
     {
         debug:true,
-        fallbackLng:'he'
+        fallbackLng:'en'
     }
 )
-export default i18n
+
+
+  export default i18n
 

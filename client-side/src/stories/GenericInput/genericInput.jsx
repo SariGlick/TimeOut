@@ -107,7 +107,7 @@ const GenericInput = ({
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
 
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password','file']),
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,

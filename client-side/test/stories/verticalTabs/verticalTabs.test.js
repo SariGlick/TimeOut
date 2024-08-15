@@ -14,7 +14,6 @@ describe('Vertical tabs component', () => {
                 <VerticalTabs labels={labels} elements={elements} />
             </I18nextProvider>
         );
-
         labels.forEach(label => {
           expect(screen.getByText(label)).toBeInTheDocument();
         });
