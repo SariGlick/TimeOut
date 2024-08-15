@@ -13,7 +13,7 @@ export const createProfile = async (req, res) => {
     const newProfile = new Profile(req.body);
     try {
         const savedProfile = await newProfile.save();
-        res.status(201).json(savedProfile);
+        res.status(200).json(savedProfile);
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -71,11 +71,69 @@ export const deleteProfile = async (req, res) => {
     }
 };
 
+export const updateLocation = async (req, res) => {
+    const { userId, location } = req.body;
+    try {
+        const profiles = await Profile.find({ userId });
+
+        if (!profiles.length) {
+            return res.status(404).send('No profiles found for user');
+        }
+        for (const profile of profiles) {
+            if (profile.googleMapsLocation && profile.googleMapsLocation.enabled) {
+                const profileLocation = profile.googleMapsLocation.location;
+                if (profileLocation && profileLocation.lat && profileLocation.lng) {
+                    const distance = getDistance(location, profileLocation);
+
+                    if (distance < 100) {
+                        await activateProfile(profile._id);
+                    }
+                } else {
+                    console.warn(`Invalid location data for profile ID ${profile._id}`);
+                }
+            }
+        }
+
+        res.send('Location updated');
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).send('Server error');
+    }
+};
+
+const getDistance = (loc1, loc2) => {
+    console.log('loc1', loc1);
+    console.log('loc2', loc2);
+
+    const toRad = (value) => value * Math.PI / 180;
+
+    const R = 6371;
+    const dLat = toRad(loc2.lat - loc1.lat);
+    const dLon = toRad(loc2.lng - loc1.lng);
+    const lat1 = toRad(loc1.lat);
+    const lat2 = toRad(loc2.lat);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) *
+        Math.cos(lat1) * Math.cos(lat2);
+
+    const c = 2 * Math.asin(Math.sqrt(a));
+    const distance = R * c * 1000; 
+
+    console.log(`Distance: ${distance} meters`);
+
+    return distance;
+};
+const activateProfile = async (profileId) => {
+    
+};
 export default {
     getAllProfiles,
     createProfile,
     getProfileById,
     updateProfile,
     getProfilesByUserId,
-    deleteProfile
+    deleteProfile,
+    updateLocation
 };

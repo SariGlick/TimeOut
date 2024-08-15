@@ -29,11 +29,13 @@ app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
 app.use('/users',usersRouter);
 app.use(pageNotFound);
-app.use(serverErrors)
-let port= process.env.PORT;
+app.use(serverErrors);
 
-app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
-})
+if (require.main === module) {
+    const port = process.env.PORT || 5000;
+    app.listen(port, () => {
+        console.log(`Server running at http://localhost:${port}`);
+    });
+}
 
 export default app;
