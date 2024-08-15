@@ -1,6 +1,6 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
-
+import activeProfile from '../profileMngr.js'
 
 export const getAllProfiles = async (req, res, next) => {
     try {
@@ -11,9 +11,6 @@ export const getAllProfiles = async (req, res, next) => {
         next({message:err.message,status:500})
     }
 };
-
-
-
 
 export const createProfile = async (req, res, next) => {
     try {
@@ -76,6 +73,16 @@ export const deleteProfile = async (req, res, next) => {
     }
 };
 
-
-
+export const activeProfileByUserId = async(req, res) => {
+    try {
+        const userId = req.body;
+        const profile = await activeProfile(userId);
+        
+        res.status(201).json(profile);
+    }
+    catch (error) {
+        console.log({ error })
+        res.status(500).send(error.message);
+    }
+}
 
