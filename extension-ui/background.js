@@ -231,4 +231,3 @@ chrome.runtime.onInstalled.addListener(() => {
     })
     .catch(error => console.error('Failed to fetch user settings:', error));
 });
-
