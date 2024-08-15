@@ -1,5 +1,6 @@
 let currentTab = null;
 let startTime = null;
+
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
   try {
     const tab= await chrome.tabs.get(activeInfo.tabId);
@@ -8,11 +9,14 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
     console.error('Error in onActivated listener:', error);
   }
 });
+
+
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.active) {
     updateData(tab);
   }
 });
+
 async function updateData(tab) {
     await updateTimeForPreviousTab();
     currentTab = tab;
@@ -21,12 +25,14 @@ async function updateData(tab) {
       await addSiteToList(tab.url);
     }
 }
+
 async function updateTimeForPreviousTab() {
   if (currentTab && startTime && currentTab.url) {
     const timeSpent = Math.round((Date.now() - startTime) / 1000);
     await updateSiteTime(currentTab.url, timeSpent);
   }
 }
+
 function isValidUrl(url) {
   try {
     new URL(url);
@@ -57,16 +63,20 @@ async function updateSiteTime(url, time) {
     await chrome.storage.local.set({ sites });
   }
 }
+
 async function getSites() {
   const result = await chrome.storage.local.get('sites');
   return result.sites || {};
 }
+
 // Listener for when the browser window is closed
 chrome.windows.onRemoved.addListener(async () => {
   await updateTimeForPreviousTab();
 });
+
 // Set up alarm to periodically update time
 chrome.alarms.create('updateTime', { periodInMinutes: 1 });
+
 chrome.alarms.onAlarm.addListener(async (alarm) => {
   if (alarm.name === 'updateTime') {
     await updateTimeForPreviousTab();
@@ -79,8 +89,10 @@ importScripts('constants.js');import { BASE_URL } from './constants';
 let blockedSitesCache = null;
 let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
 let isBlackList = false; 
+
 chrome.runtime.onStartup.addListener(() => initializeCaches());
 chrome.runtime.onInstalled.addListener(() => initializeCaches());
+
 function initializeCaches(callback) {
   chrome.storage.local.get(["blockedSites"], (data) => {
     blockedSitesCache = data.blockedSites || [];
@@ -89,6 +101,7 @@ function initializeCaches(callback) {
     }
   });
 }
+
 function ensureCachesInitialized(callback) {
   if (blockedSitesCache === null) {
     initializeCaches(callback);
@@ -96,6 +109,7 @@ function ensureCachesInitialized(callback) {
     callback();
   }
 }
+
 async function updateCurrentTabTime() {
   if (currentTab && currentTab.url) {
     await updateTimeForPreviousTab();
@@ -112,13 +126,16 @@ chrome.webNavigation.onBeforeNavigate.addListener((details) => {
     handleBeforeNavigate(details);
   });
 }, { url: [{ schemes: ['http', 'https'] }] });
+
 function handleBeforeNavigate(details) {
   try {
     const url = new URL(details.url);
     if (url.protocol === 'chrome:' || url.protocol === 'about:') {
       return;
     }
+
     const hostname = url.hostname.toLowerCase();
+
     if (isBlackList) {
       if (blockedSitesCache.some(site => hostname.includes(site))) {
         blockSite(details.tabId);
@@ -132,6 +149,7 @@ function handleBeforeNavigate(details) {
     console.error("Invalid URL: ", error);
   }
 }
+
 function blockSite(tabId) {
   chrome.tabs.get(tabId, (tab) => {
     if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
@@ -148,6 +166,7 @@ function blockSite(tabId) {
     });
   });
 }
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addBlockedSite') {
     const hostname = request.hostname.toLowerCase();
@@ -163,23 +182,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
     return true;
   }
+
   if (request.action === 'getMode') {
     ensureCachesInitialized(() => {
       sendResponse({ isBlackList: isBlackList });
     });
     return true;
   }
+
   if (request.action === 'getBlockedSites') {
     ensureCachesInitialized(() => {
       sendResponse({ blockedSites: blockedSitesCache });
     });
     return true;
   }
+
   if (request.action === 'getAllowedSites') {
     sendResponse({ allowedSites: allowedSitesCache });
     return true;
   }
 });
+
 function showNotification(site, num, options = {}) {
   var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
   var notificationOptions = {
@@ -194,6 +217,7 @@ function showNotification(site, num, options = {}) {
 }
 
 chrome.runtime.onInstalled.addListener(() => {
+
   fetch(`${BASE_URL}/${userId}`)
     .then(response => {
       if (!response.ok) {

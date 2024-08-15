@@ -6,6 +6,7 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
+
 function App() {
   return (
 

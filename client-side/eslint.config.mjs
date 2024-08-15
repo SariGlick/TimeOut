@@ -3,6 +3,7 @@ import pluginJs from "@eslint/js";
 import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
 import { fixupConfigRules } from "@eslint/compat";
 import importPlugin from "eslint-plugin-import";
+
 export default [
   {
     files: ["**/*.{js,mjs,cjs,jsx}"],

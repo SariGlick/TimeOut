@@ -1,13 +1,13 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import {createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
-import Statistics from '../components/statistics.jsx'
+import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
-export const router = createBrowserRouter([
+export  const router = createBrowserRouter([
     {
         path: '',
-        element: <Layout />,
+        element: <Layout/>,
         children: [
             {
                 path: '/',
@@ -19,7 +19,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
-                element: <ProfileList />
+                element:<ProfileList/>
             },
             {
                 path: '/statistics',
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/login',
-                element: <Login />
+                element: <Login/>
             }
         ]
     },
