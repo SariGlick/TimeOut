@@ -36,7 +36,7 @@ const useWebSocket = (userId) => {
     return () => {
       ws.close();
     };
-  }, [userId, cntUnreadMessages, initialLoad, enqueueSnackbar]);
+  }, [userId,  initialLoad]);
 
   return { cntUnreadMessages, socket };
 };
