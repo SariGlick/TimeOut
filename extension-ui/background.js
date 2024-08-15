@@ -1,3 +1,4 @@
+const BASE_URL='http://localhost:3000';
 let currentTab = null;
 let startTime = null;
 
@@ -85,7 +86,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 });
-importScripts('constants.js');import { BASE_URL } from './constants';
+importScripts('constants.js');
 let blockedSitesCache = null;
 let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
 let isBlackList = false; 
@@ -135,22 +136,15 @@ function handleBeforeNavigate(details) {
     }
 
     const hostname = url.hostname.toLowerCase();
-    if (blockedSitesCache.some(site => hostname.includes(site))) {
-      chrome.tabs.get(details.tabId, (tab) => {
-        if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
-          return;
-        }
-        chrome.scripting.executeScript({
-          target: { tabId: details.tabId },
-          func: () => {
-            //TODO  add UI for the oops window
-            window.stop();
-            window.location.href = chrome.runtime.getURL('oops.html');
-          }
-        }).catch(error => {
-          console.error("Error executing script: ", error);
-        });
-      });
+
+    if (isBlackList) {
+      if (blockedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
+    } else {
+      if (!allowedSitesCache.some(site => hostname.includes(site))) {
+        blockSite(details.tabId);
+      }
     }
   } catch (error) {
     console.error("Invalid URL: ", error);
@@ -210,9 +204,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
-
-chrome.tabs.onCreated.addListener((tab) => {
-  fetch('http://localhost:3000/profiles/activeProfile', {
+chrome.tabs.onCreated.addListener(() => {
+  fetch(`${BASE_URL}/profiles/activeProfile`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -226,10 +219,6 @@ chrome.tabs.onCreated.addListener((tab) => {
         throw new Error('Failed to fetch active profile. Status: ' + response.status);
       }
       return response.json();
-    })
-    .then(data => {
-      console.log('Active Profile Data:', data);
-      // Perform any actions with the received data here
     })
     .catch(error => {
       console.error('Error fetching active profile:', error.message);
@@ -250,7 +239,7 @@ function showNotification(site, num, options = {}) {
 
 chrome.runtime.onInstalled.addListener(() => {
 
-  fetch(`${BASE_URL}/${userId}`)
+  fetch(`${BASE_URL}/api/settings/${userId}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -263,4 +252,3 @@ chrome.runtime.onInstalled.addListener(() => {
     })
     .catch(error => console.error('Failed to fetch user settings:', error));
 });
-

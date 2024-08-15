@@ -33,13 +33,11 @@ app.use('/users', usersRouter);
 app.use('/api', settingsRouter);
 
 app.use(pageNotFound);
-app.use(serverErrors)
+app.use(serverErrors);
 
-let port= process.env.PORT;
+const port = process.env.PORT;
+app.listen(port, () => {
+});
 
-app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
-})
 
 export default app;
-
