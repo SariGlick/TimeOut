@@ -1,12 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
+<<<<<<< HEAD
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
+=======
+import { useSelector } from 'react-redux';
+import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
+>>>>>>> 74f67f50c8ffb1942092e670a609eb5f84bfac7e
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import MessageIcon from './Icon'
 import './header.scss';
+import { selectAuth } from '../../redux/auth/auth.selector';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const { user } = useSelector(selectAuth); 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -19,6 +27,13 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const getAvatarLetter = () => {
+    if (user && user.name) {
+      return user.name.charAt(0).toUpperCase();
+    }
+    return '';
+  };
+
   return (
     <div className='arooundDiv'>
     <AppBar position="static" className='navbar' >
@@ -77,7 +92,7 @@ function ResponsiveAppBar() {
           <Box >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} >
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <Avatar>{getAvatarLetter()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -101,6 +116,7 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
+          <MessageIcon/>
           </Box>
         </Toolbar>
       </Container>
