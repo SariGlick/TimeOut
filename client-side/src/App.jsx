@@ -6,9 +6,8 @@ import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack'
 import Footer from './stories/footer/FooterComponent';
 import './App.scss';
+
 function App() {
-  
-  
   return (
     <> 
       <SnackbarProvider maxSnack={3}>
