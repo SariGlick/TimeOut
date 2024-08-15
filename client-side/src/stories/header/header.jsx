@@ -1,9 +1,7 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import MessageIcon from './Icon'
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
 function ResponsiveAppBar() {
@@ -28,7 +26,6 @@ function ResponsiveAppBar() {
     }
     return '';
   };
-
   return (
     <div className='arooundDiv'>
     <AppBar position="static" className='navbar' >
@@ -111,6 +108,7 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
+          <MessageIcon/>
           </Box>
         </Toolbar>
       </Container>

@@ -1,10 +1,8 @@
 import React from 'react';
-import { render, fireEvent, waitFor, debug } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { ApolloProvider } from '@apollo/client';
-import { InMemoryCache } from '@apollo/client/cache';
 import Statistics from '../../src/components/statistics.jsx';
 import DateTimePicker from '../../src/stories/datePicker/DatePicker.jsx';
-import VisitedWebsitesComponent from '../../src/components/statistics.jsx';
 
 jest.mock('../../src/stories/datePicker/DatePicker.jsx', () => ({
   __esModule: true,
@@ -58,10 +56,10 @@ describe('Statistics component', () => {
         <Statistics />
       </ApolloProvider>
     );
-  
+
     const button = getByRole('button', { name: 'Submit' });
     fireEvent.click(button);
-  
+
     await waitFor(() => expect(getByText('Start Date: 2024-06-01')).toBeTruthy());
     expect(getByText('End Date: 2024-06-29')).toBeTruthy();
   });

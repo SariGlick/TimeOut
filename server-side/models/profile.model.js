@@ -9,7 +9,7 @@ const profileSchema = new mongoose.Schema({
         limitedTimes: [{
             start: {type:Date,required:true},
             end: {type:Date,required:true} }]
-        }]
-    });
-    
-    export  default mongoose.model("Profiles", profileSchema);
+    }]
+});
+
+export  default mongoose.model("Profiles", profileSchema);

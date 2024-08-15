@@ -29,6 +29,7 @@ export const getUserById = async (req, res,next) => {
   }
 };
 
+
 export const addUser = async (req, res,next) => {
   try {
     if (req.file ) {
@@ -45,6 +46,7 @@ export const addUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
+
 
 
 export const deleteUser = async (req, res,next) => {
