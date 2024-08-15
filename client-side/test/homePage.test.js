@@ -1,8 +1,7 @@
-
-import '@testing-library/jest-dom'; // הוסף את השורה הזו
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import '@testing-library/jest-dom'; 
 import HomePage from '../src/components/homePageComponent';
 
 describe('HomePage Component', () => {
@@ -37,8 +36,6 @@ describe('HomePage Component', () => {
     expect(screen.getByText('Go to Profiles')).toBeInTheDocument();
     expect(screen.getByText('Go to Settings')).toBeInTheDocument();
     expect(screen.getByText('Go to Reports')).toBeInTheDocument();
-
-    // בדוק שהלינקים מפנים לכתובת הנכונה
     expect(screen.getByText('Login').closest('a')).toHaveAttribute('href', '/login');
     expect(screen.getByText('Go to Profiles').closest('a')).toHaveAttribute('href', '/profiles');
     expect(screen.getByText('Go to Settings').closest('a')).toHaveAttribute('href', '/settings');
@@ -46,7 +43,6 @@ describe('HomePage Component', () => {
   });
 
   test('renders all icons', () => {
-    // בדוק שכל אייקון מוצג בעמוד
     expect(screen.getByTestId('AccountCircleIcon')).toBeInTheDocument();
     expect(screen.getByTestId('PeopleIcon')).toBeInTheDocument();
     expect(screen.getByTestId('SettingsIcon')).toBeInTheDocument();
@@ -54,7 +50,6 @@ describe('HomePage Component', () => {
   });
 
   test('renders sections with correct styles', () => {
-    // בדוק שהסגנונות הנכונים מיוצרים לפי הסוגים של הסקשנים
     const evenSections = document.querySelectorAll('.feature.even');
     const oddSections = document.querySelectorAll('.feature.odd');
     
@@ -63,7 +58,6 @@ describe('HomePage Component', () => {
   });
 
   test('should render links with correct classes', () => {
-    // בדוק אם הכפתורים כוללים את ה-class הנכון
     expect(screen.getByText('Login').closest('a')).toHaveClass('btn-primary');
     expect(screen.getByText('Go to Profiles').closest('a')).toHaveClass('btn-primary');
     expect(screen.getByText('Go to Settings').closest('a')).toHaveClass('btn-primary');
