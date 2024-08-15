@@ -22,7 +22,7 @@ const TableComponent = ({ dataObject, widthOfTable = "80%" ,widthOfColums}) => {
             paginationModel: { page: 0, pageSize: 5 },
           },
         }}
-        pageSizeOptions={[4, 8]}
+        pageSizeOptions={[4,5, 8]}
       />
     </div>
   );
