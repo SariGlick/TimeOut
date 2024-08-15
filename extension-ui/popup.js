@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   enterSite.addEventListener('click', function () {
     //TODO Insert a folder-client-side inside a folder extension-ui
-    chrome.tabs.create({ url: chrome.runtime.getURL('client-side/dist/index.html') });
+    // chrome.tabs.create({ url: chrome.runtime.getURL('client-side/dist/index.html') });
   });
 
 

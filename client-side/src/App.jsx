@@ -3,12 +3,14 @@ import { Provider } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
 import { store } from './redux/store.jsx';
+import { SnackbarProvider } from 'notistack';
 import Layout from './router/layout.jsx';
 import './App.scss';
 
 function App() {
   return (
-    // TODO insert the real routings
+    <SnackbarProvider maxSnack={3}>
+    {/* // TODO insert the real routings */}
     <Provider store={store}>
       <HashRouter>
         <Routes>
@@ -24,7 +26,11 @@ function App() {
         <Footer />
       </HashRouter>
     </Provider>
+   </SnackbarProvider>
+
   );
 }
 
 export default App;
+
+
