@@ -35,10 +35,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   browsingDataBtn.addEventListener('click', async function () {
     browsingDataDiv.classList.remove('hidden');
     blockDiv.classList.add('hidden');
-
+    
     // Clear previous content
     browsingDataDiv.innerHTML = '<h3>Browsing Data:</h3>';
-
+    
     const siteList = document.createElement('ul');
     siteList.id = 'siteList';
     browsingDataDiv.appendChild(siteList);
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     for (const [hostname, data] of sortedSites) {
       const li = document.createElement('li');
-
+      
       // Create favicon image
       const favicon = document.createElement('img');
       favicon.className = 'favicon';
@@ -58,14 +58,14 @@ document.addEventListener('DOMContentLoaded', async function () {
       favicon.onerror = () => {
         favicon.src = 'default-favicon.png'; // Make sure to add a default favicon image to your extension
       };
-
+      
       // Create text node
       const textNode = document.createTextNode(`${hostname}: ${formatTime(data.time)}`);
-
+      
       // Append favicon and text to list item
       li.appendChild(favicon);
       li.appendChild(textNode);
-
+      
       siteList.appendChild(li);
     }
   });

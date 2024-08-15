@@ -22,6 +22,7 @@ export const createProfile = async (req, res, next) => {
         return;
     }
 };
+
 export const getProfileById = async (req, res, next) => {
     const id = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(id))
@@ -36,6 +37,8 @@ export const getProfileById = async (req, res, next) => {
         next({message:err.message,status:500})
     }
 };
+
+
 
 export const updateProfile = async (req, res, next) => {
     const id = req.params.id;
@@ -68,3 +71,6 @@ export const deleteProfile = async (req, res, next) => {
          next({message:err.message,status:500});
     }
 };
+
+
+

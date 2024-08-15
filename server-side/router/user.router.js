@@ -12,3 +12,4 @@ usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 
 
 export default usersRouter;
+
