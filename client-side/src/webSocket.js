@@ -1,8 +1,14 @@
+
 import { useEffect, useState } from 'react';
+import { useSnackbar } from 'notistack';
+import ToastMessage from './stories/Toast/ToastMessage';
 
 const useWebSocket = (userId) => {
   const [cntUnreadMessages, setCntUnreadMessages] = useState(0);
   const [socket, setSocket] = useState(null);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const { enqueueSnackbar } = useSnackbar(); 
+  
 
   useEffect(() => {
     const ws = new WebSocket('ws://localhost:8080');
@@ -13,9 +19,12 @@ const useWebSocket = (userId) => {
     };
 
     ws.onmessage = (event) => {
-      const response = event.data;
-      console.log(`Received from server: ${response}`);
+      const response =event.data;            
+      if (!initialLoad && response > cntUnreadMessages) {
+        enqueueSnackbar(<ToastMessage open={true} message={'You received a new message'} type="info" />); 
+      }      
       setCntUnreadMessages(response);
+      setInitialLoad(false);
     };
 
     ws.onclose = () => {
@@ -27,7 +36,7 @@ const useWebSocket = (userId) => {
     return () => {
       ws.close();
     };
-  }, [userId]);
+  }, [userId, cntUnreadMessages, initialLoad, enqueueSnackbar]);
 
   return { cntUnreadMessages, socket };
 };
