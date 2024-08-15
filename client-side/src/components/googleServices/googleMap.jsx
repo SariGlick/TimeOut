@@ -22,7 +22,7 @@ import {
 } from '../../constants/googleMapConstants.js';
 import '../../styles/googleMapStyle.scss';
 
-const API_KEY = 'AIzaSyBma6gTpaH2g9vULEUtxRnDa2EYert1LJ8';
+const API_KEY = '';
 const LIBRARIES = ['places'];
 
 const containerStyle = {
