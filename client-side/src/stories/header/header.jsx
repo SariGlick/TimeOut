@@ -24,7 +24,8 @@ import './header.scss';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t: translate } = useTranslation();  const { user } = useSelector(selectAuth); 
+  const { t: translate } = useTranslation(); 
+ const { user } = useSelector(selectAuth); 
 
 
   const handleOpenNavMenu = (event) => {
