@@ -13,7 +13,8 @@ const InvitationsSchema = new mongoose.Schema({
         required: true
     },
     profileID: { type: Schema.Types.ObjectId, ref: 'Profiles', required: true },
-    shareLevel: { type: String, enum: ['duplicate', 'view', 'view & edit'], required: true }
+    shareLevel: { type: String, enum: ['duplicate', 'view', 'view & edit'], required: true },
+    date : {type: Date, required: true}
 });
 
 export default mongoose.model('Invitations', InvitationsSchema);
