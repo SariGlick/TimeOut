@@ -8,19 +8,15 @@ const useWebSocket = (userId) => {
     const ws = new WebSocket('ws://localhost:8080');
 
     ws.onopen = () => {
-      console.log('Connected to WebSocket server');
-      ws.send(userId);
+      ws.send(JSON.stringify({userId,type:"countUnread"}));
     };
 
     ws.onmessage = (event) => {
       const response = event.data;
-      console.log(`Received from server: ${response}`);
       setCntUnreadMessages(response);
     };
 
-    ws.onclose = () => {
-      console.log('Disconnected from WebSocket server');
-    };
+
 
     setSocket(ws);
 

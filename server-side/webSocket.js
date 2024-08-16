@@ -1,9 +1,10 @@
 import { WebSocketServer } from 'ws';
-import mongoose from 'mongoose';
-import { connectMongo } from './config/db.js'; // Assuming this connects to MongoDB
 import { EventEmitter } from 'events';
-import { getCountUnreadMessages } from './controllers/message.controller.js';
 import dotenv from 'dotenv';
+import { connectMongo } from './config/db.js'; 
+import { getCountUnreadMessages } from './services/messages.service.js';
+import { log } from 'console';
+
 dotenv.config();
 
 const wss = new WebSocketServer({ port: 8080 });
@@ -13,11 +14,23 @@ connectMongo();
 const eventEmitter = new EventEmitter(); 
 
 wss.on('connection', (ws) => {
-  console.log('Client connected');
-  ws.on('message', async (message) => {
-    ws.userId = message.toString();
-    ws.send(await getCountUnreadMessages(ws.userId));
-  });
+    ws.on('message', async (message) => {
+      const parsedMessage = JSON.parse(message);  
+      const { userId,type } = parsedMessage;
+      console.log(userId, "userId");
+      console.log(type, "type");
+      switch (type) {
+        case "countUnread":
+          ws.userId = userId.toString();
+          ws.send(await getCountUnreadMessages(ws.userId));
+          break;
+      
+        default:
+          break;
+      }
+
+    });
+  
 
   ws.on('close', () => {
     console.log('Client disconnected');
@@ -33,8 +46,15 @@ function broadcastMessage(userId, message) {
 }
 
 eventEmitter.on('new-message', (data) => {
-  const { userId, countUnreadMessages } = data;
-  broadcastMessage(userId, countUnreadMessages);
+  const { userId, type, countUnreadMessages } = data;
+  switch (type) {
+    case "countUnread":
+      broadcastMessage(userId, countUnreadMessages);
+      break;
+  
+    default:
+      break;
+  }
 });
 
 export { eventEmitter }; 
