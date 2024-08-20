@@ -7,9 +7,13 @@ import LabTabs from '../tabs/tabs';
 import MessageIcon from './Icon'
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
+import { selectUser } from '../../redux/user/user.selector';
+
 function ResponsiveAppBar() {
-  const [currentname, setCurrentname] = useState(localStorage.getItem('nameUser') || null);
-  const [currentProfile, setCurrentProfile] = useState(localStorage.getItem('nameProfile') || null);
+  const users = useSelector(selectUser);
+  const currentUser = users.length ? users[users.length - 1] : null;
+  const currentname = currentUser ? currentUser.name : '';
+  const currentProfile = currentUser ? currentUser.profile : ''; 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { user } = useSelector(selectAuth); 
@@ -94,7 +98,7 @@ function ResponsiveAppBar() {
               </IconButton>}
         
             { currentProfile && < IconButton onClick={handleOpenUserMenu} >
-                <Avatar alt={currentname} src="/static/images/avatar/2.jpg" />
+                <Avatar alt={currentProfile} src="/static/images/avatar/2.jpg" />
               </IconButton>}
             </Tooltip>
             <Menu

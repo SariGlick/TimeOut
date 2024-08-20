@@ -9,15 +9,13 @@ export async function handleGet(path) {
 };
 
 export async function handlePost(path, data) {
-    console.log(path,data,"ooo");
     const response = await axios.create({baseURL:url}).post(path,data,
         {
-                  headers: {
-                     'Content-Type': 'application/json'
+           headers: {
+                  'Content-Type': 'application/json'
                    }
                 }
     )
-    console.log(response,"respon");
     return response;
 }
 

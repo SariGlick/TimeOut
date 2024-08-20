@@ -10,12 +10,10 @@ import SignUp from './components/signUp/signUp.jsx';
 
 function App() {
   return (
-
     <>
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
-        <SignUp/>
         <Footer />
       </Provider>
     </SnackbarProvider>
