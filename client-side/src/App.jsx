@@ -22,7 +22,6 @@ function App() {
   }, [user, localization]);
 
   return (
-
     <>
       <RouterProvider router={router} />
       <SnackbarProvider maxSnack={3}>
