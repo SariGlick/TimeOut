@@ -1,15 +1,20 @@
 
+
 document.addEventListener('DOMContentLoaded', async function () {
+
   var blockSitesBtn = document.getElementById('blockSitesBtn');
   var browsingDataBtn = document.getElementById('browsingDataBtn');
   var blockDiv = document.getElementById('blockDiv');
   var browsingDataDiv = document.getElementById('browsingDataDiv');
   var blockedSitesList = document.getElementById('blockedSitesList');
   var enterSite = document.getElementById('enterSite');
+  var modeDisplay = document.getElementById('modeDisplay');
 
   enterSite.addEventListener('click', function () {
-    chrome.tabs.create({ url: 'http://localhost:3000/home' });
+    //TODO Insert a folder-client-side inside a folder extension-ui
+    // chrome.tabs.create({ url: chrome.runtime.getURL('client-side/dist/index.html') });
   });
+
 
   blockSitesBtn.addEventListener('click', function () {
     blockDiv.classList.remove('hidden');
@@ -19,7 +24,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       blockedSitesList.innerHTML = '';
       blockedSites.forEach((hostname) => {
         const li = document.createElement("li");
-        li.textContent = hostname;
+        const a = document.createElement("a");
+        a.href = `http://${hostname}`;
+        a.textContent = hostname;
+        a.target = "_blank";
+        li.appendChild(a);
         blockedSitesList.appendChild(li);
       });
     });
@@ -76,7 +85,11 @@ document.addEventListener('DOMContentLoaded', async function () {
           chrome.runtime.sendMessage({ action: 'addBlockedSite', hostname: hostname }, (response) => {
             if (response.success) {
               const li = document.createElement("li");
-              li.textContent = inputUrl;
+              const a = document.createElement("a");
+              a.href = `http://${hostname}`;
+              a.textContent = hostname;
+              a.target = "_blank";
+              li.appendChild(a);
               blockedSitesList.appendChild(li);
             } else {
               console.error(response.message);
@@ -88,6 +101,15 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
     }
     siteInput.value = "";
+  });
+
+  function updateModeDisplay(isBlackList) {
+    modeDisplay.textContent = isBlackList ? "Blacklist Mode" : "Whitelist Mode";
+  }
+
+  // Initial load
+  chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
+    updateModeDisplay(response.isBlackList);
   });
 });
 

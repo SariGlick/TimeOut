@@ -10,12 +10,14 @@
     "tabs",
     "activeTab",
     "alarms",
-     "notifications"
+     "notifications",
+    "windows"
   ],
   "host_permissions": [
     "http://*/*",
     "https://*/*",
-    "<all_urls>"
+    "<all_urls>",
+    "http://localhost:3000/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -26,7 +28,10 @@
   "icons": {
     "48": "images/icon48.png"
 },
-   "web_accessible_resources": 
-   [{"resources": ["oops.html"],
-    "matches": ["<all_urls>"]}]
+  "web_accessible_resources": [
+    {
+      "resources": ["oops.html","client-side/dist/index.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

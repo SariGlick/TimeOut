@@ -11,6 +11,4 @@ const profileSchema = new mongoose.Schema({
             end: {type:Date,required:true} }]       
     }]
 });
-
 export  default mongoose.model("Profiles", profileSchema);
-
