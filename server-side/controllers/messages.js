@@ -28,5 +28,6 @@ export const messages = {
   },
   message: {
     SEND_EMAIL: "We will send you a verification code to your email: ",
+    SUB_EMAIL:  "Password reset code.",
   }
 };

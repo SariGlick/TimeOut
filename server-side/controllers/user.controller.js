@@ -5,45 +5,12 @@ import bcrypt from 'bcrypt';
 dotenv.config();
 import { OAuth2Client } from 'google-auth-library';
 import { messages } from './messages.js'; 
+// import { sendEmailWithAttachment } from '../email-service/app/index.js';
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
-//   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
-
-//   if (!token) {
-//     return res.status(400).send(messages.error.REQ_TOKEN);
-//   }
-
-//   try {
-//     // Verify the token with Google
-//     const ticket = await client.verifyIdToken({
-//       idToken: token,
-//       audience: process.env.CLIENT_ID
-//     });
-//     const payload = ticket.getPayload();
-    
-//     if (!payload) {
-//       return res.status(500).send(messages.error.FAILED_PAYLOAD);
-//     }
-
-//     const { sub: googleId, email, name } = payload; // Extract email from the payload
-
-//     // Check if the user exists in the database
-//     let user = await Users.findOne({ email });
-//     if (!user) {
-//       // Add the user if they do not exist
-//       user = new Users({ email, name, googleId });
-//       await user.save();
-//     }
-    
-//     return res.status(200).json(user);
-
-//   } catch (error) {
-//     console.error(messages.error.VERIFY_G_TOKEN, error);
-//     return res.status(500).send(messages.error.VERIFY_G_TOKEN_MESSAGE);
-//   }
-// };
 export const getUserByGoogleAccount = async (req, res) => {
+  console.log("dfghjkl")
   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
 
   if (!token) {
@@ -103,8 +70,8 @@ export const getCode = async (req, res) => {
   try {
     const user = await Users.findOne({email});
     if (user) {
+      // sendEmailWithAttachment(user.email,messages.message.SUB_EMAIL,user.password)
       return res.status(200).send(messages.message.SEND_EMAIL + user.email);
-      // sendEmail(user, password);
     } else {
       return res.status(404).send(messages.error.USER_NOT_FOUND);
     }
@@ -150,6 +117,7 @@ export const addUser = async (req, res) => {
 };
 
 export const getUsers = async (req, res,next) => {
+   console.log("gszhdxfjgkhlujikofdjb")
   try {
     const users = await Users.find().populate('visitsWebsites profiles preference' ).select('-__v')
     .select('-__v')
