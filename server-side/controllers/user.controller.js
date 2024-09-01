@@ -10,9 +10,7 @@ import { messages } from './messages.js';
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 export const getUserByGoogleAccount = async (req, res) => {
-  console.log("dfghjkl")
   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
-
   if (!token) {
     return res.status(400).send(messages.error.REQ_TOKEN);
   }
@@ -117,7 +115,6 @@ export const addUser = async (req, res) => {
 };
 
 export const getUsers = async (req, res,next) => {
-   console.log("gszhdxfjgkhlujikofdjb")
   try {
     const users = await Users.find().populate('visitsWebsites profiles preference' ).select('-__v')
     .select('-__v')
