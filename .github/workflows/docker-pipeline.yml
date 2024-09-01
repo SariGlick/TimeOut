@@ -1,0 +1,52 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push server Docker image
+        run: |
+          if [ -f ./server-side/Dockerfile ]; then
+            echo "Dockerfile found in server-side. Building and pushing Docker image..."
+            docker buildx build --file ./server-side/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/my-project-server:latest --push ./server-side
+          else
+            echo "No Dockerfile found in server-side. Skipping build."
+          fi
+
+      - name: Build and push client Docker image
+        run: |
+          if [ -f ./client-side/Dockerfile ]; then
+            echo "Dockerfile found in client-side. Building and pushing Docker image..."
+            docker buildx build --file ./client-side/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/my-project-client:latest --push ./client-side
+          else
+            echo "No Dockerfile found in client-side. Skipping build."
+          fi
+
+      - name: Build and push extension Docker image
+        run: |
+          if [ -f ./extension-ui/Dockerfile ]; then
+            echo "Dockerfile found in extension-ui. Building and pushing Docker image..."
+            docker buildx build --file ./extension-ui/Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/my-project-extension:latest --push ./extension-ui
+          else
+            echo "No Dockerfile found in extension-ui. Skipping build."
+          fi
