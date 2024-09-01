@@ -1,28 +1,41 @@
 let blockedSitesCache = null;
 let allowedSitesCache = [];
 let isBlackList = false;
-const baseURL='http://localhost:5000/users/me'
-function fetchUserData() {
-  fetch(baseURL, { 
-    method: 'GET',
-    credentials: 'include' 
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch(error => console.error('Error fetching user data:', error));
-}
+let currentUserId = null;
+
 chrome.runtime.onStartup.addListener(() => {
   initializeCaches();
-  fetchUserData();
+  getUserIdFromTokenCookie();
 });
+
 chrome.runtime.onInstalled.addListener(() => {
   initializeCaches();
-  fetchUserData();
+  getUserIdFromTokenCookie();
 });
+
+function getUserIdFromTokenCookie() {
+  chrome.cookies.get({ url: "http://localhost:5000", name: "token" }, (cookie) => {
+    if (cookie) {
+      const token = cookie.value;
+      const userId = parseUserIdFromToken(token);
+      console.log("User ID:", userId);
+      currentUserId = userId;
+      chrome.storage.local.set({ currentUserId: userId });
+    } else {
+      console.log("Token cookie not found!");
+    }
+  });
+}
+
+function parseUserIdFromToken(token) {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.userId;
+  } catch (error) {
+    console.error("Failed to parse token:", error);
+    return null;
+  }
+}
 
 function initializeCaches(callback) {
   chrome.storage.local.get(["blockedSites"], (data) => {

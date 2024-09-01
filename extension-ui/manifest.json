@@ -4,7 +4,10 @@
   "version": "1.0",
   "description": "Blocks specified websites on Chrome using manifest v3",
   "permissions": [
+    "cookies",
     "storage",
+    "tabs",
+    "webNavigation",
     "scripting",
     "webNavigation",
     "tabs",
