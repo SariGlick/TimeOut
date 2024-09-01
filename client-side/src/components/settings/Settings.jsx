@@ -44,10 +44,14 @@ const Settings = () => {
       formData.append(key, value);
     });
     try {
-      await updatePreference(preferenceId, formData);
-      enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
+      const response = await updatePreference(preferenceId, formData);
+      if (response) {
+        enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
+      } else {
+        enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
+      }
     } catch (error) {
-      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
+      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_OCCURRED} type="error" />);
     }
   };
 

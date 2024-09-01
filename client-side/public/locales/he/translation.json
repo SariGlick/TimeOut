@@ -32,5 +32,8 @@
     "DD-MM-YYYY": "שנה / חודש / יום",
     "YYYY-MM-DD": "יום / חודש / שנה",
     "Display notification for income messages":"הצג התראה עבור הודעות נכנסות",
-    "Display browsing time limit notification":"הצג הודעת מגבלת זמן גלישה"
+    "Display browsing time limit notification":"הצג הודעת מגבלת זמן גלישה",
+    "Settings updated successfully!":"ההגדרות עודכנו בהצלחה!",
+    "Failed to update settings. Please try again.":"נכשל בעדכון ההגדרות. אנא נסה שוב",
+    "An error occurred while updating settings.":"אירעה שגיאה בעת עדכון ההגדרות"
 }

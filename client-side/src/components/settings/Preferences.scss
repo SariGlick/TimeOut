@@ -1,27 +1,39 @@
+$padding-large: 5%;
+$padding-small: 3%;
+$max-width-select: 50rem;
+$margin-select: 4%; 
+
+
 .preferences-container {
   display: flex;
   flex-direction: column;
-  align-items: center; // Centers items horizontally
-  justify-content: center; // Centers items vertically
-  padding: 5%; // Adjust padding as needed
-  
-  .select-class,
+  align-items: center;
+  justify-content: center;
+  padding: $padding-large;
+
+  .div-select {
+    display: flex;            
+    justify-content: center;    
+    width: 100%;
+    max-width: $max-width-select;
+    margin: $margin-select 0;   
+  }
+
+  .select-language,
   .select-time-zone,
   .select-date-format {
-    width: 100%; // Ensures full width within container
-    max-width: 210px; // Limits width of select elements to match provided width
-    margin-bottom: 5%; // Adjust spacing between selects
+    width: 100%;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 37.5rem) {
   .preferences-container {
-    padding: 3%; // Adjust padding for smaller screens if needed
+    padding: $padding-small;
   }
 
-  .select-class,
+  .select-language,
   .select-time-zone,
   .select-date-format {
-    max-width: 100%; // Ensures select elements fit smaller screens
+    max-width: 100%; 
   }
 }

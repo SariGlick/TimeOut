@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -20,13 +20,24 @@ const Notifications = ({ onUpdate }) => {
     displayBrowsingTimeLimit: showBrowsingTimeLimit = false,
     emailFrequency: initialEmailFrequency = EMAIL_FREQUENCY_ENUM.NEVER
   } = user.preference || {};
+
+  const baseServerUrl = process.env.REACT_APP_SERVER_URL;
+
   const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
   const [ringtoneFile, setRingtoneFile] = useState(null);
-  const url = process.env.REACT_APP_SERVER_URL;
-  const [soundVoice, setSoundVoice] = useState(`${url}/uploads/${initialSoundVoice}`);
+  const [soundVoice, setSoundVoice] = useState(`${baseServerUrl}/uploads/${initialSoundVoice}`);
   const [sendNotificationTime, setSendNotificationTime] = useState(notificationTime);
   const [displayIncomeMessages, setDisplayIncomeMessages] = useState(showIncomeMessages);
   const [displayBrowsingTimeLimit, setDisplayBrowsingTimeLimit] = useState(showBrowsingTimeLimit);
+
+  const [prevValues, setPrevValues] = useState({
+    emailFrequency: initialEmailFrequency,
+    ringtoneFileName: null,
+    sendNotificationTime: notificationTime,
+    displayIncomeMessages: showIncomeMessages,
+    displayBrowsingTimeLimit: showBrowsingTimeLimit
+  });
+
   const { t: translate } = useTranslation();
 
   const emailFrequencyOptions = Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
@@ -34,70 +45,59 @@ const Notifications = ({ onUpdate }) => {
     value: EMAIL_FREQUENCY_ENUM[key]
   }));
 
-  const prevValues = useRef({
-    emailFrequency,
-    ringtoneFileName: null,
-    sendNotificationTime,
-    displayIncomeMessages,
-    displayBrowsingTimeLimit
-  });
+  useEffect(() => {
+    if (prevValues.emailFrequency !== emailFrequency) {
+      onUpdate({ emailFrequency });
+      setPrevValues(prev => ({ ...prev, emailFrequency }));
+    }
+  }, [emailFrequency, onUpdate, prevValues.emailFrequency]);
 
   useEffect(() => {
-    
-    const changes = {};
-    if (prevValues.current.emailFrequency !== emailFrequency) {
-      changes.emailFrequency = emailFrequency;
+    if (prevValues.sendNotificationTime !== sendNotificationTime) {
+      onUpdate({ sendNotificationTime });
+      setPrevValues(prev => ({ ...prev, sendNotificationTime }));
     }
-    if (prevValues.current.sendNotificationTime !== sendNotificationTime) {
-      changes.sendNotificationTime = sendNotificationTime;
-    }
-    if (prevValues.current.displayIncomeMessages !== displayIncomeMessages) {
-      changes.displayIncomeMessages = displayIncomeMessages;
-    }
-    if (prevValues.current.displayBrowsingTimeLimit !== displayBrowsingTimeLimit) {
-      changes.displayBrowsingTimeLimit = displayBrowsingTimeLimit;
-    }
-    if (prevValues.current.ringtoneFileName === null) {
-      if (ringtoneFile) {
-        changes.soundVoice = ringtoneFile;
-      }
-    } else if (ringtoneFile && prevValues.current.ringtoneFileName !== ringtoneFile.name) {
-      changes.soundVoice = ringtoneFile;
-    }
-    
+  }, [sendNotificationTime, onUpdate, prevValues.sendNotificationTime]);
 
-    if (Object.keys(changes).length > 0) {
-      onUpdate(changes);
-      prevValues.current = { 
-        emailFrequency, 
-        ringtoneFileName: ringtoneFile ? ringtoneFile.name : null, 
-        sendNotificationTime, 
-        displayIncomeMessages, 
-        displayBrowsingTimeLimit 
-      };
+  useEffect(() => {
+    if (prevValues.displayIncomeMessages !== displayIncomeMessages) {
+      onUpdate({ displayIncomeMessages });
+      setPrevValues(prev => ({ ...prev, displayIncomeMessages }));
     }
-  }, [
-    emailFrequency, 
-    ringtoneFile, 
-    sendNotificationTime, 
-    displayIncomeMessages, 
-    displayBrowsingTimeLimit, 
-    onUpdate
-  ]);
+  }, [displayIncomeMessages, onUpdate, prevValues.displayIncomeMessages]);
+
+  useEffect(() => {
+    if (prevValues.displayBrowsingTimeLimit !== displayBrowsingTimeLimit) {
+      onUpdate({ displayBrowsingTimeLimit });
+      setPrevValues(prev => ({ ...prev, displayBrowsingTimeLimit }));
+    }
+  }, [displayBrowsingTimeLimit, onUpdate, prevValues.displayBrowsingTimeLimit]);
+
+  useEffect(() => {
+    if (prevValues.ringtoneFileName === null && ringtoneFile) {
+      onUpdate({ soundVoice: ringtoneFile });
+      setPrevValues(prev => ({ ...prev, ringtoneFileName: ringtoneFile.name }));
+    } else if (ringtoneFile && prevValues.ringtoneFileName !== ringtoneFile.name) {
+      onUpdate({ soundVoice: ringtoneFile });
+      setPrevValues(prev => ({ ...prev, ringtoneFileName: ringtoneFile.name }));
+    }
+  }, [ringtoneFile, onUpdate, prevValues.ringtoneFileName]);
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const file = files[0];
       setRingtoneFile(file);
       setSoundVoice(URL.createObjectURL(file));
     } else {
       setRingtoneFile(null);
       setSoundVoice('');
     }
-
   };
+
   const handleChangeEmailFreq = (selectedFrequency) => {
-    if (!Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase())) {
+    const isInvalidFrequency = !Object.keys(EMAIL_FREQUENCY_ENUM).includes(selectedFrequency.toUpperCase());
+    if (isInvalidFrequency) {
       return;
     }
     setEmailFrequency(selectedFrequency);
@@ -105,7 +105,7 @@ const Notifications = ({ onUpdate }) => {
 
   return (
     <div className="notifications-container">
-      <div className="notifications-settings">
+      <div className="display-checkboxs">
         <GenericInput
           label={translate(LABELS.DISPLAY_INCOME_MESSAGES)}
           type="checkbox"
@@ -127,13 +127,13 @@ const Notifications = ({ onUpdate }) => {
           onChange={handleChangeEmailFreq}
           value={emailFrequency}
           size='medium'
-          widthOfSelect='210px'
+          widthOfSelect='11rem'
         />
       </div>
       <div className="input-container">
         <GenericInput
           size='medium'
-          width='210px'
+          width='11rem'
           label={translate(LABELS.CHANGE_NOTIFICATION_TIME)}
           onChange={setSendNotificationTime}
           value={sendNotificationTime}
@@ -148,7 +148,7 @@ const Notifications = ({ onUpdate }) => {
           label={translate(LABELS.CHANGE_RINGTONE)}
           onChange={handleFileChange}
           size='medium'
-          width='210px'
+          width='11rem'
           accept='audio/mp3'
         />
         <audio controls className="audio-player">
@@ -159,7 +159,6 @@ const Notifications = ({ onUpdate }) => {
   );
 };
 Notifications.propTypes = {
-  currentUser: PropTypes.object.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 export default Notifications;

@@ -1,30 +1,40 @@
+$spacing: 1rem;
+$max-width: 100%;
+$breakpoint-mobile: 600px;
+
 .notifications-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5%; 
-  max-width: 100%;
+  padding: $spacing ; 
+  max-width: $max-width;
 
-  .select-container, .input-container, .file-container {
+  .display-checkboxs,
+  .select-container,
+  .input-container,
+  .file-container {
     width: 100%;
-    max-width: 100%; 
-    margin-bottom: 5%; 
+    max-width: $max-width;
+    margin-bottom: $spacing *1.5; 
   }
 
   .audio-player {
     width: 50%;
-    max-width: 100%; 
-    margin-top: 2%; 
+    max-width: $max-width;
+    margin-top: $spacing * 2; 
   }
 
   .but-send {
-    margin-top: 5%; 
+    margin-top: $spacing * 5; 
   }
 }
 
-@media (max-width: 600px) {
-  .select-container, .input-container, .file-container, .audio-player {
-    max-width: 100%;
+@media (max-width: $breakpoint-mobile) {
+  .select-container,
+  .input-container,
+  .file-container,
+  .audio-player {
+    max-width: $max-width;
   }
 
   .but-send {

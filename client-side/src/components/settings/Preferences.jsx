@@ -1,4 +1,4 @@
-import React, { useState,useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment-timezone';
@@ -17,11 +17,11 @@ const createTimeZones = () => {
   }));
 };
 
-const Preferences = ({ onUpdate}) => {
+const Preferences = ({ onUpdate }) => {
   const { user } = useSelector(selectAuth);
   const { t: translate, i18n: localization } = useTranslation();
-  const {  LABELS, LANGUAGE,DATE_FORMATS } = CONSTANTS;
-  const { timeZone: initialTimeZone="UTC", dateFormat: initialDateFormat="YYYY-MM-DD" } = user.preference;
+  const { LABELS, LANGUAGE, DATE_FORMATS } = CONSTANTS;
+  const { timeZone: initialTimeZone = "UTC", dateFormat: initialDateFormat = DATE_FORMATS[0].value } = user.preference;
   const [language, setLanguage] = useState(localization.resolvedLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [dateFormat, setDateFormat] = useState(initialDateFormat);
@@ -31,44 +31,39 @@ const Preferences = ({ onUpdate}) => {
     iconSrc: LANGUAGE[key]['icon']
   }));
 
-  const timeZoneOptions = createTimeZones().map(tz => ({
-    text: tz.text,
-    value: tz.value
-  }));
+  const timeZoneOptions = createTimeZones();
 
   const dateFormatOptions = DATE_FORMATS.map(({ value, label }) => ({
     text: translate(label),
     value: value
   }));
 
-  const prevValues = useRef({
+  const [prevValues, setPrevValues] = useState({
     language,
     timeZone,
     dateFormat
   });
 
   useEffect(() => {
-    const changes = {};
-    
-    if (prevValues.current.language !== language) {
-      changes.language = language;
+    if (prevValues.language !== language) {
+      onUpdate({ language });
+      setPrevValues(prev => ({ ...prev, language }));
     }
-    if (prevValues.current.timeZone !== timeZone) {
-      changes.timeZone = timeZone;
+  }, [language]);
+
+  useEffect(() => {
+    if (prevValues.timeZone !== timeZone) {
+      onUpdate({ timeZone });
+      setPrevValues(prev => ({ ...prev, timeZone }));
     }
-    if (prevValues.current.dateFormat !== dateFormat) {
-      changes.dateFormat = dateFormat;
+  }, [timeZone]);
+
+  useEffect(() => {
+    if (prevValues.dateFormat !== dateFormat) {
+      onUpdate({ dateFormat });
+      setPrevValues(prev => ({ ...prev, dateFormat }));
     }
-    
-    if (Object.keys(changes).length > 0) {
-      onUpdate(changes);
-      prevValues.current = {
-        language,
-        timeZone,
-        dateFormat
-      };
-    }
-  }, [language, timeZone, dateFormat, onUpdate]);
+  }, [dateFormat]);
 
   const handleLanguageChange = (value) => {
     localization.changeLanguage(value);
@@ -81,38 +76,43 @@ const Preferences = ({ onUpdate}) => {
 
   return (
     <div className="preferences-container">
-      <Select
-        title={translate(LABELS.SELECT_LANGUAGES)}
-        options={languageOptions}
-        className='select-class'
-        size='medium'
-        widthOfSelect='210px'
-        value={language}
-        onChange={handleLanguageChange}
-      />
-      <Select
-        className='select-time-zone'
-        options={timeZoneOptions}
-        title={translate(LABELS.SELECT_TIME_ZONE)}
-        onChange={handleChangeTimeZone}
-        value={timeZone}
-        size='medium'
-        widthOfSelect='210px'
-      />
-      <Select
-        className='select-date-format'
-        options={dateFormatOptions}
-        value={dateFormat}
-        onChange={setDateFormat}
-        title={translate(LABELS.SELECT_DATE_FORMAT)}
-        size='large'
-        widthOfSelect='210px'
-      />
+      <div className="div-select">
+        <Select
+          title={translate(LABELS.SELECT_LANGUAGES)}
+          options={languageOptions}
+          className='select-language'
+          size='medium'
+          widthOfSelect='11rem'
+          value={language}
+          onChange={handleLanguageChange}
+        />
+      </div>
+      <div className="div-select">
+        <Select
+          className='select-time-zone'
+          options={timeZoneOptions}
+          title={translate(LABELS.SELECT_TIME_ZONE)}
+          onChange={handleChangeTimeZone}
+          value={timeZone}
+          size='medium'
+          widthOfSelect='11rem'
+        />
+      </div>
+      <div className="div-select">
+        <Select
+          className='select-date-format'
+          options={dateFormatOptions}
+          value={dateFormat}
+          onChange={setDateFormat}
+          title={translate(LABELS.SELECT_DATE_FORMAT)}
+          size='large'
+          widthOfSelect='11rem'
+        />
+      </div>
     </div>
   );
 };
 Preferences.propTypes = {
-  currentUser: PropTypes.object.isRequired,
   onUpdate: PropTypes.func.isRequired
 };
 export default Preferences;
