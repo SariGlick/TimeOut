@@ -14,7 +14,6 @@ import AccountTab from './AccountTab.jsx';
 import Notifications from './Notifications.jsx';
 import CONSTANTS from './constantSetting.js';
 
-
 import './Settings.scss';
 
 const Settings = () => {
