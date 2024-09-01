@@ -46,12 +46,12 @@ const Settings = () => {
     try {
       const response = await updatePreference(preferenceId, formData);
       if (response) {
-        enqueueSnackbar(<ToastMessage message={MESSAGES.SUCCESS_UPDATED_SETTINGS} type="success" />);
+        enqueueSnackbar(<ToastMessage message={translate(MESSAGES.SUCCESS_UPDATED_SETTINGS)} type="success" />);
       } else {
-        enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
+        enqueueSnackbar(<ToastMessage message={translate(MESSAGES.ERROR_UPDATE_SETTINGS)} type="error" />);
       }
     } catch (error) {
-      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_OCCURRED} type="error" />);
+      enqueueSnackbar(<ToastMessage message={translate(MESSAGES.ERROR_OCCURRED)} type="error" />);
     }
   };
 
