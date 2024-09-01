@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@apollo/client": "^3.11.4",
     "@babel/core": "^7.25.2",
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
