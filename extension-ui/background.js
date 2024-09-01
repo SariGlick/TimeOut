@@ -1,3 +1,4 @@
+const BASE_URL='http://localhost:3000';
 let currentTab = null;
 let startTime = null;
 
@@ -85,7 +86,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 });
-importScripts('constants.js');import { BASE_URL } from './constants';
+importScripts('constants.js');
 let blockedSitesCache = null;
 let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
 let isBlackList = false; 
@@ -203,6 +204,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+chrome.tabs.onCreated.addListener(() => {
+  fetch(`${BASE_URL}/profiles/activeProfile`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      params: "669645be78def8e48726043e"
+    })
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch active profile. Status: ' + response.status);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error fetching active profile:', error.message);
+    });
+});
 function showNotification(site, num, options = {}) {
   var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
   var notificationOptions = {
@@ -218,7 +239,7 @@ function showNotification(site, num, options = {}) {
 
 chrome.runtime.onInstalled.addListener(() => {
 
-  fetch(`${BASE_URL}/${userId}`)
+  fetch(`${BASE_URL}/api/settings/${userId}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -231,4 +252,3 @@ chrome.runtime.onInstalled.addListener(() => {
     })
     .catch(error => console.error('Failed to fetch user settings:', error));
 });
-
