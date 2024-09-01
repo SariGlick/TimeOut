@@ -10,13 +10,15 @@
     "tabs",
     "activeTab",
     "alarms",
-    "notifications"
+     "notifications",
+    "windows"
   ],
   "host_permissions": [
     "https://localhost:5000/*",
     "http://*/*",
     "https://*/*",
-    "<all_urls>"
+    "<all_urls>",
+    "http://localhost:3000/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -32,7 +34,8 @@
       "resources": [
         "oops.html",
         "constants.js",
-        "oops.js"
+        "oops.js",
+        "client-side/dist/index.html"
       ],
       "matches": [
         "<all_urls>"
@@ -47,4 +50,5 @@
       "'self'"
     ]
   }
+}
 }
