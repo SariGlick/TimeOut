@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import GLogin1 from './GLogin1';
-import { getUserByGoogleAccount } from '../../services/login-services';
+import { getUserByGoogleAccount } from '../../src/components/Login/GoogleLogin';
 import { jwtDecode } from 'jwt-decode';
 
 // Mocking GoogleOAuthProvider
