@@ -10,7 +10,7 @@ import {
 export const getAllInvitations = async (req, res, next) => {
     try {
         const invitations = await getAllInvitations_service();
-        res.status(200).json(invitations);
+        return res.status(200).json(invitations);
     } catch (err) {
         return next({ message: err.message, status: 500 });
     }
@@ -25,7 +25,7 @@ export const getInvitationById = async (req, res, next) => {
         if (!invitation) {
             return next({ message: 'Invitation was not found ', status: 404 });
         }
-        res.status(200).json(invitation);
+        return res.status(200).json(invitation);
     } catch (err) {
         next({ message: err.message, status: 500 });
     }
