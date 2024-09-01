@@ -1,4 +1,5 @@
 import { SiteLimit } from './classes/siteLimit.js';
+const BASE_URL='http://localhost:3000';
 let currentTab = null;
 let startTime = null;
 
@@ -86,7 +87,7 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
   }
 });
-importScripts('constants.js');import { BASE_URL } from './constants';
+importScripts('constants.js');
 let blockedSitesCache = null;
 let allowedSitesCache = ["http://localhost:3000","https://github.com"]; 
 let isBlackList = false; 
@@ -252,6 +253,38 @@ function checkIfSiteBlocked(tab) {
   if (siteLimit.isBlocked) {
     chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
   }
+  
+chrome.tabs.onCreated.addListener(() => {
+  fetch(`${BASE_URL}/profiles/activeProfile`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      params: "669645be78def8e48726043e"
+    })
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch active profile. Status: ' + response.status);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error fetching active profile:', error.message);
+    });
+});
+function showNotification(site, num, options = {}) {
+  var message = NOTIFICATION_MESSAGE.replace('{site}', site).replace('{num}', num);
+  var notificationOptions = {
+    type: 'basic',
+    iconUrl: options.iconUrl || 'images/icon48.png',
+    title: NOTIFICATION_TITLE,
+    message: message,
+    priority: options.priority || 2
+  };
+  
+  chrome.notifications.create(notificationOptions);
 }
 
 chrome.tabs.onActivated.addListener((activeInfo) => {
@@ -320,7 +353,7 @@ chrome.storage.local.get(['lastVisit', 'TimeLeft', 'isSiteBlocked', 'notificatio
 
 chrome.runtime.onInstalled.addListener(() => {
 
-  fetch(`${BASE_URL}/${userId}`)
+  fetch(`${BASE_URL}/api/settings/${userId}`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -333,4 +366,3 @@ chrome.runtime.onInstalled.addListener(() => {
     })
     .catch(error => console.error('Failed to fetch user settings:', error));
 });
-
