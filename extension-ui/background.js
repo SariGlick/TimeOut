@@ -1,10 +1,11 @@
+import { SiteLimit } from './classes/siteLimit.js';
 const BASE_URL='http://localhost:3000';
 let currentTab = null;
 let startTime = null;
 
 chrome.tabs.onActivated.addListener(async (activeInfo) => {
   try {
-    const tab= await chrome.tabs.get(activeInfo.tabId);
+    const tab = await chrome.tabs.get(activeInfo.tabId);
     updateData(tab);
   } catch (error) {
     console.error('Error in onActivated listener:', error);
@@ -19,12 +20,12 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 });
 
 async function updateData(tab) {
-    await updateTimeForPreviousTab();
-    currentTab = tab;
-    startTime = Date.now();
-    if (tab.url) {
-      await addSiteToList(tab.url);
-    }
+  await updateTimeForPreviousTab();
+  currentTab = tab;
+  startTime = Date.now();
+  if (tab.url) {
+    await addSiteToList(tab.url);
+  }
 }
 
 async function updateTimeForPreviousTab() {
@@ -45,7 +46,7 @@ function isValidUrl(url) {
 
 async function addSiteToList(url) {
   if (!isValidUrl(url)) return;
-  
+
   const { hostname } = new URL(url);
   const sites = await getSites();
   if (!sites[hostname]) {
@@ -56,7 +57,7 @@ async function addSiteToList(url) {
 
 async function updateSiteTime(url, time) {
   if (!isValidUrl(url)) return;
-  
+
   const { hostname } = new URL(url);
   const sites = await getSites();
   if (sites[hostname]) {
@@ -118,7 +119,7 @@ async function updateCurrentTabTime() {
 }
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "updateCurrentTabTime") {
-    updateCurrentTabTime().then(() => sendResponse({success: true}));
+    updateCurrentTabTime().then(() => sendResponse({ success: true }));
     return true; // Indicates that the response is sent asynchronously
   }
 });
@@ -166,7 +167,26 @@ function blockSite(tabId) {
       console.error("Error executing script: ", error);
     });
   });
-}
+
+    if (blockedSitesCache.some(site => hostname.includes(site))) {
+      chrome.tabs.get(details.tabId, (tab) => {
+        if (tab.url.startsWith('chrome://') || tab.url.startsWith('about:')) {
+          return;
+        }
+        chrome.scripting.executeScript({
+          target: { tabId: details.tabId },
+          func: () => {
+            //TODO  add UI for the oops window
+            window.stop();
+            window.location.href = chrome.runtime.getURL('oops.html');
+          }
+        }).catch(error => {
+          console.error("Error executing script: ", error);
+        });
+      });
+    }
+  } 
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addBlockedSite') {
@@ -204,6 +224,36 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   }
 });
 
+const siteLimits = {}; 
+
+function getOrCreateSiteLimit(url) {
+  if (!siteLimits[url]) {
+    siteLimits[url] = new SiteLimit(url, profileLimits[currentProfile], notificationTime);
+  }
+  return siteLimits[url];
+}
+
+function handleTab(tab) {
+  const siteLimit = getOrCreateSiteLimit(tab.url);
+  if (siteLimit.isBlocked) {
+    chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+    return;
+  }
+
+  if (siteLimit.isTabActive) {
+    siteLimit.updateRemainingTime();
+  }
+  siteLimit.startTimer();
+  siteLimit.lastVisit.time = Date.now();
+  siteLimit.isTabActive = true;
+}
+
+function checkIfSiteBlocked(tab) {
+  const siteLimit = getOrCreateSiteLimit(tab.url);
+  if (siteLimit.isBlocked) {
+    chrome.tabs.update(tab.id, { url: chrome.runtime.getURL("oops.html") });
+  }
+  
 chrome.tabs.onCreated.addListener(() => {
   fetch(`${BASE_URL}/profiles/activeProfile`, {
     method: 'POST',
@@ -236,6 +286,70 @@ function showNotification(site, num, options = {}) {
   
   chrome.notifications.create(notificationOptions);
 }
+
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  chrome.tabs.get(activeInfo.tabId, (tab) => {
+    handleTab(tab);
+  });
+});
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete') {
+    handleTab(tab);
+  }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  const siteLimit = Object.values(siteLimits).find(limit => limit.isTabActive);
+  if (siteLimit) {
+    siteLimit.updateRemainingTime();
+    siteLimit.resetTimer();
+  }
+});
+
+chrome.windows.onFocusChanged.addListener((windowId) => {
+  if (windowId === chrome.windows.WINDOW_ID_NONE) {
+    const siteLimit = Object.values(siteLimits).find(limit => limit.isTabActive);
+    if (siteLimit) {
+      siteLimit.updateRemainingTime();
+      siteLimit.resetTimer();
+    }
+  } else {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length > 0) {
+        handleTab(tabs[0]);
+        checkIfSiteBlocked(tabs[0]);
+      }
+    });
+  }
+});
+
+chrome.storage.local.get(['lastVisit', 'TimeLeft', 'isSiteBlocked', 'notificationShown', 'currentProfile'], (data) => {
+  Object.keys(data).forEach(key => {
+    if (key.includes('_lastVisit')) {
+      const url = key.split('_')[0];
+      siteLimits[url] = new SiteLimit(url, profileLimits[currentProfile], notificationTime);
+      siteLimits[url].lastVisit = data[key];
+    } else if (key.includes('_timeLeft')) {
+      const url = key.split('_')[0];
+      if (siteLimits[url]) siteLimits[url].timeLeft = data[key];
+    } else if (key.includes('_isBlocked')) {
+      const url = key.split('_')[0];
+      if (siteLimits[url]) siteLimits[url].isBlocked = data[key];
+    } else if (key.includes('_notificationShown')) {
+      const url = key.split('_')[0];
+      if (siteLimits[url]) siteLimits[url].notificationShown = data[key];
+    } else if (key === 'currentProfile') {
+      currentProfile = data.currentProfile;
+    }
+  });
+
+  Object.values(siteLimits).forEach(siteLimit => {
+    if (siteLimit.timeLeft > 0 && !siteLimit.isBlocked) {
+      siteLimit.startTimer();
+    }
+  });
+});
 
 chrome.runtime.onInstalled.addListener(() => {
 
