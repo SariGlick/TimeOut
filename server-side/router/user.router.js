@@ -16,4 +16,3 @@ usersRouter.get('/getCode/:email/:password', getCode);
 usersRouter.get("/getUserByGoogleAccount", getUserByGoogleAccount)
 export default usersRouter;
 
-

@@ -1,40 +1,44 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 import express from 'express';
-import morgan from 'morgan'
-import cors from 'cors'
-import dotenv from 'dotenv'
+import morgan from 'morgan';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import preferencesRouter from './router/preference.router.js';
 import websitesRouter from './router/websites.router.js';
-import profilesRouter from './router/profile.router.js'
-import visitedWebSitesRouter from './router/visitedWebsite.router.js'
-import usersRouter from './router/user.router.js'
-import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
-import {connectMongo} from './config/db.js'
-
-
-const app=express();
-app.use(express.json())
-app.use(express.urlencoded({extended:true}));
-app.use(morgan('dev'));//הדפסת המידע של כל הבקשה 
-app.use(cors());
+import profilesRouter from './router/profile.router.js';
+import visitedWebSitesRouter from './router/visitedWebsite.router.js';
+import usersRouter from './router/user.router.js';
+import settingsRouter from './router/settings.router.js'; 
+import { pageNotFound, serverErrors } from './middleware/handleErrors.js';
+import { connectMongo } from './config/db.js';
 
 dotenv.config();
 connectMongo();
-app.get('/',(req,res)=>{
-    res.send('welcome to time out ');
-})
-app.use('/uploads',express.static('uploads'))
-app.use('/preferences',preferencesRouter);
-app.use('/websites',websitesRouter);
-app.use('/profiles',profilesRouter);
-app.use('/vistedWebsites',visitedWebSitesRouter);
-app.use('/users',usersRouter);
-app.use(pageNotFound);
-app.use(serverErrors)
-let port= process.env.PORT;
 
-app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
-})
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(cors());
+
+app.get('/', (req, res) => {
+    res.send('welcome to time out ');
+});
+
+app.use('/uploads', express.static('uploads'));
+app.use('/preferences', preferencesRouter);
+app.use('/websites', websitesRouter);
+app.use('/profiles', profilesRouter);
+app.use('/vistedWebSites', visitedWebSitesRouter);
+app.use('/users', usersRouter);
+app.use('/api', settingsRouter);
+
+app.use(pageNotFound);
+app.use(serverErrors);
+
+const port = process.env.PORT;
+app.listen(port, () => {
+});
+
 
 export default app;
