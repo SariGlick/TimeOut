@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, InputAdornment, Button, Checkbox, FormControlLabel } from '@mui/material';
+
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
@@ -114,7 +115,7 @@ const GenericInput = ({
       }
     </>
 
-  )
+  );
 
 };
 GenericInput.propTypes = {
@@ -127,6 +128,7 @@ GenericInput.propTypes = {
   width: PropTypes.string,
   icon: PropTypes.elementType,
   validation: PropTypes.func,
+  disabled: PropTypes.bool,
   accept: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number

@@ -24,7 +24,7 @@ function App() {
     <>
       <RouterProvider router={router} />
       <HashRouter>
-        <Routes>
+        {/* <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<h1>home</h1>} />
             <Route path="home" element={<h1>home</h1>} />
@@ -33,7 +33,7 @@ function App() {
             <Route path="statistics" element={<h1>statistics</h1>} />
             <Route path="*" element={<h1>home</h1>} />
           </Route>
-        </Routes>
+        </Routes> */}
         <Footer />
       </HashRouter>
     </>

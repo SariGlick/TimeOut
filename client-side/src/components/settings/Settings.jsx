@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
+import { useSnackbar } from 'notistack';
+import { useSelector } from 'react-redux';
+
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
-import ToastMessage from '../../stories/Toast/ToastMessage.jsx'
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
+import { updatePreference } from '../../services/preferenceService.js';
+import { selectAuth } from '../../redux/auth/auth.selector.js';
+
 import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
 import Notifications from './Notifications.jsx';
-import CONSTANTS from './constantSetting.js'
-import { useSnackbar } from 'notistack';
-import { updatePreference } from '../../services/preferenceService.js';
-import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/auth/auth.selector.js'
+import CONSTANTS from './constantSetting.js';
+
+
 import './Settings.scss';
 
 const Settings = () => {
@@ -25,10 +29,10 @@ const Settings = () => {
   const preferenceId = user.preference._id;
 
   const elements = [
-    <AccountTab />,
-    <Notifications onUpdate={setNotificationsData} />,
-    <Preferences onUpdate={setPreferencesData} />
-  ]
+    <AccountTab key="account"/>,
+    <Notifications key="notifications" onUpdate={setNotificationsData} />,
+    <Preferences key="preferences" onUpdate={setPreferencesData} />
+  ];
 
   const handleFormSubmit = async () => {
     
@@ -61,6 +65,6 @@ const Settings = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 export default Settings;

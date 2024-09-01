@@ -23,7 +23,7 @@ const Statistics = () => {
 
     return (
         <ApolloProvider client={client}>
-            <DateTimePicker onSubmit={onSubmit} />
+            {/* <DateTimePicker onSubmit={onSubmit} /> */}
             {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
         </ApolloProvider>
     );

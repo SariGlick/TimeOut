@@ -1,11 +1,13 @@
 import React, { useState,useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next'
-import Select from '../../stories/Select/Select.jsx'
-import CONSTANTS from './constantSetting.js'
+import { useTranslation } from 'react-i18next';
 import moment from 'moment-timezone';
 import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/auth/auth.selector.js'
+
+import Select from '../../stories/Select/Select.jsx';
+import { selectAuth } from '../../redux/auth/auth.selector.js';
+
+import CONSTANTS from './constantSetting.js';
 import './Preferences.scss';
 
 const createTimeZones = () => {
@@ -70,8 +72,8 @@ const Preferences = ({ onUpdate}) => {
 
   const handleLanguageChange = (value) => {
     localization.changeLanguage(value);
-    setLanguage(value)
-  }
+    setLanguage(value);
+  };
 
   const handleChangeTimeZone = (selectedTimeZone) => {
     setTimeZone(selectedTimeZone);
@@ -107,10 +109,10 @@ const Preferences = ({ onUpdate}) => {
         widthOfSelect='210px'
       />
     </div>
-  )
+  );
 };
 Preferences.propTypes = {
   currentUser: PropTypes.object.isRequired,
   onUpdate: PropTypes.func.isRequired
-}
+};
 export default Preferences;

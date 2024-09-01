@@ -32,7 +32,7 @@
  * @property {string} [googleId]
  * @property {(string|VisitedWebsite)[]} visitsWebsites
  * @property {string[]} profiles
- * @property {string[]} preferences
+ * @property {string[]} preference
  * @property {string} [profileImage]
  */
 

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next'
-import Select from '../../stories/Select/Select.jsx';
-import GenericInput from '../../stories/GenericInput/genericInput.jsx'
-import CONSTANTS from './constantSetting.js'
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { selectAuth } from '../../redux/auth/auth.selector.js'
+
+import Select from '../../stories/Select/Select.jsx';
+import GenericInput from '../../stories/GenericInput/genericInput.jsx';
+import { selectAuth } from '../../redux/auth/auth.selector.js';
+
+import CONSTANTS from './constantSetting.js';
 import './Notifications.scss';
 
 const Notifications = ({ onUpdate }) => {
@@ -159,5 +161,5 @@ const Notifications = ({ onUpdate }) => {
 Notifications.propTypes = {
   currentUser: PropTypes.object.isRequired,
   onUpdate: PropTypes.func.isRequired
-}
+};
 export default Notifications;
