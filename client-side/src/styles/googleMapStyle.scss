@@ -1,0 +1,27 @@
+.autocomplete-input {
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1500; 
+}
+
+.pac-container {
+  z-index: 9999 !important;
+  position: absolute !important;
+}
+
+.MuiDrawer-root {
+  z-index: 1400 !important; 
+}
+
+.text {
+  color: rgba(128, 128, 128, 0.5);
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+.address-text {
+  color: rgba(128, 128, 128, 0.7);
+  font-size: 16px;                
+  text-align: center;               
+  margin-top: 60px;             
+}

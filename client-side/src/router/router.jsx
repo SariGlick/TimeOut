@@ -1,6 +1,6 @@
 import React from "react";
 import {createBrowserRouter } from "react-router-dom";
-import ProfileList from "../components/profileComponent.jsx";
+import ProfilePageComponent from "../components/profileComponents/profilePageComponent.jsx";
 import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
@@ -20,7 +20,7 @@ export  const router = createBrowserRouter([
             },
             {
                 path: '/profiles',
-                element: <ProfileList />
+                element:<ProfilePageComponent  userId = {'6698da056e5c07ebd3c11ec1'}/>
             },
             {
                 path: '/statistics',
