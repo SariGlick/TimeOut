@@ -17,7 +17,6 @@ connectMongo();
 
 const app = express();
 app.use(cookieParser());
-
 const corsOptions = {
   origin: 'chrome-extension://bcmdbgmbffljogmenfmblpikdmlfdaca',
   credentials: true,

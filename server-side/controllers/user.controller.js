@@ -89,10 +89,12 @@ export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const { user, token } = await userService.signIn(email, password);
+console.log("i am here");
+
     res.cookie('token', token, {
-      httpOnly: true,
-      secure: false, 
-      sameSite: 'None'
+      httpOnly: false, 
+      secure: false,   
+      sameSite: 'None'    
     });
     return res.status(200).send({ user });
   } catch (error) {
@@ -114,3 +116,4 @@ export const getUserProfile = async (req, res, next) => {
     return next({ message: 'Server Error', status: 500 });
   }
 };
+

@@ -19,23 +19,21 @@ function getUserIdFromTokenCookie() {
       const token = cookie.value;
       const userId = parseUserIdFromToken(token);
       console.log("User ID:", userId);
-      currentUserId = userId;
-      chrome.storage.local.set({ currentUserId: userId });
+
     } else {
       console.log("Token cookie not found!");
     }
-  });
-}
 
 function parseUserIdFromToken(token) {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.userId;
+    return payload.userId;   
   } catch (error) {
     console.error("Failed to parse token:", error);
     return null;
   }
 }
+
 
 function initializeCaches(callback) {
   chrome.storage.local.get(["blockedSites"], (data) => {

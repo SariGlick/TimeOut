@@ -36,6 +36,8 @@ export const updatedUser = async (id, userData, file) => {
 };
 export const signIn = async (email, password) => {
   const user = await Users.findOne({ email });
+  console.log(user);
+  
   if (!user) {
       throw new Error('Auth Failed');
   }

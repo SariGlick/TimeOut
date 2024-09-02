@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Website Blocker7",
-  "version": "1.0",
+  "version": "3.0",
   "description": "Blocks specified websites on Chrome using manifest v3",
   "permissions": [
     "cookies",
@@ -9,12 +9,11 @@
     "tabs",
     "webNavigation",
     "scripting",
-    "webNavigation",
-    "tabs",
     "activeTab"
+    
   ],
   "host_permissions": [
-     "https://localhost:5000/*",
+     "http://localhost:5000/*",
     "http://*/*",
     "https://*/*"
   ],
