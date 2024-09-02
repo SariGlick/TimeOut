@@ -18,8 +18,12 @@ import TimerActivationButton from './timerActivation.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
+
 //
+import { useSelector } from 'react-redux';
 import DownloadAsExcel from '../Report/downloadAsExcel.jsx'; // Import the DownloadAsExcel component
+import GenericInput from '../../stories/GenericInput/genericInput.jsx';
+import GenericButton from '../../stories/Button/GenericButton.jsx';
 // import FileUpload from './FileUpload.jsx';
 // import { uploadDataToServer } from '../../services/profileService.js';
 
@@ -33,10 +37,14 @@ const ProfilePageComponent = ({ userId }) => {
   const [time, setTime] = useState(0);
   const profiles = useAppSelector(selectProfile);
   const statusOptions = selectedProfile ? getStatusOptions(selectedProfile.statusBlockedSites) : [];
-
+//
+// const [selectedFile, setSelectedFile] = useState(null);
+//
+// const userIdRedux = useSelector((state) => state.user.id);
+// const userIdRedux='s1234';
   const fetchProfiles = async () => {
     try {
-      //const userId = '6698da056e5c07ebd3c11ec1';
+      const userId = '66a0ccd1649ed11c91d9b688';
       const profileData = await getProfilesByUserId(userId);
       dispatch(setProfiles(profileData));
       setLoading(false);
@@ -285,10 +293,11 @@ const ProfilePageComponent = ({ userId }) => {
   //
 
   const formatProfileDataForExcel = (profile) => {
+    
     if (!profile || !profile.listWebsites || profile.listWebsites.length === 0) {
       return [];
     }
-   // Profile-level data
+
    const profileData = {
     'Profile Name': profile.profileName,
     'Status Blocked Sites': profile.statusBlockedSites,
@@ -296,7 +305,7 @@ const ProfilePageComponent = ({ userId }) => {
     'End Time': profile.timeProfile.end,
     
   };
-   // Map websites to create website-level data
+   
    const websiteData = profile.listWebsites.map(website => ({
     'Website Name': website.websiteId.name,
     'Website URL': website.websiteId.url,
@@ -304,20 +313,49 @@ const ProfilePageComponent = ({ userId }) => {
     'Limited Minutes': website.limitedMinutes,
   }));
 
-  // Return an array with the profile-level data and the website-level data
+
   return [profileData, ...websiteData];
 };
 
   const formattedData = selectedProfile ? formatProfileDataForExcel(selectedProfile) : [];
+//
+// const handleFileChange = (event) => {
+//   setSelectedFile(event.target.files[0]);
+// };
+// //
+// const handleFileUpload = async () => {
+//   if (!selectedFile) {
+//       return;
+//   }
+//   //
+//   try {
+//     const formData = new FormData();
+//     formData.append('file', selectedFile);
+//     formData.append('text',userIdRedux)
+//     console.log('useridddd',userIdRedux)
+//     // Replace with your API endpoint
+//     const response = await fetch('http://localhost:5000/profiles/upload', {
+//         method: 'POST',
+//         body: formData,
+        
+//     });
+//     /////
+//     console.log('body',response.body)
+//     const responseText = await response.text(); // Get the response as text
+//     console.log('Response:', responseText);
 
-  //  const handleFileUpload = async (data) => {
-  //     try {
-  //       await uploadDataToServer(data);
-  //       alert('Data successfully uploaded!');
-  //     } catch (error) {
-  //       alert('Error uploading data: ' + error.message);
-  //     }
-  //   };
+//     if (response.ok) {
+//         console.log('File uploaded successfully!');
+//     } else {
+//         console.log('File upload failed:', response.statusText);
+//     }
+// } catch (error) {
+//     console.log('An error occurred during upload!', error);
+// }
+//  finally {
+//   console.log(true);
+// }
+// };
   return (
     <div className="profile-list-container">
       <div className="profile-list-select-wrapper">
@@ -379,7 +417,16 @@ const ProfilePageComponent = ({ userId }) => {
     />
   </div>
 )}
-{/* <FileUpload onFileUpload={handleFileUpload} /> */}
+{/* // */}
+      {/* <GenericInput 
+            type="file" 
+            accept=".xlsx,.xls" 
+            onChange={handleFileChange} 
+            label="Upload Excel" 
+            size="small" 
+        />
+        <GenericButton onChange={handleFileChange} 
+            label="Add Profile" onClick={handleFileUpload}/> */}
     </div>
     
   );

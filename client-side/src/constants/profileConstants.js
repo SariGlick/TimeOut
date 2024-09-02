@@ -63,6 +63,7 @@ export const DIALOG_TITLES = {
     EDIT_PROFILE: 'Edit Profile',
     PROFILE_TIME:' Enter profile start time and profile end time',
     CREATE_FORM:'  To create a new profile please enter the required data.',
+    CREATE_FORM_EXCEL:'  To Create a new profile from an Excel file.',
     NEW_PROFILE:'New profile',
     STATUS_LIST:'Choose a white/black list to set how the sites are blocked.'
 };
@@ -88,6 +89,7 @@ export const TOAST_MESSAGES = {
     PROFILE_CREATE_ERROR: 'Error creating profile',
     PROFILE_CREATE_SUCCESS: 'Success creating profile',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
+    FILE_NOT_SELECTED: 'The button is disabled because No file was selected.',
     WEBSITE_CREATE_SUCCESS:'Website created successfully!'
 };
 

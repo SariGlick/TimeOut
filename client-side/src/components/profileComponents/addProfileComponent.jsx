@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
@@ -19,7 +19,8 @@ export default function AddProfile({ userId }) {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState(getInitialData());
   const [errorText, setErrorText] = React.useState('');
-
+  const [selectedFile, setSelectedFile] = useState(null);
+  const userIdRedux = useSelector((state) => state.user.id);
   function getInitialData() {
     return {
       name: '',
@@ -77,6 +78,7 @@ export default function AddProfile({ userId }) {
         end: data.timeEnd,
       }
     };
+    
     try {
       await createProfile(profileData);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />); 
@@ -89,8 +91,46 @@ export default function AddProfile({ userId }) {
     }
   }, [data, dispatch, navigate, handleClose, enqueueSnackbar]);
 
- 
-
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+  //
+  const handleFileUpload = async () => {
+    if (!selectedFile) {
+        return;
+    }
+    //
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('text',userIdRedux)
+      console.log('useridddd',userIdRedux)
+      // Replace with your API endpoint
+      const response = await fetch('http://localhost:5000/profiles/upload', {
+          method: 'POST',
+          body: formData,
+          
+      });
+      
+      /////
+      console.log('body',response.body)
+      const responseText = await response.text(); // Get the response as text
+      console.log('Response:', responseText);
+  
+      if (response.ok) {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
+          console.log('File uploaded successfully!');
+      } else {
+          console.log('File upload failed:', response.statusText);
+      }
+      
+  } catch (error) {
+      console.log('An error occurred during upload!', error);
+  }
+   finally {
+    console.log(true);
+  }
+  };
   return (
     <React.Fragment>
       <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={handleClickOpen} size="medium" />
@@ -105,6 +145,40 @@ export default function AddProfile({ userId }) {
       >
         <DialogTitle>{DIALOG_TITLES.NEW_PROFILE}</DialogTitle>
         <DialogContent>
+        <DialogContentText className='dialog-content-text'>
+            {DIALOG_TITLES.CREATE_FORM_EXCEL}
+          </DialogContentText>
+          <GenericInput 
+            type="file" 
+            accept=".xlsx,.xls" 
+            onChange={handleFileChange} 
+            label="Upload Excel" 
+            size="small" 
+        />
+      <span style={{ display: 'inline-block' }}>
+  <Tooltip 
+    title={!selectedFile ? TOAST_MESSAGES.FILE_NOT_SELECTED : ''} 
+    disableHoverListener={!!selectedFile}
+  >
+    <span>
+      <GenericButton 
+        onChange={handleFileChange} 
+        label="Add Profile" 
+        onClick={handleFileUpload}
+        disabled={!selectedFile}
+        style={{ pointerEvents: !selectedFile ? 'none' : 'auto' }}
+      />
+    </span>
+  </Tooltip>
+</span>
+        {/* <Tooltip title={!selectedFile ? TOAST_MESSAGES.FILE_NOT_SELECTED : ''}>
+        <span>
+         <GenericButton onChange={handleFileChange} 
+            label="Add Profile" onClick={handleFileUpload}
+            disabled={!selectedFile}
+            />
+            </span>
+            </Tooltip> */}
           <DialogContentText className='dialog-content-text'>
             {DIALOG_TITLES.CREATE_FORM}
           </DialogContentText>
