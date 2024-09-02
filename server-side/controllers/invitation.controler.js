@@ -5,7 +5,7 @@ import {
     getInvitationById_service,
     updateInvitation_service,
     deleteInvitation_service
-} from '../services/invitation.service.js'
+} from '../services/invitation.service.js';
 
 export const getAllInvitations = async (req, res, next) => {
     try {

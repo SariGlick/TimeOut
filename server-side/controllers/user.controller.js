@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';
 import {
   getUserById_service,
-} from '../services/user.service.js'
+} from '../services/user.service.js';
 
 export const getUsers = async (req, res,next) => {
   try {
