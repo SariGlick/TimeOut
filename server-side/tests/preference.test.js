@@ -1,6 +1,5 @@
 import request from 'supertest';
 import app from '../app.js';
-import { connectMongo, disconnectMongo } from '../config/db.js';
 
 
 describe('GET /preferences', () => {
