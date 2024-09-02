@@ -40,8 +40,6 @@ app.use(pageNotFound);
 app.use(serverErrors);
 
 const port = process.env.PORT;
-app.listen(port, () => {
-});
 
 
 export default app;
