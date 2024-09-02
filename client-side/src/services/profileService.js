@@ -11,6 +11,7 @@ export const getAllProfiles = async () => {
 
 export const createProfile = async (profileData) => {
     try {
+        console.log(profileData)
         const response = await handlePost('/profiles', profileData);
         return response.data;
     } catch (err) {
@@ -42,6 +43,7 @@ export const getProfilesByUserId = async (id) => {
         const response = await handleGet(`/profiles/user/${id}`);
         return response.data;
     } catch (err) {
+        console.error(`Error getting profiles for user ${id}:`, err);
         throw err;
     }
 };

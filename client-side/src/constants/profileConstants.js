@@ -1,4 +1,3 @@
-
 export const INPUT_LABELS = {
     PROFILE_NAME: 'Profile Name',
     TIME_START: 'Time Start',
@@ -7,11 +6,14 @@ export const INPUT_LABELS = {
     WEBSITE_NAME: 'Website Name',
     URL: 'URL',
     STATUS: 'status',
-    LIMIT_MINUTES: 'Limit Minutes'
+    LIMIT_MINUTES: 'Limit Minutes',
+    TIMER_ACTIVATION: 'Timer Activation',
+    GOOGLE_DRIVE:'Google Drive',
+    GOOGLE_CALENDAR:'Google Calendar',
+    GOOGLE_MAP:'Google Map'
 };
 
 export const TOOLTIP_TEXTS = {
-    TIMER_ACTIVATION: 'Timer Activation',
     ADD_WEBSITE: 'Add Website',
     WEBSITE_NAME: 'This field is optional',
     URL: 'Enter the URL of the website',
@@ -28,6 +30,9 @@ export const TOOLTIP_TEXTS = {
     DELETE: 'Delete',
     CONFIRM_DELETE: 'Are you sure you want to delete this profile?',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
+    GOOGLE_DRIVE:'Google Drive',
+    GOOGLE_CALENDAR:'Google Calendar',
+    GOOGLE_MAP:'Google Map'
 };
 
 export const SELECT_OPTIONS = {
@@ -57,14 +62,17 @@ export const BUTTON_LABELS = {
     START: 'Start'
 };
 
+
 export const DIALOG_TITLES = {
     TIMER_ACTIVATION: 'Timer Activation',
+    ADDING: 'Adding',
     ADD_PROFILE: 'Add a new profile',
     EDIT_PROFILE: 'Edit Profile',
     PROFILE_TIME:' Enter profile start time and profile end time',
     CREATE_FORM:'  To create a new profile please enter the required data.',
     NEW_PROFILE:'New profile',
-    STATUS_LIST:'Choose a white/black list to set how the sites are blocked.'
+    STATUS_LIST:'Choose a white/black list to set how the sites are blocked.',
+    GOOGLE:'Would you like your profile to be activated by Google services?'
 };
 
 export const TOAST_MESSAGES = {

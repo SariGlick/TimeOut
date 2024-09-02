@@ -1,12 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 /**
  * @typedef {Object} ProfileStateType
  * @property {Profile[]} profiles
+ * @property {Profile | null} selectedProfile
  */
 
 /** @type {ProfileStateType} */
 const initialState = {
-    profiles: []
+    profiles: [],
+    selectedProfile: null,
 };
 const profileSlice = createSlice({
     name: 'profile',
@@ -42,9 +45,16 @@ const profileSlice = createSlice({
          */
         deleteProfile: (state, action) => {
             state.profiles = state.profiles.filter(profile => profile._id !== action.payload);
+        },
+        /**
+         * @param {ProfileStateType} state
+         * @param {PayloadAction<Profile | null>} action
+         */
+        setSelectProfile: (state, action) => {
+            state.selectedProfile = action.payload;
         }
     }
 });
 
-export const { setProfiles, addProfile, updateProfile, deleteProfile } = profileSlice.actions;
+export const { setProfiles, addProfile, updateProfile, deleteProfile, setSelectProfile } = profileSlice.actions;
 export default profileSlice.reducer;

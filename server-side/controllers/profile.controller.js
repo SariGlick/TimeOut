@@ -1,18 +1,31 @@
 import Profile from '../models/profile.model.js';
+<<<<<<< HEAD
+=======
+import activeProfile from '../profileMngr.js'
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 
 export const getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profile.find();
+<<<<<<< HEAD
         return res.json(profiles);
+=======
+        res.json(profiles);
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 };
 
-export const createProfile = async (req, res, next) => {
+export const createProfile = async (req, res) => {
+    const newProfile = new Profile(req.body);
     try {
         const savedProfile = await newProfile.save();
+<<<<<<< HEAD
         return res.status(201).json(savedProfile);
+=======
+        res.status(200).json(savedProfile);
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -51,6 +64,21 @@ export const getProfilesByUserId = async (req, res) => {
         });
         if (!profiles.length) {
             return res.status(404).json({ message: 'No profiles found for this user' });
+<<<<<<< HEAD
+=======
+        }
+        res.json(profiles);
+    } catch (err) {
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+export const deleteProfile = async (req, res) => {
+    try {
+        const deletedProfile = await Profile.findByIdAndDelete(req.params.id);
+        if (!deletedProfile) {
+            return res.status(404).json({ message: 'Profile not found' });
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
         }
         return res.json(profiles);
     } catch (err) {
@@ -58,6 +86,7 @@ export const getProfilesByUserId = async (req, res) => {
     }
 };
 
+<<<<<<< HEAD
 export const deleteProfile = async (req, res) => {
     try {
         const deletedProfile = await Profile.findByIdAndDelete(req.params.id);
@@ -70,11 +99,80 @@ export const deleteProfile = async (req, res) => {
     }
 };
 
+=======
+export const updateLocation = async (req, res) => {
+    const { userId, location } = req.body;
+    try {
+        const profiles = await Profile.find({ userId });
+
+        if (!profiles.length) {
+            return res.status(404).send('No profiles found for user');
+        }
+        for (const profile of profiles) {
+            if (profile.googleMapsLocation && profile.googleMapsLocation.enabled) {
+                const profileLocation = profile.googleMapsLocation.location;
+                if (profileLocation && profileLocation.lat && profileLocation.lng) {
+                    const distance = getDistance(location, profileLocation);
+
+                    if (distance < 100) {
+                        await activateProfile(profile.userId);
+                    }
+                } else {
+                    console.warn(`Invalid location data for profile ID ${profile._id}`);
+                }
+            }
+        }
+
+        res.send('Location updated');
+    } catch (error) {
+        console.error('Server error:', error);
+        res.status(500).send('Server error');
+    }
+};
+
+const getDistance = (loc1, loc2) => {
+    const toRad = (value) => value * Math.PI / 180;
+
+    const R = 6371;
+    const dLat = toRad(loc2.lat - loc1.lat);
+    const dLon = toRad(loc2.lng - loc1.lng);
+    const lat1 = toRad(loc1.lat);
+    const lat2 = toRad(loc2.lat);
+
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) * Math.sin(dLon / 2) *
+        Math.cos(lat1) * Math.cos(lat2);
+
+    const c = 2 * Math.asin(Math.sqrt(a));
+    const distance = R * c * 1000;
+    
+    return distance;
+};
+export const activeProfileByUserId = async(req, res) => {
+    try {
+        const userId = req.body;
+        const profile = await activeProfile(userId);
+        
+        res.status(201).json(profile);
+    }
+    catch (error) {
+        console.log({ error })
+        res.status(500).send(error.message);
+    }
+}
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 export default {
     getAllProfiles,
     createProfile,
     getProfileById,
     updateProfile,
     getProfilesByUserId,
+<<<<<<< HEAD
     deleteProfile
+=======
+    deleteProfile,
+    updateLocation,
+    activeProfileByUserId
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 };

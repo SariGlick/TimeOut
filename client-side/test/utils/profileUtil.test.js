@@ -7,46 +7,139 @@ import {
     isValidURL,
     isWebsiteInProfile,
     handleFieldChange,
-    validateProfileDate
+    validateProfileDate,
+    parseTimeStringToDate 
 } from '../../src/utils/profileUtil.js';
-import { SELECT_OPTIONS, VALIDATE_MESSAGES } from '../../src/constants/profileConstants.js';
+import { SELECT_OPTIONS} from '../../src/constants/profileConstants.js';
 
 describe('formatProfileData', () => {
-    test('formats profile data correctly', () => {
-        const profile = {
-            _id: '123',
-            userId: 'user1',
-            profileName: 'Test Profile',
-            timeProfile: { start: '08:00', end: '17:00' },
-            statusBlockedSites: 'white list',
-            listWebsites: [
-                {
-                    websiteId: { _id: 'web1', name: 'Example', url: 'http://example.com' },
-                    status: 'limit',
-                    limitedMinutes: 30
-                }
-            ]
-        };
+  test('formats profile data correctly when all fields are provided', () => {
+    const profile = {
+      userId: 'user1',
+      profileName: 'Test Profile',
+      timeProfile: { start: '08:00', end: '17:00' },
+      statusBlockedSites: 'black list',
+      listWebsites: [
+        {
+          websiteId: { _id: 'web1', name: 'Example', url: 'http://example.com' },
+          status: 'limit',
+          limitedMinutes: 30
+        }
+      ],
+      googleMapsLocation: { enabled: true, address: '123 Main St', lat: 12.34, lng: 56.78 },
+      googleCalendarEvents: { enabled: true, calendarId: 'cal123' },
+      googleDriveFiles: { enabled: true, folderId: 'folder123' }
+    };
 
-        const formattedData = formatProfileData(profile);
+    const formattedData = formatProfileData(profile);
 
-        expect(formattedData).toEqual({
-            id: '123',
-            userId: 'user1',
-            profileName: 'Test Profile',
-            timeProfile: { timeStart: '08:00', timeEnd: '17:00' },
-            statusBlockedSites: 'white list',
-            websites: [{
-                index: 0,
-                websiteId: 'web1',
-                name: 'Example',
-                url: 'http://example.com',
-                status: 'limit',
-                limitedMinutes: 30
-            }]
-        });
+    expect(formattedData).toEqual({
+      userId: 'user1',
+      profileName: 'Test Profile',
+      timeProfile: { timeStart: '08:00', timeEnd: '17:00' },
+      statusBlockedSites: 'black list',
+      websites: [
+        {
+          index: 0,
+          websiteId: 'web1',
+          name: 'Example',
+          url: 'http://example.com',
+          status: 'limit',
+          limitedMinutes: 30
+        }
+      ],
+      googleMapsEnabled: true,
+      googleMapsLocation: {
+        address: '123 Main St',
+        lat: 12.34,
+        lng: 56.78
+      },
+      googleCalendarEnabled: true,
+      googleCalendarId: 'cal123',
+      googleDriveEnabled: true,
+      googleDriveFolderId: 'folder123'
     });
+  });
+
+  test('formats profile data correctly when some fields are missing', () => {
+    const profile = {
+      userId: 'user2',
+      profileName: '',
+      timeProfile: { start: '', end: '' },
+      statusBlockedSites: 'white list',
+      listWebsites: [
+        {
+          websiteId: { _id: 'web2', name: '', url: '' },
+          status: 'open',
+          limitedMinutes: 10
+        }
+      ],
+      googleMapsLocation: { enabled: false },
+      googleCalendarEvents: {},
+      googleDriveFiles: { enabled: true }
+    };
+
+    const formattedData = formatProfileData(profile);
+
+    expect(formattedData).toEqual({
+      userId: 'user2',
+      profileName: '',
+      timeProfile: {
+        timeStart: new Date().toISOString().substr(11, 5),
+        timeEnd: new Date().toISOString().substr(11, 5)
+      },
+      statusBlockedSites: 'white list',
+      websites: [
+        {
+          index: 0,
+          websiteId: 'web2',
+          name: '',
+          url: '',
+          status: 'open',
+          limitedMinutes: 10
+        }
+      ],
+      googleMapsEnabled: false,
+      googleMapsLocation: {
+        address: '',
+        lat: 0,
+        lng: 0
+      },
+      googleCalendarEnabled: false,
+      googleCalendarId: '',
+      googleDriveEnabled: true,
+      googleDriveFolderId: ''
+    });
+  });
+
+  test('formats profile data correctly when all fields are missing', () => {
+    const profile = {};
+
+    const formattedData = formatProfileData(profile);
+
+    expect(formattedData).toEqual({
+      userId: '',
+      profileName: '',
+      timeProfile: {
+        timeStart: new Date().toISOString().substr(11, 5),
+        timeEnd: new Date().toISOString().substr(11, 5)
+      },
+      statusBlockedSites: '',
+      websites: [],
+      googleMapsEnabled: false,
+      googleMapsLocation: {
+        address: '',
+        lat: 0,
+        lng: 0
+      },
+      googleCalendarEnabled: false,
+      googleCalendarId: '',
+      googleDriveEnabled: false,
+      googleDriveFolderId: ''
+    });
+  });
 });
+
 
 describe('updateFormDataWithStatusBlockedSites', () => {
     test('updates form data with new statusBlockedSites value', () => {
@@ -93,18 +186,18 @@ describe('extractWebsiteName', () => {
 });
 
 describe('validateName', () => {
-    test('returns short message for name shorter than 2 characters', () => {
-        expect(validateName('A')).toBe(VALIDATE_MESSAGES.PROFILE_NAME_SHORT);
+    test('returns -1 for name shorter than 2 characters', () => {
+      expect(validateName('A')).toBe(-1);
     });
-
-    test('returns long message for name longer than 50 characters', () => {
-        expect(validateName('A'.repeat(51))).toBe(VALIDATE_MESSAGES.PROFILE_NAME_LONG);
+  
+    test('returns 0 for name longer than 50 characters', () => {
+      expect(validateName('A'.repeat(51))).toBe(0);
     });
-
-    test('returns empty string for valid name length', () => {
-        expect(validateName('Valid Name')).toBe('');
+  
+    test('returns 1 for valid name length', () => {
+      expect(validateName('Valid Name')).toBe(1);
     });
-});
+  });
 
 describe('isValidURL', () => {
     test('returns true for valid URL', () => {
@@ -232,3 +325,37 @@ describe('validateProfileDate', () => {
         expect(validateProfileDate(formData)).toBe(true);
     });
 });
+
+describe('parseTimeStringToDate', () => {
+    test('correctly parses a valid time string', () => {
+      const timeString = '13:45';
+      const date = parseTimeStringToDate(timeString);
+      expect(date.getHours()).toBe(13);
+      expect(date.getMinutes()).toBe(45);
+      expect(date.getSeconds()).toBe(0);
+      expect(date.getMilliseconds()).toBe(0);
+    });
+  
+    test('sets the current date when parsing time string', () => {
+      const timeString = '08:30';
+      const date = parseTimeStringToDate(timeString);
+      const now = new Date();
+      expect(date.getFullYear()).toBe(now.getFullYear());
+      expect(date.getMonth()).toBe(now.getMonth());
+      expect(date.getDate()).toBe(now.getDate());
+    });
+  
+    test('parses a time string with leading zeroes correctly', () => {
+      const timeString = '01:05';
+      const date = parseTimeStringToDate(timeString);
+      expect(date.getHours()).toBe(1);
+      expect(date.getMinutes()).toBe(5);
+    });
+  
+    test('handles invalid time string format', () => {
+      const timeString = 'invalid';
+      const date = parseTimeStringToDate(timeString);
+      expect(date.getHours()).toBeNaN();
+      expect(date.getMinutes()).toBeNaN();
+    });
+  });

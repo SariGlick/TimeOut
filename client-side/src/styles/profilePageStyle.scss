@@ -125,3 +125,18 @@ button {
 .green_title{
   color:  rgb(103, 252, 210) ;
 }
+
+.custom-checkbox {
+  color: rgb(103, 252, 210) !important;
+
+  &.Mui-checked {
+    color: rgb(103, 252, 210) !important;
+  }
+
+  .MuiSvgIcon-root {
+    font-size: 28px !important;
+  }
+}
+
+
+

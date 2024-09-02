@@ -1,16 +1,34 @@
 import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Tooltip } from '@mui/material';
 import { useSnackbar } from 'notistack';
+import {
+  Button,
+  Dialog, DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Tooltip,
+  Box,
+  Checkbox,
+  FormControlLabel
+} from '@mui/material';
+import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
-import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
-import { SELECT_OPTIONS, INPUT_LABELS, DIALOG_TITLES, TOAST_MESSAGES, VALIDATE_MESSAGES, BUTTON_LABELS} from '../../constants/profileConstants.js';
+import MapComponent from '../googleServices/googleMap.jsx'
+import {
+  SELECT_OPTIONS,
+  INPUT_LABELS,
+  DIALOG_TITLES,
+  TOAST_MESSAGES,
+  VALIDATE_MESSAGES,
+  BUTTON_LABELS
+} from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
-import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 
 export default function AddProfile({ userId }) {
   const dispatch = useDispatch();
@@ -26,9 +44,12 @@ export default function AddProfile({ userId }) {
       timeStart: '00:00',
       timeEnd: '00:00',
       status: '',
-      url: '',
-      urlTimeLimit: 0,
-      urlStatus: ''
+      googleMapsEnabled: false,
+      googleMapsLocation: { address: '', lat: 0, lng: 0 },
+      googleCalendarEnabled: false,
+      googleCalendarId: '',
+      googleDriveEnabled: false,
+      googleDriveFolderId: ''
     };
   }
 
@@ -41,14 +62,12 @@ export default function AddProfile({ userId }) {
     setOpen(true);
   }, []);
 
- 
-
   const handleChange = useCallback((e) => {
-    const { name, value } = e.target;
-   
+    const { name, checked, value, type } = e.target;
+
     setData(prevData => ({
       ...prevData,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
 
     if (name === 'name') {
@@ -66,30 +85,63 @@ export default function AddProfile({ userId }) {
     return '';
   };
 
+  const handleSaveDataAddress = ({ address, markerPosition }) => {
+    setData(prevData => {
+      const updatedData = {
+        ...prevData,
+        googleMapsLocation: {
+          address: address,
+          lat: markerPosition.lat,
+          lng: markerPosition.lng
+        }
+      };
+      return updatedData;
+    });
+  };
+
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
+    const booleanize = (value) => {
+      return value === true || value === 'true';
+    };
+    debugger
     const profileData = {
-      userId:userId ,
+      userId: userId,
       profileName: data.name,
       statusBlockedSites: data.status,
-           timeProfile: {
+      timeProfile: {
         start: data.timeStart,
         end: data.timeEnd,
+      },
+      googleMapsLocation: {
+        enabled: booleanize(data.googleMapsEnabled),
+        location: {
+          address: data.googleMapsLocation.address,
+          lat: data.googleMapsLocation.lat,
+          lng: data.googleMapsLocation.lng
+        }
+      },
+      googleCalendarEvents: {
+        enabled: booleanize(data.googleCalendarEnabled),
+        calendarId: data.googleCalendarId
+      },
+      googleDriveFiles: {
+        enabled: booleanize(data.googleDriveEnabled),
+        folderId: data.googleDriveFolderId
       }
     };
+
     try {
       await createProfile(profileData);
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />); 
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       dispatch(addProfile(profileData));
-      setTimeout(() => navigate(0), 2000);      
+      setTimeout(() => navigate(0), 2000);
       handleClose();
     } catch (error) {
       console.error(TOAST_MESSAGES.PROFILE_CREATE_ERROR, error);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
     }
-  }, [data, dispatch, navigate, handleClose, enqueueSnackbar]);
-
- 
+  }, [data, dispatch, navigate, handleClose, enqueueSnackbar, userId]);
 
   return (
     <React.Fragment>
@@ -147,8 +199,43 @@ export default function AddProfile({ userId }) {
               selectedOption={data.status}
               onChange={handleChange}
             />
-           
-          </div> 
+          </div>
+          <Box className="checkbox-container">
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="googleMapsEnabled"
+                  checked={data.googleMapsEnabled}
+                  onChange={handleChange}
+                  className="custom-checkbox"
+                />
+              }
+              label="Google Map"
+            />
+            {data.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="googleCalendarEnabled"
+                  checked={data.googleCalendarEnabled}
+                  onChange={handleChange}
+                  className="custom-checkbox"
+                />
+              }
+              label="Google Calendar"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="googleDriveEnabled"
+                  checked={data.googleDriveEnabled}
+                  onChange={handleChange}
+                  className="custom-checkbox"
+                />
+              }
+              label="Google Drive"
+            />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose}>

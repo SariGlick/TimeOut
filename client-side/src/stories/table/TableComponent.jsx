@@ -179,8 +179,12 @@ const TableComponent = ({
   handleFieldChange,
   statusOptions,
   addButton,
+<<<<<<< HEAD
   handleAddRow,
   pageSize 
+=======
+  handleAddRow
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 }) => {
   let columns = dataObject.headers.map((header, i) => ({
     field: header,
@@ -285,6 +289,7 @@ const TableComponent = ({
       )}
     </div>
   );
+<<<<<<< HEAD
 };
 
 TableComponent.propTypes = {
@@ -323,4 +328,41 @@ TableComponent.defaultProps = {
   pageSize: 5, 
 };
 
+=======
+};
+
+TableComponent.propTypes = {
+  dataObject: PropTypes.shape({
+    headers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    rows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  }).isRequired,
+  widthOfTable: PropTypes.string,
+  widthOfColums: PropTypes.arrayOf(PropTypes.number).isRequired,
+  actions: PropTypes.arrayOf(
+    PropTypes.shape({
+      func: PropTypes.func,
+      icon: PropTypes.elementType,
+      label: PropTypes.string,
+      condition: PropTypes.func,
+    })
+  ),
+  editRowId: PropTypes.string,
+  handleFieldChange: PropTypes.func,
+  statusOptions: PropTypes.arrayOf(PropTypes.shape({
+    value: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  })).isRequired,
+  addButton: PropTypes.bool,
+  handleAddRow: PropTypes.func,
+};
+
+TableComponent.defaultProps = {
+  widthOfTable: "80%",
+  actions: [],
+  editRowId: null,
+  handleFieldChange: null,
+  addButton: false,
+  handleAddRow: null,
+};
+>>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 export default TableComponent;

@@ -8,13 +8,15 @@ import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import { updateProfileApi, getProfilesByUserId } from '../../services/profileService.js';
 import { deleteWebsite, updateWebsite, createWebsite } from '../../services/websiteService.js';
 import { useAppSelector } from '../../redux/store.jsx';
-import { setProfiles, updateProfile } from '../../redux/profile/profile.slice.js';
+import { setProfiles, updateProfile, setSelectProfile } from '../../redux/profile/profile.slice.js';
 import { selectProfile } from '../../redux/profile/profile.selector.js';
 import Loader from '../../stories/loader/loader.jsx';
 import AddProfileComponent from './addProfileComponent.jsx';
 import UpdateProfileComponent from './updateProfileCpmponent.jsx';
 import TimerActivationButton from './timerActivationButton.jsx';
-import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
+// import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
+// import ProfileActivationTimer from './profileActivationComponent.jsx';
+import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions, parseTimeStringToDate } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
@@ -25,13 +27,11 @@ const ProfilePageComponent = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);
   const [editedRows, setEditedRows] = useState(null);
-
   const profiles = useAppSelector(selectProfile);
   const statusOptions = selectedProfile ? getStatusOptions(selectedProfile.statusBlockedSites) : [];
 
   const fetchProfiles = async () => {
     try {
-      //const userId = '6698da056e5c07ebd3c11ec1';
       const profileData = await getProfilesByUserId(userId);
       dispatch(setProfiles(profileData));
       setLoading(false);
@@ -47,21 +47,27 @@ const ProfilePageComponent = ({ userId }) => {
     }
   }, [dispatch, userId]);
 
-
   const handleProfileSelect = (event) => {
-    const selectedProfileId = event.target.value;
-    const profile = profiles.find(profile => profile._id === selectedProfileId);
-    setSelectedProfile(profile);
-    setEditRowId(null);
-    setEditedRows(null);
-  };
+    if (profiles) {
+      const selectedProfileId = event.target.value;
+      const profile = profiles.find(profile => profile._id === selectedProfileId);
+      setSelectedProfile(profile);
+      dispatch(setSelectProfile(selectedProfile));
+      setEditRowId(null);
+      setEditedRows(null);
 
-  function parseTimeStringToDate(timeString) {
-    const [hours, minutes] = timeString.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date;
-  }
+      const start = parseTimeStringToDate(profile.timeProfile.start);
+      const end = parseTimeStringToDate(profile.timeProfile.end);
+      const durationMinutes = (end - start) / 1000 / 60;
+      if (durationMinutes >= 0) {
+        setTime(durationMinutes);
+      } else {
+        setTime(durationMinutes * -1);
+      }
+    }
+    else
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_FROM_SERVER_ERROR} type="error" />);
+  };
 
   const handleDelete = async (id) => {
     const updatedWebsites = selectedProfile.listWebsites.filter(website => website.websiteId._id !== id);
@@ -74,6 +80,7 @@ const ProfilePageComponent = ({ userId }) => {
       await updateProfileApi(selectedProfile._id, profileToUpdate);
       dispatch(updateProfile(profileToUpdate));
       setSelectedProfile(profileToUpdate);
+      dispatch(setSelectProfile(selectedProfile));
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_DELETE_SUCCESS} type="success" />);
     } catch (err) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_DELETED_ERROR} type="error" />);
@@ -90,13 +97,12 @@ const ProfilePageComponent = ({ userId }) => {
       limitedMinutes: website.status === 'limit' ? website.limitedMinutes : 0,
     });
   };
-
   const handleSave = async (id) => {
     if (!selectedProfile || !editRowId || !editedRows) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_UPDATED_ERROR} type="error" />);
       return;
     }
-    if (editedRows.status === 'limit' && (editedRows.limitedMinutes === '' || editedRows.limitedMinutes === 0)) {
+    if (editedRows.status === 'limit' && (editedRows.limitedMinutes === '' || (Number(editedRows.limitedMinutes) === 0))) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_WITHOUT_TIME} type="error" />);
       return;
     }
@@ -108,7 +114,7 @@ const ProfilePageComponent = ({ userId }) => {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.INVALID_URL} type="error" />);
       return;
     }
-    if (editedRows.id === 'new' && (isWebsiteInProfile(editedRows.url, selectedProfile))) {
+    if (editRowId === 'new' && (isWebsiteInProfile(editedRows.url, selectedProfile))) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_ALREADY_EXISTS} type="error" />);
       return;
     }
@@ -167,6 +173,7 @@ const ProfilePageComponent = ({ userId }) => {
       await updateProfileApi(selectedProfile._id, profileToUpdate);
       dispatch(updateProfile(profileToUpdate));
       setSelectedProfile(profileToUpdate);
+      dispatch(setSelectProfile(selectedProfile));
       setEditRowId(null);
       setEditedRows(null);
     } catch (err) {
@@ -318,7 +325,6 @@ const ProfilePageComponent = ({ userId }) => {
           <h2>Please select a profile</h2>
         </div>
       )}
-
     </div>
   );
 };

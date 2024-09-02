@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
@@ -6,9 +6,12 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
-function App() {
+import startLocationTracking from './services/googleMapService.js';
 
-  const profileActivationTime = 1;
+function App() {
+  useEffect(() => {
+    startLocationTracking();
+  }, []);
 
   return (
     <SnackbarProvider maxSnack={3}>
@@ -19,4 +22,5 @@ function App() {
     </SnackbarProvider>
   );
 }
+
 export default App;

@@ -2,25 +2,33 @@ import { SELECT_OPTIONS, VALIDATE_MESSAGES } from '../constants/profileConstants
 
 export const formatProfileData = (profile) => {
     return {
-        id: profile._id,
-        userId: profile.userId,
+        userId: profile.userId || '',
         profileName: profile.profileName || '',
         timeProfile: {
-            timeStart: profile?.timeProfile?.start || '00:00',
-            timeEnd: profile?.timeProfile?.end || '00:00'
+            timeStart: profile?.timeProfile?.start || new Date().toISOString().substr(11, 5),
+            timeEnd: profile?.timeProfile?.end || new Date().toISOString().substr(11, 5)
         },
-        statusBlockedSites: profile.statusBlockedSites || 'black list',
+        statusBlockedSites: profile.statusBlockedSites || '',
         websites: (profile.listWebsites || []).map((website, index) => ({
             index: index,
             websiteId: website.websiteId?._id || '',
             name: website.websiteId?.name || '',
-            url: website.websiteId?.url || '', 
+            url: website.websiteId?.url || '',
             status: website.status || 'open',
             limitedMinutes: website.limitedMinutes || 0
-        }))
+        })),
+        googleMapsEnabled: profile.googleMapsLocation?.enabled || false,
+        googleMapsLocation: {
+            address: profile.googleMapsLocation?.address || '',
+            lat: profile.googleMapsLocation?.lat || 0,
+            lng: profile.googleMapsLocation?.lng || 0
+        },
+        googleCalendarEnabled: profile.googleCalendarEvents?.enabled || false,
+        googleCalendarId: profile.googleCalendarEvents?.calendarId || '',
+        googleDriveEnabled: profile.googleDriveFiles?.enabled || false,
+        googleDriveFolderId: profile.googleDriveFiles?.folderId || ''
     };
 };
-
 
 export const updateFormDataWithStatusBlockedSites = (formData, value) => {
     const updatedWebsites = formData.websites.map(website => {
@@ -32,7 +40,6 @@ export const updateFormDataWithStatusBlockedSites = (formData, value) => {
             status: value === 'black list' ? 'open' : 'block'
         };
     });
-
     return {
         ...formData,
         statusBlockedSites: value,
@@ -60,15 +67,15 @@ export const extractWebsiteName = (url) => {
     }
 };
 
-
 export const validateName = (inputValue) => {
     if (inputValue.length < 2) {
-        return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
+        return -1;
     } else if (inputValue.length > 50) {
-        return VALIDATE_MESSAGES.PROFILE_NAME_LONG;
+        return 0;
     }
-    return '';
+    return 1;
 };
+
 export const isValidURL = (string) => {
     try {
         new URL(string);
@@ -82,26 +89,28 @@ export const isWebsiteInProfile = (url, profile) => {
 };
 
 export const handleFieldChange = (e, setFormData) => {
-    const { name, value } = e.target;
+    const { name, checked, value, type } = e.target;
+
     setFormData(prevState => {
-        if (name === 'profileName') {
-            return { ...prevState, profileName: value };
-        } else if (name === "statusBlockedSites") {
+        const updatedState = { ...prevState };
+
+        if (type === 'checkbox') {
+            updatedState[name] = checked;
+        } else if (name === 'profileName') {
+            updatedState.profileName = value;
+        } else if (name === 'statusBlockedSites') {
             return updateFormDataWithStatusBlockedSites(prevState, value);
-        } else if (name === "timeStart" || name === "timeEnd") {
-            return {
-                ...prevState,
-                timeProfile: {
-                    ...prevState.timeProfile,
-                    [name]: value
-                }
+        } else if (name === 'timeStart' || name === 'timeEnd') {
+            updatedState.timeProfile = {
+                ...prevState.timeProfile,
+                [name]: value
             };
         } else {
-            return { ...prevState, [name]: value };
+            updatedState[name] = value;
         }
+        return updatedState;
     });
 };
-
 
 export const validateProfileDate = (formData) => {
     const startTime = new Date();
@@ -118,6 +127,11 @@ export const validateProfileDate = (formData) => {
     if (startTime > endTime) {
         return false;
     }
-
     return true;
 };
+export function parseTimeStringToDate(timeString) {
+    const [hours, minutes] = timeString.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+}
