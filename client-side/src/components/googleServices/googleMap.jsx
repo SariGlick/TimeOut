@@ -31,9 +31,10 @@ const containerStyle = {
 };
 
 const defaultCenter = {
-  lat: 0,
-  lng: 0,
+  lat: 32.0853,
+  lng: 34.7818,
 };
+
 
 const MapComponent = ({ onSaveData }) => {
 
@@ -41,6 +42,7 @@ const MapComponent = ({ onSaveData }) => {
     googleMapsApiKey: API_KEY,
     libraries: LIBRARIES,
   });
+  const [isAddressValid, setIsAddressValid] = useState(false);
   const [address, setAddress] = useState('');
   const [markerPosition, setMarkerPosition] = useState(null);
   const [center, setCenter] = useState(defaultCenter);
@@ -61,15 +63,20 @@ const MapComponent = ({ onSaveData }) => {
           const { lat, lng } = place.geometry.location;
           setCenter({ lat: lat, lng: lng });
           setMarkerPosition({ lat: lat, lng: lng });
-          setZoom(18);
+          setZoom(15);
           setAddress(place.formatted_address);
           setLocationSelected(true);
+          setIsAddressValid(true);
         } else {
           enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />);
           setLocationSelected(false);
+          setIsAddressValid(false);
         }
       })
-      .catch((error) => enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />));
+      .catch((error) => {
+        enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_API_ERROR} type="error" />);
+        setIsAddressValid(false);
+      });
   }, []);
 
   const getUserLocation = useCallback(() => {
@@ -79,7 +86,7 @@ const MapComponent = ({ onSaveData }) => {
           const { latitude, longitude } = position.coords;
           setCenter({ lat: latitude, lng: longitude });
           setMarkerPosition({ lat: latitude, lng: longitude });
-          setZoom(15);
+          setZoom(9);
           fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
           )
@@ -106,7 +113,16 @@ const MapComponent = ({ onSaveData }) => {
       setZoom(2);
     }
   }, [enqueueSnackbar]);
-  
+
+
+  const changeAdrress = (e) => {
+    setAddress(e.target.value)
+    if (address.trim()) {
+      validateAddress(address);
+    } else {
+      enqueueSnackbar(<ToastMessage message={MESSAGES.VALID_ADDRESS_ERROR} type="error" />);
+    }
+  }
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -131,6 +147,7 @@ const MapComponent = ({ onSaveData }) => {
               setMarkerPosition({ lat: lat(), lng: lng() });
               setAddress(place.formatted_address);
               setLocationSelected(true);
+              setIsAddressValid(true);
               setZoom(18);
             }
           });
@@ -189,7 +206,7 @@ const MapComponent = ({ onSaveData }) => {
         onClose={() => setDrawerOpen(false)}
         transitionDuration={300}
         sx={{ zIndex: 1400 }}
-        onOpen={() => console.log('Drawer opened')}
+        onOpen={() => setDrawerOpen(true)}
       >
         <Box width="100%">
           <Slide direction="up" in={drawerOpen} timeout={300}>
@@ -219,7 +236,7 @@ const MapComponent = ({ onSaveData }) => {
                   fullWidth
                   inputRef={autocompleteRef}
                   value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  onChange={(e) => changeAdrress(e)}
                   placeholder={INPUT_LABELS.ADDRESS}
                   InputProps={{
                     endAdornment: (
@@ -241,7 +258,7 @@ const MapComponent = ({ onSaveData }) => {
                     </Button>
                   </Tooltip>
                   <Tooltip title={TOOLTIP_TEXTS.SAVE}>
-                    <Button color="success" type="submit" sx={{ width: '48%' }} onClick={onSave} disabled={!locationSelected}>
+                    <Button color="success" type="submit" sx={{ width: '48%' }} onClick={onSave} disabled={!locationSelected || !isAddressValid}>
                       {BUTTON_LABELS.SAVE}
                     </Button>
                   </Tooltip>
