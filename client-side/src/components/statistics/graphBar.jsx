@@ -10,10 +10,10 @@ import { GET_USERS } from './constants.js';
 const GraphBar = ({ startDate, endDate }) => {
   const users = useQuery(GET_USERS);
   const user = useAppSelector((state) => state.user.currentUser);
-  startDate = new Date(startDate.$d);
-  endDate = new Date(endDate.$d);
-  const dataOfStartDate = getVisitedWebsitesByDate(users, user, startDate);
-  const dataOfEndDate = getVisitedWebsitesByDate(users, user, endDate);
+  const formattedStartDate = new Date(startDate.$d);
+  const formattedEndDate = new Date(endDate.$d);
+  const dataOfStartDate = getVisitedWebsitesByDate(users, user, formattedStartDate);
+  const dataOfEndDate = getVisitedWebsitesByDate(users, user, formattedEndDate);
 
   const xAxisData = dataOfStartDate.map((item) => item.websiteName);
   const seriesData = [
