@@ -9,5 +9,6 @@ profilesRouter.post('/',createProfile);
 profilesRouter.post('/activeProfile',activeProfileByUserId);
 profilesRouter.delete('/:id',deleteProfile);
 profilesRouter.put('/:id',updateProfile);
+profilesRouter.post('/shareProfile',shareProfile);
 
 export default profilesRouter;
