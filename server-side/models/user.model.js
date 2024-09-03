@@ -9,7 +9,12 @@ const userSchema = new mongoose.Schema({
   profileImage: { type: String,default:"profile.jpg" },
   visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
+<<<<<<< HEAD
   preference: { type: Schema.Types.ObjectId, ref: 'Preference' }
+=======
+  preferences: { type: Schema.Types.ObjectId, ref: 'Preference' }
+
+>>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
 });
 
 export default mongoose.model('Users', userSchema);

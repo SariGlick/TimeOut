@@ -16,6 +16,9 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+
+import MessageIcon from './Icon'
+import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
 
 import './header.scss';
@@ -123,16 +126,35 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                <LabTabs
+                {/* <LabTabs
                   nameOfClass="navbar-tabs"
                   text={[t('settings')]}
                   nav={['/settings']}
                 />
               </Menu>
-            </Box>
+            </Box> */}
+                     <LabTabs
+          nameOfClass="navbar-tabs"
+          text={['edit user profile','manage notifications']}
+          nav={['/editUserProfile','/manageNotifications'] }
+        />
+            </Menu>
+          <MessageIcon/>
+          </Box>
           </Toolbar>
         </Container>
       </AppBar>
+                        {/* <LabTabs
+          nameOfClass="navbar-tabs"
+          text={['edit user profile','manage notifications']}
+          nav={['/editUserProfile','/manageNotifications'] }
+        />
+            </Menu>
+          <MessageIcon/>
+          </Box>
+        </Toolbar>
+      </Container>
+    </AppBar> */}
     </div>
   );
 }

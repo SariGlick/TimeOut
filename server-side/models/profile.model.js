@@ -12,5 +12,9 @@ const profileSchema = new mongoose.Schema({
     }]
 });
 
+<<<<<<< HEAD
 export  default mongoose.model("Profiles", profileSchema);
 
+=======
+export  default mongoose.model("Profiles", profileSchema);
+>>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
