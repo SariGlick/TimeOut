@@ -91,11 +91,12 @@ export const signIn = async (req, res, next) => {
     const { user, token } = await userService.signIn(email, password);
 console.log("i am here");
 
-    res.cookie('token', token, {
-      httpOnly: false, 
-      secure: false,   
-      sameSite: 'None'    
-    });
+res.cookie('token', token, {
+  httpOnly: true,
+  secure: false, 
+  sameSite: 'Strict' 
+});
+
     return res.status(200).send({ user });
   } catch (error) {
     return next({ message: 'Auth Failed', status: 401 });

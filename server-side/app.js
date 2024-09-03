@@ -25,16 +25,6 @@ const corsOptions = {
   exposedHeaders: ['set-cookie'],
 };
 app.use(cors(corsOptions));
-
-app.use(cors(corsOptions));
-
-
-app.use(cors(corsOptions));
-
-app.use(cors(corsOptions));
-
-
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));

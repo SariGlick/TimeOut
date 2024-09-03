@@ -1,6 +1,6 @@
 let blockedSitesCache = null;
 let allowedSitesCache = [];
-let isBlackList = false;
+let isBlackList = true;
 let currentUserId = null;
 
 chrome.runtime.onStartup.addListener(() => {
@@ -23,6 +23,8 @@ function getUserIdFromTokenCookie() {
     } else {
       console.log("Token cookie not found!");
     }
+    
+});}
 
 function parseUserIdFromToken(token) {
   try {
