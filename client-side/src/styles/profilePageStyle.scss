@@ -108,6 +108,9 @@ button {
 .helper-text-error {
   color: $standardErrorColor;
 }
+.helper-text{
+ color:  $errorColor;
+}
 
 .profile-select {
   width: 10vw;
