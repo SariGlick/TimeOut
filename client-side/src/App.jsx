@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import './App.scss';
-import { Provider } from 'react-redux';
 
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import { store } from './redux/store.jsx';
-import Footer from './stories/footer/FooterComponent'
-import { useTranslation } from 'react-i18next';
+import React ,{useEffect}from 'react';
+import { Provider } from 'react-redux';
+import { HashRouter, Routes, Route ,RouterProvider } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
+
+import { store } from './redux/store.jsx';
+import Layout from './router/layout.jsx';
+import { useTranslation } from 'react-i18next';
 import { selectAuth } from './redux/auth/auth.selector';
 import { useSelector } from 'react-redux';
-import Layout from './router/layout.jsx';
+import {router} from './router/router.jsx'
+import Footer from './stories/footer/FooterComponent';
 import './App.scss';
-
 
 function App() {
   
@@ -24,26 +24,16 @@ function App() {
       i18n.changeLanguage(user.preference.language)
      
    },[])
+  
+
   return (
 
     <SnackbarProvider maxSnack={3}>
-    {/* // TODO insert the real routings */}
     <Provider store={store}>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<h1>home</h1>} />
-            <Route path="home" element={<h1>home</h1>} />
-            <Route path="profiles" element={<h1>ProfileList</h1>} />
-            <Route path="reports" element={<h1>reports</h1>} />
-            <Route path="statistics" element={<h1>statistics</h1>} />
-            <Route path="*" element={<h1>home</h1>} />
-          </Route>
-        </Routes>
-        <Footer />
-      </HashRouter>
-    </Provider>
-   </SnackbarProvider>
+      <RouterProvider router={router} />
+      <Footer />
+      </Provider>
+  </SnackbarProvider>
 
   );
 }

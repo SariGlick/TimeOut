@@ -26,8 +26,9 @@ import './header.scss';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t } = useTranslation();
-  const { user } = useSelector(selectAuth); 
+
+  const { t: translate } = useTranslation(); 
+ const { user } = useSelector(selectAuth); 
 
 
   const handleOpenNavMenu = (event) => {
@@ -50,9 +51,11 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <div className="arooundDiv">
-      <AppBar position="static" className="navbar">
-        <Container maxWidth="xl">
+
+
+    <div className='arooundDiv'>
+      <AppBar position="static" className='navbar' >
+        <Container   maxWidth="xl">
           <Toolbar disableGutters>
             <Box className="left-side-box">
               <IconButton
@@ -80,13 +83,14 @@ function ResponsiveAppBar() {
                 }}
                 open={Boolean(anchorElNav)}
                 onClose={handleCloseNavMenu}
-                className="menu"
+
+                className='menu'
               >
-                <LabTabs
-                  nameOfClass="navbar-tabs"
-                  text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                  nav={['/home', '/reports', '/statistics', '/profiles']}
-                />
+            <LabTabs
+            nameOfClass="navbar-tabs"
+            text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
+            nav={["/home","/reports","/statistics","/profiles"] }
+          />
               </Menu>
             </Box>
             <Typography
@@ -94,21 +98,23 @@ function ResponsiveAppBar() {
               noWrap
               component="a"
               href="#app-bar-with-responsive-menu"
-              className="logo"
+
+              className='logo'
             >
-              {t('timeout')}
+              TimeOut
             </Typography>
             <Box className="middle-side-box">
               <LabTabs
                 nameOfClass="navbar-tabs"
-                text={[t('home'), t('reports'), t('statistics'), t('profiles')]}
-                nav={['/home', '/reports', '/statistics', '/profiles']}
+
+                text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
+                nav={["/home","/reports","/statistics","/profiles"] }
               />
             </Box>
-            <Box>
-              <Tooltip title={t('open-settings')}>
-                <IconButton onClick={handleOpenUserMenu}>
-                <Avatar>{getAvatarLetter()}</Avatar>
+            <Box >
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} >
+                  <Avatar>{getAvatarLetter()}</Avatar>
                 </IconButton>
               </Tooltip>
               <Menu
@@ -155,6 +161,7 @@ function ResponsiveAppBar() {
         </Toolbar>
       </Container>
     </AppBar> */}
+
     </div>
   );
 }

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "welcome": "  {{user-name}} ברוכה הבאה !!",
     "send preferences": "שינוי העדפות",
     "change-ringtone": "שנה צליל",
@@ -34,5 +35,27 @@
     "Display notification for income messages":"הצג התראה עבור הודעות נכנסות",
     "Display browsing time limit notification":"הצג הודעת מגבלת זמן גלישה",
     "upload-image":"העלאת תמונה"
+=======
+    "welcome":"  {{user-name}} ברוכה הבאה !!",
+    "send preferences":"שינוי העדפות",
+    "change-ringtone":"שנה צליל",
+    "home":"בית",
+    "reports":"דוחות",
+    "statistics":"סטטיסטיקות",
+    "profiles":"פרופילים",
+    "timeout":"פסק-זמן",
+    "sleect-language":"בחר שפה",
+    "change-notification-time":"שנה זמן קבלת התראות",
+    "Account" :"Cuenta",
+    "Notifications" :"התראות",
+    "Preference":"הגדרות אישיות",
+    "Display-Setting" :" הגדרות תצוגה",
+    "Message" :"הודעות",
+    "account":"חשבון",
+    "display-setting":"הגדרות תצוגה",
+    "fotter":"בקרו אותנו  ExtraTech  פותח  עי צות",
+    "settings":"הגדרות",
+    "open-settings":"פתח הגדרות"
+>>>>>>> b611101e51b7905f88cac8bced680b70104bece2
 
 }

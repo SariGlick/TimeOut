@@ -4,6 +4,8 @@ import { TextField, InputAdornment, Button, Checkbox, FormControlLabel } from '@
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
+import '../GenericInput/genericInput.scss';
+
 const GenericInput = ({
   label, 
   type = 'text',
@@ -53,8 +55,6 @@ const GenericInput = ({
     width,
   };
 
- 
-
   return (
     <>
       {type === 'file' ? (
@@ -88,6 +88,27 @@ const GenericInput = ({
       ) : (
         <div className="generic-input">
 
+{/* =======
+  
+  
+  return(
+    <>
+      {type==='file' ?(<div className="file-upload" style={inputStyle}>
+        <Button
+          component="label"
+          size={size}
+          disabled={disabled}
+          className='generic-input-file'
+        >
+          {label}
+
+          <input type='file' onChange={onChange}  id='hidenInput' disabled={disabled} accept={accept}/>
+        </Button>
+        {error && <div className="helper-text error">{helperText}</div>}
+      </div>) :(
+        <div className="generic-input">
+
+>>>>>>> b611101e51b7905f88cac8bced680b70104bece2 */}
           <TextField
             label={label}
             type={type}
@@ -120,6 +141,7 @@ const GenericInput = ({
     </>
 
   )
+    
 
 };
 GenericInput.propTypes = {
@@ -135,7 +157,8 @@ GenericInput.propTypes = {
   validation: PropTypes.func,
   accept: PropTypes.string,
   min: PropTypes.number,
-  max: PropTypes.number
+  max: PropTypes.number,
+  disabled:PropTypes.string,
 };
 
 export default GenericInput;

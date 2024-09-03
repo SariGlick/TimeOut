@@ -1,41 +1,43 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next'
-import { selectAuth } from '../../redux/auth/auth.selector';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { useSnackbar } from 'notistack';
+
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
+import { selectAuth } from '../../redux/auth/auth.selector';
+import { updatePreference } from '../../services/preferenceService.js';
+import {updateUser}  from '../../services/userService.js';
+
 import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
 import Notifications from './Notifications.jsx';
-import CONSTANTS from './constantSetting.js'
-import { useSnackbar } from 'notistack';
-import { updatePreference } from '../../services/preferenceService.js';
-import {updateUser}  from '../../services/userService.js'
+import CONSTANTS from './constantSetting.js';
 import './Settings.scss';
 
 const Settings = () => {
   const {MESSAGES, LABELS } = CONSTANTS;
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-  const user = useSelector(selectAuth)
+  const user = useSelector(selectAuth);
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
-  const [currentUser,setCurrentUser]= useState({})
+  const [currentUser,setCurrentUser]= useState({});
  
-  let preferenceId = ''
-  let userId =''
+  let preferenceId = '';
+  let userId ='';
   if(user._id)
   {
     preferenceId=user.preference._id;
-    userId=user._id
+    userId=user._id;
   }
 
   const elements = [
-    <AccountTab onUpdate={setCurrentUser}/>,
-    <Notifications currentUser={user} onUpdate={setNotificationsData}/>,
-    <Preferences currentUser={user} onUpdate={setPreferencesData}/>
-  ]
+    <AccountTab onUpdate={setCurrentUser} key=''/>,
+    <Notifications currentUser={user} onUpdate={setNotificationsData} key=''/>,
+    <Preferences currentUser={user} onUpdate={setPreferencesData} key=''/>
+  ];
 
   const handleFormSubmit = async () => {
     const formData = new FormData();
@@ -58,8 +60,8 @@ const Settings = () => {
     }
     
     Object.entries(currentUser).forEach(([key,value])=>{
-        userFormData.append(key,value)
-    })
+      userFormData.append(key,value);
+    });
     try {
       await updateUser(userId,userFormData)
     } catch (error) {
@@ -72,17 +74,17 @@ const Settings = () => {
   return (
     <div className="settings-container">
       <div className="tabs-container">
-      <VerticalTabs labels={[LABELS.ACCOUNT, LABELS.NOTIFICATIONS, LABELS.PREFERENCE, LABELS.DISPLAY_SETTING, LABELS.MESSAGE]} elements={elements} />
+        <VerticalTabs labels={[LABELS.ACCOUNT, LABELS.NOTIFICATIONS, LABELS.PREFERENCE, LABELS.DISPLAY_SETTING, LABELS.MESSAGE]} elements={elements} />
       </div>
       <div className="button-container">
-      <GenericButton
-        className='UpdateSettings'
-        label={t(LABELS.UPDATE)}
-        size='medium'
-        onClick={handleFormSubmit}
-      />
+        <GenericButton
+          className='UpdateSettings'
+          label={t(LABELS.UPDATE)}
+          size='medium'
+          onClick={handleFormSubmit}
+        />
       </div>
     </div>
-  )
-}
+  );
+};
 export default Settings;
