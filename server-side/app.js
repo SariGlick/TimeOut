@@ -4,12 +4,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import preferencesRouter from './router/preference.router.js';
 import websitesRouter from './router/websites.router.js';
+import invitationsRouter from './router/invitation.router.js'
+import pendingUsersRouter from './router/pendingUser.router.js'
+import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
+import {connectMongo} from './config/db.js'
 import profilesRouter from './router/profile.router.js';
 import visitedWebSitesRouter from './router/visitedWebsite.router.js';
 import usersRouter from './router/user.router.js';
 import settingsRouter from './router/settings.router.js'; 
-import { pageNotFound, serverErrors } from './middleware/handleErrors.js';
-import { connectMongo } from './config/db.js';
+
 
 dotenv.config();
 connectMongo();
@@ -22,8 +25,10 @@ app.use(cors());
 
 app.get('/', (req, res) => {
     res.send('welcome to time out ');
-});
+})
 
+app.use('/invitations',invitationsRouter);
+app.use('/pendingUsers',pendingUsersRouter);
 app.use('/uploads', express.static('uploads'));
 app.use('/preferences', preferencesRouter);
 app.use('/websites', websitesRouter);
@@ -31,7 +36,6 @@ app.use('/profiles', profilesRouter);
 app.use('/vistedWebSites', visitedWebSitesRouter);
 app.use('/users', usersRouter);
 app.use('/api', settingsRouter);
-
 app.use(pageNotFound);
 app.use(serverErrors);
 
@@ -39,9 +43,5 @@ const port = process.env.PORT;
 app.listen(port, () => {
 });
 
-app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
-})
 
 export default app;
-

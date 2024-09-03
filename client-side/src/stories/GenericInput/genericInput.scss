@@ -1,6 +1,7 @@
+/* genericInput.scss */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 @import './style.scss';
-
+@import '../variables.scss';
 .generic-input {
   .MuiOutlinedInput-root {
     border-radius:0.5pc;
@@ -38,7 +39,7 @@
 
     input {
       color: $color-black;
-      font-family: 'Montserrat', sans-serif;
+      font-family: $fontfamily;
       font-weight: 400;
       font-size: medium;
       transition: color 0.3s ease;
@@ -53,7 +54,7 @@
 
   .MuiFormLabel-root {
     color: $color-black;
-    font-family: 'Montserrat', sans-serif;
+    font-family: $fontfamily;
     font-weight: 400;
     font-size: medium;
     transition: color 0.3s ease;
@@ -66,7 +67,7 @@
 
   .MuiFormHelperText-root {
     color: $color-black;
-    font-family: 'Montserrat', sans-serif;
+    font-family: $fontfamily;
     font-weight: 400;
     font-size: medium;
     transition: color 0.3s ease;
@@ -75,4 +76,46 @@
       color: $color-error;
     }
   }
+
+  
+}
+.file-upload{
+  display: inline-block;
+  .generic-input-file{
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: $color-border;
+    border-width: 1px;
+    background-color:$color-border ;
+    color: $color-black;
+    font-family: $fontfamily;
+    &:hover {
+      box-shadow: 0 0 5px rgba($color-border, 0.5);
+      background-color:$color-border-hover ;
+      transition: color 0.3s ease;
+
+    }
+    &.Mui-disabled,
+    &[aria-disabled='true'] {
+      opacity: 0.7; 
+      cursor: not-allowed;
+      pointer-events: auto;
+        
+    }
+ 
+    #hidenInput{
+      clip-path: inset(50%);
+      clip: rect(0 0 0 0);
+      height: 1;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 1;
+    }
+  
+    
+  }
+  
+  
 }
