@@ -32,7 +32,7 @@ const Notifications = ({ onUpdate }) => {
 
   const [prevValues, setPrevValues] = useState({
     emailFrequency: initialEmailFrequency,
-    ringtoneFileName: null,
+    ringtoneFile: null,
     sendNotificationTime: notificationTime,
     displayIncomeMessages: showIncomeMessages,
     displayBrowsingTimeLimit: showBrowsingTimeLimit
@@ -74,14 +74,16 @@ const Notifications = ({ onUpdate }) => {
   }, [displayBrowsingTimeLimit, onUpdate, prevValues.displayBrowsingTimeLimit]);
 
   useEffect(() => {
-    if (prevValues.ringtoneFileName === null && ringtoneFile) {
+    if (prevValues.ringtoneFile === null && ringtoneFile) {
       onUpdate({ soundVoice: ringtoneFile });
-      setPrevValues(prev => ({ ...prev, ringtoneFileName: ringtoneFile.name }));
-    } else if (ringtoneFile && prevValues.ringtoneFileName !== ringtoneFile.name) {
+      setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
+      console.log('111')
+    } else if (ringtoneFile && prevValues.ringtoneFile !== ringtoneFile) {
       onUpdate({ soundVoice: ringtoneFile });
-      setPrevValues(prev => ({ ...prev, ringtoneFileName: ringtoneFile.name }));
+      setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
+      console.log('222')
     }
-  }, [ringtoneFile, onUpdate, prevValues.ringtoneFileName]);
+  }, [soundVoice, ringtoneFile, onUpdate, prevValues.ringtoneFile]);
 
   const handleFileChange = (e) => {
     const files = e.target.files;
@@ -89,6 +91,7 @@ const Notifications = ({ onUpdate }) => {
       const file = files[0];
       setRingtoneFile(file);
       setSoundVoice(URL.createObjectURL(file));
+      console.log('yeee')
     } else {
       setRingtoneFile(null);
       setSoundVoice('');

@@ -1,18 +1,18 @@
-
+@import './variables.scss';
 
 .settings-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.tabs-container {
-  width: 100%;
-}
+  .tabs-container {
+    width: $max-width;
+  }
 
-.button-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 1.25rem; 
+  .button-container {
+    display: flex;
+    justify-content: center;
+    width: $max-width;
+    margin-top: $spacing * 1.25;
+  }
 }

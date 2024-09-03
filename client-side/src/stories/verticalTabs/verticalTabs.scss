@@ -1,48 +1,50 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-@import './style.scss';
-.genericButton{
-    font-family: "Nanum Gothic", sans-serif;
+@import '../variables.scss';
+
+.vertical-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2%;
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    font-family: $font-family;
     font-optical-sizing: auto;
     font-style: normal;
-    border: 1px  solid rgb(103, 252, 210);
-    width: 30vh;
+    border: 0.1rem solid $secondary-color;
+    width: 30vh;  
     text-align: center;
     cursor: pointer;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 0.6rem 1rem $light-black, inset 0 0.1rem 0 $shadow; 
     transition: transform 0.1s, box-shadow 0.1s;
+
     &:hover {
-        box-shadow: 0 0 5px rgba($color-border, 0.5);
-        background-color:$color-border-hover ;
-        transition: color 0.3s ease;
-  
+      box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
+      background-color: $color-border-hover;
+      transition: color 0.3s ease;
     }
-    
-}
 
-.clickButton{
-    box-shadow: 0 0 5px rgba($color-border, 0.5);
-    background-color:$color-border-hover ;
-    transition: color 0.3s ease; 
-}
+    &--active {
+      box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
+      background-color: $color-border-hover;
+      transition: color 0.3s ease;
+    }
+  }
 
-.tab{
-    border: 2px;
-    border-style: solid;
-    border-color: rgb(103, 252, 210);
-    width: 100vh;
-    height: 65vh;
+  &__content {
+    border: 0.2rem solid $secondary-color; 
+    width: 100vh; 
+    height: 65vh; 
     display: flex;
     justify-content: center;
-}
+  }
 
-.tab-warper{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 2%;
-}
-
-.elments{
+  &__element {
     padding: 3%;
-    width: 60%;
+    width: 60%; 
+  }
 }

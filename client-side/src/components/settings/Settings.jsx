@@ -37,6 +37,7 @@ const Settings = () => {
     
     const formData = new FormData();
     Object.entries(notificationsData).forEach(([key, value]) => {
+      console.log([key, value]);
       formData.append(key, value);
     });
     Object.entries(preferencesData).forEach(([key, value]) => {

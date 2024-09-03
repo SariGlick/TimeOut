@@ -1,8 +1,4 @@
-$padding-large: 5%;
-$padding-small: 3%;
-$max-width-select: 50rem;
-$margin-select: 4%; 
-
+@import './variables.scss';
 
 .preferences-container {
   display: flex;
@@ -14,7 +10,7 @@ $margin-select: 4%;
   .div-select {
     display: flex;            
     justify-content: center;    
-    width: 100%;
+    width: $max-width;
     max-width: $max-width-select;
     margin: $margin-select 0;   
   }
@@ -22,11 +18,11 @@ $margin-select: 4%;
   .select-language,
   .select-time-zone,
   .select-date-format {
-    width: 100%;
+    width: $max-width;
   }
 }
 
-@media (max-width: 37.5rem) {
+@media (max-width: $breakpoint-mobile) {
   .preferences-container {
     padding: $padding-small;
   }
@@ -34,6 +30,6 @@ $margin-select: 4%;
   .select-language,
   .select-time-zone,
   .select-date-format {
-    max-width: 100%; 
+    max-width: $max-width; 
   }
 }

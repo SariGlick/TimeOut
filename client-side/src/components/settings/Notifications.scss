@@ -1,6 +1,4 @@
-$spacing: 1rem;
-$max-width: 100%;
-$breakpoint-mobile: 600px;
+@import './variables.scss';
 
 .notifications-container {
   display: flex;
@@ -13,7 +11,7 @@ $breakpoint-mobile: 600px;
   .select-container,
   .input-container,
   .file-container {
-    width: 100%;
+    width: $max-width;
     max-width: $max-width;
     margin-bottom: $spacing *1.5; 
   }
@@ -38,6 +36,6 @@ $breakpoint-mobile: 600px;
   }
 
   .but-send {
-    width: 100%;
+    width: $max-width;
   }
 }

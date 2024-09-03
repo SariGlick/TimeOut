@@ -1,23 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
-.buttonWrapper{
-    .genericButton{
-        font-family:  "Nanum Gothic", sans-serif ;
-        font-optical-sizing: auto ;
-        font-style: normal ;
-        border-radius: 1em ;
-        border: 2px ;
-        border-style: solid ;
-        border-color: rgb(103, 252, 210) ;
-        
-        &.primary{
-            background-color: black ;
-            color: white ;
+.buttonWrapper {
+    .genericButton {
+        font-family: "Nanum Gothic", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+        border-radius: 1em;
+        border: 2px;
+        border-style: solid;
+        border-color: rgb(103, 252, 210);
+
+        &.primary {
+            background-color: black;
+            color: white;
         }
-        
-        &.secondary{
-            background-color:  white;
-            color: black ;
-        } 
-    }  
-} 
+
+        &.secondary {
+            background-color: white;
+            color: black;
+        }
+
+        &.small {
+            width: 5rem;
+        }
+
+        &.medium {
+            width: 10rem;
+        }
+
+        &.large {
+            width: 12rem;
+        }
+    }
+}

@@ -8,7 +8,7 @@ const GenericButton = ({className, label, onClick, size = "medium", disabled = f
   return(
     <div className='buttonWrapper'>
       <Button 
-        className={`genericButton ${className ? `genericButton ${className}` : ''}`}
+        className={`genericButton ${className ? className : ''} ${size}`} 
         onClick={onClick}
         size={size}
         disabled={disabled}
