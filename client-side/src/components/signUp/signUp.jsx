@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom'; 
 
-import './signUp.scss';
 import PasswordStrengthMeter from '../signUp/PasswordStrength';
 import GenericButton from '../../stories/Button/GenericButton';
 import GenericInput from '../../stories/GenericInput/genericInput';
 import { MessagesSignUp } from '../../constants';
 import { createUser } from '../../services/userService';
 import { addUser } from '../../redux/user/user.slice';
+import './signUp.scss';
+
 
 const SignUpSchema = Yup.object().shape({
   name: Yup.string()
@@ -31,6 +32,7 @@ function SignUp() {
   const [robotPass, setRobotPass] = useState(null)
   const url = process.env.REACT_APP_SITEKEY;
   const dispatch = useDispatch();
+  const navigate=useNavigate();
   const formik = useFormik({
     initialValues: { name: '', email: '', password: '' },
     validationSchema: SignUpSchema,
@@ -42,7 +44,7 @@ function SignUp() {
     try {
       await createUser(user); 
       dispatch(addUser(user));
-      window.location.href="/home"
+      navigate('/home');
     } catch (error) {
       console.error("The user is not included in the system");
     }
