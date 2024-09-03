@@ -13,5 +13,3 @@ export default{
 const Template = (args) => <DateInputs {...args}/>;
 
 export const ClasicDateInputs = Template.bind({});
-
-
