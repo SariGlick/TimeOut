@@ -14,6 +14,7 @@
     "windows"
   ],
   "host_permissions": [
+    "https://localhost:5000/*",
     "http://*/*",
     "https://*/*",
     "<all_urls>",
@@ -27,11 +28,26 @@
   },
   "icons": {
     "48": "images/icon48.png"
-},
+  },
   "web_accessible_resources": [
     {
-      "resources": ["oops.html","client-side/dist/index.html"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "oops.html",
+        "constants.js",
+        "oops.js",
+        "client-side/dist/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
-  ]
+  ],
+  "content_security_policy": {
+    "script-src": [
+      "'self'"
+    ],
+    "object-src": [
+      "'self'"
+    ]
+  }
 }

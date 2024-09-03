@@ -28,7 +28,7 @@ export const getProfileById = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return next({ message: 'ID is not valid', status: 400 });
     try {
-        const profile = await Profiles.findById(req.params.id).populate('limitedWebsites.websiteId blockedSites').select('-__v');
+        const profile = await Profiles.findById(req.params.id).populate('limitedWebsites.websiteId ').select('-__v');
         if (!profile) {
           return  next({message:'profile was not found ',status:404}); 
         }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
 import { TextField, InputAdornment, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { noop } from 'lodash';
 
@@ -18,6 +19,7 @@ const GenericInput = ({
   accept,
   min,
   max,
+  name,
   validation = noop,
   ...rest
 }) => {
@@ -89,13 +91,13 @@ const GenericInput = ({
           <TextField
             label={label}
             type={type}
+            name={name}
             value={inputValue}
             onChange={handleChange}
             size={size}
             error={error}
             disabled={disabled}
             helperText={helperText}
-
             InputProps={{
               startAdornment: Icon && (
                 <InputAdornment position="start">
@@ -103,11 +105,11 @@ const GenericInput = ({
                 </InputAdornment>
               ),
               ...rest.InputProps,
-
             }}
             inputProps={{
               min: min,
               max: max
+
             }}
             style={inputStyle}
             {...rest}
@@ -115,9 +117,7 @@ const GenericInput = ({
         </div>)
       }
     </>
-
   );
-
 };
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
@@ -129,7 +129,7 @@ GenericInput.propTypes = {
   width: PropTypes.string,
   icon: PropTypes.elementType,
   validation: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   accept: PropTypes.string,
   min: PropTypes.number,
   max: PropTypes.number

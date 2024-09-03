@@ -9,7 +9,7 @@ i18n
   .use(Backend)              
   .init({
     debug: true,             
-    fallbackLng: 'he',       
+    fallbackLng: 'en',       
     interpolation: {
       escapeValue: false,    
     },

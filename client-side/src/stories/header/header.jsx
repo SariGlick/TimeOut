@@ -9,11 +9,13 @@ import MessageIcon from './Icon'
 import './header.scss';
 
 import { selectAuth } from '../../redux/auth/auth.selector';
+
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t: translate } = useTranslation();
-  const { user } = useSelector(selectAuth);
+  const { t: translate } = useTranslation(); 
+ const { user } = useSelector(selectAuth); 
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -26,7 +28,6 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   const getAvatarLetter = () => {
     if (user && user.name) {
       return user.name.charAt(0).toUpperCase();
@@ -35,9 +36,11 @@ function ResponsiveAppBar() {
   };
 
   return (
+
     <div className='arooundDiv'>
       <AppBar position="static" className='navbar' >
-        <Container maxWidth="xl">
+        <Container   maxWidth="xl">
+
           <Toolbar disableGutters>
             <Box className="left-side-box">
               <IconButton
@@ -66,11 +69,11 @@ function ResponsiveAppBar() {
                 onClose={handleCloseNavMenu}
                 className='menu'
               >
-                <LabTabs
-                  nameOfClass="navbar-tabs"
-                  text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
-                  nav={["/home", "/reports", "/statistics", "/profiles"]}
-                />
+            <LabTabs
+            nameOfClass="navbar-tabs"
+            text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
+            nav={["/home","/reports","/statistics","/profiles"] }
+          />
               </Menu>
             </Box>
             <Typography

@@ -7,12 +7,12 @@ import Footer from './stories/footer/FooterComponent';
 import { store } from './redux/store.jsx';
 import Layout from './router/layout.jsx';
 import Settings from './components/settings/Settings.jsx';
+
 import './App.scss';
 
 function App() {
   return (
     <SnackbarProvider maxSnack={3}>
-      {/* // TODO insert the real routings */}
       <Provider store={store}>
         <HashRouter>
           <Routes>
@@ -30,7 +30,6 @@ function App() {
         </HashRouter>
       </Provider>
     </SnackbarProvider>
-
   );
 }
 

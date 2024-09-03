@@ -153,6 +153,7 @@ const Notifications = ({ onUpdate }) => {
           size='medium'
           width='11rem'
           accept='audio/mp3'
+          className='generic-input-file'
         />
         <audio controls className="audio-player">
           <source src={soundVoice} />

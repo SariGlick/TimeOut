@@ -15,16 +15,29 @@
     max-width: $max-width;
     margin-bottom: $spacing *1.5; 
   }
-
-  .audio-player {
-    width: 50%;
-    max-width: $max-width;
-    margin-top: $spacing * 2; 
-  }
-
   .but-send {
     margin-top: $spacing * 5; 
   }
+  .file-container {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    width: $max-width;
+    max-width: $max-width;
+    margin-bottom: $spacing ;
+  
+    .generic-input-file, 
+    .audio-player {
+      width: 100%; 
+      max-width: 11rem; 
+      margin-bottom: $spacing; 
+    }
+  
+    .audio-player {
+      margin-top: $spacing; 
+    }
+  }
+  
 }
 
 @media (max-width: $breakpoint-mobile) {

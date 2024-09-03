@@ -5,6 +5,7 @@ import Settings from "../components/settings/Settings.jsx";
 import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
+import HomePage from "../components/homePageComponent.jsx";
 export  const router = createBrowserRouter([
 
     {
@@ -12,12 +13,12 @@ export  const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                path: '/',
-                element: <h1>home</h1>
+                path: '/home',
+                element: <HomePage/>
             },
             {
                 path: '/home',
-                element: <h1>home</h1>
+                element: <HomePage/>
             },
             {
                 path: '/profiles',

@@ -50,5 +50,5 @@ Select.propTypes = {
   widthOfSelect: PropTypes.string,
   value: PropTypes.any.isRequired
 };
-
 export default Select;
+
