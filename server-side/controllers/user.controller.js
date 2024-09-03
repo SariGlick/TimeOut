@@ -1,7 +1,5 @@
 
 import User, { generateToken } from '../models/user.model.js';
-import bcrypt from 'bcrypt';
-import User, { generateToken } from '../models/user.model.js';
 import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';

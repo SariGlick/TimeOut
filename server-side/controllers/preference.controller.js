@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 
-=======
->>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
 import mongoose from 'mongoose';
 import Preference from '../models/preference.model.js';
 
@@ -68,11 +65,8 @@ export const deletePreference = async (req, res, next) => {
 
         res.json({ message: 'deleted succesfully!!' }).status(204)
     } catch (error) {
-<<<<<<< HEAD
-        return next({ message: error.message });
 
-=======
         return next({ message: error.message, status: 500 });
->>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
+
     }
 };

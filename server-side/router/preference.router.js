@@ -2,10 +2,7 @@ import  express from 'express';
 import  {getAllPreference,getPreferenceById,updatePreference,deletePreference,addPreference} from '../controllers/preference.controller.js'
 import  upload from '../middleware/uploadFiles.js';
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
 const preferencesRouter=express.Router();
 
 preferencesRouter.get('/',getAllPreference);
