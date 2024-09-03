@@ -13,6 +13,7 @@ describe('HomePage Component', () => {
     );
   });
 
+
   test('renders HomePage component without crashing', () => {
     expect(screen.getByText('Enhance Your Browsing Experience with Our Chrome Add-on')).toBeInTheDocument();
   });
