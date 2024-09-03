@@ -1,4 +1,4 @@
-import PendingUsers from '../models/pendingUser.model';
+import PendingUsers from '../models/pendingUser.model.js';
 
 export const getAllPendingUsers_service = async () => {
     return await PendingUsers.find().select('-__v');
