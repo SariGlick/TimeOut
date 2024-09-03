@@ -78,7 +78,8 @@ describe('TableComponent', () => {
     
     expect(screen.queryByText('יונתן')).toBeInTheDocument();
     expect(screen.queryByText('מיכל')).toBeInTheDocument();
+
     
     expect(container.querySelector('table') || container.querySelector('div')).toBeInTheDocument();
-  });
+  }); 
 });
