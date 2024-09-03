@@ -37,7 +37,11 @@ module.exports = {
     alias: {
       '@storybook': path.resolve(__dirname, '.storybook')
     },
-  },
+    modules: [
+      'node_modules',
+      path.resolve(__dirname, 'src/storybook-module'), // מוסיפים את התיקייה החדשה כאן
+    ]
+  },  
   plugins: [
     new webpack.ProvidePlugin({
       React: 'react',
