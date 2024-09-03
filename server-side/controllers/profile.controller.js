@@ -14,9 +14,9 @@ export const updateProfilesByInvitation = async (req, res, next) => {
     try {
         const updatedProfiles = await updateProfiles(invitationID);
         if (!updatedProfiles) {
-            return next({ message: 'Profiles update failed', status: 404 });
+            return next({ message: 'Profiles update failed', status: 500 });
         }
-        res.json({ message: 'Profiles updated successfully based on invitation', profiles: updatedProfiles }).status(200);
+        return res.json({ message: 'Profiles updated successfully based on invitation', profiles: updatedProfiles }).status(200);
     } catch (err) {
         next({ message: err.message, status: 500 });
     }

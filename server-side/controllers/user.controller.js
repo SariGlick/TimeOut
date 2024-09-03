@@ -16,13 +16,13 @@ export const getUsers = async (req, res,next) => {
 };
 
 export const getUserById = async (req, res,next) => {
-  const id = req.params.id;
+  const {id} = req.params;
   if(!mongoose.Types.ObjectId.isValid(id))
    return next({ message: 'id is not valid' })
   try {
     const user = await getUserById_service(id);    
     if (!user) {
-        return next({message:'user not found ',status:404})
+        return next({message:'user not found ',status:500})
     }
     if (res) {
       res.send(user);

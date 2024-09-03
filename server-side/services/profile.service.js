@@ -5,8 +5,12 @@ export const getProfileById_service = async (id) => {
 }
 
 export const createProfile_service = async (profileData) => {
-    const newprofile = new Profiles(profileData);
-    await newprofile.validate();
-    await newprofile.save();
-    return newprofile;
+    try {
+        const newProfile = new Profiles(profileData);
+        await newProfile.validate();
+        await newProfile.save();
+        return newProfile;
+    } catch (error) {
+        throw { message: 'Profile validation failed. Please check the profile data.', status: 500 };
+    }
 }
