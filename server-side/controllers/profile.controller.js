@@ -1,6 +1,6 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
-import activeProfile from '../profileMngr.js'
+
 
 export const shareProfile = async (req, res, next) => {
     const { inviterID, email, profileID, shareLevel } = req.body;
@@ -15,7 +15,6 @@ export const shareProfile = async (req, res, next) => {
 
 export const getAllProfiles = async (req, res, next) => {
     try {
-
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
         res.json(profiles);
     } catch (err) {
@@ -84,16 +83,6 @@ export const deleteProfile = async (req, res, next) => {
     }
 };
 
-export const activeProfileByUserId = async(req, res) => {
-    try {
-        const userId = req.body;
-        const profile = await activeProfile(userId);
-        
-        res.status(201).json(profile);
-    }
-    catch (error) {
-        console.log({ error })
-        res.status(500).send(error.message);
-    }
-}
+
+
 
