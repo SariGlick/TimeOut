@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSnackbar } from 'notistack';
@@ -37,7 +37,7 @@ export default function AddProfile({ userId }) {
   const [open, setOpen] = React.useState(false);
   const [data, setData] = React.useState(getInitialData());
   const [errorText, setErrorText] = React.useState('');
-
+  const [selectedFile, setSelectedFile] = useState(null);
   function getInitialData() {
     return {
       name: '',
@@ -143,7 +143,37 @@ export default function AddProfile({ userId }) {
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
     }
   }, [data, dispatch, navigate, handleClose, enqueueSnackbar, userId]);
-
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+ 
+  const handleFileUpload = async () => {
+    if (!selectedFile) {
+        return;
+    }
+   
+    try {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('text',userId)
+      const response = await fetch('http://localhost:5000/profiles/upload', {
+          method: 'POST',
+          body: formData,
+          
+      });
+      const responseText = await response.text();
+      if (response.ok) {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
+      }
+      setTimeout(() => navigate(0), 2000);
+      handleClose();
+  } catch (error) {
+      console.log('An error occurred during upload!', error);
+  }
+   finally {
+    console.log(true);
+  }
+  };
   return (
     <React.Fragment>
       <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={handleClickOpen} size="medium" />
@@ -158,6 +188,34 @@ export default function AddProfile({ userId }) {
       >
         <DialogTitle>{DIALOG_TITLES.NEW_PROFILE}</DialogTitle>
         <DialogContent>
+            <DialogContentText className='dialog-content-text'>
+            {DIALOG_TITLES.CREATE_FORM_EXCEL}
+          </DialogContentText>
+          <GenericInput 
+            type="file" 
+            accept=".xlsx,.xls" 
+            onChange={handleFileChange} 
+            label="Upload Excel" 
+            size="small" 
+            width='45%'
+            className="add-profile-button"
+        />
+      <span style={{ display: 'inline-block' }}>
+  <Tooltip 
+    title={!selectedFile ? TOAST_MESSAGES.FILE_NOT_SELECTED : ''} 
+    disableHoverListener={!!selectedFile}
+  >
+    <span>
+      <GenericButton 
+        onChange={handleFileChange} 
+        label="Add Profile" 
+        onClick={handleFileUpload}
+        disabled={!selectedFile}
+        style={{ pointerEvents: !selectedFile ? 'none' : 'auto' }}
+      />
+    </span>
+  </Tooltip>
+</span>
           <DialogContentText className='dialog-content-text'>
             {DIALOG_TITLES.CREATE_FORM}
           </DialogContentText>

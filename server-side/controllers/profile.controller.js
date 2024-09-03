@@ -1,6 +1,76 @@
+import mongoose from 'mongoose';
 import Profile from '../models/profile.model.js';
 import activeProfile from '../profileMngr.js'
+import xlsx from 'xlsx';
+import fs from 'fs'
+import websitesModel from '../models/websites.model.js';
 
+const booleanize = (value) => {
+    return value === 'true' || value === '1' || value === 'yes';
+};
+
+export const uploadProfilesFromExcel = async (req, res) => {
+    try {
+        const userId = req.body.text;
+        if (!userId) {
+            return res.status(400).json({ message: 'User ID is required.' });
+        }
+        const filePath = req.file.path;
+        const workbook = xlsx.readFile(filePath);
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+        const profileData = xlsx.utils.sheet_to_json(sheet);
+        const profileSettings = profileData[0];
+        const listWebsites = await Promise.all(profileData.slice(1).map(async (site) => {
+            
+        const website = new websitesModel({
+                _id: new mongoose.Types.ObjectId(),
+                name: site['Website Name'],        
+                url: site['Website URL'],       
+            });
+
+            const savedWebsite = await website.save(); 
+            return {
+                websiteId: savedWebsite._id,       
+                status: site['Website Status'], 
+                limitedMinutes: site['Website Status'] === 'limit' ? site['Limited Minutes'] : 0, 
+            };
+        }));
+        const profile = {
+            userId: new mongoose.Types.ObjectId(userId), 
+            profileName: profileSettings['Profile Name'],
+            statusBlockedSites: profileSettings['Status Blocked Sites'],
+            listWebsites,
+            timeProfile: {
+              start: profileSettings['Start Time'],
+              end: profileSettings['End Time'],
+            },
+            googleMapsLocation: {
+              enabled: booleanize(profileSettings['Google Maps Enabled']),
+              location: {
+                address: profileSettings['Google Maps Address'],
+                lat: profileSettings['Google Maps Latitude'],
+                lng: profileSettings['Google Maps Longitude'],
+              },
+            },
+            googleCalendarEvents: {
+              enabled: booleanize(profileSettings['Google Calendar Enabled']),
+              calendarId: profileSettings['Google Calendar ID'],
+            },
+            googleDriveFiles: {
+              enabled: booleanize(profileSettings['Google Drive Enabled']),
+              folderId: profileSettings['Google Drive Folder ID'],
+            },
+          };
+
+        const newProfile = new Profile(profile);
+        const savedProfile = await newProfile.save();
+        res.status(201).json(savedProfile);
+        fs.unlinkSync(filePath);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
 export const getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profile.find();
@@ -141,5 +211,6 @@ export default {
     getProfilesByUserId,
     deleteProfile,
     updateLocation,
-    activeProfileByUserId
+    activeProfileByUserId,
+    uploadProfilesFromExcel
 };
