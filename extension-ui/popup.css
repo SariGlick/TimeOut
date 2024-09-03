@@ -4,7 +4,6 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  width: 90vw;
   background-color: #F0F0F0;
 }
 
@@ -16,20 +15,4 @@ body {
   display: none;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 5%;
-  display: flex;
-  align-items: center;
-}
-
-.favicon {
-  width: 6%;
-  height: 6%;
-  margin-right: 3%;
-}
 /*# sourceMappingURL=popup.css.map */
