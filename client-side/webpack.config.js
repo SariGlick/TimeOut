@@ -34,6 +34,9 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      '@storybook': path.resolve(__dirname, '.storybook')
+    },
   },
   plugins: [
     new webpack.ProvidePlugin({

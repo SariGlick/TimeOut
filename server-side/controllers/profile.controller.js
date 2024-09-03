@@ -1,9 +1,22 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
 import activeProfile from '../profileMngr.js'
+import {shareProfileFunction} from '../managers/sharingManager.js'
+
+export const shareProfile = async (req, res, next) => {
+    const { inviterID, email, profileID, shareLevel } = req.body;
+
+    try {
+        const result = await shareProfileFunction(inviterID, email, profileID, shareLevel, next);
+        res.status(201).json(result);
+    } catch (error) {
+        next({ message: error.message, status: 500 });
+    }
+};
 
 export const getAllProfiles = async (req, res, next) => {
     try {
+
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
         res.json(profiles);
     } catch (err) {

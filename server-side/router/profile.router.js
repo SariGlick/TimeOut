@@ -1,6 +1,5 @@
 import express from 'express'
-import {getAllProfiles,getProfileById,createProfile,deleteProfile,updateProfile,activeProfileByUserId} from '../controllers/profile.controller.js'
-import { shareProfile } from '../managers/sharingManager.js';
+import {getAllProfiles,getProfileById,createProfile,deleteProfile,updateProfile,activeProfileByUserId,shareProfile} from '../controllers/profile.controller.js'
 
 const profilesRouter=express.Router();
 

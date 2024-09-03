@@ -1,12 +1,11 @@
-import Users from '../models/user.model';
-import PendingUsers from '../models/pendingUser.model';
-import { createPendingUser } from '../controllers/pendingUser.controler';
-import { createInvitation } from '../controllers/invitation.controler';
+import Users from '../models/user.model.js';
+import PendingUsers from '../models/pendingUser.model.js';
+import { createInvitation_service} from '../services/invitation.service.js';
+import { createPendingUser_service } from '../services/pendingUser.service.js';
 
-export const shareProfile = async (req, res, next) => {
+
+export const shareProfileFunction = async (inviterID, email, profileID, shareLevel, next) => {
     try {
-        const { inviterID, email, profileID, shareLevel } = req.body;
-        
         const invitedUser = await getInvitedUserID(email, next);
 
         const date = new Date().toISOString().split('T')[0]; //to get the date in YYYY-MM-DD format
@@ -20,15 +19,15 @@ export const shareProfile = async (req, res, next) => {
             date
         };
         
-        const invitation = await createInvitation(newInvitation);
-        res.status(201).json(invitation); 
+        const invitation = await createInvitation_service(newInvitation);
+        return invitation; 
         
     } catch (error) {
-        next({ message: error.message, status: 500 });
+        return next({ message: error.message, status: 500 });
     }
 };
 
-const getInvitedUserID = async(email)=>{
+const getInvitedUserID = async(email, next) => {
     try {
         let user = await Users.findOne({email});
         if(user){
@@ -37,12 +36,12 @@ const getInvitedUserID = async(email)=>{
 
         user = await PendingUsers.findOne({email});
         if(!user){
-            user = await createPendingUser( {email} );
+            user = await createPendingUser_service( {email} );
         }
         
         return {userID: user._id, inCollection:'PendingUsers'};
         
     } catch (error) {
-        next({ message: error.message, status: 500});
+        return next({ message: error.message, status: 500});
     }
 };
