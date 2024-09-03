@@ -4,6 +4,7 @@ import activeProfile from '../profileMngr.js'
 
 export const getAllProfiles = async (req, res, next) => {
     try {
+
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
         res.json(profiles);
     } catch (err) {
