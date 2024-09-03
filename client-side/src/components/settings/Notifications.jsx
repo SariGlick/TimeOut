@@ -77,11 +77,9 @@ const Notifications = ({ onUpdate }) => {
     if (prevValues.ringtoneFile === null && ringtoneFile) {
       onUpdate({ soundVoice: ringtoneFile });
       setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
-      console.log('111')
     } else if (ringtoneFile && prevValues.ringtoneFile !== ringtoneFile) {
       onUpdate({ soundVoice: ringtoneFile });
       setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
-      console.log('222')
     }
   }, [soundVoice, ringtoneFile, onUpdate, prevValues.ringtoneFile]);
 
@@ -91,7 +89,6 @@ const Notifications = ({ onUpdate }) => {
       const file = files[0];
       setRingtoneFile(file);
       setSoundVoice(URL.createObjectURL(file));
-      console.log('yeee')
     } else {
       setRingtoneFile(null);
       setSoundVoice('');
