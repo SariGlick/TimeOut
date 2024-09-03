@@ -19,7 +19,7 @@ const Preferences = ({ currentUser, onUpdate}) => {
   const { timeZone: initialTimeZone, language: initialLanguage, dateFormat: initialDateFormat } = currentUser.preference;
   const [language, setLanguage] = useState(i18n.resolvedLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
-  const [dateFormat, setDateFormat] = useState(initialDateFormat)
+  const [dateFormat, setDateFormat] = useState(initialDateFormat);
 
   useEffect(() => {
     onUpdate({

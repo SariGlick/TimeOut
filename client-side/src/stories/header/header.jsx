@@ -3,26 +3,14 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useTranslation } from 'react-i18next';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Tooltip,
-  Avatar,
-  Container
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import LabTabs from '../tabs/tabs';
+
 
 import MessageIcon from './Icon'
+import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import LabTabs from '../tabs/tabs';
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
-
-import './header.scss';
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -132,13 +120,7 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {/* <LabTabs
-                  nameOfClass="navbar-tabs"
-                  text={[t('settings')]}
-                  nav={['/settings']}
-                />
-              </Menu>
-            </Box> */}
+                
                      <LabTabs
           nameOfClass="navbar-tabs"
           text={['edit user profile','manage notifications']}
@@ -150,20 +132,9 @@ function ResponsiveAppBar() {
           </Toolbar>
         </Container>
       </AppBar>
-                        {/* <LabTabs
-          nameOfClass="navbar-tabs"
-          text={['edit user profile','manage notifications']}
-          nav={['/editUserProfile','/manageNotifications'] }
-        />
-            </Menu>
-          <MessageIcon/>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar> */}
-
+                   
+          
     </div>
   );
 }
-
 export default ResponsiveAppBar;

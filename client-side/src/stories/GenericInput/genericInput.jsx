@@ -4,6 +4,8 @@ import { TextField, InputAdornment, Button, Checkbox, FormControlLabel } from '@
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
 
+
+
 import '../GenericInput/genericInput.scss';
 
 const GenericInput = ({
@@ -21,6 +23,7 @@ const GenericInput = ({
   max,
   validation = () => { },
   ...rest
+
 
 }) => {
   const [inputValue, setInputValue] = useState(value);
@@ -143,10 +146,37 @@ const GenericInput = ({
   )
     
 
+
+
+  return (
+    <div className="generic-input">
+      <TextField
+        label={label}
+        type={type}
+        name={name}
+        value={inputValue}
+        onChange={handleChange}
+        size={size}
+        error={error}
+        disabled={disabled}
+        helperText={helperText}
+        InputProps={{
+          startAdornment: Icon && (
+            <InputAdornment position="start">
+              <Icon />
+            </InputAdornment>
+          ),
+          ...rest.InputProps,
+        }}
+        style={inputStyle}
+        {...rest}
+      />
+    </div>
+  );
 };
+
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-
   type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
   name: PropTypes.string,
   value: PropTypes.string,
@@ -159,6 +189,7 @@ GenericInput.propTypes = {
   min: PropTypes.number,
   max: PropTypes.number,
   disabled:PropTypes.string,
+
 };
 
 export default GenericInput;

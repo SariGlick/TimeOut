@@ -1,16 +1,19 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export const getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId').select('-__v');
 =======
 import activeProfile from '../profileMngr.js'
+=======
+
+>>>>>>> e1846fe75f6d92f5dfa7a440988cb38473a34797
 
 export const getAllProfiles = async (req, res, next) => {
     try {
-
         const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
 >>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
         res.json(profiles);
@@ -82,17 +85,7 @@ export const deleteProfile = async (req, res, next) => {
 <<<<<<< HEAD
 =======
 
-export const activeProfileByUserId = async(req, res) => {
-    try {
-        const userId = req.body;
-        const profile = await activeProfile(userId);
-        
-        res.status(201).json(profile);
-    }
-    catch (error) {
-        console.log({ error })
-        res.status(500).send(error.message);
-    }
-}
+
+
 
 >>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3

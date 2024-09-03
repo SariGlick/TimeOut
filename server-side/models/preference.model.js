@@ -12,7 +12,10 @@ const PreferenceSchema= new mongoose.Schema({
     displayBrowsingTimeLimit:{type:Boolean,default:false}
 =======
     soundVoice:{type:String,default:'×××ª ××¢× ×¢×©×'},
+<<<<<<< HEAD
     language:{type:String, default:'en',emun:['en', 'he', 'es']}
 >>>>>>> b611101e51b7905f88cac8bced680b70104bece2
+=======
+>>>>>>> e1846fe75f6d92f5dfa7a440988cb38473a34797
 })
 export default mongoose.model('Preference',PreferenceSchema);

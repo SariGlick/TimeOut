@@ -1,4 +1,8 @@
 $background-class:rgb(255, 255, 255);
+$black-color:'black';
+$white-color:'white';
+$hover-color:rgb(45, 158, 126);
+$primary-color-home:rgb(103, 252, 210);
 $standardSuccessColor:rgba(229, 245, 233, 0.8);
 $standardErrorColor:rgba(254, 226, 226, 0.8);
 $standardWarningColor:#ffffe0;
@@ -8,15 +12,5 @@ $secondary-color: rgb(103, 252, 210);
 $background-class: #f0f0f0;
 $light-black: rgba(0, 0, 0, 0.1);
 $errorColor:red;
-$fontfamily:'Montserrat', sans-serif;
-$primary-color-home: rgb(103, 252, 210);
-$black-color: #000000;
-$white-color: #ffffff;
-$hover-color: rgba(103, 252, 210, 0.8);
-
-
-$font-family-primary: 'Nanum Gothic', sans-serif;
-
+$font-family-primary:'Nanum Gothic';
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-
-

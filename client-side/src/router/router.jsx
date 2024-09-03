@@ -1,6 +1,5 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-
 import Settings from "../components/settings/Settings.jsx";
 import Login from "../login/Login.jsx";
 import HomePage from "../components/homePageComponent.jsx";
