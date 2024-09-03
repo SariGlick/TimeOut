@@ -5,7 +5,8 @@ import Users from '../models/user.model.js';
 
 export const getUsers = async (req, res,next) => {
   try {
-    const users = await Users.find().populate({path: 'visitsWebsites',populate: {path: 'websiteId'}}).populate('profiles preference').select('-__v');
+    const users = await Users.find().populate('visitsWebsites profiles preference' ).select('-__v')
+    .select('-__v')
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
@@ -14,25 +15,18 @@ export const getUsers = async (req, res,next) => {
 };
 
 export const getUserById = async (req, res,next) => {
-  const id = req.params;
+  const id = req.params.id;
   if(!mongoose.Types.ObjectId.isValid(id))
-   return next({ message: 'id is not valid' })
+    return next({message:'id is not valid'})
   try {
-    const user = await Users.findById(id).populate('visitsWebsites profiles preferences').select('-__v');    
+    const user = await Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
     if (!user) {
         return next({message:'user not found ',status:404})
     }
-    if (res) {
-      res.send(user);
-    }
-    return user;
+    res.send(user);
   } catch (err) {
     console.error(err);
-    if (next) {
-      next({ message: err.message, status: 500 });
-    } else {
-      throw err;
-    }
+    next({message:err.message,status:500})
   }
 };
 
@@ -91,3 +85,5 @@ export const updatedUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
+
+
