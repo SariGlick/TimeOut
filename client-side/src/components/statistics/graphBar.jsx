@@ -1,23 +1,24 @@
 import * as React from 'react';
 import { useQuery } from '@apollo/client';
+import PropTypes from 'prop-types';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useAppSelector } from '../../redux/store.jsx';
 import Loader from '../../stories/loader/loader.jsx'
 import { getVisitedWebsitesByDate, formatDate } from './graphsUtils.js';
-import { GET_USERS } from './queries.js';
+import { GET_USERS } from './constants.js';
 
-export default function GraphBar({ startDate, endDate }) {
+const GraphBar = ({ startDate, endDate }) => {
   const users = useQuery(GET_USERS);
   const user = useAppSelector((state) => state.user.currentUser);
-  startDate = formatDate(new Date(startDate.$d));
-  endDate = formatDate(new Date(endDate.$d));
-  const result1 = getVisitedWebsitesByDate(users, user, startDate);
-  const result2 = getVisitedWebsitesByDate(users, user, endDate);
+  startDate = new Date(startDate.$d);
+  endDate = new Date(endDate.$d);
+  const dataOfStartDate = getVisitedWebsitesByDate(users, user, startDate);
+  const dataOfEndDate = getVisitedWebsitesByDate(users, user, endDate);
 
-  const xAxisData = result1.map((item) => item.websiteName);
+  const xAxisData = dataOfStartDate.map((item) => item.websiteName);
   const seriesData = [
-    { data: result1.map((item) => item.activityTime) },
-    { data: result2.map((item) => item.activityTime) }
+    { data: dataOfStartDate.map((item) => item.activityTime) },
+    { data: dataOfEndDate.map((item) => item.activityTime) }
   ];
 
   return (
@@ -32,3 +33,10 @@ export default function GraphBar({ startDate, endDate }) {
     </>
   );
 }
+
+GraphBar.propTypes = {
+  startDate: PropTypes.object.isRequired,
+  endDate: PropTypes.object.isRequired
+};
+
+export default GraphBar;

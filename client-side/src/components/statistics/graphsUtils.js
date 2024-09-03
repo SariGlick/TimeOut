@@ -47,8 +47,8 @@ export function getVisitedWebsitesByDate(users, user, date) {
     const visitedWeb = {};
     currentUser?.visitsWebsites.forEach(visit => {
         visit.visitsTime.forEach(visitTime => {
-            const visitDate = formatDate(new Date(visitTime.visitDate));
-            if (visitDate.split('-')[0] === date.split('-')[0] && parseInt(visitDate.split('-')[1], 10) === parseInt(date.split('-')[1], 10)) {
+            const visitDate = new Date(visitTime.visitDate);
+            if (visitDate.getMonth() === date.getMonth() && visitDate.getFullYear() === date.getFullYear()) {
                 if (visitedWeb[visit.websiteId.name]) {
                     visitedWeb[visit.websiteId.name].activityTime += Number(visitTime.activityTime);
                 } else {

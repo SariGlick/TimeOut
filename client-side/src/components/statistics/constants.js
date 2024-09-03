@@ -28,3 +28,4 @@ export const GET_USERS = gql`
    }
  }`
 
+export const options = [{ label: "PieChart", value: "PieChart" }, { label: "BarChart", value: "BarChart" }];

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { PieChart, ChartsLegend } from '@mui/x-charts';
 import Stack from '@mui/material/Stack';
 import { useQuery } from '@apollo/client';
-import { GET_USERS, GET_WEBSITE } from './queries.js';
+import { GET_USERS, GET_WEBSITE } from './constants.js';
 import { useAppSelector } from '../../redux/store.jsx';
 import { getWebsites, formatDate, getRandomColor } from './graphsUtils.js';
 import Loader from '../../stories/loader/loader.jsx'
