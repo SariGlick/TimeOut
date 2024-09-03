@@ -27,6 +27,7 @@ const ProfilePageComponent = ({ userId }) => {
   const [loading, setLoading] = useState(true);
   const [editRowId, setEditRowId] = useState(null);
   const [editedRows, setEditedRows] = useState(null);
+
   const profiles = useAppSelector(selectProfile);
   const statusOptions = selectedProfile ? getStatusOptions(selectedProfile.statusBlockedSites) : [];
 
@@ -55,15 +56,6 @@ const ProfilePageComponent = ({ userId }) => {
       dispatch(setSelectProfile(selectedProfile));
       setEditRowId(null);
       setEditedRows(null);
-
-      const start = parseTimeStringToDate(profile.timeProfile.start);
-      const end = parseTimeStringToDate(profile.timeProfile.end);
-      const durationMinutes = (end - start) / 1000 / 60;
-      if (durationMinutes >= 0) {
-        setTime(durationMinutes);
-      } else {
-        setTime(durationMinutes * -1);
-      }
     }
     else
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_FROM_SERVER_ERROR} type="error" />);

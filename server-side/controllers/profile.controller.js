@@ -1,17 +1,10 @@
 import Profile from '../models/profile.model.js';
-<<<<<<< HEAD
-=======
 import activeProfile from '../profileMngr.js'
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 
 export const getAllProfiles = async (req, res) => {
     try {
         const profiles = await Profile.find();
-<<<<<<< HEAD
-        return res.json(profiles);
-=======
         res.json(profiles);
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -21,11 +14,7 @@ export const createProfile = async (req, res) => {
     const newProfile = new Profile(req.body);
     try {
         const savedProfile = await newProfile.save();
-<<<<<<< HEAD
-        return res.status(201).json(savedProfile);
-=======
         res.status(200).json(savedProfile);
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -64,8 +53,6 @@ export const getProfilesByUserId = async (req, res) => {
         });
         if (!profiles.length) {
             return res.status(404).json({ message: 'No profiles found for this user' });
-<<<<<<< HEAD
-=======
         }
         res.json(profiles);
     } catch (err) {
@@ -78,7 +65,6 @@ export const deleteProfile = async (req, res) => {
         const deletedProfile = await Profile.findByIdAndDelete(req.params.id);
         if (!deletedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
         }
         return res.json(profiles);
     } catch (err) {
@@ -86,20 +72,6 @@ export const deleteProfile = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
-export const deleteProfile = async (req, res) => {
-    try {
-        const deletedProfile = await Profile.findByIdAndDelete(req.params.id);
-        if (!deletedProfile) {
-            return res.status(404).json({ message: 'Profile not found' });
-        }
-        return res.json({ message: 'Profile deleted successfully' });
-    } catch (err) {
-        return res.status(500).json({ message: err.message });
-    }
-};
-
-=======
 export const updateLocation = async (req, res) => {
     const { userId, location } = req.body;
     try {
@@ -161,18 +133,13 @@ export const activeProfileByUserId = async(req, res) => {
         res.status(500).send(error.message);
     }
 }
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 export default {
     getAllProfiles,
     createProfile,
     getProfileById,
     updateProfile,
     getProfilesByUserId,
-<<<<<<< HEAD
-    deleteProfile
-=======
     deleteProfile,
     updateLocation,
     activeProfileByUserId
->>>>>>> 82fa524d03d5df0b94a5d120e47c7ca054cee709
 };
