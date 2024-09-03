@@ -1,4 +1,4 @@
-import Invitations from "../models/invitation.model";
+import Invitations from "../models/invitation.model.js";
 
 export const getAllInvitations_service = async () => {
     return await Invitations.find().select('-__v'); 
