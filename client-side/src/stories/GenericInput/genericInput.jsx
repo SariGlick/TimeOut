@@ -6,7 +6,8 @@ import '../GenericInput/genericInput.scss';
 
 const GenericInput = ({ 
   label, 
-  type = 'text', 
+  type = 'text',
+  name = '', 
   value = '', 
   onChange = () => {}, 
   size = 'medium', 
@@ -29,8 +30,7 @@ const GenericInput = ({
   const handleChange = (e) => {
     const newValue = e.target.value;
     setInputValue(newValue);
-    if(onChange)
-       onChange(newValue);
+    onChange(e);
   };
 
   const handleValidation = (inputValue) => {
@@ -53,6 +53,7 @@ const GenericInput = ({
       <TextField
         label={label}
         type={type}
+        name={name}
         value={inputValue}
         onChange={handleChange}
         size={size}
@@ -77,6 +78,7 @@ const GenericInput = ({
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
