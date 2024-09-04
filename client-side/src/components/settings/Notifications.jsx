@@ -10,21 +10,20 @@ import { selectAuth } from '../../redux/auth/auth.selector.js';
 import CONSTANTS from './constantSetting.js';
 import './Notifications.scss';
 
-const Notifications = ({ onUpdate }) => {
-  const { user } = useSelector(selectAuth);
+const Notifications = ({ onUpdate, data }) => {
   const { EMAIL_FREQUENCY_ENUM, TITLES, LABELS } = CONSTANTS;
-  const {
-    sendNotificationTime: notificationTime = 10,
-    soundVoice: initialSoundVoice = "alertSound.mp3",
-    displayIncomeMessages: showIncomeMessages = false,
-    displayBrowsingTimeLimit: showBrowsingTimeLimit = false,
-    emailFrequency: initialEmailFrequency = EMAIL_FREQUENCY_ENUM.NEVER
-  } = user.preference || {};
-
   const baseServerUrl = process.env.REACT_APP_SERVER_URL;
+  const { t: translate } = useTranslation();
+  const { user } = useSelector(selectAuth);
+
+  const notificationTime = (data?.sendNotificationTime || user.preference?.sendNotificationTime || 10);
+  const initialSoundVoice = (data?.soundVoice || user.preference?.soundVoice || "alertSound.mp3");
+  const showIncomeMessages = (data?.displayIncomeMessages || user.preference?.displayIncomeMessages || false);
+  const showBrowsingTimeLimit = (data?.displayBrowsingTimeLimit || user.preference?.displayBrowsingTimeLimit || false);
+  const initialEmailFrequency = (data?.emailFrequency || user.preference?.emailFrequency || EMAIL_FREQUENCY_ENUM.NEVER);
 
   const [emailFrequency, setEmailFrequency] = useState(initialEmailFrequency);
-  const [ringtoneFile, setRingtoneFile] = useState(null);
+  const [ringtoneFile, setRingtoneFile] = useState({ name: initialSoundVoice });
   const [soundVoice, setSoundVoice] = useState(`${baseServerUrl}/uploads/${initialSoundVoice}`);
   const [sendNotificationTime, setSendNotificationTime] = useState(notificationTime);
   const [displayIncomeMessages, setDisplayIncomeMessages] = useState(showIncomeMessages);
@@ -32,13 +31,13 @@ const Notifications = ({ onUpdate }) => {
 
   const [prevValues, setPrevValues] = useState({
     emailFrequency: initialEmailFrequency,
-    ringtoneFile: null,
+    ringtoneFile: { name: initialSoundVoice },
     sendNotificationTime: notificationTime,
     displayIncomeMessages: showIncomeMessages,
     displayBrowsingTimeLimit: showBrowsingTimeLimit
   });
 
-  const { t: translate } = useTranslation();
+
 
   const emailFrequencyOptions = Object.keys(EMAIL_FREQUENCY_ENUM).map(key => ({
     text: translate(key.toLowerCase()),
@@ -50,48 +49,48 @@ const Notifications = ({ onUpdate }) => {
       onUpdate({ emailFrequency });
       setPrevValues(prev => ({ ...prev, emailFrequency }));
     }
-  }, [emailFrequency, onUpdate, prevValues.emailFrequency]);
+  }, [emailFrequency]);
 
   useEffect(() => {
     if (prevValues.sendNotificationTime !== sendNotificationTime) {
       onUpdate({ sendNotificationTime });
       setPrevValues(prev => ({ ...prev, sendNotificationTime }));
     }
-  }, [sendNotificationTime, onUpdate, prevValues.sendNotificationTime]);
+  }, [sendNotificationTime]);
 
   useEffect(() => {
     if (prevValues.displayIncomeMessages !== displayIncomeMessages) {
       onUpdate({ displayIncomeMessages });
       setPrevValues(prev => ({ ...prev, displayIncomeMessages }));
     }
-  }, [displayIncomeMessages, onUpdate, prevValues.displayIncomeMessages]);
+  }, [displayIncomeMessages]);
 
   useEffect(() => {
     if (prevValues.displayBrowsingTimeLimit !== displayBrowsingTimeLimit) {
       onUpdate({ displayBrowsingTimeLimit });
       setPrevValues(prev => ({ ...prev, displayBrowsingTimeLimit }));
     }
-  }, [displayBrowsingTimeLimit, onUpdate, prevValues.displayBrowsingTimeLimit]);
+  }, [displayBrowsingTimeLimit]);
 
   useEffect(() => {
-    if (prevValues.ringtoneFile === null && ringtoneFile) {
+    if (ringtoneFile && (prevValues.ringtoneFile?.name !== ringtoneFile.name)) {
+      const newSoundVoice = URL.createObjectURL(ringtoneFile);
+      setSoundVoice(newSoundVoice);
       onUpdate({ soundVoice: ringtoneFile });
-      setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
-      console.log('111')
-    } else if (ringtoneFile && prevValues.ringtoneFile !== ringtoneFile) {
-      onUpdate({ soundVoice: ringtoneFile });
-      setPrevValues(prev => ({ ...prev, ringtoneFile: ringtoneFile }));
-      console.log('222')
+      setPrevValues(prev => ({ ...prev, ringtoneFile }));
+      const audioElement = document.querySelector('.audio-player');
+      if (audioElement) {
+        audioElement.load();
+      }
+      return () => URL.revokeObjectURL(newSoundVoice);
     }
-  }, [soundVoice, ringtoneFile, onUpdate, prevValues.ringtoneFile]);
+  }, [ringtoneFile]);
 
   const handleFileChange = (e) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       const file = files[0];
       setRingtoneFile(file);
-      setSoundVoice(URL.createObjectURL(file));
-      console.log('yeee')
     } else {
       setRingtoneFile(null);
       setSoundVoice('');
@@ -163,6 +162,7 @@ const Notifications = ({ onUpdate }) => {
   );
 };
 Notifications.propTypes = {
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  data: PropTypes.object
 };
 export default Notifications;

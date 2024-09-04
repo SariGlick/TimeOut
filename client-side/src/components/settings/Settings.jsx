@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch  } from 'react-redux';
 
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
-import { updatePreference } from '../../services/preferenceService.js';
+import { updatePreference as updatePreferenceService } from '../../services/preferenceService.js';
+import {updatePreference } from '../../redux/preference/preference.slice.js';
 import { selectAuth } from '../../redux/auth/auth.selector.js';
 
 import Preferences from './Preferences.jsx';
@@ -21,32 +22,37 @@ const Settings = () => {
   const { t: translate } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useSelector(selectAuth);
+  const dispatch = useDispatch();
 
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
 
   const preferenceId = user.preference._id;
 
-  const elements = [
-    <AccountTab key="account"/>,
-    <Notifications key="notifications" onUpdate={setNotificationsData} />,
-    <Preferences key="preferences" onUpdate={setPreferencesData} />
-  ];
+  const handleUpdatePreferences = (updatedPreferences) => {
+    setPreferencesData(prev => ({ ...prev, ...updatedPreferences }));
+  };
+
+  const handleUpdateNotifications = (updatedNotifications) => {
+    setNotificationsData(prev => ({ ...prev, ...updatedNotifications }));
+  };
 
   const handleFormSubmit = async () => {
     
     const formData = new FormData();
     Object.entries(notificationsData).forEach(([key, value]) => {
-      console.log([key, value]);
       formData.append(key, value);
     });
     Object.entries(preferencesData).forEach(([key, value]) => {
       formData.append(key, value);
     });
     try {
-      const response = await updatePreference(preferenceId, formData);
+      const response = await updatePreferenceService(preferenceId, formData);
       if (response) {
         enqueueSnackbar(<ToastMessage message={translate(MESSAGES.SUCCESS_UPDATED_SETTINGS)} type="success" />);
+        dispatch(updatePreference(response));
+        setNotificationsData({});
+        setPreferencesData({});
       } else {
         enqueueSnackbar(<ToastMessage message={translate(MESSAGES.ERROR_UPDATE_SETTINGS)} type="error" />);
       }
@@ -54,6 +60,14 @@ const Settings = () => {
       enqueueSnackbar(<ToastMessage message={translate(MESSAGES.ERROR_OCCURRED)} type="error" />);
     }
   };
+
+  const isButtonDisabled = Object.keys(notificationsData).length === 0 && Object.keys(preferencesData).length === 0;
+
+  const elements = [
+    <AccountTab key="account"/>,
+    <Notifications key="notifications" onUpdate={handleUpdateNotifications} data={notificationsData}/>,
+    <Preferences key="preferences" onUpdate={handleUpdatePreferences} data={preferencesData}/>
+  ];
 
   return (
     <div className="settings-container">
@@ -66,6 +80,7 @@ const Settings = () => {
           label={translate(LABELS.UPDATE)}
           size='medium'
           onClick={handleFormSubmit}
+          disabled={isButtonDisabled}
         />
       </div>
     </div>

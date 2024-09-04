@@ -17,21 +17,27 @@ const createTimeZones = () => {
   }));
 };
 
-const Preferences = ({ onUpdate }) => {
+const Preferences = ({ onUpdate, data }) => {
   const { user } = useSelector(selectAuth);
   const { t: translate, i18n: localization } = useTranslation();
   const { LABELS, LANGUAGE, DATE_FORMATS } = CONSTANTS;
-  const { timeZone: initialTimeZone = "UTC", dateFormat: initialDateFormat = DATE_FORMATS[0].value } = user.preference;
-  const [language, setLanguage] = useState(localization.resolvedLanguage);
-  const [timeZone, setTimeZone] = useState(initialTimeZone);
-  const [dateFormat, setDateFormat] = useState(initialDateFormat);
+
   const languageOptions = Object.keys(LANGUAGE).map(key => ({
     value: key,
     text: LANGUAGE[key]['text'],
     iconSrc: LANGUAGE[key]['icon']
   }));
-
+  const initialLanguage = (data?.language || user.preference?.language || languageOptions[0].value);
   const timeZoneOptions = createTimeZones();
+  const defaultTimeZone = timeZoneOptions.find(option => option.value === "UTC")?.value || timeZoneOptions[0].value;
+  const initialTimeZone = (data?.timeZone || user.preference?.timeZone || defaultTimeZone);
+  const initialDateFormat = (data?.dateFormat || user.preference?.dateFormat || DATE_FORMATS[0].value);
+  const [language, setLanguage] = useState(initialLanguage);
+  const [timeZone, setTimeZone] = useState(initialTimeZone);
+  const [dateFormat, setDateFormat] = useState(initialDateFormat);
+
+
+
 
   const dateFormatOptions = DATE_FORMATS.map(({ value, label }) => ({
     text: translate(label),
@@ -113,6 +119,7 @@ const Preferences = ({ onUpdate }) => {
   );
 };
 Preferences.propTypes = {
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
+  data: PropTypes.object
 };
 export default Preferences;
