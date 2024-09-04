@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Tooltip,
   Box,
   Checkbox,
   FormControlLabel
@@ -133,7 +132,7 @@ export default function AddProfile({ userId }) {
     };
 
     try {
-       ProfileNew= await createProfile(profileData);
+      ProfileNew= await createProfile(profileData);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       dispatch(addProfile(profileData));
       setTimeout(() => navigate(0), 2000);
