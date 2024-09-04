@@ -67,11 +67,12 @@ export const deleteProfile = async (req, res) => {
         if (!deletedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        return res.json(profiles);
+        return res.json({ message: 'Profile deleted successfully' });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
 };
+
 
 export async function updateLocation(req, res) {
     const { userId, location } = req.body;

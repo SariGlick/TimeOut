@@ -53,6 +53,7 @@ export const deleteProfileApi = async (id) => {
         const response = await handleDelete(`/profiles/${id}`);
         return response.data;
     } catch (err) {
+        console.error('Error:', err.response || err.message);
         throw err;
     }
 };

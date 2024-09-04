@@ -133,9 +133,9 @@ export default function AddProfile({ userId }) {
     };
 
     try {
-       ProfileNew= await createProfile(profileData);
+      const ProfileNew= await createProfile(profileData);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
-      dispatch(addProfile(profileData));
+      dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
       handleClose();
     } catch (error) {
