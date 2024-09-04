@@ -36,9 +36,6 @@ const Preferences = ({ onUpdate, data }) => {
   const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [dateFormat, setDateFormat] = useState(initialDateFormat);
 
-
-
-
   const dateFormatOptions = DATE_FORMATS.map(({ value, label }) => ({
     text: translate(label),
     value: value
