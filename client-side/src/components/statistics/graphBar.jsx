@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useAppSelector } from '../../redux/store.jsx';
 import Loader from '../../stories/loader/loader.jsx'
 import { getVisitedWebsitesByDate, formatDate } from './graphsUtils.js';
-import { GET_USERS } from './constants.js';
 
 const GraphBar = ({ startDate, endDate }) => {
-  const users = useQuery(GET_USERS);
+  const users = useAppSelector((state) => state.user.users);  
   const user = useAppSelector((state) => state.user.currentUser);
   const formattedStartDate = new Date(startDate.$d);
   const formattedEndDate = new Date(endDate.$d);
@@ -23,7 +21,6 @@ const GraphBar = ({ startDate, endDate }) => {
 
   return (
     <>
-      {(users.loading) && <Loader className="secondary" />}
       <BarChart
         xAxis={[{ scaleType: 'band', data: xAxisData }]}
         series={seriesData}

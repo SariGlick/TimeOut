@@ -43,7 +43,7 @@ export function getWebsites(websites, users, user, dateStart, dateEnd) {
 }
 
 export function getVisitedWebsitesByDate(users, user, date) {
-    const currentUser = users?.data?.users?.find(u => u.email === user.email);
+    const currentUser =users?.find(u => u.email === user.email);
     const visitedWeb = {};
     currentUser?.visitsWebsites.forEach(visit => {
         visit.visitsTime.forEach(visitTime => {
