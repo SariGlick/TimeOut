@@ -1,6 +1,6 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
-
+import {shareProfileFunction} from '../managers/sharingManager.js'
 
 export const shareProfile = async (req, res, next) => {
     const { inviterID, email, profileID, shareLevel } = req.body;
