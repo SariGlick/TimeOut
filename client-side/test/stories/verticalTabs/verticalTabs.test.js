@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Updated import statement
+import '@testing-library/jest-dom'; 
 import { I18nextProvider } from 'react-i18next';
 import VerticalTabs from '../../../src/stories/verticalTabs/verticalTabs';
-import i18n from '../../../src/i18n';
+import i18n from '../../../src/i18nForTest.js';
 
 describe('Vertical tabs component', () => {
     test('renders labels and elements correctly', () => {

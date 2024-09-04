@@ -7,17 +7,13 @@ const   AccountTab=()=> {
   const [imageFile,setImageFile]= useState(null);
   const [preview, setPreview] = useState(null);
   const handleFilePicture = (e) => {
-    if (e) {
-      console.log('at handleFilePicture the  file is ' ,e.target.files[0]);
+    if (e.target.files[0]) {
       setImageFile(e.target.files[0]);
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
-      };
-      if(e.target.files[0])
-      {
-         reader.readAsDataURL(e.target.files[0]);
       }
+      reader.readAsDataURL(e.target.files[0]);
     }
   }; 
 
@@ -31,8 +27,12 @@ const   AccountTab=()=> {
        <div>
        <h2  className='font'>Change Profile Picture</h2>
         <GenericInput type="file" accept="image/*" onChange={handleFilePicture} label='upload image' size='small'/>
-        {preview &&   <div className='profile-picture-container'>            <img src={preview} alt="Profile Preview" className="profile-picture" />
-        </div>  }
+        {
+        preview && 
+          <div className='profile-picture-container'>
+          <img src={preview} alt="Profile Preview" className="profile-picture" />
+         </div> 
+        }
        </div>
     </div>
   )
