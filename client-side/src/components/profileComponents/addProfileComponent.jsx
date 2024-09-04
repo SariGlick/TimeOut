@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Tooltip,
   Box,
   Checkbox,
   FormControlLabel

@@ -210,6 +210,7 @@ const ProfilePageComponent = ({ userId }) => {
       limitedMinutes: 0,
     });
   };
+  
   const actions = [
     { func: handleDelete, icon: DeleteIcon, label: 'delete', condition: (id) => id !== editRowId },
     { func: handleEdit, icon: EditIcon, label: 'edit', condition: (id) => id !== editRowId },
