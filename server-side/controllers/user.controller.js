@@ -93,10 +93,10 @@ console.log("i am here");
 
 res.cookie('token', token, {
   httpOnly: true,
-  secure: false, 
-  sameSite: 'Strict' 
-});
+  secure: false,  
+  sameSite: 'Lax'  
 
+})
     return res.status(200).send({ user });
   } catch (error) {
     return next({ message: 'Auth Failed', status: 401 });
