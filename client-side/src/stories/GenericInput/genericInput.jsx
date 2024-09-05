@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, InputAdornment ,styled,Button} from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
-
+import { TextField, InputAdornment } from '@mui/material';
+import {Button} from '@mui/material';
 import '../GenericInput/genericInput.scss';
 
 const GenericInput = ({ 
@@ -47,7 +47,7 @@ const GenericInput = ({
       setHelperText(''); 
     }
   };
-   
+
   const inputStyle = {
     width,
   };
@@ -104,9 +104,9 @@ const GenericInput = ({
     
 
 };
+
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-
   type: PropTypes.oneOf(['text', 'number', 'email', 'password','file']),
   name: PropTypes.string,
   value: PropTypes.string,
