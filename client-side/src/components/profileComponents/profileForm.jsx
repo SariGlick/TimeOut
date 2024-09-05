@@ -1,11 +1,25 @@
 import React from 'react';
-import { Grid, Box, Tooltip } from '@mui/material';
+import { Grid, Box, Tooltip ,Checkbox,FormControlLabel} from '@mui/material';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import Select from '../../stories/Select/Select.jsx';
 import { INPUT_LABELS, TOOLTIP_TEXTS, SELECT_OPTIONS } from '../../constants/profileConstants.js';
 import { handleFieldChange } from '../../utils/profileUtil.js';
+import MapComponent from '../googleServices/googleMap.jsx'
 
 export default function ProfileForm({ formData, setFormData }) {
+    const handleSaveDataAddress = ({ address, markerPosition }) => {
+        setFormData(prevData => {
+          const updatedData = {
+            ...prevData,
+            googleMapsLocation: {
+              address: address,
+              lat: markerPosition.lat,
+              lng: markerPosition.lng
+            }
+          };
+          return updatedData;
+        });
+      };
     return (
         <Box mt={2}>
             <Grid container spacing={3}>
@@ -64,6 +78,33 @@ export default function ProfileForm({ formData, setFormData }) {
                                 widthOfSelect='100%'
                             />
                         </Tooltip>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Box mt={1}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="googleMapsEnabled"
+                                    checked={formData.googleMapsEnabled}
+                                    onChange={(e) => handleFieldChange(e, setFormData)}
+                                    className="custom-checkbox"
+                                />
+                            }
+                            label="Google Map"
+                        />
+                        {formData.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="googleCalendarEnabled"
+                                    checked={formData.googleCalendarEnabled}
+                                    onChange={(e) => handleFieldChange(e, setFormData)}
+                                    className="custom-checkbox"
+                                />
+                            }
+                            label="Google Calendar"
+                        />
                     </Box>
                 </Grid>
             </Grid>
