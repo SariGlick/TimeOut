@@ -7,8 +7,8 @@ const UploadToGoogleDrive = () => {
         onSuccess: async (tokenResponse) => {
             const accessToken = tokenResponse.access_token;
 
+            //כרגע מעלה לדריב קובץ חסר משמהות
             const fileData = new Blob(["Hello, world!"], { type: "text/plain" });
-
             const metadata = {
                 name: 'yourfile.txt', 
                 mimeType: 'text/plain', 
