@@ -18,7 +18,7 @@ import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
-import MapComponent from '../googleServices/googleMap.jsx'
+import MapComponent from '../googleServices.jsx/googleMap.jsx'
 import {
   SELECT_OPTIONS,
   INPUT_LABELS,
