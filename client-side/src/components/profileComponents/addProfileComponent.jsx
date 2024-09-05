@@ -8,9 +8,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Box,
-  Checkbox,
-  FormControlLabel
 } from '@mui/material';
 import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
@@ -18,7 +15,6 @@ import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
-import MapComponent from '../googleServices/googleMap.jsx'
 import {
   SELECT_OPTIONS,
   INPUT_LABELS,
@@ -44,12 +40,6 @@ export default function AddProfile({ userId }) {
       timeStart: '00:00',
       timeEnd: '00:00',
       status: '',
-      googleMapsEnabled: false,
-      googleMapsLocation: { address: '', lat: 0, lng: 0 },
-      googleCalendarEnabled: false,
-      googleCalendarId: '',
-      googleDriveEnabled: false,
-      googleDriveFolderId: ''
     };
   }
 
@@ -85,26 +75,8 @@ export default function AddProfile({ userId }) {
     return '';
   };
 
-  const handleSaveDataAddress = ({ address, markerPosition }) => {
-    setData(prevData => {
-      const updatedData = {
-        ...prevData,
-        googleMapsLocation: {
-          address: address,
-          lat: markerPosition.lat,
-          lng: markerPosition.lng
-        }
-      };
-      return updatedData;
-    });
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const booleanize = (value) => {
-      return value === true || value === 'true';
-    };
-
     const profileData = {
       userId,
       profileName: data.name,
@@ -113,22 +85,6 @@ export default function AddProfile({ userId }) {
         start: data.timeStart,
         end: data.timeEnd,
       },
-      googleMapsLocation: {
-        enabled: booleanize(data.googleMapsEnabled),
-        location: {
-          address: data.googleMapsLocation.address,
-          lat: data.googleMapsLocation.lat,
-          lng: data.googleMapsLocation.lng
-        }
-      },
-      googleCalendarEvents: {
-        enabled: booleanize(data.googleCalendarEnabled),
-        calendarId: data.googleCalendarId
-      },
-      googleDriveFiles: {
-        enabled: booleanize(data.googleDriveEnabled),
-        folderId: data.googleDriveFolderId
-      }
     };
 
     try {
@@ -200,42 +156,6 @@ export default function AddProfile({ userId }) {
               onChange={handleChange}
             />
           </div>
-          <Box className="checkbox-container">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleMapsEnabled"
-                  checked={data.googleMapsEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Map"
-            />
-            {data.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleCalendarEnabled"
-                  checked={data.googleCalendarEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Calendar"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleDriveEnabled"
-                  checked={data.googleDriveEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Drive"
-            />
-          </Box>
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose}>

@@ -6,13 +6,8 @@ import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
-import startLocationTracking from './services/googleMapService.js';
 
 function App() {
-  useEffect(() => {
-    startLocationTracking();
-  }, []);
-
   return (
     <SnackbarProvider maxSnack={3}>
       <Provider store={store}>

@@ -39,12 +39,6 @@ export default function UpdateProfileComponent({ profile }) {
         },
         statusBlockedSites: '',
         websites: [],
-        googleMapsEnabled: false,
-        googleMapsLocation: { address: '', lat: 0, lng: 0 },
-        googleCalendarEnabled: false,
-        googleCalendarId: '',
-        googleDriveEnabled: false,
-        googleDriveFolderId: ''
     });
 
     useEffect(() => {
@@ -70,9 +64,6 @@ export default function UpdateProfileComponent({ profile }) {
             enqueueSnackbar(<ToastMessage message={VALIDATE_MESSAGES.PROFILE_NAME_LONG} type="error" />);
             return;
         }
-        const booleanize = (value) => {
-            return value === true || value === 'true';
-        };
         try {
             const updatedProfile = {
                 userId: formData.userId,
@@ -83,22 +74,6 @@ export default function UpdateProfileComponent({ profile }) {
                     end: formData.timeProfile.timeEnd
                 },
                 listWebsites: formData.websites,
-                googleMapsLocation: {
-                    enabled: booleanize(formData.googleMapsEnabled),
-                    location: {
-                        address: formData.googleMapsLocation.address,
-                        lat: formData.googleMapsLocation.lat,
-                        lng: formData.googleMapsLocation.lng
-                    }
-                },
-                googleCalendarEvents: {
-                    enabled: booleanize(formData.googleCalendarEnabled),
-                    calendarId: formData.googleCalendarId
-                },
-                googleDriveFiles: {
-                    enabled: booleanize(formData.googleDriveEnabled),
-                    folderId: formData.googleDriveFolderId
-                }
             };
             await updateProfileApi(profile._id, updatedProfile);
             dispatch(updateProfile(updatedProfile));

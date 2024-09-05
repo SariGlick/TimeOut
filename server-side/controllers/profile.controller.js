@@ -1,6 +1,6 @@
 import Profile from '../models/profile.model.js';
 import activeProfile from '../profileMngr.js'
-import  {updateUserLocation}  from '../services/googleMapService.js';
+
 
 export const getAllProfiles = async (req, res) => {
     try {
@@ -73,18 +73,6 @@ export const deleteProfile = async (req, res) => {
     }
 };
 
-
-export async function updateLocation(req, res) {
-    const { userId, location } = req.body;
-    try {
-      await updateUserLocation(userId, location);
-      res.status(200).json({ message: 'Location updated and profiles checked' });
-    } catch (error) {
-      console.error('Error updating location:', error.message);
-      res.status(500).json({ error: error.message });
-    }
-  }
-
 export const activeProfileByUserId = async(req, res) => {
     try {
         const userId = req.body;
@@ -102,6 +90,5 @@ export default {
     updateProfile,
     getProfilesByUserId,
     deleteProfile,
-    updateLocation,
     activeProfileByUserId
 };

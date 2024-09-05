@@ -14,8 +14,6 @@ import Loader from '../../stories/loader/loader.jsx';
 import AddProfileComponent from './addProfileComponent.jsx';
 import UpdateProfileComponent from './updateProfileCpmponent.jsx';
 import TimerActivationButton from './timerActivationButton.jsx';
-// import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
-// import ProfileActivationTimer from './profileActivationComponent.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions, parseTimeStringToDate } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
