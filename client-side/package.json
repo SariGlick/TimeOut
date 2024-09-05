@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.11.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fontsource/roboto": "^5.0.13",
@@ -39,7 +40,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --verbose",
     "eject": "react-scripts eject",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -84,22 +85,29 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-storybook": "^0.8.0",
     "globals": "^15.8.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest-environment-jsdom": "^29.7.0",
+    "jest-transform-stub": "^2.0.0",
     "notistack": "^3.0.1",
     "prop-types": "^15.8.1",
     "react-scripts": "^5.0.1",
-    "sass": "^1.77.6",
+    "sass": "^1.78.0",
     "storybook": "^8.1.11"
   },
   "jest": {
     "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest"
+      "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+      "^.+\\.scss$": "jest-transform-stub"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
     },
     "moduleFileExtensions": [
       "js",
       "jsx",
       "ts",
-      "tsx"
+      "tsx",
+      "scss"
     ],
     "testEnvironment": "jest-environment-jsdom"
   }
