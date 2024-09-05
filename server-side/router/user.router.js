@@ -13,7 +13,5 @@ userRouter.delete('/:id', deleteUser);
 userRouter.put('/:id', updatedUser);
 userRouter.put('/', resetPassword);
 
-
-
 export default userRouter;
 

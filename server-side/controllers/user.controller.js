@@ -44,14 +44,15 @@ export const addUser = async (req, res,next) => {
   if(user)
     return res.status(400).send('user is exist');
   try {
-    if (req.file ) {
+    if (req.file) {
      req.body.profileImage=req.file.originalname;
+    }
      req.body.password= await bcrypt.hash(req.body.password, 10);
     const newUser = new Users(req.body);
     await newUser.validate();
     await newUser.save();
     res.status(201).json(newUser);
-  } 
+  
 }
   catch (err) {
     console.error(err);
@@ -65,9 +66,7 @@ export const signIn = async (req, res, next) => {
     if (user) {
       bcrypt.compare( password, user.password, (err, same) => {
         if (err) {
-          const error = new Error(err.message);
-          error.status = 500; 
-          return next(error);
+          return res.status(500).send({ message: "user or password doesnt exists or not match "});
         }
         if (same) {
           user.password = "****";
