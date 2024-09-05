@@ -7,6 +7,9 @@ import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
 import './App.scss';
 import startLocationTracking from './services/googleMapService.js';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+const clientId = "1074410346984-b9bsnokpb84s4afiim9t9d797k6orsvk.apps.googleusercontent.com";
 
 function App() {
   useEffect(() => {
@@ -14,12 +17,14 @@ function App() {
   }, []);
 
   return (
-    <SnackbarProvider maxSnack={3}>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-        <Footer />
-      </Provider>
-    </SnackbarProvider>
+    <GoogleOAuthProvider clientId={clientId}>
+      <SnackbarProvider maxSnack={3}>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+          <Footer />
+        </Provider>
+      </SnackbarProvider>
+    </GoogleOAuthProvider>
   );
 }
 

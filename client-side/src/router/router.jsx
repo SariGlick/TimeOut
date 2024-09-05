@@ -4,6 +4,8 @@ import ProfilePageComponent from "../components/profileComponents/profilePageCom
 import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
+import UploadToGoogleDrive from "../components/Report/UploadToGoogleDrive.jsx";
+import GoogleDriveUploader from "../components/Report/googleDriveUploader.jsx";
 import HomePage from "../components/homePageComponent.jsx";
 export  const router = createBrowserRouter([
     {
@@ -30,6 +32,10 @@ export  const router = createBrowserRouter([
                 path: '/login',
                 element: <Login/>
 
+            },
+            {
+                path: '/reports',
+                element: <><UploadToGoogleDrive/><GoogleDriveUploader/></>
             }
         ]
     },

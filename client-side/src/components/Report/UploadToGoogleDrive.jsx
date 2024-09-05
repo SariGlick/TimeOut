@@ -7,12 +7,11 @@ const UploadToGoogleDrive = () => {
         onSuccess: async (tokenResponse) => {
             const accessToken = tokenResponse.access_token;
 
-            // כעת תוכלי להשתמש ב-accessToken להעלאת קבצים
             const fileData = new Blob(["Hello, world!"], { type: "text/plain" });
 
             const metadata = {
-                name: 'yourfile.txt', // שם הקובץ
-                mimeType: 'text/plain', // סוג הקובץ
+                name: 'yourfile.txt',
+                mimeType: 'text/plain',
             };
 
             const form = new FormData();
@@ -44,7 +43,7 @@ const UploadToGoogleDrive = () => {
                 label="Upload to Google Drive"
                 onClick={() => login()}
                 className="uploadButton"
-                size="large"  // תוכלי לשנות לגודל שמתאים לך
+                size="large" 
             />
         </div>
     );
