@@ -7,6 +7,7 @@ import websitesRouter from './router/websites.router.js';
 import profilesRouter from './router/profile.router.js'
 import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
+import invitationsRouter from './router/invitation.router.js';
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
 
@@ -28,6 +29,7 @@ app.use('/websites',websitesRouter);
 app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
 app.use('/users',usersRouter);
+app.use('/invitations',invitationsRouter)
 app.use(pageNotFound);
 app.use(serverErrors)
 let port= process.env.PORT;
