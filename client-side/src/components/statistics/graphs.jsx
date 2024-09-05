@@ -52,8 +52,8 @@ const VisitedWebsitesComponent = ({ startDate, endDate }) => {
 }
 
 VisitedWebsitesComponent.propTypes = {
-    startDate: PropTypes.instanceOf(Date).isRequired,
-    endDate: PropTypes.instanceOf(Date).isRequired
+    startDate: PropTypes.instanceOf(Object).isRequired,
+    endDate: PropTypes.instanceOf(Object).isRequired
 };
 
 

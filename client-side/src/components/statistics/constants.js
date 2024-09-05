@@ -28,4 +28,25 @@ export const GET_USERS = gql`
    }
  }`
 
+export const GET_USER_BY_EMAIL = gql`
+    query userByEmail($email: String!) {
+    userByEmail(email: $email) {
+      name
+      password
+      email
+      profileImage
+      visitsWebsites {
+        visitsTime {
+          activityTime
+          visitDate
+        }
+        websiteId {
+          name
+          url
+        }
+      }
+    }
+  }
+`;
+
 export const options = [{ label: "PieChart", value: "PieChart" }, { label: "BarChart", value: "BarChart" }];

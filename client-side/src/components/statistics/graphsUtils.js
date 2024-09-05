@@ -42,10 +42,9 @@ export function getWebsites(websites, users, user, dateStart, dateEnd) {
     return website;
 }
 
-export function getVisitedWebsitesByDate(users, user, date) {
-    const currentUser =users?.find(u => u.email === user.email);
+export function getVisitedWebsitesByDate(user, date) {
     const visitedWeb = {};
-    currentUser?.visitsWebsites.forEach(visit => {
+    user.visitsWebsites.forEach(visit => {
         visit.visitsTime.forEach(visitTime => {
             const visitDate = new Date(visitTime.visitDate);
             if (visitDate.getMonth() === date.getMonth() && visitDate.getFullYear() === date.getFullYear()) {
@@ -60,4 +59,3 @@ export function getVisitedWebsitesByDate(users, user, date) {
 
     return Object.values(visitedWeb);
 }
-
