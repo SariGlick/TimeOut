@@ -7,11 +7,14 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true ,uniqe:true},
   password: { type: String },
   googleId: { type: String },
-  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsites' }],
-  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profile' }],
-  preferences: [{ type: Schema.Types.ObjectId, ref: 'Preference' }],
-  profileImage: { type: String }
-});
+  profileImage: { type: String,default:"profile.jpg" },
+  visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
+  profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
+  viewProfiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
+  preferences: { type: Schema.Types.ObjectId, ref: 'Preference' }
+ 
+
+}, { strictPopulate: false });
 
 export default mongoose.model('Users', userSchema);
 export const generateToken = (user) => {
@@ -20,5 +23,3 @@ export const generateToken = (user) => {
   const token = jwt.sign(data, privateKey, { expiresIn: '1h' });
   return token;
 };
-
-  

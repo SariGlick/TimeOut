@@ -51,7 +51,7 @@ app.use('/invitations',invitationsRouter);
 app.use('/pendingUsers',pendingUsersRouter);
 app.use('/api', settingsRouter);
 app.use(pageNotFound);
-app.use(serverErrors);
+app.use(serverErrors)
 
 
 export default app;
