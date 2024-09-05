@@ -4,23 +4,41 @@ import { useSelector } from 'react-redux';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
+import Select from '../Select/Select.jsx';
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
+import SignUp from '../../components/signUp/signUp.jsx';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { user } = useSelector(selectAuth); 
+  const { user } = useSelector(selectAuth);
+  const [isSelectOpen, setIsSelectOpen] = useState(false); 
+  const [isSignupVisible, setIsSignupVisible] = useState(false);
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
+    setIsSelectOpen((prev) => !prev);
   };
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+   const handleSave = () => {
+    setIsSignupVisible(false);
+  };
+ 
+
+  const selectFunctions = (selectedValue) => {
+    console.log('Selected Value:', selectedValue);
+    if (selectedValue == 1) {
+      setIsSignupVisible(true);
+    } else if (selectedValue == 2) {
+     
+    }
   };
   const getAvatarLetter = () => {
     if (user && user.name) {
@@ -90,31 +108,31 @@ function ResponsiveAppBar() {
               <Avatar>{getAvatarLetter()}</Avatar>
               </IconButton>
             </Tooltip>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-                        <LabTabs
-          nameOfClass="navbar-tabs"
-          text={['edit user profile','manage notifications']}
-          nav={['/editUserProfile','/manageNotifications'] }
-        />
-            </Menu>
+                {isSelectOpen && (
+                <Box sx={{ position: 'absolute', top: '100%', right: 0 }}>
+                  <Select
+                    onChange={(selectedValue) => selectFunctions(selectedValue)} // Directly pass the value
+                    className="primary"
+                    options={[
+                      { value: 1, text: "edit user profile", iconSrc: '/images/pencil.svg' },
+                      { value: 2, text: "manage notifications", iconSrc: 'images/notification.svg' },
+                    ]}
+                    title="edit user"
+                    size="small"
+                    widthOfSelect="180px"
+                  />
+                </Box>
+              )}
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
+     {isSignupVisible && (
+        <SignUp
+        isEditMode={true} 
+        onSave={handleSave}
+         />
+      )}
     </div>
   );
 }

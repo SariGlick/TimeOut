@@ -41,6 +41,13 @@ const userSlice = createSlice({
          * @param {UserStateType} state
          * @param {PayloadAction<string>} action
          */
+        updateUserDetails: (state, action) => {
+            state.currentUser = { ...state.currentUser, ...action.payload };
+          },
+           /**
+         * @param {UserStateType} state
+         * @param {PayloadAction<string>} action
+         */
         deleteUser: (state, action) => {
             const index = state.users.findIndex(user => user.id === action.payload);
             if (index !== -1) {
@@ -50,5 +57,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { setUser, addUser, updateUser, deleteUser } = userSlice.actions;
+export const { setUser, addUser, updateUser, deleteUser,updateUserDetails } = userSlice.actions;
 export default userSlice.reducer;

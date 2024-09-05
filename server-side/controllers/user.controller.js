@@ -1,6 +1,6 @@
 import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
-import Users from '../models/user.model.js';
+import Users, { generateToken } from '../models/user.model.js';
 
 
 export const getUsers = async (req, res,next) => {
@@ -72,6 +72,10 @@ export const updatedUser = async (req, res,next) => {
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})
   try {
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+
     if (req.file) 
       req.body.profileImage = req.file.originalname;
       
@@ -85,5 +89,33 @@ export const updatedUser = async (req, res,next) => {
     next({message:err.message,status:500})
   }
 };
-
+export const signIn = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      bcrypt.compare( password, user.password, (err, same) => {
+        if (err) {
+          const error = new Error(err.message);
+          error.status = 500; 
+          return next(error);
+        }
+        if (same) {
+          user.password = "****";
+          const token=generateToken(user);
+          //
+          res.cookie('token', token, { httpOnly: false, secure: true });
+          return res.status(200).send({ user });
+        } else {
+          return res.status(401).send({ message: 'Auth Failed' });
+        }
+      });
+    } else {
+      return res.status(401).send({ message: 'Auth Failed' });
+    }
+  } catch (error) {
+    error.status = 500; 
+    return next(error);
+  }
+};
 
