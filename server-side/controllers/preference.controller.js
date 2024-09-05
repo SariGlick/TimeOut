@@ -64,10 +64,6 @@ export const deletePreference = async (req, res, next) => {
 
         res.json({ message: 'deleted succesfully!!' }).status(204)
     } catch (error) {
-<<<<<<< HEAD
-        return next({ message: error.message });
-=======
         return next({ message: error.message, status: 500 });
->>>>>>> 9b418204928598b6d7eda4b6b9ba01463f7803d9
     }
 };
