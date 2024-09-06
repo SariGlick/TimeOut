@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import DateTimePicker from '../stories/datePicker/DatePicker.jsx';
+// import DateTimePicker from '../stories/datePicker/DatePicker.jsx';
 import VisitedWebsitesComponent from './statistics/graphs.jsx';
 
 const Statistics = () => {
@@ -23,7 +23,7 @@ const Statistics = () => {
 
     return (
         <ApolloProvider client={client}>
-            <DateTimePicker onSubmit={onSubmit} />
+            {/* <DateTimePicker onSubmit={onSubmit} /> */}
             {showVisitedWebsites && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
         </ApolloProvider>
     );

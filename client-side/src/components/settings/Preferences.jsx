@@ -52,12 +52,17 @@ const Preferences = ({ onUpdate, data }) => {
       onUpdate({ language });
       setPrevValues(prev => ({ ...prev, language }));
     }
+    else {
+      onUpdate({ language: undefined });
+    }
   }, [language]);
 
   useEffect(() => {
     if (prevValues.timeZone !== timeZone) {
       onUpdate({ timeZone });
       setPrevValues(prev => ({ ...prev, timeZone }));
+    }else {
+      onUpdate({ timeZone: undefined });
     }
   }, [timeZone]);
 
@@ -65,6 +70,8 @@ const Preferences = ({ onUpdate, data }) => {
     if (prevValues.dateFormat !== dateFormat) {
       onUpdate({ dateFormat });
       setPrevValues(prev => ({ ...prev, dateFormat }));
+    }else {
+      onUpdate({ dateFormat: undefined });
     }
   }, [dateFormat]);
 
@@ -84,7 +91,7 @@ const Preferences = ({ onUpdate, data }) => {
           title={translate(LABELS.SELECT_LANGUAGES)}
           options={languageOptions}
           className='select-language'
-          size='medium'
+          size='large'
           widthOfSelect='11rem'
           value={language}
           onChange={handleLanguageChange}
@@ -97,7 +104,7 @@ const Preferences = ({ onUpdate, data }) => {
           title={translate(LABELS.SELECT_TIME_ZONE)}
           onChange={handleChangeTimeZone}
           value={timeZone}
-          size='medium'
+          size='large'
           widthOfSelect='11rem'
         />
       </div>

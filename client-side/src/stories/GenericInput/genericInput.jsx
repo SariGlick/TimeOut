@@ -27,16 +27,22 @@ const GenericInput = ({
   const [helperText, setHelperText] = useState('');
 
   useEffect(() => {
-    if (validation && typeof validation === 'function') {
-      handleValidation(inputValue);
-    }
+    handleValidation(inputValue);
   }, [inputValue]);
+  
 
   const handleChange = (e) => {
-    const newValue = type === 'checkbox' ? e.target.checked : e.target.value;
+    let newValue = e.target.value;
+    if (type === 'number') {
+      newValue = parseFloat(newValue);
+    } else if (type === 'checkbox') {
+      newValue = e.target.checked;
+    }
+
     setInputValue(newValue);
-    if (onChange)
+    if (onChange) {
       onChange(newValue);
+    }
   };
 
   const handleValidation = (inputValue) => {
@@ -106,9 +112,9 @@ const GenericInput = ({
               ...rest.InputProps,
             }}
             inputProps={{
-              min: min,
-              max: max
-
+              min,
+              max,
+              ...rest.inputProps,
             }}
             style={inputStyle}
             {...rest}
@@ -121,7 +127,7 @@ const GenericInput = ({
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['text', 'number', 'email', 'password', 'file', 'checkbox']),
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.bool, PropTypes.number]),
   name: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),

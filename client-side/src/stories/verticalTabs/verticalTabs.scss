@@ -24,13 +24,13 @@
 
     &:hover {
       box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
-      background-color: $color-border-hover;
+      background-color: $hover-color;
       transition: color 0.3s ease;
     }
 
     &--active {
       box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
-      background-color: $color-border-hover;
+      background-color: $hover-color;
       transition: color 0.3s ease;
     }
   }

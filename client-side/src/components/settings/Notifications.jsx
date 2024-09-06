@@ -29,12 +29,12 @@ const Notifications = ({ onUpdate, data }) => {
   const [displayIncomeMessages, setDisplayIncomeMessages] = useState(showIncomeMessages);
   const [displayBrowsingTimeLimit, setDisplayBrowsingTimeLimit] = useState(showBrowsingTimeLimit);
 
-  const [prevValues, setPrevValues] = useState({
-    emailFrequency: initialEmailFrequency,
-    ringtoneFile: { name: initialSoundVoice },
-    sendNotificationTime: notificationTime,
-    displayIncomeMessages: showIncomeMessages,
-    displayBrowsingTimeLimit: showBrowsingTimeLimit
+  const [prevValues] = useState({
+    emailFrequency: user.preference.emailFrequency,
+    ringtoneFile: { name: user.preference.soundVoice },
+    sendNotificationTime: user.preference.sendNotificationTime,
+    displayIncomeMessages: user.preference.displayIncomeMessages,
+    displayBrowsingTimeLimit: user.preference.displayBrowsingTimeLimit
   });
 
 
@@ -47,28 +47,33 @@ const Notifications = ({ onUpdate, data }) => {
   useEffect(() => {
     if (prevValues.emailFrequency !== emailFrequency) {
       onUpdate({ emailFrequency });
-      setPrevValues(prev => ({ ...prev, emailFrequency }));
+    }else {
+      onUpdate({ emailFrequency: undefined });
     }
   }, [emailFrequency]);
 
   useEffect(() => {
-    if (prevValues.sendNotificationTime !== sendNotificationTime) {
+    if (prevValues.sendNotificationTime != sendNotificationTime) {
       onUpdate({ sendNotificationTime });
-      setPrevValues(prev => ({ ...prev, sendNotificationTime }));
+    }else {
+      onUpdate({ sendNotificationTime: undefined });
     }
   }, [sendNotificationTime]);
 
   useEffect(() => {
     if (prevValues.displayIncomeMessages !== displayIncomeMessages) {
       onUpdate({ displayIncomeMessages });
-      setPrevValues(prev => ({ ...prev, displayIncomeMessages }));
+    }
+    else {
+      onUpdate({ displayIncomeMessages: undefined });
     }
   }, [displayIncomeMessages]);
 
   useEffect(() => {
     if (prevValues.displayBrowsingTimeLimit !== displayBrowsingTimeLimit) {
       onUpdate({ displayBrowsingTimeLimit });
-      setPrevValues(prev => ({ ...prev, displayBrowsingTimeLimit }));
+    }else {
+      onUpdate({ displayBrowsingTimeLimit: undefined });
     }
   }, [displayBrowsingTimeLimit]);
 
@@ -77,12 +82,13 @@ const Notifications = ({ onUpdate, data }) => {
       const newSoundVoice = URL.createObjectURL(ringtoneFile);
       setSoundVoice(newSoundVoice);
       onUpdate({ soundVoice: ringtoneFile });
-      setPrevValues(prev => ({ ...prev, ringtoneFile }));
       const audioElement = document.querySelector('.audio-player');
       if (audioElement) {
         audioElement.load();
       }
       return () => URL.revokeObjectURL(newSoundVoice);
+    }else {
+      onUpdate({ soundVoice: undefined });
     }
   }, [ringtoneFile]);
 
@@ -128,7 +134,7 @@ const Notifications = ({ onUpdate, data }) => {
           title={translate(TITLES.SELECT_EMAIL_FREQUENCY)}
           onChange={handleChangeEmailFreq}
           value={emailFrequency}
-          size='medium'
+          size='large'
           widthOfSelect='11rem'
         />
       </div>
