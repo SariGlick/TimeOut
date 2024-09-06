@@ -5,8 +5,7 @@ const useWebSocket = (userId) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // process.env.REACT_WS_URL
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket(process.env.REACT_WS_URL);
 
     ws.onopen = () => {
       ws.send(JSON.stringify({userId,type:"countUnread"}));
