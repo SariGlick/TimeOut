@@ -4,7 +4,7 @@ import {
     getPendingUserById_service,
     updatePendingUser_service,
     deletePendingUser_service
-} from '../services/pendingUserService';
+} from '../services/pendingUser.service.js';
 
 
 export const getAllPendingUsers = async (req, res, next) => {
