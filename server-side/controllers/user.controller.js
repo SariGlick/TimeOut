@@ -4,7 +4,9 @@ import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';
 import {
+  addUserService,
   getUserById_service,
+  signInService,
 } from '../services/user.service.js';
 
 export const getUsers = async (req, res,next) => {
@@ -35,48 +37,29 @@ export const getUserById = async (req, res,next) => {
 };
 
 export const addUser = async (req, res,next) => {
-  const { name, password, email } = req.body;
-  const user= await User.findOne({email})
-  if(user)
-    return res.status(400).send('user is exist');
-  try {
-    if (req.file) {
-     req.body.profileImage=req.file.originalname;
-    }
-     req.body.password= await bcrypt.hash(req.body.password, 10);
-    const newUser = new Users(req.body);
-    await newUser.validate();
-    await newUser.save();
-    res.status(201).json(newUser);
-  
-}
-  catch (err) {
-    console.error(err);
-    next({message:err.message,status:500})
+try {
+  const newUser = await addUserService(req.body, req.file);
+  res.status(201).json(newUser);
+} catch (error) {
+  if (error.status === 500 || error.status === 400) {
+    return res.status(error.status).send({ message: error.message });
   }
+  error.status = 500; 
+  return next(error);
+}
 };
+
 export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (user) {
-      bcrypt.compare( password, user.password, (err, same) => {
-        if (err) {
-          return res.status(500).send({ message: "user or password doesnt exists or not match "});
-        }
-        if (same) {
-          user.password = "****";
-          const token=generateToken(user);
-          res.cookie('token', token, { httpOnly: true, secure: true });
-          return res.status(200).send({ user });
-        } else {
-          return res.status(401).send({ message: 'Auth Failed' });
-        }
-      });
-    } else {
-      return res.status(401).send({ message: 'Auth Failed' });
-    }
+    const { user } = await signInService(email, password);
+    const token = generateToken(user);
+    res.cookie('token', token, { httpOnly: true, secure: true });
+    return res.status(200).send( user );
   } catch (error) {
+    if (error.status === 500 || error.status === 401) {
+      return res.status(error.status).send({ message: error.message });
+    }
     error.status = 500; 
     return next(error);
   }
