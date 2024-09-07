@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt';
 import { OAuth2Client } from 'google-auth-library';
 import { messages } from '../controllers/messages.js';
 
-// יצירת אפליקציה חדשה לבדיקה
 const app = express();
 app.use(express.json());
 app.get('/userByGoogleAccount', getUserByGoogleAccount);
