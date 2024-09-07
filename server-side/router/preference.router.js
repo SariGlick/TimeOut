@@ -1,6 +1,6 @@
 import  express from 'express';
 import  upload from '../middleware/uploadFiles.js';
-import  {getAllPreference,getPreferenceById,updatePreference,deletePreference,addPreference} from '../controllers/preference.controller.js'
+import  {getAllPreference,getPreferenceById,updatePreference,deletePreference,addPreference} from '../controllers/preference.controller.js';
 
 const preferencesRouter=express.Router();
 

@@ -21,7 +21,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('welcome to time out ');
+	res.send('welcome to time out ');
 });
 
 app.use('/uploads', express.static('uploads'));
@@ -38,8 +38,8 @@ app.use(serverErrors);
 const port = process.env.PORT;
 
 app.listen(port,()=>{
-    console.log(` running at http://localhost:${port}`);
-})
+	console.log(` running at http://localhost:${port}`);
+});
 
 export default app;
 

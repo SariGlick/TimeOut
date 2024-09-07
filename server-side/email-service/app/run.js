@@ -8,21 +8,21 @@ indexScript.stdout.on('data', (data) => {
 });
 
 indexScript.stderr.on('data', (data) => {
-  console.error(`Index error: ${data}`);
+	console.error(`Index error: ${data}`);
 });
 
 producerScript.stderr.on('data', (data) => {
-  console.error(`Producer error: ${data}`);
+	console.error(`Producer error: ${data}`);
 });
 
 consumerScript.stderr.on('data', (data) => {
-  console.error(`Consumer error: ${data}`);
+	console.error(`Consumer error: ${data}`);
 });
 
 
 
 process.on('SIGINT', () => {
-  producerScript.kill();
-  consumerScript.kill();
-  process.exit(0);
+	producerScript.kill();
+	consumerScript.kill();
+	process.exit(0);
 });

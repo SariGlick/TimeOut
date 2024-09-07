@@ -1,7 +1,7 @@
 import  express from 'express';
 import { getWebsiteById,getAllWebsites,addWebSite,UpdateWebSite,deleteWebsite} from '../controllers/websites.controller.js';
 
- const websitesRouter=express.Router();
+const websitesRouter=express.Router();
 
 websitesRouter.get('/',getAllWebsites);
 websitesRouter.get('/:id',getWebsiteById);
