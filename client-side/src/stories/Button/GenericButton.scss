@@ -9,6 +9,7 @@
         border: 2px ;
         border-style: solid ;
         border-color: rgb(103, 252, 210) ;
+        
         &.primary{
             background-color: black ;
             color: white ;
@@ -17,6 +18,9 @@
         &.secondary{
             background-color:  white;
             color: black ;
-      }  
-    } 
+        } 
+    }
+    
+   
+
 } 

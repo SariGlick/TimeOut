@@ -16,7 +16,9 @@ const Statistics = () => {
     }, []);
 
     const onChange = (event) => {
-        setSelectBar(event.target.value);
+        if (startDate !== '' && endDate !== '') {
+            setSelectBar(event.target.value);
+        }
     };
     const appolo_server_url = process.env.REACT_APP_APOLLO_SERVER_URL;
 

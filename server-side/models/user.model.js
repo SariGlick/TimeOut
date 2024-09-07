@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
   viewProfiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
   preferences: { type: Schema.Types.ObjectId, ref: 'Preference' }
+ 
 
 }, { strictPopulate: false });
 
