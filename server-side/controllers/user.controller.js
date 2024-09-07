@@ -10,9 +10,12 @@ import { messages } from './messages.js';
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 export const getUserByGoogleAccount = async (req, res) => {
+  console.log("by GA")
   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
+// const token= req.headers.authorization
+  console.log('Received token:', token); // בדוק אם הטוקן מתקבל
   if (!token) {
-    return res.status(400).send(messages.error.REQ_TOKEN);
+    return res.status(401).send(messages.error.REQ_TOKEN);
   }
 
   try {
@@ -148,6 +151,7 @@ export const getUserById = async (req, res,next) => {
 };
 
 export const updatedUser = async (req, res,next) => {
+  console.log("update")
   const id = req.params.id;
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})

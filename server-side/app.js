@@ -1,4 +1,5 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -19,8 +20,17 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-app.use(cors());
 
+// // הגדרת CORS
+// const corsOptions = {
+//     origin: 'https://your-client-domain.com', // או '*', אם אתה רוצה לאפשר לכל המקורות
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//     allowedHeaders: ['Content-Type', 'Authorization']
+//   };
+//   app.use(cors(corsOptions)); // השתמש בתצורת CORS
+// // הגדרת CORS
+app.use(cors()); // השתמש בתצורת CORS
+    
 app.get('/', (req, res) => {
     res.send('welcome to time out ');
 });
@@ -36,9 +46,9 @@ app.use('/api', settingsRouter);
 app.use(pageNotFound);
 app.use(serverErrors);
 
-const port = process.env.PORT;
+const port = process.env.PORT ;
 app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
-
 
 export default app;
