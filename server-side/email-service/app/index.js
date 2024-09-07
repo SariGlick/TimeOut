@@ -1,6 +1,5 @@
-import { insertEvent } from './producer.js';
-import path from 'path';
 import dotenv from 'dotenv';
+import { insertEvent } from './producer.js';
 dotenv.config();
 /**
  * Sends an email with the specified details through Kafka producer.

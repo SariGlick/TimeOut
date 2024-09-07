@@ -1,4 +1,4 @@
-
+import mongoose from 'mongoose';
 import VisitedWebsite from '../models/visitedWebSite.model.js';
 
 export const getAllVisitedWebsites = async (req, res) => {

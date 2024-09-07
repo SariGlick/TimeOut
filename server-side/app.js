@@ -1,15 +1,15 @@
-import express from 'express';
-import morgan from 'morgan';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import preferencesRouter from './router/preference.router.js';
-import websitesRouter from './router/websites.router.js';
-import profilesRouter from './router/profile.router.js';
-import visitedWebSitesRouter from './router/visitedWebsite.router.js';
-import usersRouter from './router/user.router.js';
-import settingsRouter from './router/settings.router.js'; 
-import { pageNotFound, serverErrors } from './middleware/handleErrors.js';
+import express from 'express';
+import morgan from 'morgan';
 import { connectMongo } from './config/db.js';
+import { pageNotFound, serverErrors } from './middleware/handleErrors.js';
+import preferencesRouter from './router/preference.router.js';
+import profilesRouter from './router/profile.router.js';
+import settingsRouter from './router/settings.router.js'; 
+import usersRouter from './router/user.router.js';
+import visitedWebSitesRouter from './router/visitedWebsite.router.js';
+import websitesRouter from './router/websites.router.js';
 
 dotenv.config();
 connectMongo();
@@ -35,11 +35,11 @@ app.use('/api', settingsRouter);
 app.use(pageNotFound);
 app.use(serverErrors);
 
-const port = process.env.PORT;
-
-app.listen(port,()=>{
-	console.log(` running at http://localhost:${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+	const port = process.env.PORT || 3001;
+	app.listen(port, () => {
+		console.log(`running at http://localhost:${port}`);
+	});
+}
 
 export default app;
-

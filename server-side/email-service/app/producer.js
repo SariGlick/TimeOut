@@ -1,5 +1,5 @@
-import kafka from 'kafka-node';
 import dotenv from 'dotenv';
+import kafka from 'kafka-node';
 dotenv.config();
 
 const {Producer, Admin} = kafka;

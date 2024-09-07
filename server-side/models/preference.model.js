@@ -9,7 +9,6 @@ const PreferenceSchema= new mongoose.Schema({
 	language:{type:String, default:'en',enum:['en','es','he']},
 	inboxMessages:{type:String, default:'group by date', enum:['group by date','group by read','group by unread']},
 	messageDisplay:{type: String,default:'title only',enum:['title only','abbreviated message','full messages']},
-	messagesCount:{type:String,default:0},
 	dateFormat:{type:String,default:'DD-MM-YYYY',enum:['MM-DD-YYYY','DD-MM-YYYY','YYYY-MM-DD']},
 	displayIncomeMessages:{type:Boolean,default:false},
 	displayBrowsingTimeLimit:{type:Boolean,default:false}

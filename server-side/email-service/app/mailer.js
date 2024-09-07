@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer';
-import Bottleneck from 'bottleneck';
 import retry from 'async-retry';
+import Bottleneck from 'bottleneck';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 
 dotenv.config();
 

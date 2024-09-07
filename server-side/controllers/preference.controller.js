@@ -54,20 +54,25 @@ export const addPreference = async (req, res, next) => {
 };
 
 export const deletePreference = async (req, res, next) => {
-
 	const id = req.params.id;
-	if (!mongoose.Types.ObjectId.isValid(id))
-		return next({ message: 'id isnot valid' });
+
+	if (!mongoose.Types.ObjectId.isValid(id)) {
+		return next({ message: 'ID is not valid' });
+	}
+
 	try {
-
+		// מחיקת הרשומה
 		const PreferenceForDelet = await Preference.findByIdAndDelete(id);
-		if (!PreferenceForDelet)
-			return next({ message: 'Preferencs not found !!' });
 
-		await Preference.findByIdAndDelete(id);
-		res.status(204).send('deleted succesfully !!');
+		// אם הרשומה לא נמצאה
+		if (!PreferenceForDelet) {
+			return next({ message: 'Preference not found !!' });
+		}
+
+		// מחיקת ההודעה מוצלחת ללא תוכן
+		res.status(200).send();
 	} catch (error) {
 		return next({ message: error.message });
-
 	}
 };
+
