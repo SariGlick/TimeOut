@@ -1,12 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Tooltip, Button } from '@mui/material';
 import { TOOLTIP_TEXTS, BUTTON_LABELS } from '../../constants/profileConstants.js';
+import '../../styles/profilePageStyle.scss';
 
 export default function ProfileActions({ handleSave, handleClose, handleDelete }) {
     return (
         <>
             <Tooltip title={TOOLTIP_TEXTS.CANCEL}>
-                <Button sx={{ color: ' rgb(103, 252, 210) ' }} onClick={handleClose}>
+                <Button className='cancel-button' onClick={handleClose}>
                     {BUTTON_LABELS.CANCEL}
                 </Button>
             </Tooltip>
@@ -23,3 +25,15 @@ export default function ProfileActions({ handleSave, handleClose, handleDelete }
         </>
     );
 }
+
+ProfileActions.propTypes = {
+    handleSave: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+};
+
+ProfileActions.defaultProps = {
+    handleSave: () => {},
+    handleClose: () => {},
+    handleDelete: () => {},
+};

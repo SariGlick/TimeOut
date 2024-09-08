@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
 import {
     Dialog,
     DialogActions,
@@ -25,21 +26,23 @@ import {
 } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
+const initialFormData = {
+    userId: '',
+    profileName: '',
+    timeProfile: {
+        timeStart: new Date().toISOString().substr(11, 5),
+        timeEnd: new Date().toISOString().substr(11, 5),
+    },
+    statusBlockedSites: '',
+    websites: [],
+};
+
 export default function UpdateProfileComponent({ profile }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
-    const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        userId: '',
-        profileName: '',
-        timeProfile: {
-            timeStart: new Date().toISOString().substr(11, 5),
-            timeEnd: new Date().toISOString().substr(11, 5),
-        },
-        statusBlockedSites: '',
-        websites: [],
-    });
+    const [isOpen, setIsOpen] = useState(false);
+    const [formData, setFormData] = useState(initialFormData);
 
     useEffect(() => {
         if (profile) {
@@ -47,38 +50,25 @@ export default function UpdateProfileComponent({ profile }) {
         }
     }, [profile]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const toggleDialogOpen = useCallback(() => {
+        setIsOpen(prev => !prev);
+    }, []);
 
     const handleSave = async () => {
-        if (validateName(formData.profileName) === -1) {
+        const nameValidation = validateName(formData.profileName);
+        if (nameValidation === -1) {
             enqueueSnackbar(<ToastMessage message={VALIDATE_MESSAGES.PROFILE_NAME_SHORT} type="error" />);
             return;
         }
-        if (validateName(formData.profileName) === 0) {
+        if (nameValidation === 0) {
             enqueueSnackbar(<ToastMessage message={VALIDATE_MESSAGES.PROFILE_NAME_LONG} type="error" />);
             return;
         }
         try {
-            const updatedProfile = {
-                userId: formData.userId,
-                profileName: formData.profileName,
-                statusBlockedSites: formData.statusBlockedSites,
-                timeProfile: {
-                    start: formData.timeProfile.timeStart,
-                    end: formData.timeProfile.timeEnd
-                },
-                listWebsites: formData.websites,
-            };
-            await updateProfileApi(profile._id, updatedProfile);
-            dispatch(updateProfile(updatedProfile));
-            dispatch(setSelectProfile(updatedProfile));
-            handleClose();
+            await updateProfileApi(profile._id, formData);
+            dispatch(updateProfile(formData));
+            dispatch(setSelectProfile(formData));
+            toggleDialogOpen();
             enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_UPDATED_SUCCESS} type="success" />);
             setTimeout(() => navigate(0), 3000);
         } catch (error) {
@@ -103,17 +93,25 @@ export default function UpdateProfileComponent({ profile }) {
     return (
         <div>
             <Tooltip title={TOOLTIP_TEXTS.EDIT_PROFILE}>
-                <GenericButton label={BUTTON_LABELS.EDIT_PROFILE} onClick={handleClickOpen} size="medium" className="profile-list-button" />
+                <GenericButton label={BUTTON_LABELS.EDIT_PROFILE} onClick={toggleDialogOpen} size="medium" className="profile-list-button" />
             </Tooltip>
-            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
+            <Dialog open={isOpen} onClose={toggleDialogOpen} fullWidth maxWidth="md">
                 <DialogTitle>{DIALOG_TITLES.EDIT_PROFILE}</DialogTitle>
                 <DialogContent>
                     <ProfileForm formData={formData} setFormData={setFormData} />
                 </DialogContent>
                 <DialogActions>
-                    <ProfileActions handleSave={handleSave} handleClose={handleClose} handleDelete={handleDelete} />
+                    <ProfileActions handleSave={handleSave} handleClose={toggleDialogOpen} handleDelete={handleDelete} />
                 </DialogActions>
             </Dialog>
         </div>
     );
 }
+
+UpdateProfileComponent.propTypes = {
+    profile: PropTypes.object
+};
+
+UpdateProfileComponent.defaultProps = {
+    profile: null
+};

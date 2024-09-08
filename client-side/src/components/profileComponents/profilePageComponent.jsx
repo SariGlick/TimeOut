@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import { Delete as DeleteIcon, Edit as EditIcon, Save as SaveIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import Select from '../../stories/Select/Select.jsx';
@@ -14,8 +15,9 @@ import Loader from '../../stories/loader/loader.jsx';
 import AddProfileComponent from './addProfileComponent.jsx';
 import UpdateProfileComponent from './updateProfileCpmponent.jsx';
 import TimerActivationButton from './timerActivationButton.jsx';
-import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions, parseTimeStringToDate } from '../../utils/profileUtil.js';
+import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
+import { PROFILE_LIST_MESSAGES, PROFILE_LIST_LOADING } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
 const ProfilePageComponent = ({ userId }) => {
@@ -44,7 +46,7 @@ const ProfilePageComponent = ({ userId }) => {
     if (userId) {
       fetchProfiles(userId);
     }
-  }, [dispatch, userId]);
+  }, [userId]);
 
   const handleProfileSelect = (event) => {
     if (profiles) {
@@ -56,7 +58,7 @@ const ProfilePageComponent = ({ userId }) => {
       setEditedRows(null);
     }
     else
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_FROM_SERVER_ERROR} type="error" />);
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_NOT_FOUמD} type="error" />);
   };
 
   const handleDelete = async (id) => {
@@ -110,8 +112,9 @@ const ProfilePageComponent = ({ userId }) => {
     }
 
     let updatedWebsites;
-    if (editRowId === 'new') {
-      try {
+
+    try {
+      if (editRowId === 'new') {
         const response = await createWebsite({
           name: editedRows.name,
           url: editedRows.url
@@ -130,36 +133,30 @@ const ProfilePageComponent = ({ userId }) => {
 
         updatedWebsites = [...selectedProfile.listWebsites, newWebsite];
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_CREATE_SUCCESS} type="success" />);
-      } catch (err) {
-        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_WITHOUT_TIME} type="error" />);
-        return;
-      }
-    } else {
-      const websiteAfterUpdate = {
-        websiteId: {
-          _id: id,
-          name: editedRows.name,
-          url: editedRows.url,
-        },
-        status: editedRows.status,
-        limitedMinutes: editedRows.limitedMinutes
-      };
+      } else {
+        const websiteAfterUpdate = {
+          websiteId: {
+            _id: id,
+            name: editedRows.name,
+            url: editedRows.url,
+          },
+          status: editedRows.status,
+          limitedMinutes: editedRows.limitedMinutes
+        };
 
-      updatedWebsites = selectedProfile.listWebsites.map(website =>
-        website.websiteId._id === id ? websiteAfterUpdate : website
-      );
-    }
+        updatedWebsites = selectedProfile.listWebsites.map(website =>
+          website.websiteId._id === id ? websiteAfterUpdate : website
+        );
 
-    const profileToUpdate = {
-      ...selectedProfile,
-      listWebsites: updatedWebsites
-    };
-
-    try {
-      if (editRowId !== 'new') {
         await updateWebsite(id, { name: editedRows.name, url: editedRows.url });
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.WEBSITE_UPDATED_SUCCESS} type="success" />);
       }
+
+      const profileToUpdate = {
+        ...selectedProfile,
+        listWebsites: updatedWebsites
+      };
+
       await updateProfileApi(selectedProfile._id, profileToUpdate);
       dispatch(updateProfile(profileToUpdate));
       setSelectedProfile(profileToUpdate);
@@ -182,18 +179,27 @@ const ProfilePageComponent = ({ userId }) => {
 
     let updatedRows = { ...editedRows, [name]: value };
 
-    if (name === 'url') {
-      const websiteName = extractWebsiteName(value);
-      updatedRows = { ...updatedRows, name: websiteName };
-    }
+    switch (name) {
+      case 'url':
+        const websiteName = extractWebsiteName(value);
+        updatedRows = { ...updatedRows, name: websiteName };
+        break;
 
-    if (name === 'limitedMinutes' && editedRows.status !== 'limit') {
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.CHANGE_BLOCK_OR_OPEN_TIME} type="error" />);
-      return;
-    }
+      case 'limitedMinutes':
+        if (editedRows.status !== 'limit') {
+          enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.CHANGE_BLOCK_OR_OPEN_TIME} type="error" />);
+          return;
+        }
+        break;
 
-    if (name === 'status' && (value === 'open' || value === 'block')) {
-      updatedRows = { ...updatedRows, limitedMinutes: 0 };
+      case 'status':
+        if (value === 'open' || value === 'block') {
+          updatedRows = { ...updatedRows, limitedMinutes: 0 };
+        }
+        break;
+
+      default:
+        break;
     }
 
     setEditedRows(updatedRows);
@@ -208,7 +214,7 @@ const ProfilePageComponent = ({ userId }) => {
       limitedMinutes: 0,
     });
   };
-  
+
   const actions = [
     { func: handleDelete, icon: DeleteIcon, label: 'delete', condition: (id) => id !== editRowId },
     { func: handleEdit, icon: EditIcon, label: 'edit', condition: (id) => id !== editRowId },
@@ -276,27 +282,31 @@ const ProfilePageComponent = ({ userId }) => {
           onChange={handleProfileSelect}
           className="profile-list-select"
         />
-        {selectedProfile &&
-          <div >
+        {selectedProfile && (
+          <div>
             <div className="component-update">
               <UpdateProfileComponent profile={selectedProfile} />
             </div>
             <div className="component-timer">
-              <TimerActivationButton profileName={selectedProfile.profileName}/>
+              <TimerActivationButton profileName={selectedProfile.profileName} />
             </div>
-          </div>}
+          </div>
+        )}
       </div>
       {loading ? (
-        <div className="profile-list-loading"><Loader /></div>
+        <div className="profile-list-loading">
+          <Loader />
+          {PROFILE_LIST_LOADING}
+        </div>
       ) : selectedProfile ? (
         <div className="profile-list-details">
           <h1>
-            Hello! You have selected your {selectedProfile.profileName} profile that
-            operates between <br />
-
+            {PROFILE_LIST_MESSAGES.HELLO_SELECTED_PROFILE.replace("{profileName}", selectedProfile.profileName)}
+            {PROFILE_LIST_MESSAGES.OPERATES_BETWEEN}
+            <br />
           </h1>
           <h1 className='green_title'>{selectedProfile?.timeProfile?.start + " / " + selectedProfile?.timeProfile?.end}</h1>
-          <h2>Below are the sites that your profile contains:</h2>
+          <h2>{PROFILE_LIST_MESSAGES.BELOW_SITES}</h2>
           <TableComponent
             dataObject={generateTableData(selectedProfile)}
             widthOfTable="80%"
@@ -307,16 +317,23 @@ const ProfilePageComponent = ({ userId }) => {
             statusOptions={statusOptions}
             addButton={true}
             handleAddRow={handleAddRow}
-            pageSize={5} 
+            pageSize={5}
           />
         </div>
       ) : (
         <div>
-          <h1 className='green_title'>No profile selected</h1>
-          <h2>Please select a profile</h2>
+          <h1 className='green_title'>{PROFILE_LIST_MESSAGES.NO_PROFILE_SELECTED}</h1>
+          <h2>{PROFILE_LIST_MESSAGES.PLEASE_SELECT_PROFILE}</h2>
         </div>
       )}
     </div>
   );
+};
+ProfilePageComponent.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
+
+ProfilePageComponent.defaultProps = {
+  userId: '',
 };
 export default ProfilePageComponent;

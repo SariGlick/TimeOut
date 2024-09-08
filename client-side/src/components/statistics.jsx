@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-// import DateTimePicker from '../stories/datePicker/DatePicker.jsx';
 import VisitedWebsitesComponent from './statistics/graphs.jsx';
 
 const Statistics = () => {

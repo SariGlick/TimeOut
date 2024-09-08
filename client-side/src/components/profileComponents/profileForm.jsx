@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Grid, Box, Tooltip } from '@mui/material';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import Select from '../../stories/Select/Select.jsx';
@@ -70,3 +71,26 @@ export default function ProfileForm({ formData, setFormData }) {
         </Box>
     );
 }
+
+ProfileForm.propTypes = {
+    formData: PropTypes.shape({
+        profileName: PropTypes.string,
+        timeProfile: PropTypes.shape({
+            timeStart: PropTypes.string,
+            timeEnd: PropTypes.string,
+        }),
+        statusBlockedSites: PropTypes.string,
+    }).isRequired,
+    setFormData: PropTypes.func.isRequired,
+};
+
+ProfileForm.defaultProps = {
+    formData: {
+        profileName: '',
+        timeProfile: {
+            timeStart: '00:00',
+            timeEnd: '00:00',
+        },
+        statusBlockedSites: '',
+    },
+};

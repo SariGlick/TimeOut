@@ -1,6 +1,7 @@
-import React from 'react';
+import {Fragment,useState,useCallback} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import {
   Button,
@@ -29,9 +30,9 @@ export default function AddProfile({ userId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState(getInitialData());
-  const [errorText, setErrorText] = React.useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState(getInitialData());
+  const [errorText, setErrorText] = useState('');
   const isFormIncomplete = !data.name || data.name.length < 2 || data.name.length > 50 || !data.status;
 
   function getInitialData() {
@@ -43,16 +44,14 @@ export default function AddProfile({ userId }) {
     };
   }
 
-  const handleClose = () => {
-    setOpen(false);
+  const toggleDialogOpen = () => {
+    if (!isOpen) {
+      setData(getInitialData());
+    }
+    setIsOpen(!isOpen);
   };
 
-  const handleClickOpen = () => {
-    setData(getInitialData());
-    setOpen(true);
-  };
-
-  const handleChange = React.useCallback((e) => {
+  const handleChange = useCallback((e) => {
     const { name, checked, value, type } = e.target;
 
     setData(prevData => ({
@@ -89,7 +88,6 @@ export default function AddProfile({ userId }) {
 
     try {
       const ProfileNew= await createProfile(profileData);
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
       handleClose();
@@ -100,12 +98,12 @@ export default function AddProfile({ userId }) {
   };
 
   return (
-    <React.Fragment>
-      <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={handleClickOpen} size="medium" />
+    <Fragment>
+      <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={toggleDialogOpen} size="medium" />
       <Dialog
         fullWidth={true}
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={toggleDialogOpen}
         PaperProps={{
           component: 'form',
           onSubmit: handleSubmit,
@@ -158,7 +156,7 @@ export default function AddProfile({ userId }) {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button color="error" onClick={handleClose}>
+          <Button color="error" onClick={toggleDialogOpen}>
             {BUTTON_LABELS.CANCEL}
           </Button>
               <span>
@@ -168,6 +166,13 @@ export default function AddProfile({ userId }) {
               </span>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Fragment>
   );
 }
+AddProfile.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
+
+AddProfile.defaultProps = {
+  userId: '',
+};

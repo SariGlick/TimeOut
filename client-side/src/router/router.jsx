@@ -5,14 +5,15 @@ import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
 import HomePage from "../components/homePageComponent.jsx";
+
 export  const router = createBrowserRouter([
     {
         path: '',
         element: <Layout/>,
         children: [
             {
-                path: '/home',
-                element: <HomePage/>
+                path: '/',
+                element:<HomePage/>
             },
             {
                 path: '/home',
