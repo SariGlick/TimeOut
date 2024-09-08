@@ -50,3 +50,7 @@ export const MESSAGES = {
       color: 'green'
     }
   };
+  export const HEADER = {
+    edit_user: 'edit user',
+    manage_notifications:'manage notifications'
+  };

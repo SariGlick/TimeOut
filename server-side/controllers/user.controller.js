@@ -103,7 +103,6 @@ export const signIn = async (req, res, next) => {
         if (same) {
           user.password = "****";
           const token=generateToken(user);
-          //
           res.cookie('token', token, { httpOnly: false, secure: true });
           return res.status(200).send({ user });
         } else {

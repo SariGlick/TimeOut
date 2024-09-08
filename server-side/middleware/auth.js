@@ -2,8 +2,6 @@ import jwt from 'jsonwebtoken';
 
 export const auth = (req, res, next) => {
   try {
-    console.log('got to midleware');
-    
     const { authorization } = req.headers;
     const [, token] = authorization.split(' ');
     const privateKey = process.env.JWT_SECRET || 'JWT_SECRET';

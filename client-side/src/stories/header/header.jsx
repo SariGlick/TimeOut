@@ -8,6 +8,7 @@ import Select from '../Select/Select.jsx';
 import './header.scss';
 import { selectAuth } from '../../redux/auth/auth.selector';
 import SignUp from '../../components/signUp/signUp.jsx';
+import { HEADER } from '../../constants.js';
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
@@ -103,19 +104,19 @@ function ResponsiveAppBar() {
         />
           </Box>
           <Box >
-            <Tooltip title="Open settings">
+           { <Tooltip title={user ? "Open settings" : ""}>
               <IconButton onClick={handleOpenUserMenu} >
               <Avatar>{getAvatarLetter()}</Avatar>
               </IconButton>
-            </Tooltip>
-                {isSelectOpen && (
+            </Tooltip>}
+                {user && user.name && isSelectOpen && (
                 <Box sx={{ position: 'absolute', top: '100%', right: 0 }}>
                   <Select
-                    onChange={(selectedValue) => selectFunctions(selectedValue)} // Directly pass the value
+                    onChange={(selectedValue) => selectFunctions(selectedValue)} 
                     className="primary"
                     options={[
-                      { value: 1, text: "edit user profile", iconSrc: '/images/pencil.svg' },
-                      { value: 2, text: "manage notifications", iconSrc: 'images/notification.svg' },
+                      { value: 1, text: HEADER.edit_user, iconSrc: '/images/pencil.svg' },
+                      { value: 2, text: HEADER.manage_notifications, iconSrc: 'images/notification.svg' },
                     ]}
                     title="edit user"
                     size="small"
