@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { enqueueSnackbar, useSnackbar } from 'notistack';
 // import ReCAPTCHA from 'react-google-recaptcha';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom'; 
 import PasswordStrengthMeter from '../signUp/PasswordStrength';
 import GenericButton from '../../stories/Button/GenericButton';
+import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput';
-import { MessagesSignUp } from '../../constants';
+import { MessagesSignUp,TOAST_MESSAGES } from '../../constants';
 import { createUser, updateUser } from '../../services/userService';
 import { addUser, updateUserDetails } from '../../redux/user/user.slice';
 import './signUp.scss';
@@ -54,6 +56,15 @@ useEffect(() => {
     formik.setValues({ name: user.name || '', email: user.email || '', password: '' });
   }
 }, [isEditMode]);
+const resetFormValues = () => {
+  formik.resetForm({
+      values: {
+          name: user.name || '',
+          email: user.email || '',
+          password: ''
+      }
+  });
+};
 
   const userSignUp = async (user) => {
     try {
@@ -68,9 +79,15 @@ useEffect(() => {
     try {
       await updateUser(user,userId); 
       dispatch(updateUserDetails(user));
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_SUCCESS} type="success" />);
       navigate('/home');
     } catch (error) {
-      console.error("Failed to update user details");
+      if (error.response && error.response.status === 401) {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_ERROR_UNAUTHORIZED} type="error" />);
+      }else{
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_ERROR} type="error" />);
+      }
+      resetFormValues();
     }
   };
   return (

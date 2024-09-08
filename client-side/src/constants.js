@@ -54,3 +54,8 @@ export const MESSAGES = {
     edit_user: 'edit user',
     manage_notifications:'manage notifications'
   };
+  export const TOAST_MESSAGES = {
+    USER_UPDATED_SUCCESS: 'User updated successfully!',
+    USER_UPDATED_ERROR: 'Error updating user!',
+    USER_UPDATED_ERROR_UNAUTHORIZED: 'Error updating user, Connect to the site and try again',
+  }
