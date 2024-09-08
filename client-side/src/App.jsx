@@ -11,12 +11,13 @@ import OAuthProvider from './components/Login/OAuthProvider.jsx';
 
 function App() {
   return (
+
     <>
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
         <Footer />
-      </Provider>
+        </Provider>
     </SnackbarProvider>
     <OAuthProvider>
 <GoogleLogin></GoogleLogin>
