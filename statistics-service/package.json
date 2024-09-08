@@ -1,0 +1,20 @@
+{
+  "name": "statistics-service",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "graphQL-server.js",
+  "scripts": {
+    "start": "node graphQL-server.js",
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.10.5",
+    "apollo-server": "^3.13.0",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.5.1"
+  }
+}
