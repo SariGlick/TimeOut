@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 import Footer from './stories/footer/FooterComponent';
@@ -8,7 +8,7 @@ import { SnackbarProvider } from 'notistack';
 import './App.scss';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-const clientId = "1074410346984-b9bsnokpb84s4afiim9t9d797k6orsvk.apps.googleusercontent.com";
+const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 function App() {
 

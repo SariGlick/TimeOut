@@ -1,26 +1,25 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
-import GenericButton from '../../stories/Button/GenericButton';  
+import GenericButton from '../../stories/Button/GenericButton';
+import { FILE_DETAILS, URLS, MESSAGES, BUTTON_LABELS } from '../../constants/googleDriveConstants';
+import { handlePost } from '../../axios/middleware';
 
 const UploadToGoogleDrive = () => {
+    const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
     const login = useGoogleLogin({
+        clientId: CLIENT_ID,
         onSuccess: async (tokenResponse) => {
             const accessToken = tokenResponse.access_token;
 
-            //כרגע מעלה לדריב קובץ חסר משמהות
-            const fileData = new Blob(["Hello, world!"], { type: "text/plain" });
-            const metadata = {
-                name: 'yourfile.txt', 
-                mimeType: 'text/plain', 
-            };
+            const fileData = new Blob([FILE_DETAILS.content], { type: FILE_DETAILS.mimeType });
 
             const form = new FormData();
-            form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+            form.append('metadata', new Blob([JSON.stringify({ name: FILE_DETAILS.name, mimeType: FILE_DETAILS.mimeType })], { type: 'application/json' }));
             form.append('file', fileData);
 
             try {
-                const response = await axios.post(
-                    'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+                const response = await handlePost(
+                    URLS.uploadUrl,
                     form,
                     {
                         headers: {
@@ -29,24 +28,25 @@ const UploadToGoogleDrive = () => {
                         },
                     }
                 );
-                console.log('File uploaded:', response.data);
+                console.log('File uploaded successfully:', response);
             } catch (error) {
-                console.error('Error uploading file:', error);
+                console.error(MESSAGES.uploadError, error);
             }
         },
-        onError: error => console.error('Login failed:', error)
+        onError: error => console.error(MESSAGES.loginFailed, error)
     });
 
     return (
         <div>
             <GenericButton
-                label="Upload to Google Drive"
-                onClick={() => login()}
+                label={BUTTON_LABELS.upload}
+                onClick={login}
                 className="uploadButton"
-                size="large"  
+                size="large"
             />
         </div>
     );
 };
 
 export default UploadToGoogleDrive;
+

@@ -1,33 +1,34 @@
 import React, { useEffect } from 'react';
 import { gapi } from 'gapi-script';
-import GenericButton from '../../stories/Button/GenericButton'; 
-
-const CLIENT_ID = '1074410346984-b9bsnokpb84s4afiim9t9d797k6orsvk.apps.googleusercontent.com';
+import GenericButton from '../../stories/Button/GenericButton';
+import { GOOGLE_API, MESSAGES, BUTTON_LABELS } from '../../constants/googleDriveConstants';
 
 const GoogleDriveUploader = () => {
+  const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   useEffect(() => {
     function start() {
       gapi.client.init({
         clientId: CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/drive.file',
+        scope: GOOGLE_API.scopes,
       }).then(() => {
-        console.log('GAPI client initialized');
+        console.log(MESSAGES.gapiClientInitialized);
       }).catch(error => {
-        console.error('Error initializing GAPI client:', error);
+        console.error(MESSAGES.gapiInitError, error);
       });
     }
 
     gapi.load('client:auth2', start);
-  }, []);
+  }, [CLIENT_ID]);
 
   const handleAuthClick = async () => {
     try {
       await gapi.auth2.getAuthInstance().signIn({
-        prompt: 'select_account'
+        prompt: GOOGLE_API.prompt,
       });
-      console.log('Successfully signed in');
+      console.log(MESSAGES.gapiSignInSuccess);
     } catch (error) {
-      console.error('Error signing in:', error);
+      console.error(MESSAGES.signInError, error);
     }
   };
 
@@ -38,13 +39,13 @@ const GoogleDriveUploader = () => {
   return (
     <div>
       <GenericButton
-        label="Sign in with Google"
+        label={BUTTON_LABELS.signIn}
         onClick={handleAuthClick}
         className="signInButton"
         size="large"
       />
       <GenericButton
-        label="Sign out"
+        label={BUTTON_LABELS.signOut}
         onClick={handleSignoutClick}
         className="signOutButton"
         size="large"  

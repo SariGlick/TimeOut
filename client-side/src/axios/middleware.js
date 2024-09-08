@@ -1,27 +1,21 @@
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
-const url = process.env.REACT_APP_SERVER_URL;
-
-export async function handleGet(path) {
-    const response = await axios.create({ baseURL: url }).get(path);
+export async function handleGet(path, config = {}) {
+    const response = await axiosInstance.get(path, config);
     return response;
-
 };
 
-export async function handlePost(path, data) {
-    const response = await axios.create({ baseURL: url }).post(path, data);
+export async function handlePost(path, data, config = {}) {
+    const response = await axiosInstance.post(path, data, config);
     return response;
-
 };
 
-export async function handlePut(path, data) {
-    const response = await axios.create({ baseURL: url }).put(path, data);
+export async function handlePut(path, data, config = {}) {
+    const response = await axiosInstance.put(path, data, config);
     return response;
-
 };
 
-export async function handleDelete(path) {
-    const response = await axios.create({ baseURL: url }).delete(path);
+export async function handleDelete(path, config = {}) {
+    const response = await axiosInstance.delete(path, config);
     return response;
-
 };
