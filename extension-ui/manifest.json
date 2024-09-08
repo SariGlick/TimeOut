@@ -9,13 +9,11 @@
     "webNavigation",
     "tabs",
     "activeTab",
-    "alarms",
      "notifications"
   ],
   "host_permissions": [
     "http://*/*",
-    "https://*/*",
-    "<all_urls>"
+    "https://*/*"
   ],
   "background": {
     "service_worker": "background.js"
