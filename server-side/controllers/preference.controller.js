@@ -12,8 +12,7 @@ export const getAllPreference = async (req, res, next) => {
 export const getPreferenceById = async (req, res, next) => {
     const id = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'id is not valid' });
-
+        return next({ message: 'ID is not valid', status: 400 });
     try {
         const PreferencesById = await Preference.findById(id, { __v: false });
         res.json(PreferencesById);
@@ -55,15 +54,15 @@ export const deletePreference = async (req, res, next) => {
 
     const id = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(id))
-        return next({ message: 'id isnot valid' })
+        return next({ message: 'ID is not valid', status: 400 });
     try {
 
         const PreferenceForDelet = await Preference.findByIdAndDelete(id);
         if (!PreferenceForDelet)
             return next({ message: 'Preferencs not found !!' })
-
         res.json({ message: 'deleted succesfully!!' }).status(204)
     } catch (error) {
         return next({ message: error.message, status: 500 });
+
     }
 };

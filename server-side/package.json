@@ -42,5 +42,6 @@
     "presets": [
       "@babel/preset-env"
     ]
+
   }
 }

@@ -1,32 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  IconButton,
-  Typography,
-  Menu,
-  Tooltip,
-  Avatar,
-  Container
-} from '@mui/material';
+import { useTranslation } from 'react-i18next'
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Tooltip, Avatar, Container } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
 import MessageIcon from './Icon'
 import './header.scss';
-import { selectAuth } from '../../redux/auth/auth.selector';
 
-import './header.scss';
+import { selectAuth } from '../../redux/auth/auth.selector';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { t: translate } = useTranslation(); 
  const { user } = useSelector(selectAuth); 
-
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -52,6 +40,7 @@ function ResponsiveAppBar() {
     <div className='arooundDiv'>
       <AppBar position="static" className='navbar' >
         <Container   maxWidth="xl">
+
           <Toolbar disableGutters>
             <Box className="left-side-box">
               <IconButton
@@ -100,11 +89,11 @@ function ResponsiveAppBar() {
               <LabTabs
                 nameOfClass="navbar-tabs"
                 text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
-                nav={["/home","/reports","/statistics","/profiles"] }
+                nav={["/home", "/reports", "/statistics", "/profiles"]}
               />
             </Box>
             <Box >
-              <Tooltip title="Open settings">
+              <Tooltip title={translate("Open settings")}>
                 <IconButton onClick={handleOpenUserMenu} >
                   <Avatar>{getAvatarLetter()}</Avatar>
                 </IconButton>
@@ -130,7 +119,7 @@ function ResponsiveAppBar() {
                   nav={['/settings']}
                 />
               </Menu>
-              <MessageIcon/>
+              <MessageIcon />
             </Box>
           </Toolbar>
         </Container>

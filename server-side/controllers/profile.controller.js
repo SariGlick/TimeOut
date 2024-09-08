@@ -4,8 +4,7 @@ import activeProfile from '../profileMngr.js'
 
 export const getAllProfiles = async (req, res, next) => {
     try {
-
-        const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
+        const profiles = await Profiles.find().populate('limitedWebsites.websiteId').select('-__v');
         res.json(profiles);
     } catch (err) {
         next({message:err.message,status:500})
@@ -29,7 +28,7 @@ export const getProfileById = async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id))
         return next({ message: 'ID is not valid', status: 400 });
     try {
-        const profile = await Profiles.findById(req.params.id).populate('limitedWebsites.websiteId blockedSites').select('-__v');
+        const profile = await Profiles.findById(req.params.id).populate('limitedWebsites.websiteId ').select('-__v');
         if (!profile) {
           return  next({message:'profile was not found ',status:404}); 
         }
@@ -85,4 +84,3 @@ export const activeProfileByUserId = async(req, res) => {
         res.status(500).send(error.message);
     }
 }
-
