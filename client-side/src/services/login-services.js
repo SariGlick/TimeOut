@@ -2,7 +2,7 @@ import { handleGet} from '../axios/middleware.js'
 
 export const getUserByGoogleAccount = async (token, email) => {
   try {
-      const response = await handleGet(`/users/getUserByGoogleAccount/`, {
+      const response = await handleGet(`/users/getUserByGoogleAccount/:`, {
           headers: {
               'Authorization': `Bearer ${token}`
           }
