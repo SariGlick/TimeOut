@@ -1,94 +1,85 @@
+import {
+  getAllMessagesService,
+  getMessageByIdService,
+  getMessagesByUserIdService,
+  addMessageService,
+  updateMessageService,
+  deleteMessageService
+} from '../services/messageService.js';
 
 
-import Message from '../models/Message.model.js';
-import MessageType from '../models/MessageType.model.js';
-
-
-
-export const getMessages = async (req, res) => {
+export const getMessages = async (req, res, next) => {
   try {
-    const messages = await Message.find().select('-__v');
-
-    res.status(200).json(messages);
+    const messages = await getAllMessagesService();
+    return res.status(200).json(messages);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
 
 
-export const getMessageById = async (req, res) => {
+export const getMessageById = async (req, res, next) => {
   try {
-
-    const message = await Message.findById(req.params.id,{__v:0}) //.populate('type').populate('userId');
-
+    const { id } = req.params;
+    const message = await getMessageByIdService(id);
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }
-    res.status(200).json(message);
+    return res.status(200).json(message);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
 
 
-export const getMessagesByUserId = async (req, res) => {
+export const getMessagesByUserId = async (req, res, next) => {
   try {
-    const userId = req.params.userId;   
-    const messages = await Message.find({ userId }).select('-__v').populate('type', 'type -_id');
-    
-    if (!messages) {
+    const { userId } = req.params;
+    const messages = await getMessagesByUserIdService(userId);
+    if (!messages || messages.length === 0) {
       return res.status(404).json({ error: 'Messages not found' });
     }
-
-    res.status(200).json(messages);
+    return res.status(200).json(messages);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
 
-export const addMessage = async (req, res) => {
+
+export const addMessage = async (req, res, next) => {
   try {
-    const { type, userId, date, read } = req.body;    
-    
-    const messageType = await MessageType.findById(type);
-    if (!messageType) {
-      return res.status(400).json({ error: 'Invalid message type' });
-    }
-    
-    const message = new Message({ type, userId, date, read });
-    await message.save();
-    res.status(201).json(message);
+    const { type, userId, date, read } = req.body;
+    const message = await addMessageService({ type, userId, date, read });
+    return res.status(201).json(message);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(error);
   }
 };
-export const updateMessage = async (req, res) => {
+
+
+export const updateMessage = async (req, res, next) => {
   try {
-    const message = await Message.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );   
+    const { id } = req.params;
+    const message = await updateMessageService(id, req.body);
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }
-    res.status(200).json(message);
+    return res.status(200).json(message);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(error);
   }
 };
 
 
-export const deleteMessage = async (req, res) => {
+export const deleteMessage = async (req, res, next) => {
   try {
-    const message = await Message.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    const message = await deleteMessageService(id);
     if (!message) {
       return res.status(404).json({ error: 'Message not found' });
     }
-    res.status(200).json({ message: 'Message deleted successfully' });
+    return res.status(200).json({ message: 'Message deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
-
-

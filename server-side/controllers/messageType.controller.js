@@ -1,60 +1,58 @@
-import MessageType from '../models/MessageType.model.js';
+import {
+  getAllMessageTypesService,
+  getMessageTypeByIdService,
+  updateMessageTypeService,
+  deleteMessageTypeService
+} from '../services/messageTypeService.js';
 
 
-export const getAllMessageTypes = async (req, res) => {
+export const getAllMessageTypes = async (req, res, next) => {
   try {
-        const messageTypes = await MessageType.find().select('-__v');
-    res.status(200).json(messageTypes);
+    const messageTypes = await getAllMessageTypesService();
+    return res.status(200).json(messageTypes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
 
-
-export const getMessageTypeById = async (req, res) => {
+export const getMessageTypeById = async (req, res, next) => {
   try {
-
-    const messageType = await MessageType.findById(req.params.id).select('-__v');
-
+    const { id } = req.params;
+    const messageType = await getMessageTypeByIdService(id);
     if (!messageType) {
       return res.status(404).json({ error: 'Type not found' });
     }
-    res.status(200).json(messageType);
+    return res.status(200).json(messageType);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
 
 
-
-
-
-export const updateMessageType = async (req, res) => {
+export const updateMessageType = async (req, res, next) => {
   try {
+    const { id } = req.params;
     const { type } = req.body;
-    const updatedMessageType = await MessageType.findByIdAndUpdate(
-      req.params.id,
-      { type },
-      { new: true, runValidators: true }
-    );
+    const updatedMessageType = await updateMessageTypeService(id, { type });
     if (!updatedMessageType) {
       return res.status(404).json({ error: 'MessageType not found' });
     }
-    res.status(200).json(updatedMessageType);
+    return res.status(200).json(updatedMessageType);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    return next(error);
   }
 };
 
 
-export const deleteMessageType = async (req, res) => {
+export const deleteMessageType = async (req, res, next) => {
   try {
-    const deletedMessageType = await MessageType.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+    const deletedMessageType = await deleteMessageTypeService(id);
     if (!deletedMessageType) {
       return res.status(404).json({ error: 'MessageType not found' });
     }
-    res.status(200).json({ message: 'MessageType deleted successfully' });
+    return res.status(200).json({ message: 'MessageType deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return next(error);
   }
 };
