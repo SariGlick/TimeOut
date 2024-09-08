@@ -57,3 +57,6 @@ export const getUserProfile = async (token) => {
   const decoded = jwt.verify(token, JWT_SECRET);
   return Users.findById(decoded.id).select('_id');
 };
+export const saveToken = async (userId, token) => {
+  return Users.findByIdAndUpdate(userId, { token: token }, { new: true });
+};

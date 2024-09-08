@@ -89,24 +89,17 @@ export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const { user, token } = await userService.signIn(email, password);
-console.log("i am here");
 
-res.cookie('token', token, {
-  httpOnly: true,
-  secure: false,  
-  sameSite: 'Lax'  
-
-})
-    return res.status(200).send({ user });
+    // מחזירים את ה-token בתגובה כדי שהלקוח ישמור אותו ב-localStorage
+    return res.status(200).json({ user, token });
   } catch (error) {
     return next({ message: 'Auth Failed', status: 401 });
   }
 };
 
-
 export const getUserProfile = async (req, res, next) => {
   try {
-    const { token } = req.cookies;
+    const token = req.headers.authorization?.split(" ")[1]; 
     if (!token) {
       return res.status(401).send({ message: 'No token provided' });
     }
@@ -117,4 +110,7 @@ export const getUserProfile = async (req, res, next) => {
     return next({ message: 'Server Error', status: 500 });
   }
 };
+
+
+
 
