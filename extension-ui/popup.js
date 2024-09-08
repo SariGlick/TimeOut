@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('controlPanelHeading').textContent = TEXTS.CONTROL_PANEL_HEADING;
   document.getElementById('blockSitesBtn').textContent = TEXTS.BLOCK_WEBSITES_BUTTON;
@@ -9,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var browsingDataDiv = document.getElementById('browsingDataDiv');
   var blockedSitesList = document.getElementById('blockedSitesList');
   var enterSite = document.getElementById('enterSite');
+<<<<<<< HEAD
   var modeDisplay = document.getElementById('modeDisplay');
   function populateBlockedSitesList(blockedSites) {
     blockedSitesList.innerHTML = '';
@@ -22,8 +24,11 @@ document.addEventListener('DOMContentLoaded', function () {
       blockedSitesList.appendChild(li);
     });
   }
+=======
+>>>>>>> main
 
   enterSite.addEventListener('click', function () {
+   //TODO change address to be according to docker-file
     chrome.tabs.create({ url: 'http://localhost:3000/home' });
   });
   blockSitesBtn.addEventListener('click', function () {
@@ -31,7 +36,16 @@ document.addEventListener('DOMContentLoaded', function () {
     browsingDataDiv.classList.add('hidden');
     chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
       const blockedSites = response.blockedSites || [];
+<<<<<<< HEAD
       populateBlockedSitesList(blockedSites);
+=======
+      blockedSitesList.innerHTML = '';
+      blockedSites.forEach((hostname) => {
+        const li = document.createElement("li");
+        li.textContent = hostname;
+        blockedSitesList.appendChild(li);
+      });
+>>>>>>> main
     });
   });
 
@@ -53,10 +67,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (hostname) {
           chrome.runtime.sendMessage({ action: 'addBlockedSite', hostname: hostname }, (response) => {
             if (response.success) {
+<<<<<<< HEAD
               chrome.runtime.sendMessage({ action: 'getBlockedSites' }, (response) => {
                 const blockedSites = response.blockedSites || [];
                 populateBlockedSitesList(blockedSites);
               });
+=======
+              const li = document.createElement("li");
+              li.textContent = inputUrl;
+              blockedSitesList.appendChild(li);
+>>>>>>> main
             } else {
               console.error(response.message);
             }
@@ -68,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     siteInput.value = "";
   });
+<<<<<<< HEAD
 
 
   function updateModeDisplay(isBlackList) {
@@ -77,4 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
   chrome.runtime.sendMessage({ action: 'getMode' }, (response) => {
     updateModeDisplay(response.isBlackList);
   });
+=======
+>>>>>>> main
 });

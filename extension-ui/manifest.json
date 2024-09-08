@@ -7,11 +7,16 @@
     "cookies",
     "storage",
     "tabs",
+<<<<<<< HEAD
     "webNavigation",
     "scripting",
     "activeTab"
    
     
+=======
+    "activeTab",
+     "notifications"
+>>>>>>> main
   ],
   "host_permissions": [
      "http://localhost:5000/*",
@@ -24,6 +29,7 @@
   "action": {
     "default_popup": "popup.html"
   },
+<<<<<<< HEAD
   "web_accessible_resources": [
     {
       "resources": ["oops.html"],
@@ -35,3 +41,12 @@
     "object-src": ["'self'"]
   }
 }
+=======
+  "icons": {
+    "48": "images/icon48.png"
+},
+   "web_accessible_resources": 
+   [{"resources": ["oops.html"],
+    "matches": ["<all_urls>"]}]
+}
+>>>>>>> main

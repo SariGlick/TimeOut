@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
   --background-color: #f8f9fa;
   --container-background: #ffffff;
@@ -79,3 +80,20 @@ li {
 .hidden {
   display: none;
 }
+=======
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F0F0F0;
+    
+  }
+  .container {
+    text-align: center;
+  }
+  .hidden {
+    display: none;
+  }
+>>>>>>> main
