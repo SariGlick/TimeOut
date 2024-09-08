@@ -1,7 +1,9 @@
 import mongoose  from 'mongoose';
 import bcrypt from 'bcrypt';
 import Users from '../models/user.model.js';
-
+import {
+  getUserById_service,
+} from '../services/user.service.js';
 
 export const getUsers = async (req, res,next) => {
   try {
@@ -15,13 +17,13 @@ export const getUsers = async (req, res,next) => {
 };
 
 export const getUserById = async (req, res,next) => {
-  const id = req.params.id;
+  const {id} = req.params;
   if(!mongoose.Types.ObjectId.isValid(id))
     return next({message:'id is not valid'})
   try {
-    const user = await Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
+    const user = await getUserById_service(id);    
     if (!user) {
-        return next({message:'user not found ',status:404})
+        return next({message:'user not found ',status:500})
     }
     res.send(user);
   } catch (err) {
