@@ -1,0 +1,15 @@
+// MessageStatusUpdater.scss
+
+.message-status-updater {
+    .icon-button {
+        color: black;
+
+        &.read {
+            color: rgb(103, 252, 210);
+        }
+
+        &.unread {
+            color: rgb(103, 252, 210);
+        }
+    }
+}
