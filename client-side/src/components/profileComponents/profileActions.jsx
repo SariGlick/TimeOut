@@ -4,7 +4,11 @@ import { Tooltip, Button } from '@mui/material';
 import { TOOLTIP_TEXTS, BUTTON_LABELS } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-export default function ProfileActions({ handleSave, handleClose, handleDelete }) {
+export default function ProfileActions({
+    handleSave = () => {}, 
+    handleClose = () => {}, 
+    handleDelete = () => {}
+}) {
     return (
         <>
             <Tooltip title={TOOLTIP_TEXTS.CANCEL}>
@@ -30,10 +34,4 @@ ProfileActions.propTypes = {
     handleSave: PropTypes.func.isRequired,
     handleClose: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
-};
-
-ProfileActions.defaultProps = {
-    handleSave: () => {},
-    handleClose: () => {},
-    handleDelete: () => {},
 };
