@@ -11,24 +11,13 @@ import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 const app=express();
 app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 app.use(morgan('dev'));
 app.use(cors());
 
-=======
->>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
-=======
-const app=express();
-app.use(express.json())
-app.use(express.urlencoded({extended:true}));
-app.use(morgan('dev'));//הדפסת המידע של כל הבקשה 
-app.use(cors());
 
->>>>>>> e1846fe75f6d92f5dfa7a440988cb38473a34797
 dotenv.config();
 connectMongo();
 app.get('/',(req,res)=>{

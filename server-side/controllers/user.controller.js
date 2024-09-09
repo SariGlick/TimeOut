@@ -90,14 +90,6 @@ export const updatedUser = async (req, res, next) => {
     console.error(err);
     next({ message: err.message, status: 500 });
   }
-<<<<<<< HEAD
-<<<<<<< HEAD
-};
-=======
-};
->>>>>>> 48fda98c38898e7d69676ae621680a006f9131c3
-=======
 };
 
 
->>>>>>> e1846fe75f6d92f5dfa7a440988cb38473a34797
