@@ -23,6 +23,14 @@ const resolvers = {
                 throw new Error(error.message);
             }
         },
+        userByEmail: async (_, { email }) => {
+            try {
+                const response = await axios.get(`${url}:${port}/users/getUserByEmail/${email}`);
+                return response.data;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
     }
 };
 
