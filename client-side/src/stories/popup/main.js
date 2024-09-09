@@ -8,7 +8,7 @@ export const Main = () => {
     // open popup with it's needed `props` and an `onClose` callback function
     popupManager.open(Popup, {
       popupContent: '',
-      onClose: (...params) => console.log('modal has closed with:', ...params), // modal has closed with: param param2 param3
+      onClose: (...params) => console.error('modal has closed with:', ...params), // modal has closed with: param param2 param3
     }); 
   }
   return (
