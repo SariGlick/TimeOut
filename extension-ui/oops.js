@@ -1,7 +1,7 @@
 
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import GenericButton from '../client-side/src/stories/Button/GenericButton'; 
+import { GenericButton } from 'client-side';
 
 const HEADER_TEXT = "Access Blocked";
 const PARAGRAPH_TEXT = "You don't have permission to view this site.";
