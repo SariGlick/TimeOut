@@ -3,6 +3,8 @@ import {createBrowserRouter } from "react-router-dom";
 import ProfileList from "../components/profileComponent.jsx";
 import Report from '../components/Report/report.jsx'
 import Layout from "./layout.jsx";
+import Login from "../login/Login.jsx";
+import Statistics from '../components/statistics.jsx'
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -16,6 +18,10 @@ export  const router = createBrowserRouter([
                 path: '/home',
                 element: <h1>home</h1>
             },
+            // {
+            //     path: '/profiles',
+            //     element:<ProfileList/>
+            // },
             {
                 path: '/profiles',
                 element:<ProfileList/>
@@ -23,6 +29,14 @@ export  const router = createBrowserRouter([
             {
                 path: '/reports',
                 element:<Report/>
+            },
+            {
+                path: '/login',
+                element: <Login/>
+            },
+            {
+                path:'/statistics',
+                element: <Statistics></Statistics>
             }
         ]
     },
