@@ -18,8 +18,6 @@
     "display-setting": "configuración de pantalla",
     "fotter": "© Desarrollado por el equipo ExtraTech. Visítanos:",
     "settings": "ajustes",
-<<<<<<< HEAD
-    "open-settings":"Configuración abierta",
     "Select Email Frequency": "Seleccionar frecuencia de correo electrónico",
     "never": "nunca",
     "daily": "diario",
@@ -27,10 +25,7 @@
     "monthly": "mensual",
     "yearly": "anual",
     "Select Time Zone":"Selecciona la zona horaria",
-    "upload-image":"cargar imagen"
-
-=======
+    "upload-image":"cargar imagen",
     "open-settings":"Configuración abierta"
->>>>>>> b611101e51b7905f88cac8bced680b70104bece2
 
 }

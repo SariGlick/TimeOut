@@ -7,9 +7,11 @@ import websitesRouter from './router/websites.router.js';
 import profilesRouter from './router/profile.router.js'
 import visitedWebSitesRouter from './router/visitedWebsite.router.js'
 import usersRouter from './router/user.router.js'
+import invitationsRouter from './router/invitation.router.js';
 import {pageNotFound,serverErrors} from './middleware/handleErrors.js'
 import {connectMongo} from './config/db.js'
-
+import MessageRouter from './router/message.router.js';
+import messageTypeRouter from './router/messageType.router.js';
 
 const app=express();
 app.use(express.json())
@@ -28,7 +30,11 @@ app.use('/preferences',preferencesRouter);
 app.use('/websites',websitesRouter);
 app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
+app.use('/messages',messageRouter);
 app.use('/users',usersRouter);
+app.use('/message',MessageRouter);
+app.use('/messageType',messageTypeRouter);
+app.use('/invitations',invitationsRouter)
 app.use(pageNotFound);
 app.use(serverErrors)
 let port= process.env.PORT;

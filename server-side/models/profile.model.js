@@ -10,7 +10,11 @@ const profileSchema = new mongoose.Schema({
             start: {type:Date,required:true},
             end: {type:Date,required:true} }]       
     }]
-});
+},{ strictPopulate: false });
 
+<<<<<<< HEAD
 
 export  default mongoose.model("Profiles", profileSchema);
+=======
+export  default mongoose.model("Profiles", profileSchema);
+>>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83

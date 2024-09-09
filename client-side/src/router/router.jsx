@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Settings from "../components/settings/Settings.jsx";
 import Login from "../login/Login.jsx";
 import HomePage from "../components/homePageComponent.jsx";
-
+import Statistics from '../components/statistics.jsx'
 import Layout from "./layout.jsx";
 
 
@@ -16,7 +16,7 @@ export  const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: '/home',
+        path: '/',
         element: <HomePage/>
       },
       {
@@ -32,7 +32,11 @@ export  const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login/>
-      }
+      },
+      {
+        path:'/statistics',
+        element: <Statistics></Statistics>
+    }
     ]
   },
  
