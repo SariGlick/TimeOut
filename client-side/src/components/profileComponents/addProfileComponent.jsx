@@ -26,7 +26,7 @@ import {
 } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-export default function AddProfile({ userId }) {
+export default function AddProfile({ userId='' }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -88,6 +88,10 @@ export default function AddProfile({ userId }) {
 
     try {
       const ProfileNew= await createProfile(profileData);
+      if(ProfileNew.status===200)
+      {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
+      }
       dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
       handleClose();
@@ -171,8 +175,4 @@ export default function AddProfile({ userId }) {
 }
 AddProfile.propTypes = {
   userId: PropTypes.string.isRequired,
-};
-
-AddProfile.defaultProps = {
-  userId: '',
 };

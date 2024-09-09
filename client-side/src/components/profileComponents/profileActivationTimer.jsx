@@ -4,7 +4,7 @@ import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 import {TIMER_COLORS} from '../../constants/profileConstants.js';
 import '../../styles/profileActivationTimer.scss';
 
-const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
+const ProfileActivationTimer = ({ profileActivationTime=null, profileName='' }) => {
   const durationSeconds = profileActivationTime * 60;
 
   const renderTime = ({ remainingTime }) => {
@@ -43,10 +43,6 @@ const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
 ProfileActivationTimer.propTypes = {
   profileActivationTime: PropTypes.number.isRequired,
   profileName: PropTypes.string, 
-};
-
-ProfileActivationTimer.defaultProps = {
-  profileName: null,
 };
 
 export default ProfileActivationTimer;

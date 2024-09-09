@@ -7,6 +7,28 @@ import { INPUT_LABELS, TOOLTIP_TEXTS, SELECT_OPTIONS } from '../../constants/pro
 import { handleFieldChange } from '../../utils/profileUtil.js';
 
 export default function ProfileForm({ formData, setFormData }) {
+    ProfileForm.propTypes = {
+        formData: PropTypes.shape({
+            profileName: PropTypes.string,
+            timeProfile: PropTypes.shape({
+                timeStart: PropTypes.string,
+                timeEnd: PropTypes.string,
+            }),
+            statusBlockedSites: PropTypes.string,
+        }).isRequired,
+        setFormData: PropTypes.func.isRequired,
+    };
+
+    ProfileForm.defaultProps = {
+        formData: {
+            profileName: '',
+            timeProfile: {
+                timeStart: '00:00',
+                timeEnd: '00:00',
+            },
+            statusBlockedSites: '',
+        },
+    };
     return (
         <Box mt={2}>
             <Grid container spacing={3}>
@@ -72,25 +94,4 @@ export default function ProfileForm({ formData, setFormData }) {
     );
 }
 
-ProfileForm.propTypes = {
-    formData: PropTypes.shape({
-        profileName: PropTypes.string,
-        timeProfile: PropTypes.shape({
-            timeStart: PropTypes.string,
-            timeEnd: PropTypes.string,
-        }),
-        statusBlockedSites: PropTypes.string,
-    }).isRequired,
-    setFormData: PropTypes.func.isRequired,
-};
 
-ProfileForm.defaultProps = {
-    formData: {
-        profileName: '',
-        timeProfile: {
-            timeStart: '00:00',
-            timeEnd: '00:00',
-        },
-        statusBlockedSites: '',
-    },
-};

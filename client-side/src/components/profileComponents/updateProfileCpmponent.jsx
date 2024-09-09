@@ -37,7 +37,7 @@ const initialFormData = {
     websites: [],
 };
 
-export default function UpdateProfileComponent({ profile }) {
+export default function UpdateProfileComponent({ profile=null }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
@@ -112,6 +112,3 @@ UpdateProfileComponent.propTypes = {
     profile: PropTypes.object
 };
 
-UpdateProfileComponent.defaultProps = {
-    profile: null
-};

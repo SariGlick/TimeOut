@@ -78,7 +78,7 @@ export const DIALOG_TITLES = {
 export const TOAST_MESSAGES = {
     PROFILE_UPDATED_SUCCESS: 'Profile updated successfully!',
     PROFILE_UPDATED_ERROR: 'Error updating profile!',
-    PROFILE_NOT_FOUמD: 'Error profile not found!',
+    PROFILE_NOT_FOUND: 'Error profile not found!',
     PROFILE_DELETED_SUCCESS: 'Profile deleted successfully!',
     PROFILE_DELETED_ERROR: 'Error deleting profile!',
     PROFILE_FROM_SERVER_ERROR: 'An error occurred in fetching the data from the server!',

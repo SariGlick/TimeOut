@@ -11,7 +11,7 @@ import {
 import ProfileActivationTimer from './profileActivationTimer.jsx';
 import '../../styles/profilePageStyle.scss';
 
-export default function TimerActivationButton({ profileName }) {
+export default function TimerActivationButton({ profileName='' }) {
     const [isOpen, setIsOpen] = useState(false);
     const [start, setStart] = useState('00:00');
     const [end, setEnd] = useState('00:00');
@@ -114,8 +114,4 @@ export default function TimerActivationButton({ profileName }) {
 }
 TimerActivationButton.propTypes = {
     profileName: PropTypes.string.isRequired
-};
-
-TimerActivationButton.defaultProps = {
-    profileName: ''
 };

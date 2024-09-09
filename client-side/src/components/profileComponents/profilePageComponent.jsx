@@ -20,7 +20,7 @@ import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
 import { PROFILE_LIST_MESSAGES, PROFILE_LIST_LOADING } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-const ProfilePageComponent = ({ userId }) => {
+const ProfilePageComponent = ({ userId=''}) => {
   const dispatch = useDispatch();
   const [selectedProfile, setSelectedProfile] = useState(null);
   const { enqueueSnackbar } = useSnackbar();
@@ -58,7 +58,7 @@ const ProfilePageComponent = ({ userId }) => {
       setEditedRows(null);
     }
     else
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_NOT_FOUמD} type="error" />);
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_NOT_FOUND} type="error" />);
   };
 
   const handleDelete = async (id) => {
@@ -331,9 +331,5 @@ const ProfilePageComponent = ({ userId }) => {
 };
 ProfilePageComponent.propTypes = {
   userId: PropTypes.string.isRequired,
-};
-
-ProfilePageComponent.defaultProps = {
-  userId: '',
 };
 export default ProfilePageComponent;
