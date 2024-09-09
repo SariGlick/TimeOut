@@ -1,21 +1,29 @@
-import React from "react";
-import { usePopupManager } from "react-popup-manager";
-import { Popup } from "./popup";
+import React, { useState, createContext, useContext } from 'react';
 
-export const Main = () => {
-  const popupManager = usePopupManager();
-  const openPopup = () => {
-    // open popup with it's needed `props` and an `onClose` callback function
-    popupManager.open(Popup, {
-      popupContent: '',
-      onClose: (...params) => console.error('modal has closed with:', ...params), // modal has closed with: param param2 param3
-    }); 
-  }
+const PopupManagerContext = createContext();
+
+export const usePopupManager = () => useContext(PopupManagerContext);
+
+export const PopupManagerProvider = ({ children }) => {
+  const [popupComponent, setPopupComponent] = useState(null);
+  const [popupProps, setPopupProps] = useState({});
+
+  const openPopup = (Component, props) => {
+    setPopupComponent(() => Component);
+    setPopupProps(props);
+  };
+
+  const closePopup = () => {
+    setPopupComponent(null);
+    setPopupProps({});
+  };
+
   return (
-      <div>
-        <button onClick={() => openPopup()}>
-          popup
-        </button>
-      </div>
+    <PopupManagerContext.Provider value={{ openPopup, closePopup }}>
+      {children}
+      {popupComponent && (
+        <popupComponent {...popupProps} isOpen={true} onClose={closePopup} />
+      )}
+    </PopupManagerContext.Provider>
   );
-}
+};
