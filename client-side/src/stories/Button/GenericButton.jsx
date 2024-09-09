@@ -1,41 +1,39 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-
-import Button from '@mui/material/Button';
-
+import { Button, IconButton } from '@mui/material';
 import './GenericButton.scss';
 
-const GenericButton = ({className, label, onClick, size = "medium", disabled = false})=>{
-    return(
-        <div className='buttonWrapper'>
-            <Button 
-            className={`genericButton ${className ? `genericButton ${className}` : ''}`}
-            onClick={onClick}
-            size={size}
-            disabled={disabled}
+const GenericButton = ({ className, label, onClick, size = "medium", disabled = false, icon: Icon=null }) => (
+    <div className='buttonWrapper'>
+        {Icon ? (
+            <IconButton
+                className={`genericIconButton ${className || ''}`}
+                onClick={onClick}
+                size={size}
+                disabled={disabled}
             >
-            {label}
+                <Icon />
+            </IconButton>
+        ) : (
+            <Button
+                className={`genericButton ${className || ''}`}
+                onClick={onClick}
+                size={size}
+                disabled={disabled}
+            >
+                {label}
             </Button>
-        </div>
-    );
-};
+        )}
+    </div>
+);
 
 GenericButton.propTypes = {
-    
     className: PropTypes.string.isRequired,
-    
-    //How large should the button be?
-    size: PropTypes.oneOf(['small', 'medium','large']),
-    
-    //Button contents
-    label: PropTypes.string.isRequired,
-    
-    //Click handler
+    size: PropTypes.oneOf(['small', 'medium', 'large']),
+    label: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-
-    //Optional is disabled
     disabled: PropTypes.bool,
+    icon: PropTypes.elementType,
 };
 
 export default GenericButton;

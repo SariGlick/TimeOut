@@ -102,7 +102,3 @@ export const deleteProfile = async (req, res, next) => {
          next({message:err.message,status:500});
     }
 };
-
-
-
-

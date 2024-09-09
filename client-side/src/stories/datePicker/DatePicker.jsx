@@ -24,7 +24,7 @@ const DatePicker = ({ onSubmit }) => {
   }
 
   return (
-    <div>
+    <div className="date-picker-container">
       <DateInput onChange={date => handleDateChange('start', date)} className="start" />
       <DateInput onChange={date => handleDateChange('end', date)} className="end" />
       <GenericButton className='submit' label='submit' onClick={storeArr} disabled={isButtonDisabled} />

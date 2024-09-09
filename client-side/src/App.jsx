@@ -5,7 +5,7 @@ import Footer from './stories/footer/FooterComponent';
 import { router } from './router/router.jsx';
 import { store } from './redux/store.jsx';
 import { SnackbarProvider } from 'notistack';
-import { PopupManagerProvider } from './stories/popup/main.js';
+import Messages from './components/Messages/Messages.jsx';
 import './App.scss';
 
 
@@ -16,8 +16,9 @@ function App() {
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
-   <Footer />
-      </Provider>
+        <Messages/>
+        <Footer />
+        </Provider>
     </SnackbarProvider>
     </PopupManagerProvider>
     </>

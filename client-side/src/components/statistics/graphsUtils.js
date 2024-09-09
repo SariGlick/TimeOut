@@ -41,3 +41,21 @@ export function getWebsites(websites, users, user, dateStart, dateEnd) {
 
     return website;
 }
+
+export function getVisitedWebsitesByDate(user, date) {
+    const visitedWeb = {};
+    user.visitsWebsites.forEach(visit => {
+        visit.visitsTime.forEach(visitTime => {
+            const visitDate = new Date(visitTime.visitDate);
+            if (visitDate.getMonth() === date.getMonth() && visitDate.getFullYear() === date.getFullYear()) {
+                if (visitedWeb[visit.websiteId.name]) {
+                    visitedWeb[visit.websiteId.name].activityTime += Number(visitTime.activityTime);
+                } else {
+                    visitedWeb[visit.websiteId.name] = { websiteName: visit.websiteId.name, activityTime: Number(visitTime.activityTime) };
+                }
+            }
+        });
+    });
+
+    return Object.values(visitedWeb);
+}
