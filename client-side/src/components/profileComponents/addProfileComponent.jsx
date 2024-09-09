@@ -26,9 +26,11 @@ import {
   DIALOG_TITLES,
   TOAST_MESSAGES,
   VALIDATE_MESSAGES,
-  BUTTON_LABELS
+  BUTTON_LABELS,
+  FILE_UPLOAD
 } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
+import { handlePost } from '../../axios/middleware.js';
 
 export default function AddProfile({ userId }) {
   const dispatch = useDispatch();
@@ -146,33 +148,25 @@ export default function AddProfile({ userId }) {
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
- 
+
   const handleFileUpload = async () => {
     if (!selectedFile) {
-        return;
+      return;
     }
-   
+
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
-      formData.append('text',userId)
-      const response = await fetch('http://localhost:5000/profiles/upload', {
-          method: 'POST',
-          body: formData,
-          
-      });
-      const responseText = await response.text();
-      if (response.ok) {
+      formData.append('userId', userId)
+      const response = await handlePost('/profiles/upload', formData);
+      if (response.status === 200) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       }
-      setTimeout(() => navigate(0), 2000);
+      navigate('/profiles');
       handleClose();
-  } catch (error) {
-      console.log('An error occurred during upload!', error);
-  }
-   finally {
-    console.log(true);
-  }
+    } catch (error) {
+      console.error('An error occurred during upload!', error);
+    }
   };
   return (
     <React.Fragment>
@@ -188,34 +182,32 @@ export default function AddProfile({ userId }) {
       >
         <DialogTitle>{DIALOG_TITLES.NEW_PROFILE}</DialogTitle>
         <DialogContent>
-            <DialogContentText className='dialog-content-text'>
+          <DialogContentText className='dialog-content-text'>
             {DIALOG_TITLES.CREATE_FORM_EXCEL}
           </DialogContentText>
-          <GenericInput 
-            type="file" 
-            accept=".xlsx,.xls" 
-            onChange={handleFileChange} 
-            label="Upload Excel" 
-            size="small" 
+          <GenericInput
+            type="file"
+            accept={FILE_UPLOAD.ACCEPTED_FILE_TYPES}
+            onChange={handleFileChange}
+            label={BUTTON_LABELS.UPLOAD_EXCEL}
+            size="small"
             width='45%'
             className="add-profile-button"
-        />
-      <span style={{ display: 'inline-block' }}>
-  <Tooltip 
-    title={!selectedFile ? TOAST_MESSAGES.FILE_NOT_SELECTED : ''} 
-    disableHoverListener={!!selectedFile}
-  >
-    <span>
-      <GenericButton 
-        onChange={handleFileChange} 
-        label="Add Profile" 
-        onClick={handleFileUpload}
-        disabled={!selectedFile}
-        style={{ pointerEvents: !selectedFile ? 'none' : 'auto' }}
-      />
-    </span>
-  </Tooltip>
-</span>
+          />
+          <Tooltip
+            title={!selectedFile ? TOAST_MESSAGES.FILE_NOT_SELECTED : ''}
+            disableHoverListener={!!selectedFile}
+          >
+            <span>
+              <GenericButton
+                onChange={handleFileChange}
+                label={BUTTON_LABELS.ADD_PROFILE}
+                onClick={handleFileUpload}
+                disabled={!selectedFile}
+                className={`add-profile-button ${!selectedFile ? 'disabled' : 'enabled'}`}
+              />
+            </span>
+          </Tooltip>
           <DialogContentText className='dialog-content-text'>
             {DIALOG_TITLES.CREATE_FORM}
           </DialogContentText>

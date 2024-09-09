@@ -56,7 +56,9 @@ export const BUTTON_LABELS = {
     DELETE_PROFILE: 'Delete Profile',
     SAVE: 'Save',
     DELETE: 'Delete',
-    ADDING: 'Adding'
+    ADDING: 'Adding',
+    ADD_PROFILE: 'Add Profile',
+    UPLOAD_EXCEL: 'Upload Excel',
 };
 
 export const DIALOG_TITLES = {
@@ -102,3 +104,8 @@ export const VALIDATE_MESSAGES = {
     TIME_START: 'Start time is a mandatory field',
     TIME_END: 'End time is a mandatory field',
 };
+
+export const FILE_UPLOAD = {
+    ACCEPTED_FILE_TYPES: '.xlsx,.xls',
+  };
+  

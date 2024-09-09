@@ -14,3 +14,7 @@ export const MESSAGES = {
     EMAIL_PLACEHOLDER: 'example@example.com',
     PASSWORD_LABEL: 'Password',
   };
+  export const BUTTON_LABELS = {
+    DOWNLOAD_EXCEL: 'Download as Excel',
+  };
+  

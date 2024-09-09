@@ -4,6 +4,7 @@ import activeProfile from '../profileMngr.js'
 import xlsx from 'xlsx';
 import fs from 'fs'
 import websitesModel from '../models/websites.model.js';
+import { saveProfile, saveWebsite } from '../services/profile.service.js';
 
 const booleanize = (value) => {
     return value === 'true' || value === '1' || value === 'yes';
@@ -22,49 +23,46 @@ export const uploadProfilesFromExcel = async (req, res) => {
         const profileData = xlsx.utils.sheet_to_json(sheet);
         const profileSettings = profileData[0];
         const listWebsites = await Promise.all(profileData.slice(1).map(async (site) => {
-            
-        const website = new websitesModel({
-                _id: new mongoose.Types.ObjectId(),
-                name: site['Website Name'],        
-                url: site['Website URL'],       
-            });
 
-            const savedWebsite = await website.save(); 
+            const website = new websitesModel({
+                _id: new mongoose.Types.ObjectId(),
+                name: site['Website Name'],
+                url: site['Website URL'],
+            });
+            const savedWebsite = await saveWebsite(websiteData);
             return {
-                websiteId: savedWebsite._id,       
-                status: site['Website Status'], 
-                limitedMinutes: site['Website Status'] === 'limit' ? site['Limited Minutes'] : 0, 
+                websiteId: savedWebsite._id,
+                status: site['Website Status'],
+                limitedMinutes: site['Website Status'] === 'limit' ? site['Limited Minutes'] : 0,
             };
         }));
         const profile = {
-            userId: new mongoose.Types.ObjectId(userId), 
+            userId: new mongoose.Types.ObjectId(userId),
             profileName: profileSettings['Profile Name'],
             statusBlockedSites: profileSettings['Status Blocked Sites'],
             listWebsites,
             timeProfile: {
-              start: profileSettings['Start Time'],
-              end: profileSettings['End Time'],
+                start: profileSettings['Start Time'],
+                end: profileSettings['End Time'],
             },
             googleMapsLocation: {
-              enabled: booleanize(profileSettings['Google Maps Enabled']),
-              location: {
-                address: profileSettings['Google Maps Address'],
-                lat: profileSettings['Google Maps Latitude'],
-                lng: profileSettings['Google Maps Longitude'],
-              },
+                enabled: booleanize(profileSettings['Google Maps Enabled']),
+                location: {
+                    address: profileSettings['Google Maps Address'],
+                    lat: profileSettings['Google Maps Latitude'],
+                    lng: profileSettings['Google Maps Longitude'],
+                },
             },
             googleCalendarEvents: {
-              enabled: booleanize(profileSettings['Google Calendar Enabled']),
-              calendarId: profileSettings['Google Calendar ID'],
+                enabled: booleanize(profileSettings['Google Calendar Enabled']),
+                calendarId: profileSettings['Google Calendar ID'],
             },
             googleDriveFiles: {
-              enabled: booleanize(profileSettings['Google Drive Enabled']),
-              folderId: profileSettings['Google Drive Folder ID'],
+                enabled: booleanize(profileSettings['Google Drive Enabled']),
+                folderId: profileSettings['Google Drive Folder ID'],
             },
-          };
-
-        const newProfile = new Profile(profile);
-        const savedProfile = await newProfile.save();
+        };
+        const savedProfile = await saveProfile(profile);
         res.status(201).json(savedProfile);
         fs.unlinkSync(filePath);
     } catch (err) {
@@ -188,14 +186,14 @@ const getDistance = (loc1, loc2) => {
 
     const c = 2 * Math.asin(Math.sqrt(a));
     const distance = R * c * 1000;
-    
+
     return distance;
 };
-export const activeProfileByUserId = async(req, res) => {
+export const activeProfileByUserId = async (req, res) => {
     try {
         const userId = req.body;
         const profile = await activeProfile(userId);
-        
+
         res.status(201).json(profile);
     }
     catch (error) {
