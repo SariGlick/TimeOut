@@ -4,7 +4,7 @@ import { Tooltip, Button } from '@mui/material';
 import { TOOLTIP_TEXTS, BUTTON_LABELS } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-export default function ProfileActions({
+ function ProfileActions({
     handleSave = () => {}, 
     handleClose = () => {}, 
     handleDelete = () => {}
@@ -35,3 +35,4 @@ ProfileActions.propTypes = {
     handleClose: PropTypes.func.isRequired,
     handleDelete: PropTypes.func.isRequired,
 };
+export default  ProfileActions

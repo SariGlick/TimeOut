@@ -26,7 +26,7 @@ import {
 } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
-export default function AddProfile({ userId='' }) {
+ function AddProfile({ userId='' }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -176,3 +176,4 @@ export default function AddProfile({ userId='' }) {
 AddProfile.propTypes = {
   userId: PropTypes.string.isRequired,
 };
+export default AddProfile
