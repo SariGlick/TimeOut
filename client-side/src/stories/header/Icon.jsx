@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Badge, IconButton } from '@mui/material';
 import { MailOutline, Mail } from '@mui/icons-material';
 import useWebSocket from '../../webSocket';
-import messages from '../../components/messages/messages'
+// import messages from '../../components/messages/messages'
 import './icon.scss';
 
 const MessageIcon = () => {
-  const [openMesagges,setOpenMesagges] = useState(false);
-  const userId = '66961bef8ca0916dcbfdabc3'; //change the userId according the correct user...
+    const [openMesagges,setOpenMesagges] = useState(false);
+  const user = useSelector(state => state.user.currentUser);
+  const userId = user._id;
   const { cntUnreadMessages } = useWebSocket(userId);
 
   const hasUnreadMessages = cntUnreadMessages > 0;

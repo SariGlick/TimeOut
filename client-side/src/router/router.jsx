@@ -28,6 +28,10 @@ export  const router = createBrowserRouter([
                 element: <Statistics />
             },
             {
+                path: '/profiles',
+                // element:<ProfileList/>
+            },
+            {
                 path: '/login',
                 element: <Login/>
             },

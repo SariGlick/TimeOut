@@ -11,11 +11,10 @@ const useWebSocket = (userId) => {
   
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket(process.env.REACT_WS_URL);
 
     ws.onopen = () => {
-      console.log('Connected to WebSocket server');
-      ws.send(userId);
+      ws.send(JSON.stringify({userId,type:"countUnread"}));
     };
 
     ws.onmessage = (event) => {
