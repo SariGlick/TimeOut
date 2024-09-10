@@ -4,6 +4,8 @@ import {createBrowserRouter } from "react-router-dom";
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
 import Statistics from '../components/statistics.jsx'
+import HomePage from "../components/homePageComponent.jsx";
+import Report from "../components/Report/report.jsx";
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -11,11 +13,11 @@ export  const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <h1>home</h1>
+                element: <HomePage/>
             },
             {
                 path: '/home',
-                element: <h1>home</h1>
+                element: <HomePage/>
             },
             // {
             //     path: '/profiles',
@@ -28,6 +30,10 @@ export  const router = createBrowserRouter([
             {
                 path:'/statistics',
                 element: <Statistics></Statistics>
+            },
+            {
+                path: '/reports',
+                element: <Report/>
             }
         ]
     },
