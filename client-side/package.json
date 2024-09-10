@@ -4,9 +4,7 @@
   "private": true,
   "dependencies": {
     "@date-io/dayjs": "^3.0.0",
-    "@mui/icons-material": "^5.16.0",
     "@mui/lab": "^5.0.0-alpha.173",
-    "@mui/material": "^5.16.0",
     "@apollo/client": "^3.11.1",
     "@apollo/react-hooks": "^4.0.0",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
