@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 import Select from '../../stories/Select/Select.jsx';
 import TableComponent from '../../stories/table/TableComponent';
 import Loader from "../../stories/loader/loader";
@@ -12,6 +9,7 @@ import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import { OPTION_ARRAY, TIME } from './report.constant.jsx';
 import {handlePost} from '../../axios/middleware.js'
 import './report.scss'
+import { useSelector } from "react-redux";
 
 export default function Report() {
 
@@ -71,9 +69,9 @@ export default function Report() {
 
 
   const fillData = async () => {
-
+    const user = useSelector(state => state.user.currentUser|| {});
     const body = {
-      userId: "66bc55ba0848c7062b25610b",
+      userId: user.id,
       type: selectType,
       customDates: selectType === "custom" ? customArr : null
     }
