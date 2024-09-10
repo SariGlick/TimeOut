@@ -2,3 +2,5 @@ node_modules/
 uploads/*
 !uploads/.gitkeep
 package-lock.json
+.env
+

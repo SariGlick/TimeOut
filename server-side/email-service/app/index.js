@@ -23,4 +23,5 @@ sendEmailWithAttachment(email, subject, text, attachmentPaths);
 process.on('SIGINT', () => {
 	process.exit(0);
 });
-export {sendEmailWithAttachment};
+export {sendEmailWithAttachment}
+

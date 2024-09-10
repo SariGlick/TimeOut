@@ -30,23 +30,13 @@ const MESSAGES = {
   INVALID_EMAIL_FREQUENCY: 'Invalid email frequency selected. Please choose a valid option.',
   CONFIRM_LOCATION: 'Allow us to get your location and preferred language for a better experience?',
 };
-// const MESSAGE_DISPLAY_ENUM= {
-//   TITLE_ONLY : 'title only',
-//   SHORTENED_BODY : 'shortened body',
-//   FULL_MESSAGES :'full messages',
-// }
+
 
 const MESSAGE_DISPLAY_ENUM = [
   { value: 'TITLE_ONLY', label: 'title only' },
   { value: 'ABBREVIATED_MESSAGE', label: 'abbreviated message'},
   { value: 'FULL_MESSAGES', label: 'full messages' },
 ];
-
-// const INBOX_ENUM={
-//   GROUP_BY_DATE:"group by date",
-//   GROUP_BY_READ:"group by read",
-//   GROUP_BY_UNREAD:"group by unread"
-// }
 
 const INBOX_ENUM = [
   { value: ' GROUP_BY_DATE', label: 'group by date' },

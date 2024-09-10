@@ -16,11 +16,6 @@ jest.mock('bottleneck', () => {
 describe('sendEmail', () => {
 	let sendMailMock;
 	let scheduleMock;
-	const email = { 
-		to: 'test@example.com',
-		subject: 'Test Subject',
-		text: 'Test body text',
-	  };
 
 	beforeEach(() => {
 		sendMailMock = require('nodemailer').createTransport().sendMail;

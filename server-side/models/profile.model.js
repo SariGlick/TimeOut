@@ -8,9 +8,9 @@ const profileSchema = new mongoose.Schema({
 		status: { type: String, enum: ['block', 'open'] },
 		limitedTimes: [{
 			start: {type:Date,required:true},
-			end: {type:Date,required:true} }]       
+			end: {type:Date,required:true} }]
 	}]
-});
+},{ strictPopulate: false });
 
 export  default mongoose.model('Profiles', profileSchema);
 

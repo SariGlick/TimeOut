@@ -43,3 +43,4 @@ process.on('SIGINT', () => {
 });
 
 export { insertEvent };
+

@@ -1,4 +1,3 @@
-
 import dotenv from 'dotenv';
 import kafka from 'kafka-node';
 import { sendEmail } from './mailer.js';
@@ -31,3 +30,4 @@ process.on('SIGINT', () => {
 		process.exit(0);
 	});
 });
+

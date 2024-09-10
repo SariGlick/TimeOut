@@ -2,7 +2,6 @@ module.exports = {
   env: {
     node: true
   },
-  // plugins: ['import'],
   rules: {
     indent: ['error',  'tab'], 
     'import/order': ['error', { alphabetize: { order: 'asc', caseInsensitive: true } }],

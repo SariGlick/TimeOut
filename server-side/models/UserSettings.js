@@ -8,3 +8,4 @@ const userSettingsSchema = new mongoose.Schema({
 const UserSettings = mongoose.model('UserSettings', userSettingsSchema);
 
 export default UserSettings;
+
