@@ -8,10 +8,11 @@ import { SnackbarProvider } from 'notistack';
 // import Messages from './components/Messages/Messages.jsx';
 import './App.scss';
 
-function App() {
 
+function App() {
   return (
     <>
+        <PopupManagerProvider>
       <SnackbarProvider maxSnack={3}>
       <Provider store={store}>
         <RouterProvider router={router} />
@@ -19,6 +20,7 @@ function App() {
         <Footer />
         </Provider>
     </SnackbarProvider>
+    </PopupManagerProvider>
     </>
   );
 }
