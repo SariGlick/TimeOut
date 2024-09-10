@@ -17,7 +17,7 @@ function ResponsiveAppBar() {
   const currentProfile = currentUser ? currentUser.profile : ''; 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { t: translate } = useTranslation(); 
+  // const { t: translate } = useTranslation(); 
   const { user } = useSelector(selectAuth);
 
   const handleOpenNavMenu = (event) => {
@@ -120,7 +120,7 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
-            <MessageIcon/>
+            {/* <MessageIcon/> */}
 
           </Box>
         </Toolbar>
