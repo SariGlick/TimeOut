@@ -111,6 +111,7 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
+          <MessageIcon />
           </Box>
         </Toolbar>
       </Container>

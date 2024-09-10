@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "type": "module",
+  
   "scripts": {
     "test": "jest",
     "start": "node app.js",
