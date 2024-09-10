@@ -157,7 +157,7 @@ export default function AddProfile({ userId }) {
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
-      formData.append('userId', userId)
+      formData.append('userId', userId);
       const response = await handlePost('/profiles/upload', formData);
       if (response.status === 201) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
