@@ -17,9 +17,10 @@ import settingsRouter from './router/settings.router.js';
 import usersRouter from './router/user.router.js';
 import visitedWebsitesRouter from './router/visitedWebsite.router.js';
 
-const app=express();
+
+const app = express();
 app.use(express.json())
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
 
@@ -29,18 +30,18 @@ const port = process.env.PORT || 3000;
 
 app.use(cookieParser());
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     res.send('welcome to time out ');
 });
 
 
-app.use('/users',usersRouter);
+app.use('/users', usersRouter);
 app.use('/uploads', express.static('uploads'))
 app.use('/preferences', preferencesRouter);
 app.use('/websites', websitesRouter);
 app.use('/vistedWebsites', visitedWebsitesRouter);
 app.use('/profiles', profilesRouter);
-app.use('/message', MessagesRouter);
+app.use('/messages', MessagesRouter);
 app.use('/messageType', messageTypeRouter);
 app.use('/invitations', invitationsRouter)
 app.use(pageNotFound);

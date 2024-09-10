@@ -6,7 +6,6 @@ import SignUp from './components/signUp/signUp.jsx';
 import Footer from './stories/footer/FooterComponent';
 import { store } from './redux/store.jsx';
 import Layout from './router/layout.jsx';
-// import Messages from './components/Messages/Messages.jsx';
 import './App.scss';
 
 
@@ -23,6 +22,7 @@ function App() {
             <Route path="profiles" element={<h1>ProfileList</h1>} />
             <Route path="reports" element={<h1>reports</h1>} />
             <Route path="statistics" element={<h1>statistics</h1>} />
+            <Route path="signUp" element={SignUp}/>
             <Route path="*" element={<h1>home</h1>} />
           </Route>
         </Routes>

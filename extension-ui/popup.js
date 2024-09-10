@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
   var blockSitesBtn = document.getElementById('blockSitesBtn');
   var browsingDataBtn = document.getElementById('browsingDataBtn');

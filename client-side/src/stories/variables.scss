@@ -1,25 +1,20 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-$color-error: red;
-$color-black: black;
-$color-border: rgb(61, 192, 155);
-$color-border-hover: rgb(45, 158, 126);
-$errorColor:red;
-$light-black: rgba(0, 0, 0, 0.1);
-$primary-color: black;
-$secondary-color: rgb(103, 252, 210);
-
 $background-class: #ffffff;
-$secondary-color-hard: rgb(158, 255, 229);
-$standardSuccessColor: rgb(164, 255, 231);
-
-$primary-color-home: rgb(103, 252, 210);
 $black-color: #000000;
-$white-color: #ffffff;
-$hover-color: rgba(103, 252, 210, 0.8);
+$color-black: black;
+$color-border-hover: rgb(45, 158, 126);
+$color-border: rgb(61, 192, 155);
+$color-error: red;
+$errorColor:red;
 $font-family-primary: 'Nanum Gothic', sans-serif;
-
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+$hover-color: rgba(103, 252, 210, 0.8);
+$light-black: rgba(0, 0, 0, 0.1);
+$primary-color-home: rgb(103, 252, 210);
+$primary-color: black;
+$secondary-color-hard:rgba(72, 245, 193, 0.2);
+$secondary-color: rgb(103, 252, 210);
 $standardErrorColor:rgba(254, 226, 226, 0.8);
 $standardInfoColor:rgba(224, 242, 241, 0.8);
+$standardSuccessColor: rgb(164, 255, 231);
 $standardWarningColor:rgba(255, 255, 224, 0.8);
+$white-color: #ffffff;

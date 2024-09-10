@@ -15,7 +15,7 @@ const DownloadPage = ({divID,nameFile="timeOut-Report",sizePage="a4",directly="p
       const imgWidth = pdfWidth;
       const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'PNG', 10, 0, imgWidth, imgHeight);
       pdf.save(`${nameFile}.pdf`);
     });
 };
