@@ -4,13 +4,22 @@ import { useSelector } from 'react-redux';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
-import './header.scss';
-import { selectAuth } from '../../redux/auth/auth.selector';
 import MessageIcon from './Icon';
+import { selectAuth } from '../../redux/auth/auth.selector';
+import { selectUser } from '../../redux/user/user.selector';
+
+import './header.scss';
+
 function ResponsiveAppBar() {
+  const users = useSelector(selectUser);
+  const currentUser = users.length ? users[users.length - 1] : null;
+  const currentname = currentUser ? currentUser.name : '';
+  const currentProfile = currentUser ? currentUser.profile : ''; 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  const { user } = useSelector(selectAuth); 
+  const { t: translate } = useTranslation(); 
+  const { user } = useSelector(selectAuth);
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -23,11 +32,10 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const getAvatarLetter = () => {
-    if (user && user.name) {
-      return user.name.charAt(0).toUpperCase();
-    }
-    return '';
+  const getAvatar = () => {
+    if (currentProfile) return currentProfile; 
+    if (user && user.name) return user.name.charAt(0).toUpperCase();
+    return '/static/images/avatar/2.jpg';
   };
 
   return (
@@ -88,7 +96,7 @@ function ResponsiveAppBar() {
           <Box >
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} >
-              <Avatar>{getAvatarLetter()}</Avatar>
+              <Avatar>{getAvatar()}</Avatar>
               </IconButton>
             </Tooltip>
             <Menu

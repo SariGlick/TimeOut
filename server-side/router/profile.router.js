@@ -11,9 +11,5 @@ profilesRouter.post('/activeProfile',activeProfileByUserId);
 profilesRouter.get('/user/:id', getProfilesByUserId);
 profilesRouter.post('/shareProfile',shareProfile);
 profilesRouter.put('/acceptSharing/:id',updateProfilesByInvitation);
-<<<<<<< HEAD
-export default profilesRouter;
-=======
 
 export default profilesRouter;
->>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83

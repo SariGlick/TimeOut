@@ -4,6 +4,9 @@ import ProfilePageComponent from "../components/profileComponents/profilePageCom
 import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
+
+import SignUp from "../components/signUp/signUp.jsx";
+
 import HomePage from "../components/homePageComponent.jsx";
 import Statistics from '../components/statistics.jsx'
 export  const router = createBrowserRouter([
@@ -36,9 +39,14 @@ export  const router = createBrowserRouter([
                 element: <Login/>
             },
             {
+              path:'/SignUp',
+              element:<SignUp/>
+            },
+            {
                 path:'/statistics',
                 element: <Statistics></Statistics>
             }
+          
         ]
     },
 ])

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Provider } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import { SnackbarProvider } from 'notistack';
+import SignUp from './components/signUp/signUp.jsx';
 import Footer from './stories/footer/FooterComponent';
 import { store } from './redux/store.jsx';
-import { SnackbarProvider } from 'notistack';
 import Layout from './router/layout.jsx';
 // import Messages from './components/Messages/Messages.jsx';
 import './App.scss';
