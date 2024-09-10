@@ -10,4 +10,3 @@ router.delete('/:id',deleteWebsite);
 
 export default router;
 
-

@@ -32,3 +32,6 @@ export const signInService = async (email, password) => {
     await newUser.save();
     return newUser;
   };
+export const getUserByEmail_service=async(email)=>{
+   return await Users.findOne({ email }).populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preferences').select('-__v');
+}

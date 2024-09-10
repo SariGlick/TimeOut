@@ -9,5 +9,3 @@ router.post('/preferences',upload.single('soundVoice'),addPreference);
 router.put('/preferences/:id',upload.single('soundVoice'),updatePreference);
 router.delete('/preferences/:id',deletePreference);
 export default router;
-
-
