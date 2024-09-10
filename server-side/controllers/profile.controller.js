@@ -12,7 +12,7 @@ const booleanize = (value) => {
 
 export const uploadProfilesFromExcel = async (req, res) => {
     try {
-        const userId = req.body.text;
+        const userId = req.body.userId;
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required.' });
         }
@@ -29,7 +29,7 @@ export const uploadProfilesFromExcel = async (req, res) => {
                 name: site['Website Name'],
                 url: site['Website URL'],
             });
-            const savedWebsite = await saveWebsite(websiteData);
+            const savedWebsite = await saveWebsite(website);
             return {
                 websiteId: savedWebsite._id,
                 status: site['Website Status'],

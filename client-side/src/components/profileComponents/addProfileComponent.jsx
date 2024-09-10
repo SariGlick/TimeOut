@@ -159,13 +159,14 @@ export default function AddProfile({ userId }) {
       formData.append('file', selectedFile);
       formData.append('userId', userId)
       const response = await handlePost('/profiles/upload', formData);
-      if (response.status === 200) {
+      if (response.status === 201) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       }
       navigate('/profiles');
       handleClose();
     } catch (error) {
       console.error('An error occurred during upload!', error);
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
     }
   };
   return (
