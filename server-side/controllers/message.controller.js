@@ -43,7 +43,7 @@ export const getMessagesByUserIdController = async (req, res) => {
   }
 };
 
-export const addMessage = async (req, res) => {
+export const addMessageController = async (req, res) => {
   try {
     const { type, userId, date, read } = req.body;
     const messageType = await MessageType.findById(type);
