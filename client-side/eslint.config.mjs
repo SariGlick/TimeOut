@@ -5,15 +5,15 @@ import { fixupConfigRules } from "@eslint/compat";
 
 
 export default [
-  {files: ["**/*.{js,mjs,cjs,jsx}"]},
+  { files: ["**/*.{js,mjs,cjs,jsx}"] },
   { languageOptions: { parserOptions: { ecmaFeatures: { jsx: true } } } },
-  {languageOptions: { globals: globals.browser }},
+  { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   ...fixupConfigRules(pluginReactConfig),
   {
     rules: {
-      'semi': ['error', 'always'], 
-       "node":true
+      'semi': ['error', 'always'],
+      "node": true
       //'indent': ['error', 2],     // enforce 2 spaces for indentation
     }
   }

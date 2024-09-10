@@ -1,6 +1,6 @@
 import  express from 'express';
 
-import { getMessages,getMessageById,addMessage, updateMessage, deleteMessage,getMessagesByUserId } from '../controllers/message.controller.js';
+// import { getMessages,getMessageById,addMessage, updateMessage, deleteMessage,getMessagesByUserId } from '../controllers/message.controller.js';
 const MessageRouter=express.Router();
 
 MessageRouter.get('/',getMessages);
