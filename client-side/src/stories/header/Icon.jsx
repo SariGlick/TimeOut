@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Badge, IconButton } from '@mui/material';
 import { MailOutline, Mail } from '@mui/icons-material';
 import useWebSocket from '../../webSocket';
-import messages from '../../components/messages/messages'
+// import messages from '../../components/messages/messages'
 import './icon.scss';
 
 const MessageIcon = () => {
@@ -14,9 +14,12 @@ const MessageIcon = () => {
 
   const hasUnreadMessages = cntUnreadMessages > 0;
 
+  const handleClick = () => {
+    // Displays a generic component with the list
+  };
 
   return (
-    <IconButton onClick={()=>{setOpenMesagges(!openMesagges)}} className="iconButton">
+    <IconButton onClick={()=>{setOpenMesagges(!openMesagges);}} className="iconButton">
       {hasUnreadMessages ? (
         <Badge badgeContent={cntUnreadMessages} color="error" className="badgeContent">
           <Mail />

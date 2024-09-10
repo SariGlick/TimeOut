@@ -50,6 +50,7 @@ const typeDefs = `
   type Query {
     websites: [Websites]
     users: [Users]
+    userByEmail(email: String!): Users
     profile: [Profiles]
     visitedWebsites: [VisitedWebsites]
     preferences: [Preference]
