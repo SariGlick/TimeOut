@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Loader from '../../../src/stories/loader/loader.jsx'; 
+import '@testing-library/jest-dom';
 
 test('renders Loader component with default class', () => {
   render(<Loader />);

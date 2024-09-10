@@ -1,13 +1,20 @@
-import  express from 'express';
-const MessageRouter=express.Router();
-/*import { getMessages,getMessageById,addMessage, updateMessage, deleteMessage,getMessagesByUserId } from '../controllers/message.controller.js';
+import express from 'express';
+import {
+  getMessages,
+  getMessageByIdController,
+  getMessagesByUserIdController,
+  addMessageController,
+  updateMessageController,
+  deleteMessageController
+} from '../controllers/message.controller.js';
 
+const messageRouter = express.Router();
 
-MessageRouter.get('/',getMessages);
-MessageRouter.get('/:id', getMessageById);
-MessageRouter.get('/user/:userId',getMessagesByUserId );
-MessageRouter.post('/',addMessage);
-MessageRouter.put('/:id',updateMessage);
-MessageRouter.delete('/:id',deleteMessage);
-*/
-export default MessageRouter;
+messageRouter.get('/', getMessages);
+messageRouter.get('/:id', getMessageByIdController);
+messageRouter.get('/user/:userId', getMessagesByUserIdController);
+messageRouter.post('/', addMessageController);
+messageRouter.put('/:id', updateMessageController);
+messageRouter.delete('/:id', deleteMessageController);
+
+export default messageRouter;
