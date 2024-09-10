@@ -14,5 +14,3 @@ initializeBlockedSitesCache(() => {
     window.location.href = chrome.runtime.getURL('oops.html');
   }
 });
-
-

@@ -112,4 +112,4 @@ UpdateProfileComponent.propTypes = {
     profile: PropTypes.object
 };
 
-export default  UpdateProfileComponent
+export default  UpdateProfileComponent;
