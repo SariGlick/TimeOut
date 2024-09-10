@@ -8,9 +8,9 @@ export const INPUT_LABELS = {
     STATUS: 'status',
     LIMIT_MINUTES: 'Limit Minutes',
     TIMER_ACTIVATION: 'Timer Activation',
-    GOOGLE_DRIVE:'Google Drive',
-    GOOGLE_CALENDAR:'Google Calendar',
-    GOOGLE_MAP:'Google Map'
+    GOOGLE_DRIVE: 'Google Drive',
+    GOOGLE_CALENDAR: 'Google Calendar',
+    GOOGLE_MAP: 'Google Map'
 };
 
 export const TOOLTIP_TEXTS = {
@@ -30,9 +30,9 @@ export const TOOLTIP_TEXTS = {
     DELETE: 'Delete',
     CONFIRM_DELETE: 'Are you sure you want to delete this profile?',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
-    GOOGLE_DRIVE:'Google Drive',
-    GOOGLE_CALENDAR:'Google Calendar',
-    GOOGLE_MAP:'Google Map'
+    GOOGLE_DRIVE: 'Google Drive',
+    GOOGLE_CALENDAR: 'Google Calendar',
+    GOOGLE_MAP: 'Google Map'
 };
 
 export const SELECT_OPTIONS = {
@@ -59,6 +59,8 @@ export const BUTTON_LABELS = {
     SAVE: 'Save',
     DELETE: 'Delete',
     ADDING: 'Adding',
+    ADD_PROFILE: 'Add Profile',
+    UPLOAD_EXCEL: 'Upload Excel',
     START: 'Start'
 };
 
@@ -70,6 +72,7 @@ export const DIALOG_TITLES = {
     EDIT_PROFILE: 'Edit Profile',
     PROFILE_TIME:' Enter profile start time and profile end time',
     CREATE_FORM:'  To create a new profile please enter the required data.',
+    CREATE_FORM_EXCEL:'  To Create a new profile from an Excel file.',
     NEW_PROFILE:'New profile',
     STATUS_LIST:'Choose a white/black list to set how the sites are blocked.',
     GOOGLE:'Would you like your profile to be activated by Google services?'
@@ -78,6 +81,7 @@ export const DIALOG_TITLES = {
 export const TOAST_MESSAGES = {
     PROFILE_UPDATED_SUCCESS: 'Profile updated successfully!',
     PROFILE_UPDATED_ERROR: 'Error updating profile!',
+    PROFILE_NOT_FOUND: 'Error profile not found!',
     PROFILE_DELETED_SUCCESS: 'Profile deleted successfully!',
     PROFILE_DELETED_ERROR: 'Error deleting profile!',
     PROFILE_FROM_SERVER_ERROR: 'An error occurred in fetching the data from the server!',
@@ -96,6 +100,7 @@ export const TOAST_MESSAGES = {
     PROFILE_CREATE_ERROR: 'Error creating profile',
     PROFILE_CREATE_SUCCESS: 'Success creating profile',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
+    FILE_NOT_SELECTED: 'The button is disabled because No file was selected.',
     WEBSITE_CREATE_SUCCESS:'Website created successfully!'
 };
 
@@ -106,3 +111,21 @@ export const VALIDATE_MESSAGES = {
     TIME_START: 'Start time is a mandatory field',
     TIME_END: 'End time is a mandatory field',
 };
+
+export const FILE_UPLOAD = {
+    ACCEPTED_FILE_TYPES: '.xlsx,.xls',
+  };
+  
+export const TIMER_COLORS = {
+    primary: 'rgb(45, 158, 126)',
+};
+
+export const PROFILE_LIST_MESSAGES = {
+    HELLO_SELECTED_PROFILE: "Hello! You have selected your {profileName} profile that",
+    OPERATES_BETWEEN: "operates between",
+    BELOW_SITES: "Below are the sites that your profile contains:",
+    NO_PROFILE_SELECTED: "No profile selected",
+    PLEASE_SELECT_PROFILE: "Please select a profile",
+};
+
+export const PROFILE_LIST_LOADING = "Loading...";

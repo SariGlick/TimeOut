@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Button } from '@mui/material';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
@@ -10,18 +11,18 @@ import {
 import ProfileActivationTimer from './profileActivationTimer.jsx';
 import '../../styles/profilePageStyle.scss';
 
-export default function TimerActivationButton({ profileName }) {
-    const [open, setOpen] = useState(false);
+ function TimerActivationButton({ profileName='' }) {
+    const [isOpen, setIsOpen] = useState(false);
     const [start, setStart] = useState('00:00');
     const [end, setEnd] = useState('00:00');
     const [timers, setTimers] = useState([]);
 
     const handleClickOpen = useCallback(() => {
-        setOpen(true);
+        setIsOpen(true);
     }, []);
 
     const handleClose = useCallback(() => {
-        setOpen(false);
+        setIsOpen(false);
     }, []);
 
     function parseTimeStringToDate(timeString) {
@@ -62,7 +63,7 @@ export default function TimerActivationButton({ profileName }) {
     return (
         <div>
             <GenericButton label={BUTTON_LABELS.TIMER_ACTIVATION} onClick={handleClickOpen} size="medium" className="profile-timer-button" />
-            <Dialog open={open} onClose={handleClose} fullWidth={true}>
+            <Dialog open={isOpen} onClose={handleClose} fullWidth={true}>
                 <DialogTitle>{DIALOG_TITLES.TIMER_ACTIVATION}</DialogTitle>
                 <DialogContent>
                     <Grid container spacing={3} mt={2}>
@@ -111,3 +112,7 @@ export default function TimerActivationButton({ profileName }) {
         </div>
     );
 }
+TimerActivationButton.propTypes = {
+    profileName: PropTypes.string.isRequired
+};
+export default  TimerActivationButton

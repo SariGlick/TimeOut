@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types'; 
 import { CountdownCircleTimer } from 'react-countdown-circle-timer';
+import {TIMER_COLORS} from '../../constants/profileConstants.js';
 import '../../styles/profileActivationTimer.scss';
 
-const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
+const ProfileActivationTimer = ({ profileActivationTime=null, profileName='' }) => {
   const durationSeconds = profileActivationTime * 60;
 
   const renderTime = ({ remainingTime }) => {
@@ -14,7 +16,7 @@ const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
 
     return (
       <div className="timer-container">
-        <div className='timer-title'>Profile {profileName}!</div>
+        {profileName && <div className='timer-title'>Profile {profileName}!</div>} 
         <div className="timer-time">{`${hours}:${formattedMinutes}:${formattedSeconds}`}</div>
         <div className="timer-label">Time Left</div>
       </div>
@@ -24,10 +26,10 @@ const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
   return (
     <div className="timer-wrapper">
       <CountdownCircleTimer
-        key={profileActivationTime} // Make sure the timer resets when profileActivationTime changes
+        key={profileActivationTime} 
         isPlaying
         duration={durationSeconds}
-        colors={[['rgb(45, 158, 126)']]}
+        colors={[TIMER_COLORS.primary]}
         strokeWidth={4}
         size={100}
         trailColor="#d6d6d6"
@@ -36,6 +38,11 @@ const ProfileActivationTimer = ({ profileActivationTime, profileName }) => {
       </CountdownCircleTimer>
     </div>
   );
+};
+
+ProfileActivationTimer.propTypes = {
+  profileActivationTime: PropTypes.number.isRequired,
+  profileName: PropTypes.string, 
 };
 
 export default ProfileActivationTimer;

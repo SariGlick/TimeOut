@@ -94,23 +94,39 @@ export const handleFieldChange = (e, setFormData) => {
     setFormData(prevState => {
         const updatedState = { ...prevState };
 
-        if (type === 'checkbox') {
-            updatedState[name] = checked;
-        } else if (name === 'profileName') {
-            updatedState.profileName = value;
-        } else if (name === 'statusBlockedSites') {
-            return updateFormDataWithStatusBlockedSites(prevState, value);
-        } else if (name === 'timeStart' || name === 'timeEnd') {
-            updatedState.timeProfile = {
-                ...prevState.timeProfile,
-                [name]: value
-            };
-        } else {
-            updatedState[name] = value;
+        switch (type) {
+            case 'checkbox':
+                updatedState[name] = checked;
+                break;
+
+            default:
+                switch (name) {
+                    case 'profileName':
+                        updatedState.profileName = value;
+                        break;
+
+                    case 'statusBlockedSites':
+                        return updateFormDataWithStatusBlockedSites(prevState, value);
+
+                    case 'timeStart':
+                    case 'timeEnd':
+                        updatedState.timeProfile = {
+                            ...prevState.timeProfile,
+                            [name]: value
+                        };
+                        break;
+
+                    default:
+                        updatedState[name] = value;
+                        break;
+                }
+                break;
         }
+
         return updatedState;
     });
 };
+
 
 export const validateProfileDate = (formData) => {
     const startTime = new Date();

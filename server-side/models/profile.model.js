@@ -14,65 +14,6 @@ const profileSchema = new Schema({
         start: { type: String },
         end: { type: String }
     },
-    googleMapsLocation: {
-        enabled: { type: Boolean, default: false },
-        location: {
-            address: { type: String },
-            lat: { type: Number, required: true },
-            lng: { type: Number, required: true }
-        }
-    },
-    googleCalendarEvents: {
-        enabled: { type: Boolean, default: false },
-        calendarId: { type: String }
-    },
-    googleDriveFiles: {
-        enabled: { type: Boolean, default: false },
-        folderId: { type: String }
-<<<<<<< HEAD
-=======
-    }
 });
 
-
-// Middleware to check the status of listWebsites before saving
-profileSchema.pre('save', function (next) {
-    const profile = this;
-
-    if (profile.statusBlockedSites === 'white list') {
-        profile.listWebsites.forEach(site => {
-            if (site.status === 'blocked') {
-                return next(new Error('In white list mode, site status cannot be "blocked"'));
-            }
-        });
-    }else if (profile.statusBlockedSites === 'black list') {
-        profile.listWebsites.forEach(site => {
-            if (site.status === 'opened') {
-                return next(new Error('In white list mode, site status cannot be "opened"'));
-            }
-        });
->>>>>>> 5c30f3e681f0a6d4b047b90f90aaf035d1edb9cc
-    }
-});
-
-// profileSchema.pre('save', function (next) {
-//     const profile = this;
-
-//     if (profile.statusBlockedSites === 'white list') {
-//         profile.listWebsites.forEach(site => {
-//             if (site.status === 'blocked') {
-//                 return next(new Error('In white list mode, site status cannot be "blocked"'));
-//             }
-//         });
-//     }else if (profile.statusBlockedSites === 'black list') {
-//         profile.listWebsites.forEach(site => {
-//             if (site.status === 'opened') {
-//                 return next(new Error('In white list mode, site status cannot be "opened"'));
-//             }
-//         });
-//     }
-    
-//     next();
-// });
-
-export default mongoose.model("Profiles", profileSchema);
+export  default mongoose.model("Profiles", profileSchema);

@@ -8,7 +8,28 @@
   justify-content: flex-start;
   width: 100%;
   padding: 2%;
+
+  .profile-list-button {
+    background-color: transparent;
+    border: 2px solid $secondary-color;
+    color: $secondary-color;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+      background-color: $secondary-color;
+      color: white;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
 }
+
 .profile-list-select-wrapper {
   display: flex;
   justify-content: center;
@@ -47,6 +68,7 @@ button {
   display: block;
   margin: 2vh auto;
 }
+
 .custom-time-input {
   color: $primary-color;
   background-color: white;
@@ -54,9 +76,11 @@ button {
   padding: 0.5%;
   border-radius: 10px;
   margin: 2vh;
+
   &:hover {
     border-color: darken($secondary-color, 10%);
   }
+
   &:focus {
     border-color: darken($secondary-color, 10%);
     outline: none;
@@ -67,67 +91,47 @@ button {
 .div-time {
   display: flex;
   justify-content: center;
-}
-.div-time > *:not(:last-child) {
-  margin-right: 10%;
-}
-.dialog-content-text {
-  padding: 2vh;
-}
-.component-add {
-  position: absolute;
-  margin-bottom: 2vh;
-  margin: 2vh;
-  right: 0.7vw;
-}
-.component-update {
-  position: absolute;
-  top: 22vh;
-  margin-bottom: 2vh;
-  margin: 2vh;
-  right: 0.7vw;
-}
-.component-timer {
-  position: absolute;
-  top: 32vh;
-  margin-bottom: 2vh;
-  margin: 2vh;
-  right: 0.7vw;
-}
-.profile-list-container {
-  .profile-list-button {
-    background-color: transparent;
-    border: 2px solid $secondary-color;
-    color: $secondary-color;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    &:hover {
-      background-color: $secondary-color;
-      color: white;
-    }
-    &:focus {
-      outline: none;
-    }
+
+  > *:not(:last-child) {
+    margin-right: 10%;
   }
 }
+
+.component-add,
+.component-update,
+.component-timer {
+  position: absolute;
+  margin-bottom: 2vh;
+  margin: 2vh;
+  right: 0.7vw;
+
+  &.component-update {
+    top: 22vh;
+  }
+
+  &.component-timer {
+    top: 32vh;
+  }
+}
+
 .helper-text-error {
   color: $standardErrorColor;
 }
-.helper-text{
- color:  $errorColor;
+
+.helper-text {
+  color: $errorColor;
 }
 
 .profile-select {
   width: 10vw;
 }
+
 .timer {
-  margin-left:3vh;
+  margin-left: 3vh;
 }
-.green_title{
-  color:  rgb(103, 252, 210) ;
+
+.green_title {
+  color: rgb(103, 252, 210);
 }
 
 .custom-checkbox {
@@ -141,6 +145,24 @@ button {
     font-size: 28px !important;
   }
 }
+.add-profile-button {
+  margin-bottom: 100%;
+}
+.export-section{
+  margin-top: -2%;
+  margin-bottom: 4%;
+  margin-left: 63%;
+}
 
+.add-profile-button {
+  &.disabled {
+    pointer-events: none;
+  }
 
-
+  &.enabled {
+    pointer-events: auto;
+  }
+}
+.cancel-button {
+  color: rgb(103, 252, 210) !important;
+}
