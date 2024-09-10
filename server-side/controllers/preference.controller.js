@@ -1,5 +1,6 @@
-import  mongoose from 'mongoose';
-import  Preference from '../models/preference.model.js';
+
+import mongoose from 'mongoose';
+import Preference from '../models/preference.model.js';
 
 export const getAllPreference=async(req,res,next)=>{
      try {
