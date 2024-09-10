@@ -1,10 +1,13 @@
 import mongoose from 'mongoose';
-import Profile from '../models/profile.model.js';
+import Profiles from '../models/profile.model.js';
 import activeProfile from '../profileMngr.js'
 import xlsx from 'xlsx';
 import fs from 'fs'
 import websitesModel from '../models/websites.model.js';
 import { saveProfile, saveWebsite } from '../services/profile.service.js';
+import { shareProfileFunction } from '../managers/sharingManager.js'
+import { updateProfiles } from '../managers/sharingManager.js';
+
 
 const booleanize = (value) => {
     return value === 'true' || value === '1' || value === 'yes';
@@ -69,9 +72,37 @@ export const uploadProfilesFromExcel = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
-export const getAllProfiles = async (req, res) => {
+
+export const updateProfilesByInvitation = async (req, res, next) => {
+    const invitationID = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(invitationID)) {
+        return next({ message: 'Invitation ID is not valid', status: 400 });
+    }
     try {
-        const profiles = await Profile.find();
+        const updatedProfiles = await updateProfiles(invitationID);
+        if (!updatedProfiles) {
+            return next({ message: 'Profiles update failed', status: 500 });
+        }
+        return res.json({ message: 'Profiles updated successfully based on invitation', profiles: updatedProfiles }).status(200);
+    } catch (err) {
+        next({ message: err.message, status: 500 });
+    }
+};
+
+export const shareProfile = async (req, res, next) => {
+    const { inviterID, email, profileID, shareLevel } = req.body;
+
+    try {
+        const result = await shareProfileFunction(inviterID, email, profileID, shareLevel, next);
+        res.status(201).json(result);
+    } catch (error) {
+        next({ message: error.message, status: 500 });
+    }
+};
+
+export const getAllProfiles = async (req, res, next) => {
+    try {
+        const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
         res.json(profiles);
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -79,7 +110,7 @@ export const getAllProfiles = async (req, res) => {
 };
 
 export const createProfile = async (req, res) => {
-    const newProfile = new Profile(req.body);
+    const newProfile = new Profiles(req.body);
     try {
         const savedProfile = await newProfile.save();
         res.status(200).json(savedProfile);
@@ -90,11 +121,11 @@ export const createProfile = async (req, res) => {
 
 export const getProfileById = async (req, res) => {
     try {
-        const profile = await Profile.findById(req.params.id);
+        const profile = await Profiles.findById(req.params.id);
         if (!profile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json(profile);
+        return res.json(profile);
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -102,11 +133,11 @@ export const getProfileById = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const updatedProfile = await Profile.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        const updatedProfile = await Profiles.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json(updatedProfile);
+        return res.json(updatedProfile);
     } catch (err) {
         return res.status(400).json({ message: err.message });
     }
@@ -115,7 +146,7 @@ export const updateProfile = async (req, res) => {
 export const getProfilesByUserId = async (req, res) => {
     try {
         const userId = req.params.id;
-        const profiles = await Profile.find({ userId: userId }).populate({
+        const profiles = await Profiles.find({ userId: userId }).populate({
             path: 'listWebsites.websiteId',
             model: 'Websites'
         });
@@ -130,11 +161,11 @@ export const getProfilesByUserId = async (req, res) => {
 
 export const deleteProfile = async (req, res) => {
     try {
-        const deletedProfile = await Profile.findByIdAndDelete(req.params.id);
+        const deletedProfile = await Profiles.findByIdAndDelete(req.params.id);
         if (!deletedProfile) {
             return res.status(404).json({ message: 'Profile not found' });
         }
-        res.json({ message: 'Profile deleted successfully' });
+        return res.json({ message: 'Profile deleted successfully' });
     } catch (err) {
         return res.status(500).json({ message: err.message });
     }
@@ -189,15 +220,14 @@ const getDistance = (loc1, loc2) => {
 
     return distance;
 };
+
 export const activeProfileByUserId = async (req, res) => {
     try {
         const userId = req.body;
         const profile = await activeProfile(userId);
-
         res.status(201).json(profile);
     }
     catch (error) {
-        console.log({ error })
         res.status(500).send(error.message);
     }
 }
@@ -210,5 +240,6 @@ export default {
     deleteProfile,
     updateLocation,
     activeProfileByUserId,
-    uploadProfilesFromExcel
+    uploadProfilesFromExcel,
+    activeProfileByUserId,
 };

@@ -9,10 +9,15 @@ export async function handleGet(path) {
 };
 
 export async function handlePost(path, data) {
-    const response = await axios.create({ baseURL: url }).post(path, data);
+    const response = await axios.create({baseURL:url}).post(path,data,
+        {
+           headers: {
+                  'Content-Type': 'application/json'
+                   }
+                }
+    )
     return response;
-
-};
+}
 
 export async function handlePut(path, data) {
     const response = await axios.create({ baseURL: url }).put(path, data);

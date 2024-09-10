@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
 
 /**
@@ -7,8 +7,8 @@ import { User } from '../../types/types';
  */
 
 /** @type {UserStateType} */
-const initialState = { users: [] };
 
+const initialState = { users: [], currentUser: {} }
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -17,7 +17,7 @@ const userSlice = createSlice({
          * @param {UserStateType} state
          * @param {PayloadAction<User[]>} action
          */
-        setUser: (state, action) => {
+        setUsers: (state, action) => {
             state.users = action.payload;
         },
         /**
@@ -26,6 +26,7 @@ const userSlice = createSlice({
          */
         addUser: (state, action) => {
             state.users.push(action.payload);
+            state.currentUser=action.payload;
         },
         /**
          * @param {UserStateType} state

@@ -4,6 +4,7 @@ import { INVALID_INPUT_MESSAGE } from './constants';
 import { TextField, InputAdornment } from '@mui/material';
 import './genericInput.scss';
 
+
 const GenericInput = ({ 
   label, 
   name='',
@@ -20,18 +21,17 @@ const GenericInput = ({
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState('');
-
   useEffect(() => {
     if (validation && typeof validation === 'function') {
       handleValidation(inputValue);
     }
   }, [inputValue]);
 
-const handleChange = (e) => {
-  const newValue = e.target.value;
-  setInputValue(newValue);
-  if (onChange) onChange(e);
-};
+  const handleChange = (e) => {
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    onChange(e);
+  };
 
   const handleValidation = (inputValue) => {
     const validationResult = validation(inputValue);
@@ -40,10 +40,10 @@ const handleChange = (e) => {
       setHelperText(validationResult.helperText || INVALID_INPUT_MESSAGE);
     } else {
       setError(false);
-      setHelperText(''); 
+      setHelperText('');
     }
   };
-
+   
   const inputStyle = {
     width,
   };
@@ -55,6 +55,7 @@ const handleChange = (e) => {
         type={type}
         name={name}
         value={inputValue}
+        name={name}
         onChange={handleChange}
         size={size}
         error={error}
@@ -77,7 +78,9 @@ const handleChange = (e) => {
 
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'number', 'email', 'password','time','url']),
+
+  type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
+  name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'medium']),
@@ -85,5 +88,4 @@ GenericInput.propTypes = {
   icon: PropTypes.elementType,
   validation: PropTypes.func,
 };
-
 export default GenericInput;

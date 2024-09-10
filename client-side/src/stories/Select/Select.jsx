@@ -4,7 +4,7 @@ import SelectMui from '@mui/material/Select';
 import PropTypes from 'prop-types';
 import './select.scss';
 
-const Select = ({ className, options = [{ text: "option1", icon: '🖋️' }, { text: "option2", icon: '🖋️' }], onChange = undefined, title, size = 'large', widthOfSelect, value, name }) => {
+const Select = ({ className, options, onChange = undefined, title, size = 'large', widthOfSelect, value, name }) => {
   return (
     <div className='selectWrapper'>
       <Box>

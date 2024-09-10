@@ -6,18 +6,15 @@ export const getAllProfiles = async () => {
         return response.data;
     } catch (err) {
         console.error('Error getting all profiles:', err);
-        throw err;
     }
 };
 
 export const createProfile = async (profileData) => {
     try {
-        console.log(profileData)
         const response = await handlePost('/profiles', profileData);
         return response.data;
     } catch (err) {
-        console.error('Error creating profile:', err);
-        throw err;
+        console.error('Error createProfile:', err);
     }
 };
 
@@ -26,8 +23,7 @@ export const getProfileById = async (id) => {
         const response = await handleGet(`/profiles/${id}`);
         return response.data;
     } catch (err) {
-        console.error(`Error getting profile with id ${id}:`, err);
-        throw err;
+        console.error('Error getting  profile:', err);
     }
 };
 
@@ -37,8 +33,7 @@ export const updateProfileApi = async (id, profileData) => {
         const response = await handlePut(`/profiles/${id}`, profileData);
         return response.data;
     } catch (err) {
-        console.error(`Error updating profile with id ${id}:`, err);
-        throw err;
+        console.error('Error  profiles:', err);
     }
 };
 
@@ -48,7 +43,6 @@ export const getProfilesByUserId = async (id) => {
         return response.data;
     } catch (err) {
         console.error(`Error getting profiles for user ${id}:`, err);
-        throw err;
     }
 };
 
@@ -57,8 +51,7 @@ export const deleteProfileApi = async (id) => {
         const response = await handleDelete(`/profiles/${id}`);
         return response.data;
     } catch (err) {
-        console.error(`Error deleting profile with id ${id}:`, err);
-        throw err;
+        console.error('Error:', err.response || err.message);
     }
 };
 

@@ -11,7 +11,6 @@ const initialState = {
     profiles: [],
     selectedProfile: null,
 };
-
 const profileSlice = createSlice({
     name: 'profile',
     initialState,

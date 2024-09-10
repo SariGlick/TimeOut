@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { Fragment, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 import {
   Button,
@@ -8,10 +9,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Tooltip,
-  Box,
-  Checkbox,
-  FormControlLabel
 } from '@mui/material';
 import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
@@ -19,7 +16,6 @@ import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
-import MapComponent from '../googleServices/googleMap.jsx'
 import {
   SELECT_OPTIONS,
   INPUT_LABELS,
@@ -32,37 +28,30 @@ import {
 import '../../styles/profilePageStyle.scss';
 import { handlePost } from '../../axios/middleware.js';
 
-export default function AddProfile({ userId }) {
+function AddProfile({ userId = '' }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const [open, setOpen] = React.useState(false);
-  const [data, setData] = React.useState(getInitialData());
-  const [errorText, setErrorText] = React.useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [data, setData] = useState(getInitialData());
+  const [errorText, setErrorText] = useState('');
+  const isFormIncomplete = !data.name || data.name.length < 2 || data.name.length > 50 || !data.status;
+
   function getInitialData() {
     return {
       name: '',
       timeStart: '00:00',
       timeEnd: '00:00',
       status: '',
-      googleMapsEnabled: false,
-      googleMapsLocation: { address: '', lat: 0, lng: 0 },
-      googleCalendarEnabled: false,
-      googleCalendarId: '',
-      googleDriveEnabled: false,
-      googleDriveFolderId: ''
     };
   }
 
-  const handleClose = useCallback(() => {
-    setOpen(false);
-  }, []);
-
-  const handleClickOpen = useCallback(() => {
-    setData(getInitialData());
-    setOpen(true);
-  }, []);
+  const toggleDialogOpen = () => {
+    if (!isOpen) {
+      setData(getInitialData());
+    }
+    setIsOpen(!isOpen);
+  };
 
   const handleChange = useCallback((e) => {
     const { name, checked, value, type } = e.target;
@@ -78,7 +67,6 @@ export default function AddProfile({ userId }) {
     }
   }, [data.status, enqueueSnackbar]);
 
-
   const validateName = (inputValue) => {
     if (inputValue.length < 2) {
       return VALIDATE_MESSAGES.PROFILE_NAME_SHORT;
@@ -88,63 +76,31 @@ export default function AddProfile({ userId }) {
     return '';
   };
 
-  const handleSaveDataAddress = ({ address, markerPosition }) => {
-    setData(prevData => {
-      const updatedData = {
-        ...prevData,
-        googleMapsLocation: {
-          address: address,
-          lat: markerPosition.lat,
-          lng: markerPosition.lng
-        }
-      };
-      return updatedData;
-    });
-  };
-
-  const handleSubmit = useCallback(async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const booleanize = (value) => {
-      return value === true || value === 'true';
-    };
-    debugger
     const profileData = {
-      userId: userId,
+      userId,
       profileName: data.name,
       statusBlockedSites: data.status,
       timeProfile: {
         start: data.timeStart,
         end: data.timeEnd,
       },
-      googleMapsLocation: {
-        enabled: booleanize(data.googleMapsEnabled),
-        location: {
-          address: data.googleMapsLocation.address,
-          lat: data.googleMapsLocation.lat,
-          lng: data.googleMapsLocation.lng
-        }
-      },
-      googleCalendarEvents: {
-        enabled: booleanize(data.googleCalendarEnabled),
-        calendarId: data.googleCalendarId
-      },
-      googleDriveFiles: {
-        enabled: booleanize(data.googleDriveEnabled),
-        folderId: data.googleDriveFolderId
-      }
     };
 
     try {
-      await createProfile(profileData);
-      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
-      dispatch(addProfile(profileData));
+      const ProfileNew = await createProfile(profileData);
+      if (ProfileNew.status === 200) {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
+      }
+      dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
       handleClose();
     } catch (error) {
       console.error(TOAST_MESSAGES.PROFILE_CREATE_ERROR, error);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
     }
-  }, [data, dispatch, navigate, handleClose, enqueueSnackbar, userId]);
+  }
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -170,12 +126,12 @@ export default function AddProfile({ userId }) {
     }
   };
   return (
-    <React.Fragment>
-      <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={handleClickOpen} size="medium" />
+    <Fragment>
+      <GenericButton label={DIALOG_TITLES.ADD_PROFILE} variant="outlined" className="profile-list-button" onClick={toggleDialogOpen} size="medium" />
       <Dialog
         fullWidth={true}
-        open={open}
-        onClose={handleClose}
+        open={isOpen}
+        onClose={toggleDialogOpen}
         PaperProps={{
           component: 'form',
           onSubmit: handleSubmit,
@@ -222,7 +178,7 @@ export default function AddProfile({ userId }) {
             label={INPUT_LABELS.PROFILE_NAME}
             validation={validateName}
             error={!!errorText}
-            helperText={<span style={{ color: 'red' }}>{errorText}</span>}
+            helperText={<span className='helper-text'>{errorText}</span>}
           />
           <DialogContentText className='dialog-content-text'>{DIALOG_TITLES.PROFILE_TIME} </DialogContentText>
           <div className='div-time'>
@@ -252,62 +208,22 @@ export default function AddProfile({ userId }) {
               onChange={handleChange}
             />
           </div>
-          <Box className="checkbox-container">
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleMapsEnabled"
-                  checked={data.googleMapsEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Map"
-            />
-            {data.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleCalendarEnabled"
-                  checked={data.googleCalendarEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Calendar"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  name="googleDriveEnabled"
-                  checked={data.googleDriveEnabled}
-                  onChange={handleChange}
-                  className="custom-checkbox"
-                />
-              }
-              label="Google Drive"
-            />
-          </Box>
         </DialogContent>
         <DialogActions>
-          <Button color="error" onClick={handleClose}>
+          <Button color="error" onClick={toggleDialogOpen}>
             {BUTTON_LABELS.CANCEL}
           </Button>
-          {(!data.name || data.name.length < 2 || data.name.length > 50 || !data.status) ? (
-            <Tooltip title={TOAST_MESSAGES.FORM_NOT_FILLED}>
-              <span>
-                <Button color="success" type="submit" disabled={!data.name || data.name.length < 2 || data.name.length > 50 || !data.status}>
-                  {BUTTON_LABELS.ADDING}
-                </Button>
-              </span>
-            </Tooltip>
-          ) : (
-            <Button color="success" type="submit">
+          <span>
+            <Button color="success" type="submit" disabled={isFormIncomplete}>
               {BUTTON_LABELS.ADDING}
             </Button>
-          )}
+          </span>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Fragment>
   );
 }
+AddProfile.propTypes = {
+  userId: PropTypes.string.isRequired,
+};
+export default AddProfile
