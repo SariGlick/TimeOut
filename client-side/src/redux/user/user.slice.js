@@ -24,15 +24,9 @@ const userSlice = createSlice({
          * @param {UserStateType} state
          * @param {PayloadAction<User>} action
          */
-        setUser: (state, action) => {
-          state.currentUser = action.payload;
-        },
-        /**
-         * @param {UserStateType} state
-         * @param {PayloadAction<User>} action
-         */
         addUser: (state, action) => {
             state.users.push(action.payload);
+            state.currentUser=action.payload;
         },
         /**
          * @param {UserStateType} state

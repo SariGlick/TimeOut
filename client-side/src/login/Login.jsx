@@ -50,8 +50,7 @@ function Login({ apiUrl =process.env.REACT_APP_SERVER_URL}) {
         },
       });
       const userData = loginResponse.data;
-
-
+      localStorage.setItem('userId', userData.user._id);
       dispatch(setCurrentUser(userData.user));
 
       navigate('/');
