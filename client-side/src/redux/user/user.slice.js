@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSelector, createSlice } from '@reduxjs/toolkit';
 import { User } from '../../types/types';
 
 /**
@@ -7,8 +7,8 @@ import { User } from '../../types/types';
  */
 
 /** @type {UserStateType} */
-const initialState = { users: [], currentUser: {} }
 
+const initialState = { users: [], currentUser: {} }
 const userSlice = createSlice({
     name: 'user',
     initialState,

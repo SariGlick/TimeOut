@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from 'react';
 import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
-import DateTimePicker from '../stories/datePicker/DatePicker.jsx';
 import VisitedWebsitesComponent from './statistics/graphs.jsx';
 import GraphBar from './statistics/graphBar.jsx';
 import RadioButtonComponent from '../stories/RadioButton/radio-Button.jsx';
