@@ -1,10 +1,10 @@
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 import Profiles from '../models/profile.model.js';
-import {shareProfileFunction} from '../managers/sharingManager.js'
-import {updateProfiles} from '../managers/sharingManager.js';
+import { shareProfileFunction } from '../managers/sharingManager.js'
+import { updateProfiles } from '../managers/sharingManager.js';
 
 export const updateProfilesByInvitation = async (req, res, next) => {
-    const invitationID = req.params.id;    
+    const invitationID = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(invitationID)) {
         return next({ message: 'Invitation ID is not valid', status: 400 });
     }
@@ -101,7 +101,18 @@ export const deleteProfile = async (req, res) => {
     }
 };
 
-export const activeProfileByUserId = async(req, res) => {
+export async function updateLocation(req, res) {
+    const { userId, location } = req.body;
+    try {
+        await updateUserLocation(userId, location);
+        res.status(200).json({ message: 'Location updated and profiles checked' });
+    } catch (error) {
+        console.error('Error updating location:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const activeProfileByUserId = async (req, res) => {
     try {
         const userId = req.body;
         const profile = await activeProfile(userId);

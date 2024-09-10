@@ -1,12 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Box, Tooltip } from '@mui/material';
+import { Grid, Box, Tooltip, FormControlLabel, Checkbox } from '@mui/material';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import Select from '../../stories/Select/Select.jsx';
 import { INPUT_LABELS, TOOLTIP_TEXTS, SELECT_OPTIONS } from '../../constants/profileConstants.js';
 import { handleFieldChange } from '../../utils/profileUtil.js';
+import MapComponent from '../googleServices/googleMap.jsx';
 
- function ProfileForm({ formData, setFormData }) {
+function ProfileForm({ formData, setFormData }) {
+    const handleSaveDataAddress = ({ address, markerPosition }) => {
+        setFormData(prevData => {
+            const updatedData = {
+                ...prevData,
+                googleMapsLocation: {
+                    address: address,
+                    lat: markerPosition.lat,
+                    lng: markerPosition.lng
+                }
+            };
+            return updatedData;
+        });
+    };
+
     return (
         <Box mt={2}>
             <Grid container spacing={3}>
@@ -18,7 +33,7 @@ import { handleFieldChange } from '../../utils/profileUtil.js';
                                 name="profileName"
                                 value={formData.profileName}
                                 onChange={(e) => handleFieldChange(e, setFormData)}
-                                width='100%'
+                                width="100%"
                             />
                         </Tooltip>
                     </Box>
@@ -34,7 +49,7 @@ import { handleFieldChange } from '../../utils/profileUtil.js';
                                 value={formData.timeProfile.timeStart}
                                 onChange={(e) => handleFieldChange(e, setFormData)}
                                 type="time"
-                                width='100%'
+                                width="100%"
                             />
                         </Tooltip>
                     </Box>
@@ -48,7 +63,7 @@ import { handleFieldChange } from '../../utils/profileUtil.js';
                                 value={formData.timeProfile.timeEnd}
                                 onChange={(e) => handleFieldChange(e, setFormData)}
                                 type="time"
-                                width='100%'
+                                width="100%"
                             />
                         </Tooltip>
                     </Box>
@@ -62,9 +77,25 @@ import { handleFieldChange } from '../../utils/profileUtil.js';
                                 value={formData.statusBlockedSites}
                                 onChange={(e) => handleFieldChange(e, setFormData)}
                                 options={SELECT_OPTIONS.STATUS_BLOCKED_SITES}
-                                widthOfSelect='100%'
+                                widthOfSelect="100%"
                             />
                         </Tooltip>
+                    </Box>
+                </Grid>
+                <Grid item xs={12} sm={5}>
+                    <Box mt={1}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    name="googleMapsEnabled"
+                                    checked={formData.googleMapsEnabled}
+                                    onChange={(e) => handleFieldChange(e, setFormData)}
+                                    className="custom-checkbox"
+                                />
+                            }
+                            label="Google Map"
+                        />
+                        {formData.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
                     </Box>
                 </Grid>
             </Grid>
@@ -94,4 +125,5 @@ ProfileForm.defaultProps = {
         statusBlockedSites: '',
     },
 };
-export default  ProfileForm
+
+export default ProfileForm;

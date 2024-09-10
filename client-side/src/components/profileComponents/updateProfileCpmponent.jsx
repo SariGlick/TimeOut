@@ -35,9 +35,11 @@ const initialFormData = {
     },
     statusBlockedSites: '',
     websites: [],
+    googleMapsEnabled: false,
+    googleMapsLocation: { address: '', lat: 0, lng: 0 },
 };
 
- function UpdateProfileComponent({ profile=null }) {
+function UpdateProfileComponent({ profile = null }) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
@@ -64,10 +66,31 @@ const initialFormData = {
             enqueueSnackbar(<ToastMessage message={VALIDATE_MESSAGES.PROFILE_NAME_LONG} type="error" />);
             return;
         }
+        const booleanize = (value) => {
+            return value === true || value === 'true';
+        };
         try {
-            await updateProfileApi(profile._id, formData);
-            dispatch(updateProfile(formData));
-            dispatch(setSelectProfile(formData));
+            const updatedProfile = {
+                userId: formData.userId,
+                profileName: formData.profileName,
+                statusBlockedSites: formData.statusBlockedSites,
+                timeProfile: {
+                    start: formData.timeProfile.timeStart,
+                    end: formData.timeProfile.timeEnd
+                },
+                listWebsites: formData.websites,
+                googleMapsLocation: {
+                    enabled: booleanize(formData.googleMapsEnabled),
+                    location: {
+                        address: formData.googleMapsLocation.address,
+                        lat: formData.googleMapsLocation.lat,
+                        lng: formData.googleMapsLocation.lng
+                    }
+                }
+            };
+            await updateProfileApi(profile._id, updatedProfile);
+            dispatch(updateProfile(updatedProfile));
+            dispatch(setSelectProfile(updatedProfile));
             toggleDialogOpen();
             enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_UPDATED_SUCCESS} type="success" />);
             setTimeout(() => navigate(0), 3000);
@@ -112,4 +135,4 @@ UpdateProfileComponent.propTypes = {
     profile: PropTypes.object
 };
 
-export default  UpdateProfileComponent;
+export default UpdateProfileComponent;

@@ -5,7 +5,7 @@ import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
 import HomePage from "../components/homePageComponent.jsx";
-import Statistics from '../components/statistics.jsx'
+// import Statistics from '../components/statistics.jsx'
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -31,10 +31,10 @@ export  const router = createBrowserRouter([
                 path: '/login',
                 element: <Login/>
             },
-            {
-                path:'/statistics',
-                element: <Statistics></Statistics>
-            }
+            // {
+            //     path:'/statistics',
+            //     element: <Statistics/>
+            // }
         ]
     },
 ])

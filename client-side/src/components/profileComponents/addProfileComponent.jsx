@@ -1,4 +1,4 @@
-import {Fragment,useState,useCallback} from 'react';
+import { Fragment, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,6 +9,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Checkbox,
+  FormControlLabel
 } from '@mui/material';
 import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
@@ -16,6 +18,7 @@ import GenericButton from '../../stories/Button/GenericButton.jsx';
 import GenericInput from '../../stories/GenericInput/genericInput.jsx';
 import { addProfile } from '../../redux/profile/profile.slice.js';
 import { createProfile } from '../../services/profileService.js';
+import MapComponent from '../googleServices/googleMap.jsx';
 import {
   SELECT_OPTIONS,
   INPUT_LABELS,
@@ -26,7 +29,7 @@ import {
 } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
- function AddProfile({ userId='' }) {
+function AddProfile({ userId = '' }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -41,6 +44,8 @@ import '../../styles/profilePageStyle.scss';
       timeStart: '00:00',
       timeEnd: '00:00',
       status: '',
+      googleMapsEnabled: false,
+      googleMapsLocation: { address: '', lat: 0, lng: 0 },
     };
   }
 
@@ -74,8 +79,25 @@ import '../../styles/profilePageStyle.scss';
     return '';
   };
 
+  const handleSaveDataAddress = ({ address, markerPosition }) => {
+    setData(prevData => {
+      const updatedData = {
+        ...prevData,
+        googleMapsLocation: {
+          address: address,
+          lat: markerPosition.lat,
+          lng: markerPosition.lng
+        }
+      };
+      return updatedData;
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const booleanize = (value) => {
+      return value === true || value === 'true';
+    };
     const profileData = {
       userId,
       profileName: data.name,
@@ -84,17 +106,24 @@ import '../../styles/profilePageStyle.scss';
         start: data.timeStart,
         end: data.timeEnd,
       },
+      googleMapsLocation: {
+        enabled: booleanize(data.googleMapsEnabled),
+        location: {
+          address: data.googleMapsLocation.address,
+          lat: data.googleMapsLocation.lat,
+          lng: data.googleMapsLocation.lng
+        }
+      },
     };
 
     try {
-      const ProfileNew= await createProfile(profileData);
-      if(ProfileNew.status===200)
-      {
+      const ProfileNew = await createProfile(profileData);
+      if (ProfileNew.status === 200) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       }
       dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
-      handleClose();
+      toggleDialogOpen();
     } catch (error) {
       console.error(TOAST_MESSAGES.PROFILE_CREATE_ERROR, error);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
@@ -158,16 +187,28 @@ import '../../styles/profilePageStyle.scss';
               onChange={handleChange}
             />
           </div>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  name="googleMapsEnabled"
+                  checked={data.googleMapsEnabled}
+                  onChange={handleChange}
+                  className="custom-checkbox"
+                />
+              }
+              label="Google Map"
+            />
+            {data.googleMapsEnabled && <MapComponent onSaveData={handleSaveDataAddress} />}
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={toggleDialogOpen}>
             {BUTTON_LABELS.CANCEL}
           </Button>
-              <span>
-                <Button color="success" type="submit" disabled={isFormIncomplete}>
-                  {BUTTON_LABELS.ADDING}
-                </Button>
-              </span>
+          <span>
+            <Button color="success" type="submit" disabled={isFormIncomplete}>
+              {BUTTON_LABELS.ADDING}
+            </Button>
+          </span>
         </DialogActions>
       </Dialog>
     </Fragment>

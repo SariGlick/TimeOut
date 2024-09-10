@@ -14,6 +14,14 @@ const profileSchema = new Schema({
         start: { type: String },
         end: { type: String }
     },
+    googleMapsLocation: {
+        enabled: { type: Boolean, default: false },
+        location: {
+            address: { type: String },
+            lat: { type: Number, required: true },
+            lng: { type: Number, required: true }
+        }
+    }
 });
 
-export  default mongoose.model("Profiles", profileSchema);
+export default mongoose.model("Profiles", profileSchema);
