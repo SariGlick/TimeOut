@@ -4,12 +4,8 @@ import ProfilePageComponent from "../components/profileComponents/profilePageCom
 import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
-<<<<<<< HEAD
 import HomePage from "../components/homePageComponent.jsx";
-
-=======
 import Statistics from '../components/statistics.jsx'
->>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83
 export  const router = createBrowserRouter([
     {
         path: '',
