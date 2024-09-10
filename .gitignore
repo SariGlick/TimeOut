@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 .vscode/settings.json
  package-lock.json
 node_modules
+=======
+.vscode/settings.json
+ package-lock.json
+>>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83

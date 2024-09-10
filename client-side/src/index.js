@@ -7,15 +7,27 @@ import App from './App';
 import './index.scss';
 import './i18n.js';
 
+// <<<<<<< HEAD
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <React.StrictMode>
+//     <Provider store={store}>
+//       <React.Suspense fallback='loading'>
+//         <App />
+//       </React.Suspense>
+//     </Provider>
+//   </React.StrictMode>
+// );
+
+// reportWebVitals();
+// =======
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <React.Suspense fallback='loading'>
-        <App />
-      </React.Suspense>
-    </Provider>
+    <App/>
   </React.StrictMode>
 );
-
 reportWebVitals();
+

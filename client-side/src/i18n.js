@@ -9,7 +9,7 @@ i18n
 .init(
     {
         debug:true,
-        fallbackLng:'he'
+        fallbackLng:'en'
     }
 )
 
