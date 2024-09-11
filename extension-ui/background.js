@@ -1,44 +1,21 @@
+importScripts('constants.js');
 let blockedSitesCache = null;
 let allowedSitesCache = [];
 let isBlackList = true;
-let currentUserId = null;
+let currentUser = null;
 
 chrome.runtime.onStartup.addListener(() => {
   initializeCaches();
-  getUserIdFromTokenCookie();
+  initializeSession();
 });
 
 chrome.runtime.onInstalled.addListener(() => {
   initializeCaches();
-  getUserIdFromTokenCookie();
+  initializeSession();
 });
 
-function getUserIdFromTokenCookie() {
-  chrome.cookies.get({ url: "http://localhost:5000", name: "token" }, (cookie) => {
-    if (cookie) {
-      const token = cookie.value;
-      const userId = parseUserIdFromToken(token);
-      console.log("User ID:", userId);
-
-    } else {
-      console.log("Token cookie not found!");
-    }
-    
-});}
-
-function parseUserIdFromToken(token) {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    return payload.userId;   
-  } catch (error) {
-    console.error("Failed to parse token:", error);
-    return null;
-  }
-}
-
-
 function initializeCaches(callback) {
-  chrome.storage.local.get(["blockedSites"], (data) => {
+  chrome.storage.local.get("blockedSites", (data) => {
     blockedSitesCache = data.blockedSites || [];
     if (typeof callback === "function") {
       callback();
@@ -46,7 +23,7 @@ function initializeCaches(callback) {
   });
 }
 
-function ensureCachesInitialized(callback) {
+function ensureBlockedSitesCacheInitialized(callback) {
   if (blockedSitesCache === null) {
     initializeCaches(callback);
   } else if (typeof callback === "function") {
@@ -54,8 +31,47 @@ function ensureCachesInitialized(callback) {
   }
 }
 
+function initializeSession() {
+  chrome.storage.local.get(['userId'], (result) => {
+    if (result.userId) {
+      currentUser = result.userId;
+      console.log("Current User ID:", currentUser);
+    } else {
+      // No userId in storage, fetch it from the server
+      fetchUserIdFromServer();
+    }
+  });
+}
+
+function fetchUserIdFromServer() {
+  fetch('http://localhost:5000/users/me', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json', 'Cache-Control': 'no-cache'
+    },
+    credentials: 'include' // אם אתה זקוק לשלוח עוגיות
+  })
+  .then((response) => response.json())
+  .then((user_id) => {
+    if (user_id) {
+      const userId = user_id; // נניח ש-ID של המשתמש נמצא ב- data.user._id
+      currentUser = userId; // עדכן את המשתנה currentUser
+      // שמור את ה-userId ב-chrome.storage.local
+      chrome.storage.local.set({ userId: currentUser }, () => {
+        console.log("User ID fetched from server and stored:", currentUser);
+      });
+    } else {
+      console.log("User ID not found on the server.");
+    }
+  })
+  .catch((error) => {
+    console.error("Error fetching user ID from server:", error);
+  });
+}
+
+
 chrome.webNavigation.onBeforeNavigate.addListener((details) => {
-  ensureCachesInitialized(() => {
+  ensureBlockedSitesCacheInitialized(() => {
     handleBeforeNavigate(details);
   });
 }, { url: [{ schemes: ['http', 'https'] }] });
@@ -68,15 +84,8 @@ function handleBeforeNavigate(details) {
     }
 
     const hostname = url.hostname.toLowerCase();
-
-    if (isBlackList) {
-      if (blockedSitesCache.some(site => hostname.includes(site))) {
-        blockSite(details.tabId);
-      }
-    } else {
-      if (!allowedSitesCache.some(site => hostname.includes(site))) {
-        blockSite(details.tabId);
-      }
+    if (blockedSitesCache.some(site => hostname.includes(site))) {
+      blockSite(details.tabId);
     }
   } catch (error) {
     console.error("Invalid URL: ", error);
@@ -103,35 +112,29 @@ function blockSite(tabId) {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'addBlockedSite') {
     const hostname = request.hostname.toLowerCase();
-    ensureCachesInitialized(() => {
+    ensureBlockedSitesCacheInitialized(() => {
       if (!blockedSitesCache.includes(hostname)) {
         blockedSitesCache.push(hostname);
         chrome.storage.local.set({ blockedSites: blockedSitesCache }, () => {
           sendResponse({ success: true });
         });
       } else {
-        sendResponse({ success: false, message: "Site is already blocked." });
+        sendResponse({ success: false, message: 'Site already blocked' });
       }
     });
     return true;
-  }
-
-  if (request.action === 'getMode') {
-    ensureCachesInitialized(() => {
-      sendResponse({ isBlackList: isBlackList });
-    });
-    return true;
-  }
-
-  if (request.action === 'getBlockedSites') {
-    ensureCachesInitialized(() => {
+  } else if (request.action === 'getBlockedSites') {
+    ensureBlockedSitesCacheInitialized(() => {
       sendResponse({ blockedSites: blockedSitesCache });
     });
     return true;
-  }
-
-  if (request.action === 'getAllowedSites') {
-    sendResponse({ allowedSites: allowedSitesCache });
+  } else if (request.action === 'storeUserId' && request.userId) {
+    // שמירת ה-UserId שנשלח מדף ה-HTML
+    chrome.storage.local.set({ userId: request.userId }, () => {
+      currentUser = request.userId;
+      console.log('User ID stored:', currentUser);
+      sendResponse({ success: true });
+    });
     return true;
   }
 });

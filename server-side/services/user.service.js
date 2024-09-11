@@ -1,26 +1,41 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import Users from '../models/user.model.js';
-import dotenv from 'dotenv';
 
-dotenv.config();
-const JWT_SECRET = process.env.JWT_SECRET;
+export const signIn = async (email, password) => {
+  const user = await Users.findOne({ email });
+  console.log(user);
+  
+  if (!user) {
+    throw new Error('User not found');
+  }
 
-export const getUsers = async () => {
-  return Users.find().populate('visitsWebsites profiles preference').select('-__v');
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+  if (!isPasswordValid) {
+    throw new Error('Authentication failed');
+  }
+
+  user.password = undefined; // Hide password
+  return { user };
 };
 
 export const getUserById = async (id) => {
-  return Users.findById(id).populate('visitsWebsites profiles preference').select('-__v');
+  return Users.findById(id).select('-password');
 };
 
-export const addUser = async (userData, file) => {
-  if (file) {
-    userData.profileImage = file.originalname;
-  }
-  userData.password = await bcrypt.hash(userData.password, 10);
-  const newUser = new Users(userData);
-  await newUser.validate();
+export const getUsers = async () => {
+  return Users.find().select('-password');
+};
+
+export const addUser = async (data, file) => {
+  const salt = await bcrypt.genSalt(10);
+  const hash = await bcrypt.hash(data.password, salt);
+
+  const newUser = new Users({
+    ...data,
+    password: hash,
+    profileImage: file?.path,
+  });
+
   return newUser.save();
 };
 
@@ -28,32 +43,21 @@ export const deleteUser = async (id) => {
   return Users.findByIdAndDelete(id);
 };
 
-export const updatedUser = async (id, userData, file) => {
-  if (file) {
-    userData.profileImage = file.originalname;
-  }
-  return Users.findByIdAndUpdate(id, userData, { new: true });
-};
-export const signIn = async (email, password) => {
-  const user = await Users.findOne({ email });
-  console.log(user);
-  
+export const updatedUser = async (id, data, file) => {
+  const user = await Users.findById(id);
+
   if (!user) {
-      throw new Error('Auth Failed');
+    throw new Error('User not found');
   }
 
-  const same = await bcrypt.compare(password, user.password);
-  if (!same) {
-      throw new Error('Auth Failed');
+  user.name = data.name || user.name;
+  user.email = data.email || user.email;
+  user.profileImage = file?.path || user.profileImage;
+
+  if (data.password) {
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(data.password, salt);
   }
 
-  user.password = "****"; 
-  const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
-  return { user, token };
-};
-
-
-export const getUserProfile = async (token) => {
-  const decoded = jwt.verify(token, JWT_SECRET);
-  return Users.findById(decoded.id).select('_id');
+  return user.save();
 };

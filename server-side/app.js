@@ -17,14 +17,21 @@ connectMongo();
 
 const app = express();
 app.use(cookieParser());
-const corsOptions = {
-  origin: 'chrome-extension://bcmdbgmbffljogmenfmblpikdmlfdaca',
-  credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type'],
-  exposedHeaders: ['set-cookie'],
-};
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500', 'chrome-extension://bcmdbgmbffljogmenfmblpikdmlfdaca'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true  
+}));
+
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
