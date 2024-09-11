@@ -1,56 +1,35 @@
-import { use } from 'i18next';
-import { handleGet, handlePost, handlePut, handleDelete } from '../axios/middleware.js'
-const userUrl = `${process.env.REACT_APP_BASE_URL}/users`
-export const getAllUser = async() =>{
+import axios from 'axios';
+import { handlePost, handlePut } from '../axios/middleware';
+const baseURL = process.env.REACT_APP_BASE_URL;
+export const createUser = async (userData) => {
     try {
-        const response =  handleGet(userUrl)
+        const response = await handlePost('/users', userData);
         return response.data;
-    } catch (error) {
-       console.error('error geting all user',error.message);
-         throw error;
+    } catch (err) {
+        console.error('Error creating user:', err);
+        throw err;
     }
- 
-}
-export const getUserById = async(id) =>{
-    try {
-        const response = handleGet(`${userUrl}/${id}`)
-        return (await response).data
-    } catch (error) {
-        console.error('error getting user by user id',error);
-        throw error;
-    }
+};
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
   
-}
-export const updateUser=(id,user) =>{
+  export const updateUser = async (user, userId) => {
     try {
-        const response = handlePut(`${userUrl}/${id}`,user)
-        return response.data
-
-    } catch (error) {
-        console.error('error updating user ', error);
-        throw error;
-        
-    }
-}
-export const addUser = (user)=>{
-    try {
-        const response = handlePost(userUrl,user)
+      const token = getCookie('token');
+      const response = await axios.put(`${baseURL}/users/${userId}`,
+           user, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`
+            }
+            });
         return response.data;
-    } catch (error) {
-        console.error('error adding user ', error);
-        throw error;
-        
+    } catch (err) {
+        console.error('Error updating user:', err);
+        throw err;
     }
-
-}
-export const  deleteUser = (id) =>{
-    try {
-        const response = handleDelete(`${userUrl}/${id}`)
-        return response.data;
-    } catch (error) {
-        console.error('error in deleting user');
-         throw error;
-        
-    }
-
-}
+  };

@@ -30,7 +30,6 @@ app.use('/preferences',preferencesRouter);
 app.use('/websites',websitesRouter);
 app.use('/profiles',profilesRouter);
 app.use('/vistedWebsites',visitedWebSitesRouter);
-app.use('/messages',messageRouter);
 app.use('/users',usersRouter);
 app.use('/message',MessageRouter);
 app.use('/messageType',messageTypeRouter);

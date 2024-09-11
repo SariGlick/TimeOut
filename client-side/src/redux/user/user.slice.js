@@ -7,7 +7,7 @@ import { User } from '../../types/types';
  */
 
 /** @type {UserStateType} */
-const initialState = { users: [], currentUser: {} }
+const initialState = { users: [] };
 
 const userSlice = createSlice({
     name: 'user',
@@ -17,7 +17,7 @@ const userSlice = createSlice({
          * @param {UserStateType} state
          * @param {PayloadAction<User[]>} action
          */
-        setUsers: (state, action) => {
+        setUser: (state, action) => {
             state.users = action.payload;
         },
         /**
@@ -26,7 +26,6 @@ const userSlice = createSlice({
          */
         addUser: (state, action) => {
             state.users.push(action.payload);
-            state.currentUser=action.payload;
         },
         /**
          * @param {UserStateType} state
@@ -42,6 +41,13 @@ const userSlice = createSlice({
          * @param {UserStateType} state
          * @param {PayloadAction<string>} action
          */
+        updateUserDetails: (state, action) => {
+            state.currentUser = { ...state.currentUser, ...action.payload };
+          },
+           /**
+         * @param {UserStateType} state
+         * @param {PayloadAction<string>} action
+         */
         deleteUser: (state, action) => {
             const index = state.users.findIndex(user => user.id === action.payload);
             if (index !== -1) {
@@ -51,5 +57,5 @@ const userSlice = createSlice({
     }
 });
 
-export const { setUser, addUser, updateUser, deleteUser } = userSlice.actions;
+export const { setUser, addUser, updateUser, deleteUser,updateUserDetails } = userSlice.actions;
 export default userSlice.reducer;

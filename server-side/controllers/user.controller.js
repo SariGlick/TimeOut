@@ -7,7 +7,7 @@ import {
 
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find().populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preferences').select('-__v');
+    const users = await Users.find().populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preference').select('-__v');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
@@ -69,6 +69,7 @@ export const deleteUser = async (req, res,next) => {
 };
 
 export const updatedUser = async (req, res, next) => {
+  
   const id = req.params.id;
   if (!mongoose.Types.ObjectId.isValid(id))
     return next({ message: 'id is not valid' });
@@ -83,6 +84,8 @@ export const updatedUser = async (req, res, next) => {
     }
 
     const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
+    console.log(updatedUser);
+    
     if (!updatedUser) {
       return next({ message: 'user not found', status: 404 });
     }

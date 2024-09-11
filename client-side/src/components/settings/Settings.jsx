@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
@@ -9,6 +9,9 @@ import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import { selectAuth } from '../../redux/auth/auth.selector';
 import { updatePreference } from '../../services/preferenceService.js';
 import {updateUser}  from '../../services/userService.js';
+import {  updateUserDetails } from '../../redux/user/user.slice';
+import { useNavigate } from 'react-router-dom'; 
+import {TOAST_MESSAGES} from '../../constants';
 
 import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
@@ -23,22 +26,26 @@ const Settings = () => {
   const user = useSelector(selectAuth);
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
-  const [currentUser,setCurrentUser]= useState({});
- 
+  const [updatedUser,setUpdatedUser]= useState({});
+ const dispatch = useDispatch();
+  const navigate =useNavigate();
   let preferenceId = '';
-  let userId ='';
+  let userId =user.id || '66d49dbc7d55dde5372e67f0';
   if(user._id)
   {
     preferenceId=user.preference._id;
     userId=user._id;
   }
+const setUserChanges =(value)=>{
+    setUpdatedUser(prev=>({...prev, ...value}));
+};
 
   const elements = [
-    <AccountTab onUpdate={setCurrentUser} key=''/>,
+    <AccountTab onUpdate={setUserChanges} key='' updatedUser={updatedUser}/>,
     <Notifications currentUser={user} onUpdate={setNotificationsData} key=''/>,
     <Preferences currentUser={user} onUpdate={setPreferencesData} key=''/>
   ];
-
+   
   const handleFormSubmit = async () => {
     const formData = new FormData();
     const userFormData= new FormData();
@@ -59,14 +66,21 @@ const Settings = () => {
       enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_SETTINGS} type="error" />);
     }
     
-    Object.entries(currentUser).forEach(([key,value])=>{
+    Object.entries(updatedUser).forEach(([key,value])=>{
+      
       userFormData.append(key,value);
     });
     try {
-      await updateUser(userId,userFormData)
+      const newUser= await updateUser(userFormData,userId); 
+      dispatch(updateUserDetails(newUser));
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_SUCCESS} type="success" />);
+      navigate('/home');
     } catch (error) {
-      enqueueSnackbar(<ToastMessage message={MESSAGES.ERROR_UPDATE_USER} type="error" />);
-
+      if (error.response && error.response.status === 401) {
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_ERROR_UNAUTHORIZED} type="error" />);
+      }else{
+        enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.USER_UPDATED_ERROR} type="error" />);
+      }
     }
 
   };

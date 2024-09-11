@@ -1,14 +1,11 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
-<<<<<<< HEAD
 import activeProfile from '../profileMngr.js'
-=======
 import {shareProfileFunction} from '../managers/sharingManager.js'
 import {updateProfiles} from '../managers/sharingManager.js';
 import {
     getProfileById_service,
 } from '../services/profile.service.js';
->>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83
 
 export const updateProfilesByInvitation = async (req, res, next) => {
     const invitationID = req.params.id;    

@@ -16,7 +16,7 @@ export const homePageTexts = {
       title: "Manage Your Settings",
       description: "Customize your preferences to better track and understand your spending habits. Adjust your profile settings to suit your needs and enhance your browsing experience.",
       buttonText: "Go to Settings",
-      link: "/settings"
+      link: "/manageNotifications"
     },
     getReports: {
       title: "Get Detailed Reports",

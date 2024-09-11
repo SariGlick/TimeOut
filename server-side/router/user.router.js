@@ -12,9 +12,5 @@ usersRouter.post('/',upload.single('profileImage'), addUser);
 usersRouter.delete('/:id', deleteUser);
 usersRouter.put('/:id',upload.single('profileImage'), updatedUser);
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83
 export default usersRouter;

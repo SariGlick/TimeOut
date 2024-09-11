@@ -4,6 +4,14 @@ $color-border-hover: rgb(45, 158, 126);
 $color-error: red;
 $color-black: black;
 
+.center-container {
+  display: flex;
+  flex-direction: column; /* Stack the input and image vertically */
+  align-items: center;    /* Center horizontally */
+  justify-content: center; /* Center vertically if needed */
+  margin-top: 20px;       /* Add some space from the top if necessary */
+}
+
 .profile-picture-container {
     position: relative;
     width: 12vh; // Adjust size as needed
@@ -11,11 +19,10 @@ $color-black: black;
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid $color-border;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-  
+    margin: 8%;
     .profile-picture {
       width: 100%;
       height: 100%;
@@ -25,4 +32,64 @@ $color-black: black;
 .font{
     font-family: 'Montserrat', sans-serif;
 
+}
+// 
+$primary-color: #ccc;
+$border-radius: 1%;
+$direction: rtl;
+.signup-container {
+  min-width: 139%;
+  width: 130%;
+  margin: 0 auto;
+  box-shadow: 0 0 1% rgba(0, 0, 0, 0.1);
+  text-align: $direction;
+}
+h2 {
+  margin-bottom: 2%;
+  direction: ltr;
+  margin-right: calc(100% - 78%);
+}
+.form-group {
+  margin-bottom: 3%;
+}
+@mixin form-element {
+  display: block;
+  margin-bottom: 2%;
+
+  & + & { 
+    margin-top: 1%; 
+  }
+}
+label {
+  @include form-element;
+}
+
+input {
+  @include form-element;
+
+  width: 100%;
+  padding: 1%;
+  box-sizing: border-box;
+  border: 1px solid $primary-color;
+  border-radius: $border-radius;
+  direction: $direction;
+  margin-bottom: 16px;
+}
+button {
+  width: 100%;
+  padding: 2%;
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  font-size: 5%;
+}
+.error {
+  color: red;
+  font-size: small;
+  margin-top: 1%;
+  margin-right: calc(100% - 54%); 
+}
+.css-eglki6-MuiLinearProgress-root{
+  margin-top: 12px;
 }

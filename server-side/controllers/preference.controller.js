@@ -67,10 +67,7 @@ export const deletePreference = async (req, res, next) => {
         await Preference.findByIdAndDelete(id);
         res.status(204).send('deleted succesfully !!');
     } catch (error) {
-<<<<<<< HEAD
 
-=======
->>>>>>> bfbcc67dc1c843746542105d3d6332eedff71e83
         return next({ message: error.message, status: 500 });
     }
 };
