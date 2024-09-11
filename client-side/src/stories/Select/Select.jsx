@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box,InputLabel,MenuItem,FormControl}from '@mui/material';
+import { Box, InputLabel, MenuItem, FormControl } from '@mui/material';
 import SelectMui from '@mui/material/Select';
 import PropTypes from 'prop-types';
 
@@ -9,25 +9,29 @@ import './select.scss';
 const Select = ({
   className,
   options = OPTION_SELSCT,
-  onChange = () => {},
+  onChange = () => { },
   title,
   size = 'large',
-  widthOfSelect, 
-  value
+  widthOfSelect,
+  value,
+  'data-testid': dataTestId
 }) => {
   return (
     <div className='selectWrapper'>
       <Box>
         <FormControl size={size} variant="outlined">
           <InputLabel className='input'>{title}</InputLabel>
-          <SelectMui style={{width: widthOfSelect}} label={title}
+          <SelectMui
+            style={{ width: widthOfSelect }}
+            label={title}
             className={` genericSelect ${className} `}
             onChange={(event) => onChange(event.target.value)}
             value={value}
+            inputProps={{ 'data-testid': dataTestId }}
           >
             {options.map((option, index) => (
-              <MenuItem key={index}  value={option.value}>
-                {option.iconSrc && <img className="img" src={option.iconSrc}  alt=""/>}
+              <MenuItem key={index} value={option.value}>
+                {option.iconSrc && <img className="img" src={option.iconSrc} alt="" />}
                 {option.text}
               </MenuItem>
             ))}
@@ -48,7 +52,8 @@ Select.propTypes = {
   size: PropTypes.oneOf(['small', 'large']),
   className: PropTypes.string.isRequired,
   widthOfSelect: PropTypes.string,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
+  'data-testid': PropTypes.string
 };
 export default Select;
 

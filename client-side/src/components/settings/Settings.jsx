@@ -6,11 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import VerticalTabs from '../../stories/verticalTabs/verticalTabss';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
-import { updatePreference as updatePreferenceService } from '../../services/preferenceService.js';
-import { updatePreference } from '../../redux/preference/preference.slice.js';
+import { updatePreference  } from '../../services/preferenceService.js';
 import { updateCurrentUser } from '../../redux/auth/auth.slice.js';
 import { selectAuth } from '../../redux/auth/auth.selector.js';
-import { selectPreference } from '../../redux/preference/preference.selector.js';
 
 import Preferences from './Preferences.jsx';
 import AccountTab from './AccountTab.jsx';
@@ -24,13 +22,12 @@ const Settings = () => {
   const { t: translate } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const { user } = useSelector(selectAuth);
-  const updatedPreferences = useSelector(selectPreference);
   const dispatch = useDispatch();
 
   const [notificationsData, setNotificationsData] = useState({});
   const [preferencesData, setPreferencesData] = useState({});
 
-  const preferenceId = user.preference._id;
+  const preferenceId = user?.preference._id;
 
   const handleUpdatePreferences = (updatedPreferences) => {
     setPreferencesData(prev => {
@@ -63,10 +60,9 @@ const Settings = () => {
       if (value !== undefined) formData.append(key, value);
     });
     try {
-      const response = await updatePreferenceService(preferenceId, formData);
+      const response = await updatePreference(preferenceId, formData); 
       if (response) {
         enqueueSnackbar(<ToastMessage message={translate(MESSAGES.SUCCESS_UPDATED_SETTINGS)} type="success" />);
-        dispatch(updatePreference(response));
         dispatch(updateCurrentUser({
           ...user,
           preference: response
