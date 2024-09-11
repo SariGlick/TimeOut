@@ -1,0 +1,15 @@
+[33m60eefe34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mesti_login_2[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33mf2bdb4b6[m[33m ([m[1;31morigin/esti_login_2[m[33m)[m HEAD@{1}: reset: moving to HEAD
+[33mf2bdb4b6[m[33m ([m[1;31morigin/esti_login_2[m[33m)[m HEAD@{2}: commit: fix login with google
+[33m60eefe34[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mesti_login_2[m[33m)[m HEAD@{3}: commit: add tests and change function to match them
+[33m15aef8d2[m HEAD@{4}: checkout: moving from esti_login_2 to esti_login_2
+[33m15aef8d2[m HEAD@{5}: commit (merge): '''
+[33m74105b55[m HEAD@{6}: commit: ---
+[33m2d45c1e5[m HEAD@{7}: commit: remove c.log
+[33m60063684[m HEAD@{8}: commit: change routing
+[33md1210c92[m HEAD@{9}: commit: change file
+[33m8d41d56b[m HEAD@{10}: commit: fix everything
+[33me32cdcf1[m HEAD@{11}: commit: fix changes
+[33mfcb947e3[m HEAD@{12}: commit: add login function to user
+[33mc2ab3770[m[33m ([m[1;32mmain[m[33m)[m HEAD@{13}: checkout: moving from main to esti_login_2
+[33mc2ab3770[m[33m ([m[1;32mmain[m[33m)[m HEAD@{14}: clone: from https://github.com/SariGlick/TimeOut

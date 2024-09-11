@@ -5,19 +5,15 @@ import bcrypt from 'bcrypt';
 dotenv.config();
 import { OAuth2Client } from 'google-auth-library';
 import { messages } from './messages.js'; 
-// import { sendEmailWithAttachment } from '../email-service/app/index.js';
+import { sendEmailWithAttachment } from '../email-service/app/index.js';
 
 const client = new OAuth2Client(process.env.CLIENT_ID);
 
 export const getUserByGoogleAccount = async (req, res) => {
-  console.log("by GA")
   const token = req.headers['authorization']?.split(' ')[1]; // Extract the token from the Authorization header
-// const token= req.headers.authorization
-  console.log('Received token:', token); // בדוק אם הטוקן מתקבל
   if (!token) {
     return res.status(401).send(messages.error.REQ_TOKEN);
   }
-
   try {
     // Verify the token with Google
     const ticket = await client.verifyIdToken({
@@ -61,7 +57,7 @@ export const getByEmail = async (req, res) => {
   }
 };
 export const getCode = async (req, res) => {
-  const { email, password } = req.query;
+  const { email, password } = req.query; 
   if (!email) {
     return res.status(400).send(messages.error.REQ_EMAIL);
   }
@@ -71,7 +67,7 @@ export const getCode = async (req, res) => {
   try {
     const user = await Users.findOne({email});
     if (user) {
-      // sendEmailWithAttachment(user.email,messages.message.SUB_EMAIL,user.password)
+      sendEmailWithAttachment(user.email,messages.message.SUB_EMAIL, `Your password is: ${user.password}`,user.name,[])
       return res.status(200).send(messages.message.SEND_EMAIL + user.email);
     } else {
       return res.status(404).send(messages.error.USER_NOT_FOUND);
@@ -116,7 +112,6 @@ export const addUser = async (req, res) => {
     return res.status(500).send(messages.error.INTERNAL_SERVER_ERROR);
   }
 };
-
 export const getUsers = async (req, res,next) => {
   try {
     const users = await Users.find().populate({path: 'visitsWebsites',populate: {path: 'websiteId'}}).populate('profiles preference').select('-__v');
