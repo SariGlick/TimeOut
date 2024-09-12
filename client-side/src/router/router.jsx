@@ -11,6 +11,8 @@ import SignUp from "../components/signUp/signUp.jsx";
 
 import HomePage from "../components/homePageComponent.jsx";
 import Statistics from '../components/statistics.jsx'
+import HomePage from "../components/homePageComponent.jsx";
+import Report from "../components/Report/report.jsx";
 export  const router = createBrowserRouter([
     {
         path: '',

@@ -5,8 +5,6 @@ import {
   addUserService,
   getUserById_service,
   signInService,
-  getUserById_service,
-  getUserByEmail_service
 } from '../services/user.service.js';
 
 export const getUsers = async (req, res, next) => {
