@@ -93,13 +93,7 @@ export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const { user } = await userService.signIn(email, password);
-console.log(" i am user ✔️✔️✔️✔️"+ user);
-
-
    current_user=JSON.stringify(user._id);
-  console.log(current_user);
-  
-
     return res.status(200).send({ user });
   } catch (error) {
     return next({ message: 'Auth Failed', status: 401 });

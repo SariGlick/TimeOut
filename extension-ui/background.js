@@ -37,7 +37,6 @@ function initializeSession() {
       currentUser = result.userId;
       console.log("Current User ID:", currentUser);
     } else {
-      // No userId in storage, fetch it from the server
       fetchUserIdFromServer();
     }
   });
@@ -49,24 +48,23 @@ function fetchUserIdFromServer() {
     headers: {
       'Content-Type': 'application/json', 'Cache-Control': 'no-cache'
     },
-    credentials: 'include' // אם אתה זקוק לשלוח עוגיות
+    credentials: 'include'
   })
-  .then((response) => response.json())
-  .then((user_id) => {
-    if (user_id) {
-      const userId = user_id; // נניח ש-ID של המשתמש נמצא ב- data.user._id
-      currentUser = userId; // עדכן את המשתנה currentUser
-      // שמור את ה-userId ב-chrome.storage.local
-      chrome.storage.local.set({ userId: currentUser }, () => {
-        console.log("User ID fetched from server and stored:", currentUser);
-      });
-    } else {
-      console.log("User ID not found on the server.");
-    }
-  })
-  .catch((error) => {
-    console.error("Error fetching user ID from server:", error);
-  });
+    .then((response) => response.json())
+    .then((user_id) => {
+      if (user_id) {
+        const userId = user_id;
+        currentUser = userId;
+        chrome.storage.local.set({ userId: currentUser }, () => {
+          console.log("User ID fetched from server and stored:", currentUser);
+        });
+      } else {
+        console.log("User ID not found on the server.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching user ID from server:", error);
+    });
 }
 
 
@@ -129,7 +127,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
     return true;
   } else if (request.action === 'storeUserId' && request.userId) {
-    // שמירת ה-UserId שנשלח מדף ה-HTML
     chrome.storage.local.set({ userId: request.userId }, () => {
       currentUser = request.userId;
       console.log('User ID stored:', currentUser);

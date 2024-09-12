@@ -14,7 +14,7 @@ export const signIn = async (email, password) => {
     throw new Error('Authentication failed');
   }
 
-  user.password = undefined; // Hide password
+  user.password = undefined; 
   return { user };
 };
 
