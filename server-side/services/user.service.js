@@ -1,5 +1,5 @@
 import Users from "../models/user.model.js";
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 export const getUserById_service = async (id) => {
     return await Users.findById(id).populate('visitsWebsites profiles preferences').select('-__v');
 }

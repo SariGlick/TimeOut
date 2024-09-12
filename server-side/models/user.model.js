@@ -11,9 +11,7 @@ const userSchema = new mongoose.Schema({
   visitsWebsites: [{ type: Schema.Types.ObjectId, ref: 'VisitedWebsite' }],
   profiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
   viewProfiles: [{ type: Schema.Types.ObjectId, ref: 'Profiles' }],
-  preferences: { type: Schema.Types.ObjectId, ref: 'Preference' }
- 
-
+  preference: { type: Schema.Types.ObjectId, ref: 'Preference' }
 }, { strictPopulate: false });
 
 export default mongoose.model('Users', userSchema);

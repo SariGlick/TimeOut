@@ -18,14 +18,16 @@ import usersRouter from './router/user.router.js';
 import visitedWebsitesRouter from './router/visitedWebsite.router.js';
 
 
+
+dotenv.config();
+connectMongo();
+
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
 
-dotenv.config();
-connectMongo();
 const port = process.env.PORT || 3000;
 
 app.use(cookieParser());

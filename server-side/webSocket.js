@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { connectMongo } from './config/db.js';
 import { getCountUnreadMessages } from './services/messages.service.js';
 import { log } from 'console';
-import dotenv from 'dotenv';
+
 dotenv.config();
 
 const wss = new WebSocketServer({ port: 8080 });

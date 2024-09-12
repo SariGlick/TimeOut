@@ -10,22 +10,16 @@ export const getAllPreference=async(req,res,next)=>{
       return next({message:error.message})
      }
 };
-export const getPreferenceById=async(req,res,next)=>{
-    const id= req.params.id;
-    if(mongoose.Types.ObjectId.isValid(id))
-    {
-        try {
-            const PreferencesById= await Preference.findById(id,{__v:false});
-            res.json(PreferencesById);
-        } catch (error) {
-            return next({message:error.message})
-        }
+export const getPreferenceById = async (req, res, next) => {
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id))
+        return next({ message: 'ID is not valid', status: 400 });
+    try {
+        const PreferencesById = await Preference.findById(id, { __v: false });
+        res.json(PreferencesById);
+    } catch (error) {
+        return next({ message: error.message, status: 500 });
     }
-    else{
-        next({message:'id is not valid'});
-    }
-    
-
 };
 
 export const updatePreference=async(req,res,next)=>{
@@ -60,7 +54,7 @@ export const deletePreference=async(req,res,next)=>{
 
     const id= req.params.id;
     if(!mongoose.Types.ObjectId.isValid(id))
-        return next({message:'id isnot valid'})
+        return next({message:'id isnot valid', status: 400})
     try { 
        
          const PreferenceForDelet=await Preference.findById(id);
@@ -69,6 +63,6 @@ export const deletePreference=async(req,res,next)=>{
         await Preference.findByIdAndDelete(id);
         res.status(204).send();
         } catch (error) {
-        return next({message:error.message});
+        return next({message:error.message, status: 500 });
     }
 };

@@ -32,7 +32,7 @@ export const shareProfile = async (req, res, next) => {
 
 export const getAllProfiles = async (req, res, next) => {
     try {
-        const profiles = await Profiles.find().populate('limitedWebsites.websiteId blockedSites').select('-__v');
+        const profiles = await Profiles.find().populate('limitedWebsites.websiteId').select('-__v');
         res.json(profiles);
     } catch (err) {
         return res.status(500).json({ message: err.message });
@@ -51,7 +51,7 @@ export const createProfile = async (req, res) => {
 
 export const getProfileById = async (req, res) => {
     try {
-        const profile = await Profiles.findById(req.params.id);
+        const profile = await Profiles.findById(req.params.id).populate('limitedWebsites.websiteId ').select('-__v');
         if (!profile) {
             return res.status(404).json({ message: 'Profile not found' });
         }

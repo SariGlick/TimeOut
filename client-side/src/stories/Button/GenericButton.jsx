@@ -16,7 +16,7 @@ const GenericButton = ({ className, label, onClick, size = "medium", disabled = 
             </IconButton>
         ) : (
             <Button
-                className={`genericButton ${className || ''}`}
+            className={`genericButton ${className ? className : ''} ${size}`} 
                 onClick={onClick}
                 size={size}
                 disabled={disabled}

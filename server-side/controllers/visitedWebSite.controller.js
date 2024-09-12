@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import VisitedWebsite from '../models/visitedWebSite.model.js';
 import visitedWebsiteservice from '../services/visitedWebsiteService.js'
 
