@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-@import './style.scss';
+@import '../variables.scss';
 
 .generic-input {
   .MuiOutlinedInput-root {
-    border-radius: 8px;
+    border-radius: 0.5pc;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    border-color: $color-border;
+    border-color: rgb(61, 192, 155);
     border-width: 1px;
     width: 100%;
 
@@ -30,6 +30,7 @@
       input {
         color: rgba($color-black, 0.7); 
         pointer-events: none; 
+        
       }
     }
 
@@ -37,12 +38,14 @@
       color: $color-black;
       font-family: 'Montserrat', sans-serif;
       font-weight: 400;
-      font-size: 14px;
+      font-size: medium;
       transition: color 0.3s ease;
+      text-align: left; 
+ 
     }
 
     &.Mui-error {
-      border-color: $color-error;
+      border-color: $errorColor;
     }
   }
 
@@ -50,8 +53,9 @@
     color: $color-black;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 16px;
+    font-size: medium;
     transition: color 0.3s ease;
+   
 
     &.Mui-focused {
       color: $color-border-hover;
@@ -62,11 +66,11 @@
     color: $color-black;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 12px;
+    font-size: medium;
     transition: color 0.3s ease;
 
     &.Mui-error {
-      color: $color-error;
+      color: $errorColor;
     }
   }
 

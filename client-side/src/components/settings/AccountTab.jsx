@@ -78,25 +78,25 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
   
   
   return (
- <div className='account-warper'>
-   <div className="center-container">
-    <div className="input-wrapper">
+  <div className="center-container">
+    <div className='input-warper'>
     <GenericInput 
-      type="file" 
-      accept="image/*" 
-      onChange={handleFilePicture} 
-      label={translate(LABELS.UPLOAD_IMAGE)} 
-      size='small'
-    />
+     type="file" 
+     accept="image/*" 
+     onChange={handleFilePicture} 
+     label={translate(LABELS.UPLOAD_IMAGE)} 
+     size='small'
+   /> 
   </div>
-  
-  {preview &&  
-    <div className='profile-picture-container'> 
-      <img src={preview} alt="Profile Preview" className="profile-picture" />
-    </div> 
-  }
-  </div>
-    <div className="signup-container">
+   
+   {preview &&  
+     <div className='profile-picture-container'> 
+       <img src={preview} alt="Profile Preview" className="profile-picture" />
+     </div> 
+   }  
+
+   
+<div className="signup-container">
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
             <GenericInput
@@ -111,7 +111,8 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
             onBlur={formik.handleBlur}
             value={formik.values.name}
             width="100%"
-            size="medium"
+            size="medium" 
+            className ='sign-input'
           />
           {formik.touched.name && formik.errors.name ? (
             <div className="error">{formik.errors.name}</div>
@@ -131,6 +132,8 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
             value={formik.values.email}
             width="100%"
             size="medium"
+            className ='sign-input'
+
           />
           {formik.touched.email && formik.errors.email ? (
             <div className="error">{formik.errors.email}</div>
@@ -151,6 +154,7 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
             
             width="100%"
             size="medium"
+
           />
           {formik.touched.password && formik.errors.password ? (
             <div className="error">{formik.errors.password}</div>
@@ -159,8 +163,9 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
         </div>
 
       </form>
-    </div>   
-</div>
+    </div> 
+ </div>
+      
   )
 };
 export default AccountTab

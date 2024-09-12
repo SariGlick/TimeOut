@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { TextField, InputAdornment, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { INVALID_INPUT_MESSAGE } from './constants';
 import './genericInput.scss';
-
-
-
 import '../GenericInput/genericInput.scss';
+import './genericInput.scss';
+
 
 const GenericInput = ({
   label, 
@@ -15,7 +14,7 @@ const GenericInput = ({
   value = '',
   onChange = () => { },
   size = 'medium',
-  width = '20%',
+  width ,
   icon: Icon = null,
   disabled = false,
   accept,
@@ -25,11 +24,11 @@ const GenericInput = ({
   ...rest
 
 
+
 }) => {
   const [inputValue, setInputValue] = useState(value);
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState('');
-
   useEffect(() => {
     if (validation && typeof validation === 'function') {
       handleValidation(inputValue);
@@ -53,7 +52,7 @@ const GenericInput = ({
       setHelperText('');
     }
   };
-
+   
   const inputStyle = {
     width,
   };
@@ -123,39 +122,12 @@ const GenericInput = ({
     </>
 
   )
-    
-
-
-
-  return (
-    <div className="generic-input">
-      <TextField
-        label={label}
-        type={type}
-        name={name}
-        value={inputValue}
-        onChange={handleChange}
-        size={size}
-        error={error}
-        disabled={disabled}
-        helperText={helperText}
-        InputProps={{
-          startAdornment: Icon && (
-            <InputAdornment position="start">
-              <Icon />
-            </InputAdornment>
-          ),
-          ...rest.InputProps,
-        }}
-        style={inputStyle}
-        {...rest}
-      />
-    </div>
-  );
+  
 };
 
 GenericInput.propTypes = {
   label: PropTypes.string.isRequired,
+
   type: PropTypes.oneOf(['text', 'number', 'email', 'password']),
   name: PropTypes.string,
   value: PropTypes.string,
@@ -170,5 +142,4 @@ GenericInput.propTypes = {
   disabled:PropTypes.string,
 
 };
-
 export default GenericInput;

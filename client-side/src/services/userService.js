@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { handlePost, handlePut } from '../axios/middleware';
 const baseURL = process.env.REACT_APP_BASE_URL;
+import { handlePost } from '../axios/middleware';
+
 export const createUser = async (userData) => {
     try {
         const response = await handlePost('/users', userData);

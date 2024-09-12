@@ -3,13 +3,15 @@ $color-border: rgb(61, 192, 155);
 $color-border-hover: rgb(45, 158, 126);
 $color-error: red;
 $color-black: black;
-
+$primary-color: #ccc;
+$border-radius: 1%;
+$direction: rtl;
 .center-container {
   display: flex;
-  flex-direction: column; /* Stack the input and image vertically */
-  align-items: center;    /* Center horizontally */
-  justify-content: center; /* Center vertically if needed */
-  margin-top: 20px;       /* Add some space from the top if necessary */
+  flex-direction: column; 
+  align-items: center;    
+  justify-content: center; 
+  margin-top: 20px;      
 }
 
 .profile-picture-container {
@@ -22,7 +24,7 @@ $color-black: black;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 8%;
+    margin: 4%;
     .profile-picture {
       width: 100%;
       height: 100%;
@@ -33,16 +35,17 @@ $color-black: black;
     font-family: 'Montserrat', sans-serif;
 
 }
-// 
-$primary-color: #ccc;
-$border-radius: 1%;
-$direction: rtl;
+.input-warper{
+  margin-bottom: 5%;
+}
+
 .signup-container {
-  min-width: 139%;
-  width: 130%;
-  margin: 0 auto;
-  box-shadow: 0 0 1% rgba(0, 0, 0, 0.1);
-  text-align: $direction;
+  min-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 0 1% rgba(0, 0, 0, 0.1);
+    text-align: rtl;
+ 
 }
 h2 {
   margin-bottom: 2%;
@@ -66,7 +69,6 @@ label {
 
 input {
   @include form-element;
-
   width: 100%;
   padding: 1%;
   box-sizing: border-box;

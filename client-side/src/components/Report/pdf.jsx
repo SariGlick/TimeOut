@@ -2,7 +2,7 @@ import React from 'react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import GenericButton from '../../stories/Button/GenericButton';
-import { LABEL_OF_PDF_DOWNLOAD, TABLE } from './report.constant';
+import { LABEL_OF_PDF_DOWNLOAD, TABLE,TEXT } from './report.constant';
 
 const PdfGenerator = ({ data, nameFile = "timeOut-Report", columnsforthetable = TABLE }) => {
   const userName = "name"; 
@@ -23,7 +23,7 @@ const PdfGenerator = ({ data, nameFile = "timeOut-Report", columnsforthetable = 
       startY: 35,
     });
 
-    doc.text("developed by Extratech", 10, 250);
+    doc.text(TEXT, 10, 250);
 
     doc.save(`${nameFile}.pdf`);
   };

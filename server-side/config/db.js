@@ -5,7 +5,6 @@ export const connectMongo = () => {
     .then(() => console.log('mongoDB connected'))
     .catch(err => console.log(err.message));
 }
-
 export const disconnectMongo = async () => {
   await mongoose.disconnect();
   console.log('mongoDB disconnected');

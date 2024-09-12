@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-
 import { useTranslation } from 'react-i18next';
-
-
 import MessageIcon from './Icon'
-import {AppBar,Box,Toolbar,IconButton,Typography,Menu,AdbIcon,MenuItem,Tooltip,Button,Avatar,Container} from '@mui/material';
+import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
-import './header.scss';
+import { selectUser } from '../../redux/user/user.selector';
 import { selectAuth } from '../../redux/auth/auth.selector';
+import './header.scss';
+
 function ResponsiveAppBar() {
+  const users = useSelector(selectUser);
+  const currentUser = users.length ? users[users.length - 1] : null;
+  const currentname = currentUser ? currentUser.name : '';
+  const currentProfile = currentUser ? currentUser.profile : ''; 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -32,10 +35,9 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
   const getAvatarLetter = () => {
-    if (user && user.name) {
-      return user.name.charAt(0).toUpperCase();
-    }
-    return '';
+    if (currentProfile) return currentProfile; 
+    if (user && user.name) return user.name.charAt(0).toUpperCase();
+    return '/static/images/avatar/2.jpg';
   };
 
   return (
@@ -56,6 +58,7 @@ function ResponsiveAppBar() {
               >
                 <MenuIcon />
   
+
               </IconButton>
               <Menu
                 id="menu-appbar"
@@ -127,7 +130,8 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
-          <MessageIcon/>
+            <MessageIcon/>
+
           </Box>
           </Toolbar>
         </Container>

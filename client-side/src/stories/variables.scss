@@ -1,6 +1,4 @@
-$background-class:rgb(255, 255, 255);
-$black-color:'black';
-$white-color:'white';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 $hover-color:rgb(45, 158, 126);
 $primary-color-home:rgb(103, 252, 210);
 $standardSuccessColor:rgba(229, 245, 233, 0.8);
@@ -9,8 +7,15 @@ $standardWarningColor:#ffffe0;
 $standardInfoColor:rgba(224, 242, 241, 0.8);
 $primary-color: black;
 $secondary-color: rgb(103, 252, 210);
-$background-class: #f0f0f0;
-$light-black: rgba(0, 0, 0, 0.1);
 $errorColor:red;
-$font-family-primary:'Nanum Gothic';
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+$background-class: #ffffff;
+$black-color: #000000;
+$color-black: black;
+$color-border-hover: rgb(45, 158, 126);
+$color-border: rgb(61, 192, 155);
+$color-error: red;
+$font-family-primary: 'Nanum Gothic', sans-serif;
+$light-black: rgba(0, 0, 0, 0.1);
+$secondary-color-hard:rgba(72, 245, 193, 0.2);
+$white-color: #ffffff;
+
