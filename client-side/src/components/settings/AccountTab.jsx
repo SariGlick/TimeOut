@@ -96,7 +96,7 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
    }  
 
    
-<div className="signup-container">
+<div className="signuUp-container">
       <form onSubmit={formik.handleSubmit}>
         <div className="form-group">
             <GenericInput
@@ -115,7 +115,7 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
             className ='sign-input'
           />
           {formik.touched.name && formik.errors.name ? (
-            <div className="error">{formik.errors.name}</div>
+            <div className="errors">{formik.errors.name}</div>
           ) : null}
         </div>
         <div className="form-group">
@@ -136,7 +136,7 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
 
           />
           {formik.touched.email && formik.errors.email ? (
-            <div className="error">{formik.errors.email}</div>
+            <div className="errors">{formik.errors.email}</div>
           ) : null}
         </div>
         <div className="form-group" >
@@ -157,7 +157,7 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
 
           />
           {formik.touched.password && formik.errors.password ? (
-            <div className="error">{formik.errors.password}</div>
+            <div className="errors">{formik.errors.password}</div>
           ) : null}
           <PasswordStrengthMeter  password={password} />
         </div>
