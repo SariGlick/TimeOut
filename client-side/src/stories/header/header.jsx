@@ -18,11 +18,11 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const { t: translate } = useTranslation(); 
- const { user } = useSelector(selectAuth); 
+const { t: translate } = useTranslation(); 
+  const user = useSelector(state => state.user.currentUser||{});
+ const url=process.env.REACT_APP_BASE_URL;
 
-
-
+ 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -38,7 +38,12 @@ function ResponsiveAppBar() {
   const getAvatarLetter = () => {
     if (currentProfile) return currentProfile; 
     if (user && user.name) return user.name.charAt(0).toUpperCase();
-    return '/static/images/avatar/2.jpg';
+    return `${url}/uploads/${user.profileImage}`
+  };
+  const getUserProfileImage = () =>{
+    
+      return user?.profileImage ? `${url}/uploads/${user.profileImage}` :''
+    
   };
 
   return (
@@ -106,7 +111,7 @@ function ResponsiveAppBar() {
             <Box >
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} >
-                  <Avatar>{getAvatarLetter()}</Avatar>
+                  <Avatar alt={getAvatarLetter()} src={getUserProfileImage()}></Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

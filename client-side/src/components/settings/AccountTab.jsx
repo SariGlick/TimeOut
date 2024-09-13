@@ -32,7 +32,6 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
   const url=process.env.REACT_APP_BASE_URL;
   let imagesrc=''
 
-  const [imageFile,setImageFile]= useState(null);
   const [preview, setPreview] = useState();
   const [password, setPassword] = useState('');
  
@@ -60,7 +59,6 @@ const AccountTab=({onUpdate,isEditMode = true, onSave,updatedUser})=> {
 
   const handleFilePicture = (e) => {
     if (e?.target?.files[0]) {
-      setImageFile(e.target.files[0]);
       onUpdate({profileImage:e.target.files[0]});
       const reader = new FileReader();
       reader.onloadend = () => {
