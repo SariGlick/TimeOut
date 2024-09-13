@@ -22,6 +22,7 @@ function ResponsiveAppBar() {
  const { user } = useSelector(selectAuth); 
 
 
+
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -130,7 +131,7 @@ function ResponsiveAppBar() {
           nav={['/editUserProfile','/manageNotifications'] }
         />
             </Menu>
-            <MessageIcon/>
+            {/* <MessageIcon/> */}
 
           </Box>
           </Toolbar>

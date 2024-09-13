@@ -8,11 +8,6 @@ import Statistics from '../components/statistics.jsx';
 import Layout from "./layout.jsx";
 import SignUp from "../components/signUp/signUp.jsx";
 import HomePage from "../components/homePageComponent.jsx";
-
-
- 
-
-
 export  const router = createBrowserRouter([
   {
     path: '',
