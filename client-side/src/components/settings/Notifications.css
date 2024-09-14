@@ -1,0 +1,28 @@
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.notifications-container .select-container, .notifications-container .input-container, .notifications-container .file-container {
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+.notifications-container .audio-player {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 10px;
+}
+.notifications-container .but-send {
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .select-container, .input-container, .file-container, .audio-player {
+    max-width: 100%;
+  }
+  .but-send {
+    width: 100%;
+  }
+}/*# sourceMappingURL=Notifications.css.map */

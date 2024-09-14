@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.timeInputWrapper {
+  width: 20%;
+}
+.timeInputWrapper .MuiOutlinedInput-root .MuiOutlinedInput-input {
+  font-size: 14px;
+}
+.timeInputWrapper .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+  border-color: rgb(103, 252, 210);
+  border-width: 2px;
+  border-style: solid;
+  transition: border-color 0.3s ease;
+}
+.timeInputWrapper .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline.Mui-focused {
+  border-color: rgb(103, 252, 210);
+}
+.timeInputWrapper .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline:hover {
+  border-color: rgb(103, 252, 210);
+}/*# sourceMappingURL=DateInput.css.map */

@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.login-container {
+  max-width: 400px;
+  margin: 4% auto 0;
+  padding: 3%;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: right;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.login-container h2 {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.login-container .form-group {
+  margin-bottom: 3%;
+  position: relative;
+}
+.login-container button {
+  margin-top: 7%;
+  width: 100%;
+  padding: 5%;
+  cursor: pointer;
+  line-height: 1.5;
+  box-sizing: border-box;
+}
+.login-container .alert-error {
+  width: 100%;
+  margin-top: 3%;
+  text-align: center;
+  margin-bottom: -10%;
+}
+.login-container .icon {
+  margin-bottom: 5%;
+  margin-left: 33%;
+  width: 4%;
+  height: 1%;
+}
+.login-container .email {
+  width: 85%;
+}
+.login-container .signup-link {
+  margin-bottom: 14%;
+  text-align: center;
+  font-size: 100%;
+}
+.login-container .password {
+  display: flex;
+  align-items: center;
+}
+.login-container .signup-text {
+  cursor: pointer;
+  font-weight: bold;
+}
+.login-container .signup-text:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 568px) {
+  .login-container {
+    margin: 15% auto 0;
+  }
+}/*# sourceMappingURL=login.css.map */

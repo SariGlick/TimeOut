@@ -1,0 +1,67 @@
+.start {
+  margin-bottom: 100px;
+}
+
+.submit {
+  background-color: white;
+  color: black !important;
+}
+.submit:disabled {
+  background-color: #ccc;
+  color: #666;
+}
+
+.downloadButton {
+  padding-bottom: 10%;
+}
+
+#reportPage {
+  display: flex;
+  flex-direction: row;
+  margin-left: 60%;
+  margin-top: -3%;
+  margin-right: 5%;
+}
+
+.pdf-wrap {
+  margin-left: 80%;
+  margin-top: -13%;
+}
+
+.title {
+  margin-left: 10%;
+}
+
+.table-wrapper {
+  margin-top: -5%;
+}
+
+.loader {
+  margin-top: 10%;
+  margin-left: 45%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date-inputs {
+  display: flex;
+  justify-content: center;
+}
+
+.start,
+.end {
+  flex: 1;
+}
+
+.error {
+  margin-top: 30%;
+  margin-left: 32%;
+}
+
+.p {
+  margin-bottom: -310%;
+}/*# sourceMappingURL=report.css.map */

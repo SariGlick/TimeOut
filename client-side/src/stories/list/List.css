@@ -1,0 +1,20 @@
+.wrapper {
+  background-color: #ffffff;
+  padding: 1%;
+  position: absolute;
+  right: 1%;
+  top: 7%;
+  width: 18%;
+  border-radius: 6%;
+  border: 1px solid #e0e0e0;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.icons-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  z-index: 2;
+}/*# sourceMappingURL=List.css.map */
