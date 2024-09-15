@@ -4,6 +4,7 @@ import VisitedWebsitesComponent from './statistics/graphs.jsx';
 import GraphBar from './statistics/graphBar.jsx';
 import RadioButtonComponent from '../stories/RadioButton/radio-Button.jsx';
 import { options } from './statistics/constants.js';
+import DatePicker from '../../src/stories/datePicker/DatePicker.jsx';
 const Statistics = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
@@ -28,7 +29,7 @@ const Statistics = () => {
 
     return (
         <ApolloProvider client={client}>
-            <DateTimePicker onSubmit={onSubmit} />
+            <DatePicker onSubmit={onSubmit} />
             <RadioButtonComponent options={options} selectedOption={""} onChange={onChange} />
             {selectBar === "BarChart" && <GraphBar startDate={startDate} endDate={endDate} />}
             {selectBar === "PieChart" && <VisitedWebsitesComponent startDate={startDate} endDate={endDate} />}
