@@ -48,7 +48,7 @@ const Preferences = ({ currentUser, onUpdate}) => {
         }))}
         className='select-class'
         size='medium'
-        widthOfSelect='210px'
+        widthOfSelect='100%'
         value={language}
         onChange={handleLanguageChange}
       />
@@ -62,7 +62,7 @@ const Preferences = ({ currentUser, onUpdate}) => {
         onChange={handleChangeTimeZone}
         value={timeZone}
         size='medium'
-        widthOfSelect='210px'
+        widthOfSelect='100%'
       />
       <Select
         className='select-date-format'
@@ -75,7 +75,7 @@ const Preferences = ({ currentUser, onUpdate}) => {
         onChange={setDateFormat}
         title={t(LABELS.SELECT_DATE_FORMAT)}
         size='large'
-        widthOfSelect='210px'
+        widthOfSelect='100%'
       />
     </div>
   )

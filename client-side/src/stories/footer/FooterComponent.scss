@@ -2,11 +2,8 @@
 
 .footer-wrapper {
     background-color: $primary-color;
-    // background-color: var(--mui-palette-background-paper);
     color: $secondary-color;
-    // color: var(--mui-palette-text-primary);
-    // color: var(--footer-text);
-    padding: 20px;
+    padding: 20%;
     text-align: left;
     position: fixed;
     bottom: 0;
@@ -19,7 +16,6 @@
   }
   .link-style {
     color: $secondary-color;
-    // color: var(--footer-link);
 
     font-family: "Nanum Gothic", sans-serif;
     font-optical-sizing: auto;

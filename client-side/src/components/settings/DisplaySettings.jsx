@@ -51,7 +51,7 @@ const DisplaySettings = ({ currentUser, onUpdate }) => {
           onChange={handleThemeChange}
           value={themes}
           size="medium"
-          widthOfSelect="210px"
+          widthOfSelect="100%"
         />
       </div>
       <div className="select-container">

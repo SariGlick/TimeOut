@@ -3,11 +3,11 @@ import app from '../app.js';
 import { connectMongo, disconnectMongo } from '../config/db.js'
 
 beforeAll(async () => {
-    await connectMongo(); // Connects to a database before the tests
+    await connectMongo();
   });
   
   afterAll(async () => {
-    await disconnectMongo(); // Closes database connection after tests
+    await disconnectMongo();
   });
   
 describe('GET /', () => {

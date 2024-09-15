@@ -3,21 +3,16 @@
   .navbar{
     background-color: $primary-color  ;
     color: $secondary-color  ;
-    // background-color: var(--mui-palette-background-paper);
-    // color: var(--mui-palette-text-primary);
   }
   .logo{
       margin-right: 2 ;
       font-family: 'Nanum Gothic' ;
       color: rgb(103, 252, 210) ;
-      // color: var(--mui-palette-text-primary);
-      // color: $primary-color;
       text-decoration: none ;
   }
   .menu{
       display: 'block' ;
       math-depth: 'none'  ;
-      // background-color: inherit; // השתמש בצבע המורשה מהרקע הכללי
   }
   .left-side-box{
       flex-grow: 1;
