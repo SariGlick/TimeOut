@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.table {
+  background-color: #ffffff;
+  margin-top: 10%;
+  border: 2px solid black;
+  text-align: center;
+  margin: auto;
+}
+.table .MuiDataGrid-row:hover,
+.table .MuiDataGrid-cell:hover {
+  background-color: rgba(72, 245, 193, 0.2);
+  border-color: black;
+}
+.table .MuiDataGrid-row:active,
+.table .MuiDataGrid-cell:active {
+  background-color: rgba(72, 245, 193, 0.2);
+  border-color: rgb(103, 252, 210);
+}
+.table .MuiDataGrid-root {
+  border: none;
+}
+.table .MuiDataGrid-columnHeaders {
+  background-color: black;
+}
+.table .MuiDataGrid-columnHeaders .MuiDataGrid-columnHeaderTitle {
+  color: rgb(103, 252, 210);
+  font-weight: bold;
+  text-align: center;
+  font-size: 140%;
+  font-family: "Nanum Gothic", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+.table .MuiDataGrid-cell {
+  color: black;
+  background-color: #ffffff;
+  text-align: center;
+  font-size: 110%;
+}
+.table .MuiDataGrid-cell:hover {
+  border-color: rgb(103, 252, 210);
+}
+.table .MuiDataGrid-cellCheckbox .Mui-checked,
+.table .table.checkboxSelection .Mui-checked {
+  color: rgb(103, 252, 210);
+}
+.table .MuiDataGrid-footerContainer {
+  background-color: #ffffff;
+}
+.table .MuiDataGrid-footerContainer .MuiTablePagination-root {
+  color: black;
+}
+.table .MuiDataGrid-row:hover {
+  background-color: rgba(72, 245, 193, 0.2);
+}
+.table .MuiDataGrid-row.Mui-selected {
+  background-color: secondary-color-hard;
+}
+.table .MuiDataGrid-row.Mui-selected:hover {
+  background-color: secondary-color-hard;
+}
+
+.add-button-container {
+  text-align: center;
+  margin-top: 10px;
+}/*# sourceMappingURL=TableComponent.css.map */

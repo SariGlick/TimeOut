@@ -4,12 +4,14 @@ import SelectMui from '@mui/material/Select';
 import PropTypes from 'prop-types';
 import './select.scss';
 
+
 const Select = ({ className, options, onChange = undefined, title, size = 'large', widthOfSelect, value, name }) => {
   return (
     <div className='selectWrapper'>
       <Box>
         <FormControl size={size} variant="outlined">
           <InputLabel className='input'>{title}</InputLabel>
+
           <SelectMui
             style={{ width: widthOfSelect }}
             label={title}
@@ -30,7 +32,6 @@ const Select = ({ className, options, onChange = undefined, title, size = 'large
     </div>
   );
 };
-
 Select.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     value: PropTypes.string.isRequired,
@@ -41,8 +42,10 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   size: PropTypes.oneOf(['small', 'large']),
+
   className: PropTypes.string,
   name: PropTypes.string
 };
+
 
 export default Select;

@@ -5,11 +5,12 @@ import {
   addUserService,
   getUserById_service,
   signInService,
+  getUserByEmail_service
 } from '../services/user.service.js';
 
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find().populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preferences').select('-__v');
+    const users = await Users.find().populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preference').select('-__v');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);
@@ -99,22 +100,31 @@ export const deleteUser = async (req, res,next) => {
   }
 };
 
-export const updatedUser = async (req, res,next) => {
+export const updatedUser = async (req, res, next) => {
+  
   const id = req.params.id;
-  if(!mongoose.Types.ObjectId.isValid(id))
-    return next({message:'id is not valid'})
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return next({ message: 'id is not valid' });
+
   try {
     if (req.file) 
       req.body.profileImage = req.file.originalname;
-      
+
+    // שינוי פורמט התאריך, נניח אם יש שדה בשם date
+    if (req.body.date) {
+      req.body.date = moment(req.body.date).format('yyyy-MM-dd'); // החלף בפורמט הרצוי
+    }
+
     const updatedUser = await Users.findByIdAndUpdate(id, req.body, { new: true });
+    console.log(updatedUser);
+    
     if (!updatedUser) {
-      return next({message:'user not found ',status:404})
+      return next({ message: 'user not found', status: 404 });
     }
     res.status(200).json(updatedUser);
   } catch (err) {
     console.error(err);
-    next({message:err.message,status:500})
+    next({ message: err.message, status: 500 });
   }
 };
 

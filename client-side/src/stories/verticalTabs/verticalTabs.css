@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.genericButton {
+  font-family: "Nanum Gothic", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  border: 1px solid rgb(103, 252, 210);
+  width: 30vh;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.genericButton:hover {
+  box-shadow: 0 0 5px rgba(61, 192, 155, 0.5);
+  background-color: rgb(45, 158, 126);
+  transition: color 0.3s ease;
+}
+
+.clickButton {
+  box-shadow: 0 0 5px rgba(61, 192, 155, 0.5);
+  background-color: rgb(45, 158, 126);
+  transition: color 0.3s ease;
+}
+
+.tab {
+  border: 2px;
+  border-style: solid;
+  border-color: rgb(103, 252, 210);
+  width: 100vh;
+  height: 70h;
+  display: flex;
+  justify-content: center;
+}
+
+.tab-warper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2%;
+}
+
+.elments {
+  padding: 3%;
+}/*# sourceMappingURL=verticalTabs.css.map */

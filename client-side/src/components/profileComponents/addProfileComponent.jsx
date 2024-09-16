@@ -43,7 +43,10 @@ import '../../styles/profilePageStyle.scss';
       status: '',
     };
   }
+  const handleClose= ()=>{
 
+  };
+ 
   const toggleDialogOpen = () => {
     if (!isOpen) {
       setData(getInitialData());

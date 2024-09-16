@@ -24,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(cors());
 
+
 dotenv.config();
 connectMongo();
 const port = process.env.PORT || 3000;
@@ -32,6 +33,7 @@ app.use(cookieParser());
 
 app.get('/', (req, res) => {
     res.send('welcome to time out ');
+
 });
 
 
@@ -54,16 +56,17 @@ app.use(serverErrors)
 
 app.listen(port, () => {
     console.log(`Running at http://localhost:${port}`);
-}).on('error', (err) => {
-    if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${port} is already in use, trying a different port...`);
-        app.listen(0, () => {
-            const newPort = app.address().port;
-            console.log(`Server is now running at http://localhost:${newPort}`);
-        });
-    } else {
-        console.error(`Failed to start server: ${err.message}`);
-    }
-});
+})
+// .on('error', (err) => {
+//     if (err.code === 'EADDRINUSE') {
+//         console.error(`Port ${port} is already in use, trying a different port...`);
+//         app.listen(0, () => {
+//             const newPort = app.address().port;
+//             console.log(`Server is now running at http://localhost:${newPort}`);
+//         });
+//     } else {
+//         console.error(`Failed to start server: ${err.message}`);
+//     }
+// });
 
 export default app;

@@ -7,6 +7,7 @@ const profileSchema = new Schema({
     statusBlockedSites: { type: String, enum: ['black list', 'white list'] },
     listWebsites: [{
         websiteId: { type: Schema.Types.ObjectId, ref: 'Websites' },
+
         status: { type: String, enum: ['block', 'open', 'limit'] },
         limitedMinutes: { type: Number, default: 0, required: true },
     }],

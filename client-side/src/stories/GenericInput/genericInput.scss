@@ -3,13 +3,11 @@
 
 .generic-input {
   .MuiOutlinedInput-root {
-    border-radius:0.5pc;
+    border-radius: 0.5pc;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    border-color: $color-border;
+    border-color: rgb(61, 192, 155);
     border-width: 1px;
-    width: 50%;
-    margin-right:20pc;
-    
+    width: 100%;
 
     &:hover {
       border-color: $color-border-hover;
@@ -74,5 +72,71 @@
     &.Mui-error {
       color: $errorColor;
     }
+  }
+
+  
+}
+.file-upload{
+  .generic-input-file{
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    border-color: $color-border;
+    border-width: 1px;
+    background-color:$color-border ;
+    color: $color-black;
+    width: 100%; 
+    min-width: 160px;
+    font-family: 'Montserrat', sans-serif;
+    &:hover {
+    box-shadow: 0 0 5px rgba($color-border, 0.5);
+    background-color:$color-border-hover ;
+    transition: color 0.3s ease;
+
+    }
+    &.Mui-disabled,
+    &[aria-disabled='true'] {
+      opacity: 0.7; 
+      cursor: not-allowed;
+      pointer-events: auto;
+        
+    }
+ 
+    #hidenInput{
+      clip-path: inset(50%);
+      clip: rect(0 0 0 0);
+      height: 1;
+      overflow: hidden;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 1;
+    }
+  
+    
+  }
+  
+  
+}
+
+.generic-input-checkbox {
+  display: flex;
+  align-items: center;
+  .MuiCheckbox-root {
+    color: $color-border; // צבע הכפתור
+    &.Mui-checked {
+      color: $color-border-hover; // צבע הכפתור כשנבחר
+    }
+    &.Mui-disabled {
+      opacity: 0.7; 
+      cursor: not-allowed; 
+    }
+  }
+
+  .MuiFormControlLabel-label {
+    color: $color-black;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: color 0.3s ease;
   }
 }

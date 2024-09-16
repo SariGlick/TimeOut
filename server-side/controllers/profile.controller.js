@@ -1,5 +1,6 @@
 import mongoose  from 'mongoose';
 import Profiles from '../models/profile.model.js';
+import activeProfile from '../profileMngr.js'
 import {shareProfileFunction} from '../managers/sharingManager.js'
 import {updateProfiles} from '../managers/sharingManager.js';
 

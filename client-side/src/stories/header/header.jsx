@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import MessageIcon from './Icon'
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LabTabs from '../tabs/tabs';
-import MessageIcon from './Icon';
-import { selectAuth } from '../../redux/auth/auth.selector';
 import { selectUser } from '../../redux/user/user.selector';
-
+import { selectAuth } from '../../redux/auth/auth.selector';
 import './header.scss';
 
 function ResponsiveAppBar() {
@@ -17,9 +17,12 @@ function ResponsiveAppBar() {
   const currentProfile = currentUser ? currentUser.profile : ''; 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-  // const { t: translate } = useTranslation(); 
-  const { user } = useSelector(selectAuth);
 
+const { t: translate } = useTranslation(); 
+  const user = useSelector(state => state.user.currentUser||{});
+ const url=process.env.REACT_APP_BASE_URL;
+
+ 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -32,89 +35,102 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  const getAvatar = () => {
+  const getAvatarLetter = () => {
     if (currentProfile) return currentProfile; 
     if (user && user.name) return user.name.charAt(0).toUpperCase();
-    return '/static/images/avatar/2.jpg';
+    return `${url}/uploads/${user.profileImage}`
+  };
+  const getUserProfileImage = () =>{
+    
+      return user?.profileImage ? `${url}/uploads/${user.profileImage}` :''
+    
   };
 
   return (
+
+
     <div className='arooundDiv'>
-    <AppBar position="static" className='navbar' >
-      <Container   maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box className="left-side-box">
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              className='menu'
-            >
-          <LabTabs
-          nameOfClass="navbar-tabs"
-          text={["home", "reports", "statistics", "profiles"]}
-          nav={["/home","/reports","/statistics","/profiles"] }
-        />
-            </Menu>
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            className='logo'
-          >
-            TimeOut
-          </Typography>
-          <Box className="middle-side-box">
-          <LabTabs
-          nameOfClass="navbar-tabs"
-          text={["home", "reports", "statistics", "profiles"]}
-          nav={["/home","/reports","/statistics","/profiles"] }
-        />
-          </Box>
-          <Box >
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} >
-              <Avatar>{getAvatar()}</Avatar>
+      <AppBar position="static" className='navbar' >
+        <Container   maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box className="left-side-box">
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
+  
+
               </IconButton>
-            </Tooltip>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+
+                className='menu'
+              >
+            <LabTabs
+            nameOfClass="navbar-tabs"
+            text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
+            nav={["/home","/reports","/statistics","/profiles"] }
+          />
+              </Menu>
+            </Box>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+
+              className='logo'
             >
-                        <LabTabs
+              TimeOut
+            </Typography>
+            <Box className="middle-side-box">
+              <LabTabs
+                nameOfClass="navbar-tabs"
+
+                text={[translate("home"), translate("reports"), translate("statistics"), translate("profiles")]}
+                nav={["/home","/reports","/statistics","/profiles"] }
+              />
+            </Box>
+            <Box >
+              <Tooltip title="Open settings">
+                <IconButton onClick={handleOpenUserMenu} >
+                  <Avatar alt={getAvatarLetter()} src={getUserProfileImage()}></Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                
+                     <LabTabs
           nameOfClass="navbar-tabs"
           text={['edit user profile','manage notifications']}
           nav={['/editUserProfile','/manageNotifications'] }
@@ -123,9 +139,11 @@ function ResponsiveAppBar() {
             {/* <MessageIcon/> */}
 
           </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+          </Toolbar>
+        </Container>
+      </AppBar>
+                   
+          
     </div>
   );
 }

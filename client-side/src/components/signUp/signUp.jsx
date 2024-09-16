@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import ReCAPTCHA from 'react-google-recaptcha';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useNavigate } from 'react-router-dom'; 
 
+import React, { useState } from 'react'; 
+import { useDispatch } from 'react-redux'; 
+import { useNavigate } from 'react-router-dom'; 
+import { useFormik } from 'formik'; 
+import ReCAPTCHA from 'react-google-recaptcha'; 
 import PasswordStrengthMeter from '../signUp/PasswordStrength';
 import GenericButton from '../../stories/Button/GenericButton';
 import GenericInput from '../../stories/GenericInput/genericInput';
 import { MessagesSignUp } from '../../constants';
 import { createUser } from '../../services/userService';
 import { addUser } from '../../redux/user/user.slice';
+import * as Yup from 'yup';
+
 import './signUp.scss';
 
 
@@ -27,6 +28,7 @@ const SignUpSchema = Yup.object().shape({
     .matches(/\d/, MessagesSignUp.password.matches.digits)
     .min(4, MessagesSignUp.password.min)
 });
+
 function SignUp() {
   const [password, setPassword] = useState('');
   const [robotPass, setRobotPass] = useState(null)
@@ -49,6 +51,7 @@ function SignUp() {
       console.error("The user is not included in the system");
     }
   };
+
   return (
     <div className="signup-container">
       <h2 >signUp </h2>
@@ -62,7 +65,7 @@ function SignUp() {
             onBlur={formik.handleBlur}
             value={formik.values.name}
             width="100%"
-            size="medium"
+            size="medium" 
           />
           {formik.touched.name && formik.errors.name ? (
             <div className="error">{formik.errors.name}</div>
@@ -104,6 +107,7 @@ function SignUp() {
           ) : null}
           <PasswordStrengthMeter  password={password} />
         </div>
+
       <ReCAPTCHA
        sitekey={url}
    
@@ -120,5 +124,6 @@ function SignUp() {
     </div>
   );
 }
+
 export default SignUp;
 

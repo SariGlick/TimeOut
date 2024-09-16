@@ -13,11 +13,21 @@ const visitedWebsitesSchema=new mongoose.Schema({
             type: Date,
             required: true
         },
-        activityTime: {
-            type: Number,
-            required: true
-        }
+        visitsTime: [{
+            visitDate: {
+                type: Date,
+                default:Date(),
+                unique:true
+            },
+            activityTime: {
+                type: Number,
+                required: true
+            }
+        }]
     }]
 });
+
+
+        
 export default mongoose.model("VisitedWebsites", visitedWebsitesSchema)
 

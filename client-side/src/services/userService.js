@@ -1,4 +1,7 @@
+import axios from 'axios';
 import { handlePost } from '../axios/middleware';
+
+const baseURL = process.env.REACT_APP_BASE_URL;
 
 export const createUser = async (userData) => {
     try {
@@ -9,3 +12,26 @@ export const createUser = async (userData) => {
         throw err;
     }
 };
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+  
+  export const updateUser = async (user, userId) => {
+    try {
+      const token = getCookie('token');
+      const response = await axios.put(`${baseURL}/users/${userId}`,
+           user, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`
+            }
+            });
+        return response.data;
+    } catch (err) {
+        console.error('Error updating user:', err);
+        throw err;
+    }
+  };

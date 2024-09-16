@@ -1,0 +1,59 @@
+.select-class,
+.select-time-zone,
+.select-date-format {
+  margin-bottom: 20px;
+}
+.select-class .select-container,
+.select-time-zone .select-container,
+.select-date-format .select-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+.select-class .select-container .select-label,
+.select-time-zone .select-container .select-label,
+.select-date-format .select-container .select-label {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+.select-class .select-container .select-input,
+.select-time-zone .select-container .select-input,
+.select-date-format .select-container .select-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  cursor: pointer;
+}
+.select-class .select-container .select-input:focus,
+.select-time-zone .select-container .select-input:focus,
+.select-date-format .select-container .select-input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.select-class .select-icon,
+.select-time-zone .select-icon,
+.select-date-format .select-icon {
+  margin-right: 10px;
+  width: 24px;
+  height: 24px;
+}
+
+.select-time-zone .select-input {
+  border-color: #f0ad4e;
+}
+.select-time-zone .select-input:focus {
+  border-color: #ec971f;
+}
+
+.select-date-format .select-input {
+  border-color: #5bc0de;
+}
+.select-date-format .select-input:focus {
+  border-color: #31b0d5;
+}/*# sourceMappingURL=Preferences.css.map */

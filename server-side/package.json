@@ -41,8 +41,6 @@
     "react-popup-manager": "^2.1.13",
     "ws": "^8.18.0"
   },
-
- 
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",

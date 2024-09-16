@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-titel {
+  font-size: 78%;
+  color: black;
+}
+
+.timer-time {
+  font-size: 75%;
+  color: black;
+}
+
+.timer-label {
+  font-size: 50%;
+  margin-top: 4%;
+  color: rgb(103, 252, 210);
+}
+
+.countdown-circle-timer {
+  stroke-width: 0.25%;
+  size: 6.25%;
+}
+
+.profile-list-container .profile-timer-button {
+  background-color: transparent;
+  border: 2px solid rgb(103, 252, 210);
+  color: rgb(103, 252, 210);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.profile-list-container .profile-timer-button:hover {
+  background-color: rgb(103, 252, 210);
+  color: white;
+}
+.profile-list-container .profile-timer-button:focus {
+  outline: none;
+}
+
+.profile-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 2%;
+}
+.profile-list-container .profile-list-button {
+  background-color: transparent;
+  border: 2px solid rgb(103, 252, 210);
+  color: rgb(103, 252, 210);
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+.profile-list-container .profile-list-button:hover {
+  background-color: rgb(103, 252, 210);
+  color: white;
+}
+.profile-list-container .profile-list-button:focus {
+  outline: none;
+}
+
+.profile-list-select-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 2%;
+}
+
+.profile-list-select {
+  position: absolute;
+  top: 2.5vh;
+  width: 15vw;
+}
+
+.profile-list-loading {
+  font-size: 1.2em;
+  color: black;
+}
+
+.profile-list-details {
+  text-align: center;
+  width: 100%;
+  max-width: 120vw;
+  margin-bottom: 9vh;
+}
+
+.profile-list-table {
+  margin-top: 2vh;
+  width: 98%;
+  max-width: 120vw;
+}
+
+h1, h2, p {
+  text-align: center;
+}
+
+button {
+  display: block;
+  margin: 2vh auto;
+}
+
+.custom-time-input {
+  color: black;
+  background-color: white;
+  border: 2px solid rgb(103, 252, 210);
+  padding: 0.5%;
+  border-radius: 10px;
+  margin: 2vh;
+}
+.custom-time-input:hover {
+  border-color: #35fbc3;
+}
+.custom-time-input:focus {
+  border-color: #35fbc3;
+  outline: none;
+  box-shadow: 0 0 8px rgba(103, 252, 210, 0.5);
+}
+
+.div-time {
+  display: flex;
+  justify-content: center;
+}
+.div-time > *:not(:last-child) {
+  margin-right: 10%;
+}
+
+.component-add,
+.component-update,
+.component-timer {
+  position: absolute;
+  margin-bottom: 2vh;
+  margin: 2vh;
+  right: 0.7vw;
+}
+.component-add.component-update,
+.component-update.component-update,
+.component-timer.component-update {
+  top: 22vh;
+}
+.component-add.component-timer,
+.component-update.component-timer,
+.component-timer.component-timer {
+  top: 32vh;
+}
+
+.helper-text-error {
+  color: rgba(254, 226, 226, 0.8);
+}
+
+.helper-text {
+  color: red;
+}
+
+.profile-select {
+  width: 10vw;
+}
+
+.timer {
+  margin-left: 3vh;
+}
+
+.green_title {
+  color: rgb(103, 252, 210);
+}
+
+.custom-checkbox {
+  color: rgb(103, 252, 210) !important;
+}
+.custom-checkbox.Mui-checked {
+  color: rgb(103, 252, 210) !important;
+}
+.custom-checkbox .MuiSvgIcon-root {
+  font-size: 28px !important;
+}
+
+.cancel-button {
+  color: rgb(103, 252, 210) !important;
+}/*# sourceMappingURL=profilePageStyle.css.map */

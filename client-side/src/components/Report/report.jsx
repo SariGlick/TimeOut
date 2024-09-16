@@ -19,6 +19,7 @@ export default function Report() {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [dateTimePiker, setDateTimePiker] = useState(false);
+  const user = useSelector(state => state.user.currentUser|| {});
 
   const selectFunction = (selectedValue) => {
     switch (selectedValue) {
@@ -69,7 +70,6 @@ export default function Report() {
 
 
   const fillData = async () => {
-    const user = useSelector(state => state.user.currentUser|| {});
     const body = {
       userId: user.id,
       type: selectType,
