@@ -4,8 +4,6 @@ import Users, { generateToken } from '../models/user.model.js';
 import {
   addUserService,
   signInService,
-  getUserById_service,
-  getUserByEmail_service
 } from '../services/user.service.js';
 
 
