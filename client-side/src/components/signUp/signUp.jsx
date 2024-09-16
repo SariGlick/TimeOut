@@ -35,7 +35,7 @@ function SignUp() {
   const [robotPass, setRobotPass] = useState(null);
   const url = process.env.REACT_APP_SITEKEY;
   const apiUrl =process.env.REACT_APP_SERVER_URL
-  const { t: translate, i18n: localization } = useTranslation();
+  const { i18n: localization } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -96,6 +96,7 @@ function SignUp() {
         },
       });
       const userData = loginResponse.data;
+      console.log('userData',userData)
       localStorage.setItem('userId', userData._id);
       dispatch(setCurrentUser(userData));
       localization.changeLanguage(userData.preference.language);

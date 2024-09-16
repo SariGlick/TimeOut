@@ -1,9 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+
 import '@testing-library/jest-dom/extend-expect';
+import { useSelector } from 'react-redux';
+
 import Notifications from '../../../src/components/settings/Notifications.jsx';
 import CONSTANTS from '../../../src/components/settings/constantSetting.js';
-import { useSelector } from 'react-redux';
 
 // Mocking the useSelector hook from redux
 jest.mock('react-redux', () => ({

@@ -5,17 +5,17 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import "./DateInput.scss";
 
-const DateInput = ({ onChange }) => {
+const DateInput = ({ onChange,format  }) => {
   return (
     <div className="timeInputWrapper">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DatePicker
           onChange={onChange}
+          format={format}
           renderInput={(params) => (
             <TextField
               {...params}
               InputProps={{ style: { fontSize: "14px" }}}
-              inputFormat="dd-MM-yyyy"
             />
           )}
         />
@@ -26,6 +26,7 @@ const DateInput = ({ onChange }) => {
 
 DateInput.propTypes = {
   onChange: PropTypes.func.isRequired,
+  format: PropTypes.string.isRequired,
 };
 
 export default DateInput;

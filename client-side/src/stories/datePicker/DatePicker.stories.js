@@ -1,5 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
+
 import DatePicker from './DatePicker';
 
 export default {

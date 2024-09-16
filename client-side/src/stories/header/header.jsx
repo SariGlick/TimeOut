@@ -3,11 +3,13 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import {AppBar,Box,Toolbar,IconButton,Typography,Menu,Tooltip,Avatar,Container} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useTranslation } from 'react-i18next';
+
 import LabTabs from '../tabs/tabs';
-import MessageIcon from './Icon';
 import { selectAuth } from '../../redux/auth/auth.selector';
 import { selectUser } from '../../redux/user/user.selector';
-import { useTranslation } from 'react-i18next'
+
+import MessageIcon from './Icon';
 
 import './header.scss';
 
@@ -41,92 +43,92 @@ function ResponsiveAppBar() {
 
   return (
     <div className='arooundDiv'>
-    <AppBar position="static" className='navbar' >
-      <Container   maxWidth="xl">
-        <Toolbar disableGutters>
-          <Box className="left-side-box">
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              className='menu'
-            >
-          <LabTabs
-          nameOfClass="navbar-tabs"
-          text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
-          nav={["/home","/reports","/statistics","/profiles"] }
-        />
-            </Menu>
-          </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            className='logo'
-          >
-            TimeOut
-          </Typography>
-          <Box className="middle-side-box">
-          <LabTabs
-          nameOfClass="navbar-tabs"
-          text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
-          nav={["/home","/reports","/statistics","/profiles"] }
-        />
-          </Box>
-          <Box >
-            <Tooltip title={translate("Open settings")}>
-              <IconButton onClick={handleOpenUserMenu} >
-              <Avatar>{getAvatar()}</Avatar>
+      <AppBar position="static" className='navbar' >
+        <Container   maxWidth="xl">
+          <Toolbar disableGutters>
+            <Box className="left-side-box">
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                className='menu'
+              >
+                <LabTabs
+                  nameOfClass="navbar-tabs"
+                  text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
+                  nav={["/home","/reports","/statistics","/profiles"] }
+                />
+              </Menu>
+            </Box>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="#app-bar-with-responsive-menu"
+              className='logo'
             >
-                        <LabTabs
-          nameOfClass="navbar-tabs"
-          text={[translate('settings')]}
-          nav={['/settings'] }
-        />
-            </Menu>
-            {/* <MessageIcon/> */}
+            TimeOut
+            </Typography>
+            <Box className="middle-side-box">
+              <LabTabs
+                nameOfClass="navbar-tabs"
+                text={[translate("home"),translate("reports"), translate("statistics"), translate("profiles")]}
+                nav={["/home","/reports","/statistics","/profiles"] }
+              />
+            </Box>
+            <Box >
+              <Tooltip title={translate("Open settings")}>
+                <IconButton onClick={handleOpenUserMenu} >
+                  <Avatar>{getAvatar()}</Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                <LabTabs
+                  nameOfClass="navbar-tabs"
+                  text={[translate('settings')]}
+                  nav={['/settings'] }
+                />
+              </Menu>
+              {/* <MessageIcon/> */}
 
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
     </div>
   );
 }
