@@ -94,7 +94,7 @@ import '../../styles/profilePageStyle.scss';
       }
       dispatch(addProfile(ProfileNew));
       setTimeout(() => navigate(0), 2000);
-      handleClose();
+      // handleClose();
     } catch (error) {
       console.error(TOAST_MESSAGES.PROFILE_CREATE_ERROR, error);
       enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);

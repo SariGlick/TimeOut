@@ -11,7 +11,7 @@ import {
 
 export const getUsers = async (req, res, next) => {
   try {
-    const users = await Users.find().populate({ path: 'visitsWebsites', populate: { path: 'websiteId' } }).populate('profiles preference').select('-__v');
+    const users = await Users.find().populate({ path: 'VisitedWebsites', populate: { path: 'websitesId' } }).populate('profiles preference').select('-__v');
     res.status(200).send(users);
   } catch (err) {
     console.error(err);

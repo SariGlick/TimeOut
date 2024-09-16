@@ -10,12 +10,7 @@ import { selectAuth } from '../../redux/auth/auth.selector.js';
 import CONSTANTS from './constantSetting.js';
 import './Preferences.scss';
 
-const createTimeZones = () => {
-  return moment.tz.names().map(timezone => ({
-    value: timezone,
-    text: timezone,
-  }));
-};
+const createTimeZones = () => moment.tz.names().map(timezone => ({ value: timezone, text: timezone }));
 
 const Preferences = ({ onUpdate, data }) => {
   const { user } = useSelector(selectAuth);
@@ -27,11 +22,11 @@ const Preferences = ({ onUpdate, data }) => {
     text: LANGUAGE[key]['text'],
     iconSrc: LANGUAGE[key]['icon']
   }));
-  const initialLanguage = (data?.language || user.preference?.language || languageOptions[0].value);
+  const initialLanguage = (data?.language || user?.preference?.language || languageOptions[1].value);
   const timeZoneOptions = createTimeZones();
   const defaultTimeZone = timeZoneOptions.find(option => option.value === "UTC")?.value || timeZoneOptions[0].value;
-  const initialTimeZone = (data?.timeZone || user.preference?.timeZone || defaultTimeZone);
-  const initialDateFormat = (data?.dateFormat || user.preference?.dateFormat || DATE_FORMATS[0].value);
+  const initialTimeZone = (data?.timeZone || user?.preference?.timeZone || defaultTimeZone);
+  const initialDateFormat = (data?.dateFormat || user?.preference?.dateFormat || DATE_FORMATS[0].value);
   const [language, setLanguage] = useState(initialLanguage);
   const [timeZone, setTimeZone] = useState(initialTimeZone);
   const [dateFormat, setDateFormat] = useState(initialDateFormat);
@@ -41,18 +36,17 @@ const Preferences = ({ onUpdate, data }) => {
     value: value
   }));
 
-  const [prevValues, setPrevValues] = useState({
-    language,
-    timeZone,
-    dateFormat
+  const [prevValues] = useState({
+    language:user?.preference.language,
+    timeZone:user?.preference.timeZone,
+    dateFormat:user?.preference.dateFormat
   });
 
   useEffect(() => {
     if (prevValues.language !== language) {
       onUpdate({ language });
-      setPrevValues(prev => ({ ...prev, language }));
     }
-    else {
+    else if(data && 'language' in data){
       onUpdate({ language: undefined });
     }
   }, [language]);
@@ -60,8 +54,7 @@ const Preferences = ({ onUpdate, data }) => {
   useEffect(() => {
     if (prevValues.timeZone !== timeZone) {
       onUpdate({ timeZone });
-      setPrevValues(prev => ({ ...prev, timeZone }));
-    }else {
+    }else if(data && 'timeZone' in data){
       onUpdate({ timeZone: undefined });
     }
   }, [timeZone]);
@@ -69,9 +62,9 @@ const Preferences = ({ onUpdate, data }) => {
   useEffect(() => {
     if (prevValues.dateFormat !== dateFormat) {
       onUpdate({ dateFormat });
-      setPrevValues(prev => ({ ...prev, dateFormat }));
-    }else {
+    }else if(data && 'dateFormat' in data){
       onUpdate({ dateFormat: undefined });
+      
     }
   }, [dateFormat]);
 
@@ -95,6 +88,7 @@ const Preferences = ({ onUpdate, data }) => {
           widthOfSelect='11rem'
           value={language}
           onChange={handleLanguageChange}
+          data-testid="select-language"
         />
       </div>
       <div className="div-select">
@@ -106,6 +100,7 @@ const Preferences = ({ onUpdate, data }) => {
           value={timeZone}
           size='large'
           widthOfSelect='11rem'
+          data-testid="select-time-zone"
         />
       </div>
       <div className="div-select">
@@ -117,6 +112,7 @@ const Preferences = ({ onUpdate, data }) => {
           title={translate(LABELS.SELECT_DATE_FORMAT)}
           size='large'
           widthOfSelect='11rem'
+          data-testid="select-date-format"
         />
       </div>
     </div>

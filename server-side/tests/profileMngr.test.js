@@ -6,7 +6,7 @@ jest.mock('../controllers/user.controller.js');
 describe('activeProfile function', () => {
     const userId = '12345';
     const user = {
-        preferences: {
+        preference: {
             timeZone: 'America/New_York',
         },
         profiles: [
@@ -42,7 +42,7 @@ describe('activeProfile function', () => {
 
     const userId2 = '12345789';
     const user2 = {
-        preferences: {
+        preference: {
             timeZone: 'America/New_York',
         },
         profiles: []

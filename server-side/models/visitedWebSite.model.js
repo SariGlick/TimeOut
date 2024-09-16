@@ -5,7 +5,7 @@ const visitedWebsitesSchema=new mongoose.Schema({
     
     websitesId:[{
         type:Schema.Types.ObjectId,
-        ref:'website',
+        ref:'Websites',
         require:true,
     }],
     visitsTime: [{
