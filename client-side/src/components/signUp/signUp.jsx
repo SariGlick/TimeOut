@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,7 +12,7 @@ import GenericInput from '../../stories/GenericInput/genericInput';
 import { MessagesSignUp } from '../../constants';
 import { createUser } from '../../services/userService';
 import { addUser } from '../../redux/user/user.slice';
-import { setCurrentUser } from '../../redux/auth/auth.slice';
+import { userLogin } from '../../services/authService';
 import './signUp.scss';
 
 
@@ -33,8 +32,8 @@ const SignUpSchema = Yup.object().shape({
 function SignUp() {
   const [password, setPassword] = useState('');
   const [robotPass, setRobotPass] = useState(null);
+  const [error, setError] = useState(null);
   const url = process.env.REACT_APP_SITEKEY;
-  const apiUrl =process.env.REACT_APP_SERVER_URL
   const { i18n: localization } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -90,19 +89,9 @@ function SignUp() {
       };
       await createUser(userWithPreferences);
       dispatch(addUser(userWithPreferences));
-      const loginResponse = await axios.post(`${apiUrl}/users/signIn`, user, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const userData = loginResponse.data;
-      console.log('userData',userData)
-      localStorage.setItem('userId', userData._id);
-      dispatch(setCurrentUser(userData));
-      localization.changeLanguage(userData.preference.language);
-      navigate('/home');
+      await userLogin(user, robotPass, setError, null, formik.setSubmitting, dispatch, localization, navigate);
     } catch (error) {
-      console.error("The user is not included in the system");
+      console.error("The user is not included in the system", error);
       throw error;
     }
   };
@@ -164,12 +153,11 @@ function SignUp() {
         </div>
         <ReCAPTCHA
           sitekey={url}
-
           onChange={(val) => setRobotPass(val)}
         />
         <GenericButton
           className="secondary"
-          label="signUp"
+          label="sign Up"
           onClick={formik.handleSubmit}
           size="medium"
           disabled={formik.isSubmitting || !robotPass}

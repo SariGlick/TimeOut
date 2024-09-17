@@ -68,7 +68,6 @@ describe('Notifications Component', () => {
   test('calls onUpdate when email frequency changes', () => {
     render(<Notifications onUpdate={mockOnUpdate} data={mockData} />);
     fireEvent.change(screen.getByTestId('select-email-frequency'), { target: { value: 'daily' } });
-    console.log(mockOnUpdate.mock.calls);
     expect(mockOnUpdate).toHaveBeenCalledWith({ emailFrequency: 'daily' });
   });  
 

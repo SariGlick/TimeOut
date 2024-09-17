@@ -2,28 +2,29 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import axios from 'axios';
 import { Alert, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ReCAPTCHA from 'react-google-recaptcha';
 import './login.scss';
 import GenericButton from '../stories/Button/GenericButton';
 import GenericInput from '../stories/GenericInput/genericInput';
-import { setCurrentUser } from '../redux/auth/auth.slice';
 import { MESSAGES } from '../constants';
+import {userLogin} from '../services/authService'
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email(MESSAGES.INVALID_EMAIL_FORMAT).required(MESSAGES.EMAIL_REQUIRED),
   password: Yup.string().required(MESSAGES.PASSWORD_REQUIRED),
 });
 
-function Login({ apiUrl =process.env.REACT_APP_SERVER_URL}) {
+function Login() {
   const [error, setError] = useState(null);
   const [isNotExists, setIsNotExists] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [robotPass, setRobotPass] = useState(null);
+  const { i18n: localization } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,46 +33,9 @@ function Login({ apiUrl =process.env.REACT_APP_SERVER_URL}) {
     validationSchema: SignInSchema,
     onSubmit: (values) => {
       const user = { email: values.email, password: values.password };
-      userLogin(user);
+      userLogin(user, robotPass, setError, setIsNotExists, formik.setSubmitting, dispatch, localization, navigate);
     },
   });
-
-  const userLogin = async (user) => {
-    try {
-      if (!robotPass) {
-        setError(MESSAGES.RECAPTCHA_ERROR);
-        setIsNotExists(true);
-        return;
-      }
-      setError(null);
-      const loginResponse = await axios.post(`${apiUrl}/users/signIn`, user, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      const userData = loginResponse.data;
-      localStorage.setItem('userId', userData._id);
-      dispatch(setCurrentUser(userData));
-
-      navigate('/home');
-    } catch (error) {
-
-      if (error.response) {
-        if (error.response.status === 401) {
-          setError(MESSAGES.INVALID_EMAIL_PASSWORD);
-        } else {
-          setError(MESSAGES.UNEXPECTED_ERROR);
-        }
-      } else if (error.request) {
-        setError(MESSAGES.NETWORK_ERROR);
-      } else {
-        setError(MESSAGES.UNEXPECTED_ERROR);
-      }
-      setIsNotExists(true);
-    } finally {
-      formik.setSubmitting(false);
-    }
-  };
 
   const handleSignUpClick = () => navigate('/Signup');
 
