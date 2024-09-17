@@ -1,4 +1,4 @@
-@import '../stylies.scss';
+@import '../variables.scss';
 
 .table {
     background-color: $background-class;
@@ -78,4 +78,7 @@
         }
     }
 }
-
+.add-button-container {
+    text-align: center;
+    margin-top: 10px;
+  }

@@ -1,17 +1,14 @@
 import express from 'express'
-import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite} from '../controllers/visitedWebSite.controller.js'
-const router=express.Router();
-<<<<<<< HEAD
-router.get('/vistedWebsite',getAllVisitedWebsites)
-router.get('/vistedWebsite/:id',getVisitedWebsiteById)
-router.post('/vistedWebsite',createVisitedWebsite)
-router.put('/vistedWebsite/:id',updateVisitedWebsite)
-router.delete('/vistedWebsite/:id',deleteVisitedWebsite)
-=======
-router.get('/',getAllVisitedWebsites)
-router.get('/:id',getVisitedWebsiteById)
-router.post('/',createVisitedWebsite)
-router.put('/:id',updateVisitedWebsite)
-router.delete('/:id',deleteVisitedWebsite)
->>>>>>> moriya/server-side
-export default router;
+import {getAllVisitedWebsites,getVisitedWebsiteById,deleteVisitedWebsite,updateVisitedWebsite,createVisitedWebsite,showVisitedWebsite} from '../controllers/visitedWebSite.controller.js'
+
+const visitedWebSitesRouter=express.Router();
+
+visitedWebSitesRouter.get('/',getAllVisitedWebsites)
+visitedWebSitesRouter.get('/:id',getVisitedWebsiteById)
+visitedWebSitesRouter.post('/',createVisitedWebsite)
+visitedWebSitesRouter.put('/:id',updateVisitedWebsite)
+visitedWebSitesRouter.delete('/:id',deleteVisitedWebsite)
+visitedWebSitesRouter.post('/showVisitedWebsite',showVisitedWebsite)
+
+export default visitedWebSitesRouter;
+
