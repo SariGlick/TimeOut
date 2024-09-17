@@ -1,5 +1,5 @@
 import express from 'express'
-import {getAllProfiles,getProfileById,createProfile,deleteProfile,updateProfile, getProfilesByUserId,updateLocation,activeProfileByUserId,uploadProfilesFromExcel} from '../controllers/profile.controller.js'
+import {getAllProfiles,getProfileById,createProfile,deleteProfile,updateProfile, getProfilesByUserId,updateLocation,activeProfileByUserId,uploadProfilesFromExcel,shareProfile,updateProfilesByInvitation} from '../controllers/profile.controller.js'
 import upload from '../middleware/uploadFiles.js';
 
 const profilesRouter=express.Router();
@@ -12,4 +12,7 @@ profilesRouter.post('/activeProfile',activeProfileByUserId);
 profilesRouter.get('/user/:id', getProfilesByUserId);
 profilesRouter.post('/updateLocation', updateLocation);
 profilesRouter.post('/upload', upload.single('file'), uploadProfilesFromExcel); 
+profilesRouter.post('/shareProfile',shareProfile);
+profilesRouter.put('/acceptSharing/:id',updateProfilesByInvitation);
+
 export default profilesRouter;

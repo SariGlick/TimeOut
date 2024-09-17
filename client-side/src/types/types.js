@@ -32,7 +32,7 @@
  * @property {string} [googleId]
  * @property {(string|VisitedWebsite)[]} visitsWebsites
  * @property {string[]} profiles
- * @property {string[]} preferences
+ * @property {string[]} preference
  * @property {string} [profileImage]
  */
 
@@ -58,7 +58,12 @@
  * @property {string} id
  * @property {'never' | 'daily' | 'weekly' | 'monthly' | 'yearly'} emailFrequency
  * @property {number} sendNotificationTime
- * @property {string} [soundVoice]
+ * @property {string} [soundVoice] 
+ * @property {string} timeZone 
+ * @property {'en' | 'es' | 'he'} language 
+ * @property {'MM-DD-YYYY' | 'DD-MM-YYYY' | 'YYYY-MM-DD'} dateFormat 
+ * @property {boolean} displayIncomeMessages 
+ * @property {boolean} displayBrowsingTimeLimit 
  */
 
 /**

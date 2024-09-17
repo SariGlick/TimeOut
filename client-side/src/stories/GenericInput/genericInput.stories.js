@@ -1,6 +1,7 @@
 import React from 'react';
-import GenericInput from '../inputs/genericInput';
 import PersonIcon from '@mui/icons-material/Person';
+
+import GenericInput from '../inputs/genericInput';
 
 export default {
   title: 'Components/StyledInput',
@@ -82,4 +83,10 @@ export const PasswordInput = Template.bind({});
 PasswordInput.args = {
   label: 'Enter password',
   type: 'password',
+};
+export const CheckboxInput = Template.bind({});
+CheckboxInput.args = {
+  label: 'Enable notifications',
+  type: 'checkbox',
+  value: false, 
 };

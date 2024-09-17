@@ -7,9 +7,10 @@ export const INPUT_LABELS = {
     URL: 'URL',
     STATUS: 'status',
     LIMIT_MINUTES: 'Limit Minutes',
-    GOOGLE_DRIVE:'Google Drive',
-    GOOGLE_CALENDAR:'Google Calendar',
-    GOOGLE_MAP:'Google Map'
+    TIMER_ACTIVATION: 'Timer Activation',
+    GOOGLE_DRIVE: 'Google Drive',
+    GOOGLE_CALENDAR: 'Google Calendar',
+    GOOGLE_MAP: 'Google Map'
 };
 
 export const TOOLTIP_TEXTS = {
@@ -29,9 +30,9 @@ export const TOOLTIP_TEXTS = {
     DELETE: 'Delete',
     CONFIRM_DELETE: 'Are you sure you want to delete this profile?',
     FORM_NOT_FILLED: 'The button is disabled because not all fields are filled.',
-    GOOGLE_DRIVE:'Google Drive',
-    GOOGLE_CALENDAR:'Google Calendar',
-    GOOGLE_MAP:'Google Map'
+    GOOGLE_DRIVE: 'Google Drive',
+    GOOGLE_CALENDAR: 'Google Calendar',
+    GOOGLE_MAP: 'Google Map'
 };
 
 export const SELECT_OPTIONS = {
@@ -50,6 +51,7 @@ export const SELECT_OPTIONS = {
 };
 
 export const BUTTON_LABELS = {
+    TIMER_ACTIVATION: 'Timer Activation',
     EDIT_PROFILE: 'Edit Profile',
     ADD_WEBSITE: 'Add Website',
     CANCEL: 'Cancel',
@@ -59,9 +61,13 @@ export const BUTTON_LABELS = {
     ADDING: 'Adding',
     ADD_PROFILE: 'Add Profile',
     UPLOAD_EXCEL: 'Upload Excel',
+    START: 'Start'
 };
 
+
 export const DIALOG_TITLES = {
+    TIMER_ACTIVATION: 'Timer Activation',
+    ADDING: 'Adding',
     ADD_PROFILE: 'Add a new profile',
     EDIT_PROFILE: 'Edit Profile',
     PROFILE_TIME:' Enter profile start time and profile end time',
@@ -75,6 +81,7 @@ export const DIALOG_TITLES = {
 export const TOAST_MESSAGES = {
     PROFILE_UPDATED_SUCCESS: 'Profile updated successfully!',
     PROFILE_UPDATED_ERROR: 'Error updating profile!',
+    PROFILE_NOT_FOUND: 'Error profile not found!',
     PROFILE_DELETED_SUCCESS: 'Profile deleted successfully!',
     PROFILE_DELETED_ERROR: 'Error deleting profile!',
     PROFILE_FROM_SERVER_ERROR: 'An error occurred in fetching the data from the server!',
@@ -109,3 +116,16 @@ export const FILE_UPLOAD = {
     ACCEPTED_FILE_TYPES: '.xlsx,.xls',
   };
   
+export const TIMER_COLORS = {
+    primary: 'rgb(45, 158, 126)',
+};
+
+export const PROFILE_LIST_MESSAGES = {
+    HELLO_SELECTED_PROFILE: "Hello! You have selected your {profileName} profile that",
+    OPERATES_BETWEEN: "operates between",
+    BELOW_SITES: "Below are the sites that your profile contains:",
+    NO_PROFILE_SELECTED: "No profile selected",
+    PLEASE_SELECT_PROFILE: "Please select a profile",
+};
+
+export const PROFILE_LIST_LOADING = "Loading...";

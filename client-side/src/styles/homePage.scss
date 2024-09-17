@@ -3,10 +3,10 @@
 @import '../stories/variables.scss';
 
 .homepage-container {
-  font-family: $font-family-primary;
+  font-family: $font-family;
   margin: 0;
   padding: 0;
-  color: $black-color;
+  color: $primary-color;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -57,13 +57,13 @@
 
     &.odd {
       background-color: $white-color;
-      color: $black-color;
+      color: $primary-color;
       flex-direction: row-reverse;
     }
 
     &.even {
       background-color: $primary-color-home;
-      color: $black-color;
+      color: $primary-color;
       flex-direction: row;
     }
 

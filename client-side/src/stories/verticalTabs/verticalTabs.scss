@@ -1,0 +1,50 @@
+@import '../variables.scss';
+
+.vertical-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2%;
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__button {
+    font-family: $font-family;
+    font-optical-sizing: auto;
+    font-style: normal;
+    border: 0.1rem solid $secondary-color;
+    width: 30vh;  
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 0.6rem 1rem $light-black, inset 0 0.1rem 0 $shadow; 
+    transition: transform 0.1s, box-shadow 0.1s;
+
+    &:hover {
+      box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
+      background-color: $hover-color;
+      transition: color 0.3s ease;
+    }
+
+    &--active {
+      box-shadow: 0 0.5rem 0.5rem rgba($secondary-color, 0.5); 
+      background-color: $hover-color;
+      transition: color 0.3s ease;
+    }
+  }
+
+  &__content {
+    border: 0.2rem solid $secondary-color; 
+    width: 100vh; 
+    height: 65vh; 
+    display: flex;
+    justify-content: center;
+  }
+
+  &__element {
+    padding: 3%;
+    width: 60%; 
+  }
+}

@@ -18,9 +18,10 @@ const TableComponent = ({
   handleFieldChange,
   statusOptions,
   addButton,
-  handleAddRow
+  handleAddRow,
+  pageSize
 }) => {
-  let columns = dataObject.headers.map((header, i) => ({
+  const columns = dataObject.headers.map((header, i) => ({
     field: header,
     headerName: header,
     width: widthOfColums[i],
@@ -28,42 +29,43 @@ const TableComponent = ({
     headerAlign: 'center',
     renderCell: (params) => {
       if (editRowId && editRowId === params.row.id && header !== 'Actions') {
-        if (header === 'status') {
-          return (
-            <Select
-              value={params.value}
-              onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
-              name={header}
-              fullWidth
-            >
-              {statusOptions.map(option => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.text}
-                </MenuItem>
-              ))}
-            </Select>
-          );
-        }
-        if (header === 'name') {
-          return (
-            <Tooltip title='This field is optional'>
+        switch (header) {
+          case 'status':
+            return (
+              <Select
+                value={params.value}
+                onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
+                name={header}
+                fullWidth
+              >
+                {statusOptions.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.text}
+                  </MenuItem>
+                ))}
+              </Select>
+            );
+          case 'name':
+            return (
+              <Tooltip title='This field is optional'>
+                <TextField
+                  value={params.value}
+                  onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
+                  name={header}
+                  fullWidth
+                />
+              </Tooltip>
+            );
+          default:
+            return (
               <TextField
                 value={params.value}
                 onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
                 name={header}
                 fullWidth
               />
-            </Tooltip>
-          );
+            );
         }
-        return (
-          <TextField
-            value={params.value}
-            onChange={(e) => handleFieldChange && handleFieldChange(e, params.row.id)}
-            name={header}
-            fullWidth
-          />
-        );
       }
       if (header === 'Actions') {
         return (
@@ -104,19 +106,20 @@ const TableComponent = ({
   }
 
   return (
-    <div className="table" style={{ width: widthOfTable, marginTop: "8%" }}>
+    <div className="table" style={{ width: widthOfTable }}>
       <DataGrid
         rows={dataObject.rows}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: pageSize || 5 },
           },
         }}
-        pageSizeOptions={[4, 8]}
+        pageSizeOptions={[4, 8, 10]}
+        pageSize={pageSize || 5}
       />
       {addButton && (
-        <div style={{ textAlign: 'center', marginTop: '10px' }}>
+        <div className="add-button-container">
           <GenericButton variant="outlined" size="medium" onClick={handleAddRow} className="profile-list-button" label='Add Website' />
         </div>
       )}
@@ -147,6 +150,7 @@ TableComponent.propTypes = {
   })).isRequired,
   addButton: PropTypes.bool,
   handleAddRow: PropTypes.func,
+  pageSize: PropTypes.number,
 };
 
 TableComponent.defaultProps = {
@@ -156,5 +160,7 @@ TableComponent.defaultProps = {
   handleFieldChange: null,
   addButton: false,
   handleAddRow: null,
+  pageSize: 5,
 };
+
 export default TableComponent;
