@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import Profile from '../models/profile.model.js';
+import Profiles from '../models/profile.model.js';
 import activeProfile from '../profileMngr.js'
 import xlsx from 'xlsx';
 import fs from 'fs'
 import websitesModel from '../models/websites.model.js';
 import { saveProfile, saveWebsite } from '../services/profile.service.js';
-import {shareProfileFunction} from '../managers/sharingManager.js'
-import {updateProfiles} from '../managers/sharingManager.js';
+import { shareProfileFunction } from '../managers/sharingManager.js'
+import { updateProfiles } from '../managers/sharingManager.js';
 
 
 const booleanize = (value) => {
@@ -15,7 +15,7 @@ const booleanize = (value) => {
 
 export const uploadProfilesFromExcel = async (req, res) => {
     try {
-        const userId = req.body.text;
+        const userId = req.body.userId;
         if (!userId) {
             return res.status(400).json({ message: 'User ID is required.' });
         }
@@ -32,7 +32,7 @@ export const uploadProfilesFromExcel = async (req, res) => {
                 name: site['Website Name'],
                 url: site['Website URL'],
             });
-            const savedWebsite = await saveWebsite(websiteData);
+            const savedWebsite = await saveWebsite(website);
             return {
                 websiteId: savedWebsite._id,
                 status: site['Website Status'],
@@ -74,7 +74,7 @@ export const uploadProfilesFromExcel = async (req, res) => {
 };
 
 export const updateProfilesByInvitation = async (req, res, next) => {
-    const invitationID = req.params.id;    
+    const invitationID = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(invitationID)) {
         return next({ message: 'Invitation ID is not valid', status: 400 });
     }
@@ -221,7 +221,7 @@ const getDistance = (loc1, loc2) => {
     return distance;
 };
 
-export const activeProfileByUserId = async(req, res) => {
+export const activeProfileByUserId = async (req, res) => {
     try {
         const userId = req.body;
         const profile = await activeProfile(userId);

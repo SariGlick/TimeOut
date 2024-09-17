@@ -273,7 +273,7 @@ const ProfilePageComponent = ({ userId=''}) => {
   };
 
   const formatProfileDataForExcel = (profile) => {
-  if (!profile || !profile.listWebsites || profile.listWebsites.length === 0) {
+  if (!profile) {
       return [];
   }
 
@@ -292,12 +292,13 @@ const ProfilePageComponent = ({ userId=''}) => {
       'Google Drive Folder ID': profile.googleDriveFiles?.folderId || '', 
   };
 
-  const websiteData = profile.listWebsites.map(website => ({
+  const websiteData = profile.listWebsites && profile.listWebsites.length > 0
+  ? profile.listWebsites.map(website => ({
       'Website Name': website.websiteId?.name || '',
       'Website URL': website.websiteId?.url || '',
       'Website Status': website.status || '', 
       'Limited Minutes': website.limitedMinutes
-  }));
+  })): [];
 
   return [profileData, ...websiteData];
 };

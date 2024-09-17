@@ -9,7 +9,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Tooltip,
 } from '@mui/material';
+
 import RadioButton from '../../stories/RadioButton/radio-Button.jsx';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';
 import GenericButton from '../../stories/Button/GenericButton.jsx';
@@ -28,13 +30,14 @@ import {
 import '../../styles/profilePageStyle.scss';
 import { handlePost } from '../../axios/middleware.js';
 
- function AddProfile({ userId='' }) {
+function AddProfile({ userId = '' }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setIsOpen] = useState(false);
   const [data, setData] = useState(getInitialData());
   const [errorText, setErrorText] = useState('');
+  const [selectedFile, setSelectedFile] = useState();
   const isFormIncomplete = !data.name || data.name.length < 2 || data.name.length > 50 || !data.status;
 
   function getInitialData() {
@@ -89,9 +92,8 @@ import { handlePost } from '../../axios/middleware.js';
     };
 
     try {
-      const ProfileNew= await createProfile(profileData);
-      if(ProfileNew.status===200)
-      {
+      const ProfileNew = await createProfile(profileData);
+      if (ProfileNew.status === 200) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       }
       dispatch(addProfile(ProfileNew));
@@ -115,15 +117,16 @@ import { handlePost } from '../../axios/middleware.js';
     try {
       const formData = new FormData();
       formData.append('file', selectedFile);
-      formData.append('userId', userId)
+      formData.append('userId', userId);
       const response = await handlePost('/profiles/upload', formData);
-      if (response.status === 200) {
+      if (response.status === 201) {
         enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_SUCCESS} type="success" />);
       }
       navigate('/profiles');
-      handleClose();
+      // handleClose();
     } catch (error) {
       console.error('An error occurred during upload!', error);
+      enqueueSnackbar(<ToastMessage message={TOAST_MESSAGES.PROFILE_CREATE_ERROR} type="error" />);
     }
   };
   return (
@@ -214,11 +217,11 @@ import { handlePost } from '../../axios/middleware.js';
           <Button color="error" onClick={toggleDialogOpen}>
             {BUTTON_LABELS.CANCEL}
           </Button>
-              <span>
-                <Button color="success" type="submit" disabled={isFormIncomplete}>
-                  {BUTTON_LABELS.ADDING}
-                </Button>
-              </span>
+          <span>
+            <Button color="success" type="submit" disabled={isFormIncomplete}>
+              {BUTTON_LABELS.ADDING}
+            </Button>
+          </span>
         </DialogActions>
       </Dialog>
     </>
@@ -227,4 +230,4 @@ import { handlePost } from '../../axios/middleware.js';
 AddProfile.propTypes = {
   userId: PropTypes.string.isRequired,
 };
-export default AddProfile
+export default AddProfile;
