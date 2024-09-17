@@ -109,6 +109,13 @@ const Notifications = ({ onUpdate, data }) => {
     setEmailFrequency(selectedFrequency);
   };
 
+  const handleChangeIncomeMessages=(e)=>{
+    setDisplayIncomeMessages(e.target.checked);
+  }
+  const handleChangeBrowsingTimeLimit=(e)=>{
+    setDisplayBrowsingTimeLimit(e.target.checked);
+  }
+
   return (
     <div className="notifications-container">
       <div className="display-checkboxs">
@@ -116,13 +123,13 @@ const Notifications = ({ onUpdate, data }) => {
           label={translate(LABELS.DISPLAY_INCOME_MESSAGES)}
           type="checkbox"
           checked={displayIncomeMessages}
-          onChange={setDisplayIncomeMessages}
+          onChange={handleChangeIncomeMessages}
         />
         <GenericInput
           label={translate(LABELS.DISPLAY_BROWSING_TIME_LIMIT)}
           type="checkbox"
           checked={displayBrowsingTimeLimit}
-          onChange={setDisplayBrowsingTimeLimit}
+          onChange={handleChangeBrowsingTimeLimit}
         />
       </div>
       <div className="select-container">
@@ -142,7 +149,7 @@ const Notifications = ({ onUpdate, data }) => {
           size='medium'
           width='11rem'
           label={translate(LABELS.CHANGE_NOTIFICATION_TIME)}
-          onChange={setSendNotificationTime}
+          onChange={(e) => setSendNotificationTime(parseFloat(e.target.value))}
           value={sendNotificationTime}
           type='number'
           className='gInput'

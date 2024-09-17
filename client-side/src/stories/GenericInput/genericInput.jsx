@@ -31,28 +31,10 @@ const GenericInput = ({
   
 
   const handleChange = (e) => {
-    let newValue;
-
-    if (e.target) {
-      if (type === 'number') {
-        newValue = parseFloat(e.target.value);
-      } else if (type === 'checkbox') {
-        newValue = e.target.checked;
-      } else {
-        newValue = e.target.value;
-      }
-
-      setInputValue(newValue);
-      if (typeof onChange === 'function') {
-        if (name) {
-          onChange(e);
-        } else {
-          onChange(newValue);
-        }
-      }
-    }
+    const newValue = e.target.value;
+    setInputValue(newValue);
+    onChange(e);
   };
-
 
   const handleValidation = (inputValue) => {
     const validationResult = validation(inputValue);
