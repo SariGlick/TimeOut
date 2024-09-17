@@ -1,0 +1,133 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import '../stories/variables.scss';
+
+.homepage-container {
+  font-family: $font-family;
+  margin: 0;
+  padding: 0;
+  color: $primary-color;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $white-color;
+
+  .homepage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn-primary {
+    background-color: $white-color;
+    color: $primary-color;
+    border: 0.125rem solid $primary-color-home;
+    padding: 1.5rem 3rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    display: inline-block;
+    min-width: 70%;
+
+    &:hover {
+      background-color: $primary-color-home;
+      color: $white-color;
+    }
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .feature {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+    &.odd {
+      background-color: $white-color;
+      color: $primary-color;
+      flex-direction: row-reverse;
+    }
+
+    &.even {
+      background-color: $primary-color-home;
+      color: $primary-color;
+      flex-direction: row;
+    }
+
+    .content {
+      width: 90%;
+      max-width: 80%;
+      padding: 2rem;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: calc(33vh + 10cm);
+      border-radius: 2%;
+      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    }
+
+    .text {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .feature-icon-container {
+      width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .feature-icon {
+      font-size: 8rem !important;
+      width: 8rem !important;
+      height: 8rem !important;
+
+      &.odd {
+        color: $primary-color-home;
+      }
+    }
+
+    &:nth-of-type(odd) .text {
+      text-align: left;
+    }
+
+    &:nth-of-type(even) .text {
+      text-align: right;
+    }
+  }
+
+  .btn-secondary {
+    background-color: $primary-color-home;
+    color: $white-color;
+    border: 2% solid $primary-color-home;
+    padding: 1.5rem 3rem;
+    text-decoration: none;
+    font-size: 1.25rem;
+    border-radius: 8%;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    display: inline-block;
+    min-width: 200%;
+
+    &:hover {
+      background-color: $hover-color;
+    }
+  }
+}

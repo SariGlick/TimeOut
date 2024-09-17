@@ -1,0 +1,56 @@
+@import '../variables.scss';
+.selectWrapper {
+  font-family:  $font-family;
+
+  .genericSelect {
+    &.primary {
+
+      background-color: $background-class;
+    }
+
+    &.secondary {
+      background-color: $secondary-color;
+    }
+
+    &:hover .MuiOutlinedInput-notchedOutline {
+      border-color:$secondary-color;
+    }
+
+    &.Mui-focused .MuiOutlinedInput-notchedOutline {
+      border-color: $hover-color;
+      box-shadow: 0 0 0.5rem rgba($secondary-color, 0.8); 
+    }
+
+    .MuiOutlinedInput-notchedOutline {
+      border-width: 0.1rem;
+      border-color:$secondary-color;
+      border-radius: 8px;
+      legend {
+        width: auto; 
+      }
+    }
+
+    .MuiSelect-root {
+      font-family:  $font-family; 
+    }
+  }
+
+  .MuiInputLabel-root {
+    font-family:  $font-family; 
+
+    &.Mui-focused {
+      color:$primary-color;
+    }
+  }
+
+  .MuiMenuItem-root {
+    font-family:  $font-family; 
+
+  
+  }
+}
+.img {
+  width: 23px; 
+  height:23px;
+  margin-right: 3px; 
+}
