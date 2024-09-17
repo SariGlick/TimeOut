@@ -17,6 +17,7 @@ import UpdateProfileComponent from './updateProfileCpmponent.jsx';
 import TimerActivationButton from './timerActivationButton.jsx';
 import { extractWebsiteName, isValidURL, isWebsiteInProfile, getStatusOptions } from '../../utils/profileUtil.js';
 import { TOAST_MESSAGES } from '../../constants/profileConstants.js';
+import DownloadAsExcel from '../Report/downloadAsExcel.jsx';
 import { PROFILE_LIST_MESSAGES, PROFILE_LIST_LOADING } from '../../constants/profileConstants.js';
 import '../../styles/profilePageStyle.scss';
 
@@ -271,6 +272,39 @@ const ProfilePageComponent = ({ userId=''}) => {
     return { headers, rows };
   };
 
+  const formatProfileDataForExcel = (profile) => {
+  if (!profile) {
+      return [];
+  }
+
+  const profileData = {
+      'Profile Name': profile.profileName, 
+      'Status Blocked Sites': profile.statusBlockedSites || '',
+      'Start Time': profile.timeProfile?.start || '', 
+      'End Time': profile.timeProfile?.end || '', 
+      'Google Maps Enabled': profile.googleMapsLocation?.enabled ? 'Yes' : 'No', 
+      'Google Maps Address': profile.googleMapsLocation?.location?.address || '', 
+      'Google Maps Latitude': profile.googleMapsLocation?.location?.lat, 
+      'Google Maps Longitude': profile.googleMapsLocation?.location?.lng,
+      'Google Calendar Enabled': profile.googleCalendarEvents?.enabled ? 'Yes' : 'No',
+      'Google Calendar ID': profile.googleCalendarEvents?.calendarId || '', 
+      'Google Drive Enabled': profile.googleDriveFiles?.enabled ? 'Yes' : 'No', 
+      'Google Drive Folder ID': profile.googleDriveFiles?.folderId || '', 
+  };
+
+  const websiteData = profile.listWebsites && profile.listWebsites.length > 0
+  ? profile.listWebsites.map(website => ({
+      'Website Name': website.websiteId?.name || '',
+      'Website URL': website.websiteId?.url || '',
+      'Website Status': website.status || '', 
+      'Limited Minutes': website.limitedMinutes
+  })): [];
+
+  return [profileData, ...websiteData];
+};
+
+const formattedData = selectedProfile ? formatProfileDataForExcel(selectedProfile) : [];
+
   return (
     <div className="profile-list-container">
       <div className="profile-list-select-wrapper">
@@ -324,6 +358,15 @@ const ProfilePageComponent = ({ userId=''}) => {
         <div>
           <h1 className='green_title'>{PROFILE_LIST_MESSAGES.NO_PROFILE_SELECTED}</h1>
           <h2>{PROFILE_LIST_MESSAGES.PLEASE_SELECT_PROFILE}</h2>
+        </div>
+      )}
+      {selectedProfile && (
+        <div className="export-section">
+          <DownloadAsExcel
+            data={formattedData}
+            sheetName={`${selectedProfile.profileName} Profile`}  
+            fileName={`${selectedProfile.profileName}_profile.xlsx`} 
+          />
         </div>
       )}
     </div>

@@ -145,7 +145,24 @@ button {
     font-size: 28px !important;
   }
 }
+.add-profile-button {
+  margin-bottom: 100%;
+}
+.export-section{
+  margin-top: -2%;
+  margin-bottom: 4%;
+  margin-left: 63%;
+}
 
+.add-profile-button {
+  &.disabled {
+    pointer-events: none;
+  }
+
+  &.enabled {
+    pointer-events: auto;
+  }
+}
 .cancel-button {
   color: rgb(103, 252, 210) !important;
 }
