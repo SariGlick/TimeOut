@@ -19,6 +19,17 @@
             background-color:  white;
             color: black ;
         } 
+        &.small {
+            width: 5rem;
+        }
+
+        &.medium {
+            width: 10rem;
+        }
+
+        &.large {
+            width: 12rem;
+        }
     }
     
    

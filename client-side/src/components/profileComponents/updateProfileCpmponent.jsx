@@ -10,8 +10,8 @@ import {
     DialogTitle,
     Tooltip
 } from '@mui/material';
-import ProfileForm from './profileForm.jsx';
-import ProfileActions from './profileActions.jsx';
+import ProfileForm from './ProfileForm.jsx';
+import ProfileActions from './ProfileActions.jsx';
 import { updateProfileApi, deleteProfileApi } from '../../services/profileService.js';
 import { deleteProfile, updateProfile, setSelectProfile } from '../../redux/profile/profile.slice.js';
 import ToastMessage from '../../stories/Toast/ToastMessage.jsx';

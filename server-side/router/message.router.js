@@ -3,7 +3,7 @@ import {
   getMessages,
   getMessageByIdController,
   getMessagesByUserIdController,
-  addMessageController,
+  addMessage,
   updateMessageController,
   deleteMessageController
 } from '../controllers/message.controller.js';
@@ -13,7 +13,7 @@ const messageRouter = express.Router();
 messageRouter.get('/', getMessages);
 messageRouter.get('/:id', getMessageByIdController);
 messageRouter.get('/user/:userId', getMessagesByUserIdController);
-messageRouter.post('/', addMessageController);
+messageRouter.post('/', addMessage);
 messageRouter.put('/:id', updateMessageController);
 messageRouter.delete('/:id', deleteMessageController);
 

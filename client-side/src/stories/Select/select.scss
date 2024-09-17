@@ -1,9 +1,10 @@
 @import '../variables.scss';
 .selectWrapper {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family:  $font-family;
 
   .genericSelect {
     &.primary {
+
       background-color: $background-class;
     }
 
@@ -16,11 +17,12 @@
     }
 
     &.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border-color:$secondary-color;
+      border-color: $hover-color;
+      box-shadow: 0 0 0.5rem rgba($secondary-color, 0.8); 
     }
 
     .MuiOutlinedInput-notchedOutline {
-      border-width: 2px;
+      border-width: 0.1rem;
       border-color:$secondary-color;
 
       legend {
@@ -29,12 +31,12 @@
     }
 
     .MuiSelect-root {
-      font-family: 'Nanum Gothic', sans-serif; 
+      font-family:  $font-family; 
     }
   }
 
   .MuiInputLabel-root {
-    font-family: 'Nanum Gothic', sans-serif; 
+    font-family:  $font-family; 
 
     &.Mui-focused {
       color:$primary-color;
@@ -42,7 +44,7 @@
   }
 
   .MuiMenuItem-root {
-    font-family: 'Nanum Gothic', sans-serif; 
+    font-family:  $font-family; 
 
   
   }

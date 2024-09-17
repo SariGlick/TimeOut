@@ -1,18 +1,14 @@
 import React from "react";
 import {createBrowserRouter } from "react-router-dom";
-import ProfileList from "../components/profileComponent.jsx";
 import Report from '../components/Report/report.jsx'
 import ProfilePageComponent from "../components/profileComponents/profilePageComponent.jsx";
 import Statistics from '../components/statistics.jsx';
-import Layout from "./layout.jsx";
 import Login from "../login/Login.jsx";
-
 import SignUp from "../components/signUp/signUp.jsx";
+import Settings from "../components/settings/Settings.jsx";
+import HomePage from "../components/homePageComponent.jsx";
+import Layout from "./layout.jsx";
 
-import HomePage from "../components/homePageComponent.jsx";
-import Statistics from '../components/statistics.jsx'
-import HomePage from "../components/homePageComponent.jsx";
-import Report from "../components/Report/report.jsx";
 export  const router = createBrowserRouter([
     {
         path: '',
@@ -35,16 +31,16 @@ export  const router = createBrowserRouter([
                 element: <Statistics />
             },
             {
-                path: '/profiles',
-                element:<ProfileList/>
-            },
-            {
                 path: '/login',
                 element: <Login/>
             },
             {
                 path: '/reports',
                 element:<Report/>
+            },
+            {
+              path: '/settings',
+              element: <Settings/>
             },
             {
               path:'/SignUp',

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Select from './Select';
 
 export default {
@@ -25,9 +26,6 @@ Primary.args = {
   title: "primary select",
   size: 'large',
   widthOfSelect: "150px",
-  onChange: (selectedValue) => {
-    console.log('Selected value in Primary:', selectedValue);
-  },
 };
 
 export const Secondary = Template.bind({});
@@ -41,7 +39,6 @@ Secondary.args = {
   title: "secondary select",
   size: 'small',
   widthOfSelect: "170px",
-  onChange: (selectedValue) => {
-    console.log('Selected value in Secondary:', selectedValue);
-  },
+  
 };
+

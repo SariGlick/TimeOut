@@ -18,11 +18,11 @@ export default async function activeProfile(userId) {
         if (user.profiles.length === 0)
             return [];
         else {
-            const currentTime = getcurrentTime(user.preferences.timeZone, new Date());
+            const currentTime = getcurrentTime(user.preference.timeZone, new Date());
             const activeProfile = user.profiles.filter((item) => item.listWebsites.filter((website) => {
                 return website.limitedTimes.some((item) => {
-                    return getcurrentTime(user.preferences.timeZone, item.start) <= currentTime &&
-                        getcurrentTime(user.preferences.timeZone, item.end) >= currentTime && item.start <= item.end
+                    return getcurrentTime(user.preference.timeZone, item.start) <= currentTime &&
+                        getcurrentTime(user.preference.timeZone, item.end) >= currentTime && item.start <= item.end
                 })
             }))
             return activeProfile;
